@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="AcctToAgreements">
+	<typeAlias alias="agreementInfo"
+		type="com.monsanto.irdsoapservices.to.AgreementInfo" />
+    <typeAlias alias="agreementHierarchyInfo"
+               type="com.monsanto.irdsoapservices.to.AgreementHierarchyInfo"/>
+
+	<resultMap id="getAgreementsResult" class="agreementInfo">
+		<result property="accountId" column="ACCT_ID" />
+		<result property="signerAccountId" column="SIGNER_ACCT_ID" nullValue="0"/>
+        <result property="accountAliasId" column="ACCT_ALIAS_ID"/>
+        <result property="signerAliasId" column="SIGNER_ALIAS_ID"/>
+		<result property="agreementCode" column="AGREEMENT_CODE" />
+        <result property="beginDate" column="BEGIN_DATE"/>
+        <result property="endDate" column="END_DATE"/>
+        <result property="rowUserId" column="ROW_USER_ID"/>
+        <result property="rowModifyDate" column="ROW_MODIFY_DATE"/>
+	</resultMap>
+    <resultMap id="agreementHierarchyResult" class="agreementHierarchyInfo">
+        <result property="agreementCode" column="AGREEMENT_CODE"/>
+        <result property="agreementDescr" column="AGREEMENT_DESCR"/>
+        <result property="commercialAgreement" column="COMMERCIAL_AGREEMENT"/>
+        <result property="monsantoTraitAgreement" column="MONSANTO_TRAIT_AGREEMENT"/>
+        <result property="cornAgreementFlag" column="CORN_AGREEMENT_FLAG"/>
+        <result property="soybeanAgreementFlag" column="SOYBEAN_AGREEMENT_FLAG"/>
+    </resultMap>
+
+    <select id="getAgreementsByAlias" parameterClass="java.util.Map" resultMap="getAgreementsResult">
+        SELECT  AAD.ACCT_ID, XACCT.ALIAS_ID ACCT_ALIAS_ID, AAD.SIGNER_ACCT_ID, XSIGNER.ALIAS_ID SIGNER_ALIAS_ID, AAD.AGREEMENT_CODE, AAD.BEGIN_DATE, AAD.END_DATE,
+                AAD.ROW_USER_ID, AAD.ROW_MODIFY_DATE
+        FROM    I_ACCT_TO_AGREEMENT AAD,
+                I_ACCT_XREF XACCT,
+                I_ACCT_XREF XSIGNER,
+                (
+                    SELECT  ACCT_ID, SIGNER_ACCT_ID, MAX (END_DATE) END_DATE
+                    FROM    I_ACCT_TO_AGREEMENT AA
+                    WHERE   AA.AGREEMENT_CODE = #agrCode#
+                    <isNotNull prepend="AND" property="acctId">
+                        AA.ACCT_ID = #acctId#
+                    </isNotNull>
+                    <isNotNull prepend="AND" property="signerAcctId">
+			            AA.SIGNER_ACCT_ID = #signerAcctId#
+                    </isNotNull>
+                    GROUP BY ACCT_ID, SIGNER_ACCT_ID) AAMAX
+         WHERE  AAD.ACCT_ID = XACCT.ACCT_ID
+                AND XACCT.SYSTEM_TYPE_CODE= #systemTypeCode#
+                AND XACCT.ACTIVE_FLAG='Y'
+                AND AAD.SIGNER_ACCT_ID = XSIGNER.ACCT_ID
+                AND XSIGNER.SYSTEM_TYPE_CODE=#systemTypeCode#
+                AND XSIGNER.ACTIVE_FLAG='Y'
+                AND AAD.AGREEMENT_CODE = #agrCode#
+                AND AAD.ACCT_ID = AAMAX.ACCT_ID
+                AND AAD.SIGNER_ACCT_ID = AAMAX.SIGNER_ACCT_ID
+                AND AAD.END_DATE = AAMAX.END_DATE
+    </select>
+
+    <select id="getAgreements" parameterClass="java.util.Map" resultMap="getAgreementsResult">
+        SELECT  AAD.ACCT_ID, NULL AS ACCT_ALIAS_ID, AAD.SIGNER_ACCT_ID, NULL AS SIGNER_ALIAS_ID, AAD.AGREEMENT_CODE, AAD.BEGIN_DATE, AAD.END_DATE,
+                AAD.ROW_USER_ID, AAD.ROW_MODIFY_DATE
+        FROM    I_ACCT_TO_AGREEMENT AAD,
+                (
+                    SELECT  ACCT_ID, SIGNER_ACCT_ID, MAX (END_DATE) END_DATE
+                    FROM    I_ACCT_TO_AGREEMENT AA
+                    WHERE   AA.AGREEMENT_CODE = #agrCode#
+                    <isNotNull prepend="AND" property="acctId">
+                        AA.ACCT_ID = #acctId#
+                    </isNotNull>
+                    <isNotNull prepend="AND" property="signerAcctId">
+			            AA.SIGNER_ACCT_ID = #signerAcctId#
+                    </isNotNull>
+                    GROUP BY ACCT_ID, SIGNER_ACCT_ID) AAMAX
+         WHERE  AAD.AGREEMENT_CODE = #agrCode#
+                AND AAD.ACCT_ID = AAMAX.ACCT_ID
+                AND AAD.SIGNER_ACCT_ID = AAMAX.SIGNER_ACCT_ID
+                AND AAD.END_DATE = AAMAX.END_DATE
+    </select>
+
+
+    <select id="getAcctIdByAlias" parameterClass="java.util.Map" resultClass="java.lang.Long">
+        SELECT ACCT_ID
+        FROM    I_ACCT_XREF
+        WHERE SYSTEM_TYPE_CODE = #systemTypeCode# AND ALIAS_ID = #aliasId# AND ACTIVE_FLAG = 'Y'
+    </select>
+    <update id="updateAgreement" parameterClass="agreementInfo">
+        UPDATE I_ACCT_TO_AGREEMENT
+        SET END_DATE = #endDate#, ROW_MODIFY_DATE = #rowModifyDate#, ROW_USER_ID = #rowUserId#, ROW_TASK_ID = #rowTaskId#
+        WHERE ACCT_ID = #accountId# AND AGREEMENT_CODE = #agreementCode# AND END_DATE > SYSDATE
+    </update>
+
+    <select id="getAgreementHierarchy" parameterClass="java.util.Map" resultMap="agreementHierarchyResult">
+        SELECT  DISTINCT AA.AGREEMENT_CODE, A.SDESCR AGREEMENT_DESCR, A.COMMERCIAL_AGREEMENT, A.CORN_AGREEMENT_FLAG, A.SOYBEAN_AGREEMENT_FLAG, A.MONSANTO_TRAIT_AGREEMENT
+        FROM    I_AGREEMENT A, I_ACCT_TO_AGREEMENT AA
+        WHERE   A.END_DATE >= SYSDATE
+                AND AA.END_DATE >= SYSDATE
+                AND A.BEGIN_DATE &lt;= SYSDATE
+                AND AA.BEGIN_DATE &lt;= SYSDATE
+                AND A.LICENSED_BY_CODE = #licensedBy#
+                AND AA.ACCT_ID = #accountId#
+                AND AA.AGREEMENT_CODE = A.AGREEMENT_CODE
+                AND (A.COMMERCIAL_AGREEMENT IS NOT NULL OR A.MONSANTO_TRAIT_AGREEMENT IS NOT NULL)
+    </select>
+
+
+</sqlMap>
+

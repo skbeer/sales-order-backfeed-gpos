@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.monsanto.commercial.irdsoapservices</groupId>
+        <artifactId>irdsoapservices-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <groupId>com.monsanto.commercial.irdsoapservices.irdsoapservices-parent</groupId>
+    <artifactId>irdsoapservices-acceptancetests</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>IrdSoapServices-ATs</name>
+    <description>ACCEPTANCE TESTS FOR IRD SOAP SERVICES</description>
+    <inceptionYear>2009</inceptionYear>
+
+    <dependencies>
+        <dependency>                     
+            <groupId>com.monsanto.commercial.irdsoapservices-client</groupId>
+            <artifactId>irdsoapservices-client</artifactId>
+            <version>1.0.2</version>            
+        </dependency>
+    </dependencies>
+          
+    <build>
+    </build>
+
+    <profiles>
+    </profiles>
+</project>

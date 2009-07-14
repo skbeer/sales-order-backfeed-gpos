@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.monsanto.commercial.irdsoapservices</groupId>
+        <artifactId>irdsoapservices-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <groupId>com.monsanto.commercial.irdsoapservices.irdsoapservices-parent</groupId>
+    <artifactId>irdsoapservices-ear</artifactId>
+    <version>1.0.0</version>
+    <packaging>ear</packaging>
+    <name>IRDSoapServices - EAR</name>
+    <description>IRD SOAP SERVICES - EAR</description>
+    <inceptionYear>2009</inceptionYear>
+
+    <properties>
+        <default.weblogic.domain>${env.WEBLOGIC_DOMAIN}</default.weblogic.domain>
+        <default.ear.name>IrdSoapServices</default.ear.name>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>irdsoapservices-web</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${default.ear.name}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <modules>
+                        <webModule>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>irdsoapservices-web</artifactId>
+                            <contextRoot>/IrdSoapServices</contextRoot>
+                        </webModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>local-weblogic-deployment EAR</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-ear-to-weblogic-default-domain-autodeploy-folder-during-package-phase</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <copy file="${project.build.directory}/${project.build.finalName}.ear"
+                                              tofile="${default.weblogic.domain}/autodeploy/${default.ear.name}.ear"
+                                              overwrite="true"/>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

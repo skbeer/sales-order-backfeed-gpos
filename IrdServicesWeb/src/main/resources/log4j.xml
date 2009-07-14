@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="false" xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+  <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+     <layout class="org.apache.log4j.PatternLayout" >
+     <param name="ConversionPattern" value="%5p [%d{yyyy-MM-dd HH:mm:ss}] (%F:%M:%L) - %m%n"/>
+     </layout>
+  </appender>
+
+  <appender name="ApplicationjRollingFileAppender" class="org.apache.log4j.RollingFileAppender">
+    <param name="File" value="${log4j.logfile.dir}/IRDSoapServicesApp.log"/>
+    <param name="Append" value="true"/>
+    <param name="MaxFileSize" value="500KB"/>
+    <param name="MaxBackupIndex" value="9"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%5p [%d{yyyy-MM-dd HH:mm:ss}] (%F:%M:%L) - %m%n"/>
+    </layout>
+  </appender>
+
+  <category name="org.apache.beehive.netui.core.urltemplates">
+    <priority value="fatal" />
+    <appender-ref ref="stdout"/>
+    <appender-ref ref="ApplicationjRollingFileAppender"/>
+  </category>
+
+  <category name="weblogic">
+    <priority value="warn" />
+    <appender-ref ref="stdout"/>
+  </category>
+
+  <!-- Note: Apparently it is necessary to have additivity="false" on any
+  	categories which overlap, and also on a category which overlaps the
+  	root (which they all do); otherwise a log event is sent to all the
+  	loggers up to and including the root which match, and they do their
+  	logging.  Thus multiple entries will appear if any appender-refs are
+  	repeated among the various categories and root. -->
+
+  <category name="com.monsanto" additivity="false">
+    <priority value="info" />
+    <appender-ref ref="ApplicationjRollingFileAppender"/>
+    <appender-ref ref="stdout" /> 
+  </category>
+    
+  <!--<category name="java.sql" additivity="false">-->
+    <!--<priority value="debug" />-->
+    <!--<appender-ref ref="stdout"/>  -->
+  <!--</category>-->
+  
+  <root> 
+    <priority value ="warn" /> 
+    <appender-ref ref="stdout" /> 
+  </root>
+
+</log4j:configuration>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       	xmlns:aop="http://www.springframework.org/schema/aop"
+		    xmlns:tx="http://www.springframework.org/schema/tx"
+       		xsi:schemaLocation="
+       			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+           
+		<bean id="irdDataSource"
+			class="org.springframework.jndi.JndiObjectFactoryBean">
+			<property name="jndiName">	
+				<value>ird_datasource</value>
+			</property>
+		</bean>
+		
+		<bean id="sqlMap" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		        <property name="configLocation">  
+		        	<value>classpath:SqlMapConfig.xml</value>
+		        </property>
+		        <property name="dataSource" ref="irdDataSource" />
+		</bean>
+
+		<bean id="irdDao" class="com.monsanto.irdsoapservices.dao.impl.IrdDaoImpl">
+				<property name="dataSource" ref="irdDataSource"/>
+				<property name="sqlMapClient" ref="sqlMap" />    
+		</bean>
+        <bean id="agreementsDao" class="com.monsanto.irdsoapservices.dao.impl.AgreementsDaoImpl">
+            	<property name="dataSource" ref="irdDataSource"/>
+				<property name="sqlMapClient" ref="sqlMap" />
+        </bean>
+        <bean id="brandsDao" class="com.monsanto.irdsoapservices.dao.impl.BrandsDaoImpl">
+            	<property name="dataSource" ref="irdDataSource"/>
+				<property name="sqlMapClient" ref="sqlMap" />
+        </bean>
+
+		<bean id="accountAttributesHelper" class="com.monsanto.irdsoapservices.helper.AccountAttributesHelper">
+			<property name="dao" ref="irdDao"/>
+		</bean>
+		<bean id="accountDetailsHelper" class="com.monsanto.irdsoapservices.helper.AccountDetailsHelper">
+			<property name="dao" ref="irdDao"/>
+		</bean>
+		<bean id="contactsHelper" class="com.monsanto.irdsoapservices.helper.ContactsHelper">
+			<property name="dao" ref="irdDao"/>
+		</bean>
+        <bean id="agreementsHelper" class="com.monsanto.irdsoapservices.helper.AgreementsHelper">
+            <property name="agreementsDao" ref="agreementsDao"/>
+            <property name="irdDao" ref="irdDao"/>
+        </bean>
+        <bean id="brandsHelper" class="com.monsanto.irdsoapservices.helper.BrandsHelper">
+            <property name="brandsDao" ref="brandsDao"/>
+        </bean>
+        
+		
+		<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		    <property name="dataSource" ref="irdDataSource"/>
+	    </bean>
+		
+		<tx:advice id="txAdvice" transaction-manager="txManager">
+	        <tx:attributes>
+	            <tx:method name="get*" read-only="true" rollback-for="Exception,RuntimeException"/>
+	            <tx:method name="*" rollback-for="Exception,RuntimeException"/>
+	        </tx:attributes>        
+	    </tx:advice>
+	    
+	    <aop:config>
+	        <aop:pointcut id="serviceOperation" expression="execution(* com.monsanto.irdsoapservices.helper.*.*(..))"/>
+	        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
+    	</aop:config>
+    
+		
+	</beans>

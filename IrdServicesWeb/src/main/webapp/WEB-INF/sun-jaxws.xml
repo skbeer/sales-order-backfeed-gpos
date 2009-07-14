@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<endpoints xmlns='http://java.sun.com/xml/ns/jax-ws/ri/runtime' version='2.0'>
+    <endpoint
+        name='AccountInformationService'
+        implementation='com.monsanto.irdsoapservices.service.impl.AccountInformationServiceImpl'
+        url-pattern='/AccountInformationService'/>
+
+    <endpoint
+        name='AccountAgreementService'
+        implementation='com.monsanto.irdsoapservices.service.impl.AccountAgreementsServiceImpl'
+        url-pattern='/AccountAgreementService'/>
+
+    <endpoint
+        name='BrandsService'
+        implementation='com.monsanto.irdsoapservices.service.impl.BrandsServiceImpl'
+        url-pattern='/BrandsService'/>
+
+</endpoints>

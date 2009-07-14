@@ -1,0 +1,202 @@
+package com.monsanto.irdsoapservices.dao.impl;
+
+import com.monsanto.irdsoapservices.constants.DBConstants;
+import com.monsanto.irdsoapservices.dao.IrdDao;
+import com.monsanto.irdsoapservices.schema.GrowerContactType;
+import com.monsanto.irdsoapservices.to.*;
+import com.monsanto.irdsoapservices.utils.StringUtils;
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+
+import java.util.*;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: mkuchip
+ * Date: Mar 17, 2009
+ * To change this template use File | Settings | File Templates.
+ */
+public class IrdDaoImpl extends SqlMapClientDaoSupport implements IrdDao {
+
+	public List<ContactInfo> getContactsByAcctId(long acctId, String contactType) throws Exception {
+        return getContacts(acctId, 0, contactType);
+	}
+
+    public List<ContactInfo> getContacts(long acctId, long contactId, String contactType) throws Exception {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("acctId", acctId>0 ? acctId+"" : null);
+        params.put("contactId",	contactId>0 ? contactId+"" : null);
+        params.put("contactType", StringUtils.isNullOrEmpty(contactType) ? null : contactType.trim().toUpperCase());
+        return (List<ContactInfo>)getSqlMapClientTemplate().queryForList("Contact.getContacts", params);
+    }
+
+	public ContactInfo getContactByContactId(long contactId, String contactType) throws Exception {
+        return getContacts(0, contactId, contactType).get(0);
+	}
+	
+	public List<AcctToAttr> getAttributesByAcctId(long acctId) throws Exception {
+		return (List<AcctToAttr>)getSqlMapClientTemplate().queryForList("AcctToAttr.getFlags", acctId);
+	}
+		
+	public int insertAccountAttribute(AcctToAttr acctToAttr) throws Exception {
+		setAuditFields(acctToAttr, true);
+		getSqlMapClientTemplate().insert("AcctToAttr.insertAttribute", acctToAttr);
+		return 1;
+	}
+
+	public int deleteAccountAttribute(AcctToAttr acctToAttr) throws Exception {
+		getSqlMapClientTemplate().insert("AcctToAttr.deleteAttribute", acctToAttr);
+		return 1;
+	}
+
+	public LfaGrowerDetails getAccountDetails(long growerAccountId) throws Exception {
+		return (LfaGrowerDetails)getSqlMapClientTemplate().queryForObject("LfaGrowerDetails.getDetails", growerAccountId);
+	}
+
+	public int saveAccountDetails(LfaGrowerDetails lfaDetails) throws Exception {
+		long growerAccountId = lfaDetails.getAccountId();
+		LfaGrowerDetails currentDetails = getAccountDetails(growerAccountId);
+		if(currentDetails == null) {
+			getSqlMapClientTemplate().insert("LfaGrowerDetails.insertDetails", lfaDetails);
+		} else {
+			getSqlMapClientTemplate().update("LfaGrowerDetails.updateDetails", lfaDetails);
+		}
+		return 1;
+	}
+
+	public int deleteAccountDetails(long growerAccountId) throws Exception {
+		getSqlMapClientTemplate().delete("LfaGrowerDetails.deleteDetails", growerAccountId);
+		return 1;
+	}
+
+	public void insertContactInfo(ContactInfo contactInfo) throws Exception {
+		long contactId = insertContact(contactInfo);
+		insertContactFunction(new ContactFunctionInfo(contactInfo));
+		for(ContactPhoneInfo phoneInfo: contactInfo.getPhoneNumbers()) {
+			phoneInfo.setContactId(contactId);
+			insertContactPhone(phoneInfo);
+		}
+		for(ContactEmailInfo emailInfo: contactInfo.getEmailAddresses()) {
+			emailInfo.setContactId(contactId);
+			insertContactEmail(emailInfo);
+		}
+	}
+
+	public void updateContactInfo(ContactInfo mergedContactInfo, String contactType) throws Exception {
+		if(!GrowerContactType.PRIMARY.toString().equalsIgnoreCase(contactType)) {
+			updateContact(mergedContactInfo);
+		}
+		for(ContactPhoneInfo phoneInfo: mergedContactInfo.getPhoneNumbers()) {
+			System.out.println(phoneInfo);
+			if(phoneInfo.getContactPhoneId()==null) {
+				insertContactPhone(phoneInfo);
+			} else if(!StringUtils.isNullOrEmpty(phoneInfo.getPhoneNumber())){
+				updateContactPhone(phoneInfo);
+			} else {
+				deleteContactPhone(phoneInfo.getContactPhoneId());
+			}
+		}
+		for(ContactEmailInfo emailInfo: mergedContactInfo.getEmailAddresses()) {
+			if(emailInfo.getContactEmailId()==null) {
+				insertContactEmail(emailInfo);
+			} else if(!StringUtils.isNullOrEmpty(emailInfo.getEmailAddress())){
+				updateContactEmail(emailInfo);
+			} else {
+				deleteContactEmail(emailInfo.getContactEmailId());
+			}
+		}
+	}
+
+	public int deleteContactInfo(ContactInfo contactInfo) throws Exception {
+		long contactId = contactInfo.getContactId();
+		ContactFunctionInfo contactFunction = new ContactFunctionInfo(contactInfo);
+		contactFunction.setFunctionTypeCode(contactInfo.getContactType());
+		int deletedRows = getSqlMapClientTemplate().delete("Contact.deleteAllContactPhones", contactId);
+		deletedRows+= getSqlMapClientTemplate().delete("Contact.deleteAllContactEmails", contactId);
+		deletedRows+= getSqlMapClientTemplate().delete("Contact.deleteContactFunction", contactFunction);
+		deletedRows+= getSqlMapClientTemplate().delete("Contact.deleteContact", contactId);
+		return deletedRows;
+	}
+
+    public List<EmployeeInfo> getAssociatedEmployees(long accountId) throws Exception {
+        return (List<EmployeeInfo>)getSqlMapClientTemplate().queryForList("Employee.getAssociatedEmployees", accountId);
+    }
+
+    public long getAccountIdByAlias(String aliasType, String aliasId) throws Exception {
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("systemTypeCode", aliasType);
+        map.put("aliasId", aliasId);
+        Object acctIdObj = getSqlMapClientTemplate().queryForObject("AcctToAgreements.getAcctIdByAlias", map);
+        return (acctIdObj == null ? 0: ((java.lang.Long)acctIdObj).longValue());
+    }
+    
+	protected long insertContact(ContactInfo contactInfo) throws Exception {
+		setAuditFields(contactInfo, true);
+		return (Long)getSqlMapClientTemplate().insert("Contact.insertContact", contactInfo);
+	}
+	protected int insertContactFunction(ContactFunctionInfo contactFunction) throws Exception {
+		setAuditFields(contactFunction, true);
+		getSqlMapClientTemplate().insert("Contact.insertContactFunction", contactFunction);
+		return 1;
+	}
+	protected int insertContactPhone(ContactPhoneInfo contactPhone) throws Exception {
+		int rowCount = 0;
+		if(!StringUtils.isNullOrEmpty(contactPhone.getPhoneNumber())) {
+			setAuditFields(contactPhone, true);
+			getSqlMapClientTemplate().insert("Contact.insertContactPhone", contactPhone);
+			rowCount++;
+		}
+		return rowCount;
+	}
+	protected int insertContactEmail(ContactEmailInfo contactEmail) throws Exception {
+		int rowCount = 0;
+		if(!StringUtils.isNullOrEmpty(contactEmail.getEmailAddress())) {
+			setAuditFields(contactEmail, true);
+			getSqlMapClientTemplate().insert("Contact.insertContactEmail", contactEmail);
+			rowCount++;
+		}
+		return rowCount;
+	}
+
+	protected int updateContact(ContactInfo contactInfo) throws Exception {
+		setAuditFields(contactInfo, false);
+		return getSqlMapClientTemplate().update("Contact.updateContact", contactInfo);
+	}
+	protected int updateContactPhone(ContactPhoneInfo contactPhone) throws Exception {
+		setAuditFields(contactPhone, false);
+		return getSqlMapClientTemplate().update("Contact.updateContactPhone", contactPhone);
+	}
+	protected int updateContactEmail(ContactEmailInfo contactEmail) throws Exception {
+		setAuditFields(contactEmail, false);
+		return getSqlMapClientTemplate().update("Contact.updateContactEmail", contactEmail);
+	}
+
+	protected int deleteContactPhone(long contactPhoneId) throws Exception {
+		return getSqlMapClientTemplate().delete("Contact.deleteContactPhoneNumber", contactPhoneId);
+	}
+
+	protected int deleteContactEmail(long contactEmailId) throws Exception {
+		return getSqlMapClientTemplate().delete("Contact.deleteContactEmailAddress", contactEmailId);
+	}
+
+	protected String getFunctionTypeCode(String description) throws Exception {
+		return (String)getSqlMapClientTemplate().queryForObject("Contact.getFunctionTypeCode", description);
+	}
+
+    private void setAuditFields(Object auditableObject, boolean setRowEntryDate) throws RuntimeException {
+        if (auditableObject == null) {return;}
+        Date timestamp = Calendar.getInstance().getTime();
+        try {
+            BeanUtils.setProperty(auditableObject, "rowModifyDate", timestamp);
+            BeanUtils.setProperty(auditableObject, "rowTaskId", DBConstants.ROW_TASK_ID);
+            BeanUtils.setProperty(auditableObject, "rowUserId", DBConstants.ROW_USER_ID);
+            if(setRowEntryDate) {
+            	BeanUtils.setProperty(auditableObject, "rowEntryDate", timestamp);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+}

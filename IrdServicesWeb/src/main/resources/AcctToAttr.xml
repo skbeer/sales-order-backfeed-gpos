@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" 	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="AcctToAttr">
+	<typeAlias alias="acctToAttr"
+		type="com.monsanto.irdsoapservices.to.AcctToAttr" />
+		
+	<resultMap id="flagsResult" class="acctToAttr">
+		<result property="accountId" column="ACCT_ID" />
+		<result property="attrCode" column="ACCT_ATTR_CODE" />		
+		<result property="originalAccountId" column="ORIGINAL_ACCT_ID" />		
+	</resultMap>
+	<select id="getFlags" parameterClass="long" resultMap="flagsResult">
+		SELECT 
+			ACCT_ID, ACCT_ATTR_CODE, ORIGINAL_ACCT_ID 
+		FROM 
+			I_ACCT_TO_ATTR
+		WHERE ACCT_ID = #id#
+	</select>
+	<select id="getOtherChem" parameterClass="long" resultClass="java.lang.String">
+		SELECT OTHER_CHEM
+		FROM	I_LFA_GROWER_DETAIL_DNML
+		WHERE	ACCT_ID = #id#
+	</select>
+	<insert id="insertAttribute" parameterClass="acctToAttr">
+		INSERT INTO I_ACCT_TO_ATTR (ACCT_ID, ACCT_ATTR_CODE, ORIGINAL_ACCT_ID, ROW_ENTRY_DATE, ROW_MODIFY_DATE, ROW_TASK_ID, ROW_USER_ID)
+		VALUES (#accountId#, #attrCode#, #originalAccountId#, #rowEntryDate#, #rowModifyDate#, #rowTaskId#, #rowUserId#)
+	</insert>
+	<delete id="deleteAttribute" parameterClass="acctToAttr">
+		DELETE FROM I_ACCT_TO_ATTR WHERE ACCT_ID = #accountId# AND ACCT_ATTR_CODE = #attrCode#
+	</delete>
+	
+</sqlMap>
+

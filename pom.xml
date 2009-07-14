@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.monsanto.commercial</groupId>
+        <artifactId>commercial-pom</artifactId>
+        <version>1.1.0</version>
+    </parent>
+
+    <groupId>com.monsanto.commercial.irdsoapservices</groupId>
+    <artifactId>irdsoapservices-parent</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>IRDSoapServices - parent POM</name>
+    <description>IRD Soap Services Project</description>
+    <inceptionYear>2009</inceptionYear>
+
+    <organization>
+        <name>US Commercial</name>
+    </organization>
+
+    <scm>
+        <connection>scm:svn:http://svn01/commercial/ServiceDevelopment/IRDSoapServices/trunk</connection>
+        <developerConnection>scm:svn:http://svn01/commercial/ServiceDevelopment/IRDSoapServices/trunk</developerConnection>
+    </scm>
+
+    <properties>
+        <java.version>1.6</java.version>
+        <oracle.home>${env.ORACLE_HOME}</oracle.home>
+        <junit.version>4.4</junit.version>
+        <spring.version>2.5.6</spring.version>
+        <slf4j.version>1.4.3</slf4j.version>
+        <tiles.version>2.0.5</tiles.version>
+        <jstl.version>1.2</jstl.version>
+        <servlet-api.version>2.5</servlet-api.version>
+        <standard.version>1.1.2</standard.version>
+    </properties>
+
+    <modules>
+        <module>IrdServicesEar</module>
+        <module>IrdServicesWeb</module>
+        <module>IrdServicesAcceptanceTests</module>
+    </modules>
+
+
+</project>

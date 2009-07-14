@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<display-name>IrdSoapServices</display-name>
+	<description>
+		IRD SOAP SERVICES
+	</description>
+
+    <listener>
+        <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+    </listener>
+
+    <context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:applicationContext.xml
+		</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>SpringContextServlet</servlet-name>
+		<servlet-class>
+			org.springframework.web.context.ContextLoaderServlet
+		</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+
+    <servlet>
+        <display-name>AccountInformationService</display-name>
+        <servlet-name>AccountInformationService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccountInformationService</servlet-name>
+        <url-pattern>/AccountInformationService</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>AccountAgreementService</display-name>
+        <servlet-name>AccountAgreementService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccountAgreementService</servlet-name>
+        <url-pattern>/AccountAgreementService</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>BrandsService</display-name>
+        <servlet-name>BrandsService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BrandsService</servlet-name>
+        <url-pattern>/BrandsService</url-pattern>
+    </servlet-mapping>
+
+
+
+</web-app>

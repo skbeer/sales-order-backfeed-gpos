@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" 	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Employee">
+	<typeAlias alias="employee"
+		type="com.monsanto.irdsoapservices.to.EmployeeInfo" />
+
+    <resultMap id="employeesResult" class="employee">
+        <result property="accountId" column="ACCT_ID" nullValue="0"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="roleCode" column="EMP_ROLE_CODE"/>
+        <result property="firstName" column="FIRST_NAME"/>
+        <result property="lastName" column="LAST_NAME"/>
+        <result property="emailAddress" column="EMAIL"/>
+    </resultMap>
+
+    <select id="getAssociatedEmployees" parameterClass="long" resultMap="employeesResult">
+        SELECT  ETA.ACCT_ID, E.FIRST_NAME, E.LAST_NAME, E.USER_ID, E.EMAIL, ES.EMP_ROLE_CODE
+        FROM    I_EMP_STRUCT ES,
+                I_EMP E,
+                I_IRD_PARAMETER IP,
+                I_EMP_TO_ACCT_TYPE EAT,
+                I_EMP_TO_ACCT ETA
+        WHERE   ES.EMP_ROLE_CODE = 'SAM'
+                AND ES.ORG_STRUCT_CODE =  IP.CHARACTER_VALUE
+                AND E.EMP_ID = ES.EMP_ID
+                AND ETA.EMP_ID = E.EMP_ID
+                AND ETA.EMP_TO_ACCT_TYPE_CODE = EAT.EMP_TO_ACCT_TYPE_CODE
+                AND EAT.EMP_TO_ACCT_TYPE_CODE = 'CS'
+                AND E.EMP_STATUS_TYPE_CODE='A'
+                AND IP.IRD_PARAMETER_CODE = 'ORG_STRUCTURE'
+                AND ETA.ACCT_ID=#acctId#
+        UNION
+        SELECT  ETA.ACCT_ID,E.FIRST_NAME, E.LAST_NAME, E.USER_ID,E.EMAIL,DECODE(ES.EMP_ROLE_CODE,'USCOMM','NAM','NAM') EMP_ROLE_CODE
+        FROM    I_EMP_TO_ACCT ETA,
+                I_EMP_STRUCT ES,
+                I_EMP E,
+                I_IRD_PARAMETER IP
+        WHERE   ES.EMP_ROLE_CODE IN ('USCOMM','NAM')
+                AND UPPER(JOB_TITLE)='NATIONAL ACCOUNT MANAGER'
+                AND ES.ORG_STRUCT_CODE =  IP.CHARACTER_VALUE
+                AND E.EMP_ID = ES.EMP_ID
+                AND ETA.EMP_ID = E.EMP_ID
+                AND ETA.EMP_TO_ACCT_TYPE_CODE='NAM'
+                AND E.EMP_STATUS_TYPE_CODE='A'
+                AND IP.IRD_PARAMETER_CODE = 'ORG_STRUCTURE'
+                AND ETA.ACCT_ID=#acctId#
+        UNION
+        SELECT  ATD.ACCT_ID, E.FIRST_NAME, E.LAST_NAME, E.USER_ID,E.EMAIL,ES.EMP_ROLE_CODE
+        FROM    I_EMP_TO_ORG ETO,
+                I_EMP_STRUCT ES,
+                S_ACCT_TERR_DNML ATD,
+                I_EMP E,
+                I_IRD_PARAMETER IP
+        WHERE   ES.EMP_ID = ETO.EMP_ID
+                AND ES.EMP_ROLE_CODE = 'AMA'
+                AND E.EMP_STATUS_TYPE_CODE='A'
+                AND ES.ORG_STRUCT_CODE =  IP.CHARACTER_VALUE
+                AND E.EMP_ID = ES.EMP_ID
+                AND ES.ORG_STRUCT_CODE = ETO.ORG_STRUCT_CODE
+                AND ATD.ORG_STRUCT_CODE = ETO.ORG_STRUCT_CODE
+                AND ATD.FINAL_TERR_CODE= ORG_CODE
+                AND ATD.ACCT_ID=#acctId#
+                AND ATD.MKT_SEG_CODE ='AG'
+                AND IP.IRD_PARAMETER_CODE = 'ORG_STRUCTURE'
+    </select>
+
+</sqlMap>

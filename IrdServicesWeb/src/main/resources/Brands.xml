@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Brands">
+	<typeAlias alias="brandInfo"
+		type="com.monsanto.irdsoapservices.to.BrandInfo" />
+
+	<resultMap id="getBrandsResult" class="brandInfo">
+		<result property="specieName" column="SPECIE_NAME" />
+		<result property="brandId" column="BRAND_ID" nullValue="0"/>
+		<result property="brandDescr" column="BRAND_DESCR" />
+	</resultMap>
+
+	<select id="getBrandsBySpecies" resultMap="getBrandsResult">
+        SELECT DISTINCT S.DESCR SPECIE_NAME, SCB.SEED_COMPANY_BRAND_ID BRAND_ID, SCB.DESCR BRAND_DESCR
+        FROM I_PROD P, I_PROD_ACCT_USAGE PAU, I_SEED_COMPANY_BRAND SCB, I_SEED_SPECIES S
+        WHERE P.PROD_ID = PAU.PROD_ID
+        AND PAU.SEED_COMPANY_BRAND_ID = SCB.SEED_COMPANY_BRAND_ID
+        AND P.SPECIES_CODE = S.SPECIES_CODE
+        AND P.PROD_STATUS_CODE = 'AC'
+        AND S.DESCR  IN 
+        <iterate open="(" close=")" conjunction=",">
+            #[]#
+        </iterate>
+        ORDER BY SPECIE_NAME, BRAND_DESCR
+	</select>
+
+</sqlMap>
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" 	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="LfaGrowerDetails">
+	<typeAlias alias="lfaGrowerDetail"
+		type="com.monsanto.irdsoapservices.to.LfaGrowerDetails" />
+		
+	<resultMap id="getDetailsResult" class="lfaGrowerDetail">
+		<result property="accountId" column="ACCT_ID" />
+		<result property="spouse" column="SPOUSE" />		
+		<result property="family" column="FAMILY" />		
+		<result property="hobbies" column="INTERESTS_HOBBIES" />		
+		<result property="organizations" column="ORGANIZATIONS" />		
+		<result property="chemistryComments" column="CHEMISTRY_COMMENTS" />		
+		<result property="otherChem" column="OTHER_CHEM" />		
+	</resultMap>
+
+	<select id="getDetails" parameterClass="long" resultMap="getDetailsResult">
+		SELECT 
+			ACCT_ID, SPOUSE, FAMILY, INTERESTS_HOBBIES, ORGANIZATIONS, CHEMISTRY_COMMENTS, OTHER_CHEM
+		FROM 
+			I_LFA_GROWER_DETAIL_DNML
+		WHERE ACCT_ID = #id#
+	</select>
+	<insert id="insertDetails" parameterClass="lfaGrowerDetail">
+		INSERT INTO I_LFA_GROWER_DETAIL_DNML (ACCT_ID, SPOUSE, FAMILY, INTERESTS_HOBBIES, ORGANIZATIONS, CHEMISTRY_COMMENTS, OTHER_CHEM)
+		VALUES (#accountId#, #spouse#, #family#, #hobbies#, #organizations#, #chemistryComments#, #otherChem#)
+	</insert>
+	<update id="updateDetails" parameterClass="lfaGrowerDetail">
+		UPDATE I_LFA_GROWER_DETAIL_DNML SET SPOUSE= #spouse#, FAMILY=#family#, INTERESTS_HOBBIES=#hobbies#, ORGANIZATIONS=#organizations#,
+			CHEMISTRY_COMMENTS=#chemistryComments#, OTHER_CHEM=#otherChem#
+		WHERE ACCT_ID = #accountId#
+	</update>
+	<delete id="deleteDetails" parameterClass="long">
+		DELETE 
+		FROM I_LFA_GROWER_DETAIL_DNML
+		WHERE ACCT_ID = #accountId#
+	</delete>
+</sqlMap>
