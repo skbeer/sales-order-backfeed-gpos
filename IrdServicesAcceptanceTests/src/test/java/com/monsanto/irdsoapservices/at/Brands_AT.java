@@ -49,7 +49,7 @@ public class Brands_AT extends AbstractAcceptanceTestCase {
         assertHeader(response.getHeader());
         assertEquals(1, response.getGetBrandsResponseBody().getBrandsForSpecie().size());
         assertEquals("CORN", response.getGetBrandsResponseBody().getBrandsForSpecie().get(0).getSeedSpecieName());
-        assertEquals(237, response.getGetBrandsResponseBody().getBrandsForSpecie().get(0).getBrand().size());
+        assertEquals(211, response.getGetBrandsResponseBody().getBrandsForSpecie().get(0).getBrand().size());
     }
 
     public void testGetBrands_withData_multipleSpecie() throws Exception {
@@ -59,7 +59,7 @@ public class Brands_AT extends AbstractAcceptanceTestCase {
         assertHeader(response.getHeader());
         assertEquals(2, response.getGetBrandsResponseBody().getBrandsForSpecie().size());
         assertEquals("CORN", response.getGetBrandsResponseBody().getBrandsForSpecie().get(0).getSeedSpecieName());
-        assertEquals(237, response.getGetBrandsResponseBody().getBrandsForSpecie().get(0).getBrand().size());
+        assertEquals(211, response.getGetBrandsResponseBody().getBrandsForSpecie().get(0).getBrand().size());
         assertEquals("SOYBEAN", response.getGetBrandsResponseBody().getBrandsForSpecie().get(1).getSeedSpecieName());
         assertEquals(272, response.getGetBrandsResponseBody().getBrandsForSpecie().get(1).getBrand().size());
     }
