@@ -68,8 +68,8 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
         List<AgreementHierarchyInfo> agrHierarchy = agreementDao.getAgreementHierarchy(1836, "CS");
         assertNotNull(agrHierarchy);
         assertEquals(3, agrHierarchy.size());
-        assertAgrementHierarchyInfo(agrHierarchy, 1, "RRSN", "RRSN-Soybean", null, "C08", "N", "Y");
-        assertAgrementHierarchyInfo(agrHierarchy, 0, "Z051", "Bean Commercial", "Z05", null, "N", "Y");
+        assertAgrementHierarchyInfo(agrHierarchy, 0, "RRSN", "RRSN-Soybean", null, "C08", "N", "Y");
+        assertAgrementHierarchyInfo(agrHierarchy, 1, "Z051", "Bean Commercial", "Z05", null, "N", "Y");
         assertAgrementHierarchyInfo(agrHierarchy, 2, "Z052", "Bean Testing", "Z05", null, "N", "Y");
 //        assertAgrementHierarchyInfo(agrHierarchy, 0, "RRSN", "RRSN-Soybean", null, "C08", "N", "Y");
 //        assertAgrementHierarchyInfo(agrHierarchy, 1, "Z051", "Bean Commercial", "Z05", null, "N", "Y");
