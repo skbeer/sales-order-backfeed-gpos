@@ -23,7 +23,7 @@
     	the YYYYMMDD-HHMx (give only the 10's digit for minutes)
     	that EAR is built. Enables verification of which version of the
     	EAR is really running. -->
-    <title>Log4J Administration :: EAR version 20090507.1500</title>
+    <title>Log4J Administration</title>
     <style type="text/css">
       <!--
       #content { margin: 0px; padding: 0px; text-align: center; background-color: #ccc; border: 1px solid #000; width: 100%;}
@@ -57,7 +57,7 @@
       String logNameFilterType = (String)request.getParameter("logNameFilterType");
     %>
     <div id="content">
-      <h1>Log4J Administration</h1>
+      <h1>Log4J Administration :: EAR Version 1.0.0 :: Date Created: 08/24/2009 2:00 PM</h1>
       <div class="filterForm">
         <form action="log4jAdmin.jsp" name="logFilterForm">Filter Loggers:&nbsp;&nbsp;
           <input name="logNameFilter" type="text" size="50" value="<%=(logNameFilter == null ? "":logNameFilter)%>" class="filterText" />
