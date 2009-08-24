@@ -99,6 +99,7 @@
                 AND AA.ACCT_ID = #accountId#
                 AND AA.AGREEMENT_CODE = A.AGREEMENT_CODE
                 AND (A.COMMERCIAL_AGREEMENT IS NOT NULL OR A.MONSANTO_TRAIT_AGREEMENT IS NOT NULL)
+        ORDER BY AA.AGREEMENT_CODE
     </select>
 
 

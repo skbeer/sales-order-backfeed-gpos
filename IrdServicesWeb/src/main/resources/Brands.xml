@@ -8,21 +8,50 @@
 		<result property="specieName" column="SPECIE_NAME" />
 		<result property="brandId" column="BRAND_ID" nullValue="0"/>
 		<result property="brandDescr" column="BRAND_DESCR" />
+        <result property="seedCompanyAccountId" column="SEED_COMPANY_ACCT_ID"/>
+        <result property="seedCompanyName" column="SEED_COMPANY_NAME"/>
+        <result property="accountAttribute" column="ACCT_ATTR_CODE"/>
+        <result property="sapBrandChannel" column="SAP_BRAND_CHANNEL"/>
 	</resultMap>
 
 	<select id="getBrandsBySpecies" resultMap="getBrandsResult">
-        SELECT DISTINCT S.DESCR SPECIE_NAME, SCB.SEED_COMPANY_BRAND_ID BRAND_ID, SCB.DESCR BRAND_DESCR
-        FROM I_PROD P, I_PROD_ACCT_USAGE PAU, I_SEED_COMPANY_BRAND SCB, I_SEED_SPECIES S
-        WHERE P.PROD_ID = PAU.PROD_ID
-        AND PAU.SEED_COMPANY_BRAND_ID = SCB.SEED_COMPANY_BRAND_ID
-        AND P.SPECIES_CODE = S.SPECIES_CODE
-        AND P.PROD_STATUS_CODE = 'AC'
-        AND S.DESCR  IN 
-        <iterate open="(" close=")" conjunction=",">
-            #[]#
-        </iterate>
+        SELECT  DISTINCT SCB.SEED_COMPANY_BRAND_ID BRAND_ID,
+                SCB.DESCR BRAND_DESCR,
+		        S.SDESCR SPECIE_NAME,
+		        A.ACCT_ID SEED_COMPANY_ACCT_ID,
+		        A.NAME_1 SEED_COMPANY_NAME,
+                AA.ACCT_ATTR_CODE,
+		        DECODE(AA.ACCT_ATTR_CODE, 'SSFELGBL', 'CORNSTATES', 'ASI', 'ASI', 'MON', 'BRANDED', NULL) AS SAP_BRAND_CHANNEL
+        FROM    IRD.PROD_ACCT_USAGE PU,
+                IRD.ACCT A,
+                IRD.SEED_COMPANY_BRAND SCB,
+                IRD.PROD P,
+                IRD.SEED_SPECIES S,
+                IRD.ACCT_TO_ATTR AA
+        WHERE
+                A.ACCT_ID = PU.ACCT_ID
+                AND PU.SEED_COMPANY_BRAND_ID = SCB.SEED_COMPANY_BRAND_ID
+                AND P.PROD_ID = PU.PROD_ID
+                AND P.SPECIES_CODE = S.SPECIES_CODE
+                AND A.ACCT_ID = AA.ACCT_ID
+                AND A.ACCT_STATUS_TYPE_ID  = 1
+                AND AA.ACCT_ATTR_CODE IN ('SSFELGBL', 'ASI','MON')
+                AND P.PROD_STATUS_CODE = 'AC'
+	            AND S.SPECIES_CODE IN
+                    <iterate open="(" close=")" conjunction=",">
+                        #[]#
+                    </iterate>
         ORDER BY SPECIE_NAME, BRAND_DESCR
 	</select>
+
+    <select id="getSpecieCodesByDescr" resultClass="java.lang.String">
+        SELECT DISTINCT SPECIES_CODE
+        FROM    I_SEED_SPECIES
+        WHERE   UPPER(DESCR) IN
+                <iterate open="(" close=")" conjunction=",">
+                    #[]#
+                </iterate>        
+    </select>
 
 </sqlMap>
 

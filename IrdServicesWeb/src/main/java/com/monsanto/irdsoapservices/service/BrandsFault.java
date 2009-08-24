@@ -1,9 +1,8 @@
 
 package com.monsanto.irdsoapservices.service;
 
-import com.monsanto.irdsoapservices.brands.schema.ExceptionType;
-
 import javax.xml.ws.WebFault;
+import com.monsanto.irdsoapservices.brands.schema.ExceptionType;
 
 
 /**

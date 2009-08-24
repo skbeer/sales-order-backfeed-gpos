@@ -36,43 +36,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BrandType }
+     * Create an instance of {@link GetBrandsRequestBodyType }
      * 
      */
-    public BrandType createBrandType() {
-        return new BrandType();
-    }
-
-    /**
-     * Create an instance of {@link ExceptionType }
-     * 
-     */
-    public ExceptionType createExceptionType() {
-        return new ExceptionType();
-    }
-
-    /**
-     * Create an instance of {@link BrandsForSpecieType }
-     * 
-     */
-    public BrandsForSpecieType createBrandsForSpecieType() {
-        return new BrandsForSpecieType();
-    }
-
-    /**
-     * Create an instance of {@link GetBrandsResponseType }
-     * 
-     */
-    public GetBrandsResponseType createGetBrandsResponseType() {
-        return new GetBrandsResponseType();
-    }
-
-    /**
-     * Create an instance of {@link GetBrandsRequestType }
-     * 
-     */
-    public GetBrandsRequestType createGetBrandsRequestType() {
-        return new GetBrandsRequestType();
+    public GetBrandsRequestBodyType createGetBrandsRequestBodyType() {
+        return new GetBrandsRequestBodyType();
     }
 
     /**
@@ -84,11 +52,43 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetBrandsRequestBodyType }
+     * Create an instance of {@link GetBrandsResponseType }
      * 
      */
-    public GetBrandsRequestBodyType createGetBrandsRequestBodyType() {
-        return new GetBrandsRequestBodyType();
+    public GetBrandsResponseType createGetBrandsResponseType() {
+        return new GetBrandsResponseType();
+    }
+
+    /**
+     * Create an instance of {@link BrandType }
+     * 
+     */
+    public BrandType createBrandType() {
+        return new BrandType();
+    }
+
+    /**
+     * Create an instance of {@link BrandsForSpecieType }
+     * 
+     */
+    public BrandsForSpecieType createBrandsForSpecieType() {
+        return new BrandsForSpecieType();
+    }
+
+    /**
+     * Create an instance of {@link GetBrandsRequestType }
+     * 
+     */
+    public GetBrandsRequestType createGetBrandsRequestType() {
+        return new GetBrandsRequestType();
+    }
+
+    /**
+     * Create an instance of {@link ExceptionType }
+     * 
+     */
+    public ExceptionType createExceptionType() {
+        return new ExceptionType();
     }
 
     /**

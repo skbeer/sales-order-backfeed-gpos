@@ -18,7 +18,12 @@ import java.util.List;
 public class BrandsDaoImpl extends SqlMapClientDaoSupport implements BrandsDao {
 
     public List<BrandInfo> getBrandsBySpecies(List<String> species) throws Exception {
-        return (List<BrandInfo>)getSqlMapClientTemplate().queryForList("Brands.getBrandsBySpecies", toUpper(species));
+        List<BrandInfo> brands = new ArrayList<BrandInfo>();
+        List<String> specieCodes = (List<String>)getSqlMapClientTemplate().queryForList("Brands.getSpecieCodesByDescr", toUpper(species));
+        if(specieCodes.size()>0) {
+            brands = (List<BrandInfo>)getSqlMapClientTemplate().queryForList("Brands.getBrandsBySpecies", specieCodes);
+        }
+        return brands;
     }
 
     private List<String> toUpper(List<String> species) throws Exception {

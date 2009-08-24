@@ -24,10 +24,10 @@ public class BrandsDaoImpl_UT extends AbstractTransactionalDataSourceSpringConte
         List<BrandInfo> brands = brandsDao.getBrandsBySpecies(species);
         assertTrue(brands.size()>0);
         //assertEquals(249, brands.size());
-//        for (int index = 0; index < brands.size(); index++) {
-//            BrandInfo brandInfo = brands.get(index);
-//            System.out.println(brandInfo.toString());
-//        }
+        for (int index = 0; index < brands.size(); index++) {
+            BrandInfo brandInfo = brands.get(index);
+            System.out.println(brandInfo.toString());
+        }
     }
 
     public void testGetBrands_noData() throws Exception {

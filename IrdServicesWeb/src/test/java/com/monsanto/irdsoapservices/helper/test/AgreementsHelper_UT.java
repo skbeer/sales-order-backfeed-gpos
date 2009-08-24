@@ -1,15 +1,23 @@
 package com.monsanto.irdsoapservices.helper.test;
 
 import com.monsanto.irdsoapservices.dao.AgreementsDao;
+import com.monsanto.irdsoapservices.dao.IrdDao;
 import com.monsanto.irdsoapservices.to.AgreementInfo;
 import com.monsanto.irdsoapservices.to.AgreementHierarchyInfo;
 import com.monsanto.irdsoapservices.helper.AgreementsHelper;
 import com.monsanto.irdsoapservices.agreements.schema.*;
 import com.monsanto.irdsoapservices.test.BaseTestCase;
 import com.monsanto.irdsoapservices.service.AccountAgreementsFault;
+import com.monsanto.irdsoapservices.utils.XmlDateTimeUtil;
+import com.monsanto.isdcommon.header.schema.HeaderType;
+import com.monsanto.isdcommon.header.schema.PartnerIdentifierType;
+import com.monsanto.isdcommon.header.schema.PartnerTypeAttribute;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
+
+import org.easymock.EasyMock;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,6 +31,12 @@ public class AgreementsHelper_UT extends BaseTestCase {
     GetAgreementsRequestType request = new GetAgreementsRequestType();
     MockAgreementsDao agrDao = null;
 
+    // Some of the UTs in this class were written without Easymock.
+    // Below are new instances of AgreementsHelper and the DAO classes using EasyMock.
+    AgreementsHelper agreementsHelper = null;
+    AgreementsDao agreementsDao = null;
+    IrdDao irdDao = null;
+
     @Override
     protected void doSetUp() throws Exception {
         agrDao = new MockAgreementsDao();
@@ -32,6 +46,12 @@ public class AgreementsHelper_UT extends BaseTestCase {
         requestBody.setAccountIdentifier(getAccountIdentifier(new Long(123)));
         request.setHeader(getValidHeader("ABC123", "A_PARTNER"));
         request.setGetAgreementsRequestBody(requestBody);
+        // init EasyMock classes
+        agreementsHelper = new AgreementsHelper();
+        agreementsDao = EasyMock.createMock(AgreementsDao.class);
+        irdDao = EasyMock.createMock(IrdDao.class);
+        agreementsHelper.setAgreementsDao(agreementsDao);
+        agreementsHelper.setIrdDao(irdDao);        
     }
 
     public void testGetAgreements_invalidRequest_throwError() {
@@ -53,26 +73,26 @@ public class AgreementsHelper_UT extends BaseTestCase {
             System.out.println(e);
         }
     }
-
-    public void testGetAgreements_byAccountId() throws Exception {
-        GetAgreementsResponseType response = helper.getAgreements(request);
-        assertNotNull(response);
-        assertNotNull(response.getGetAgreementsResponseBody().getAgreementInformation());
-        assertHeader(response.getHeader(), "ABC123", "A_PARTNER");
-        assertTrue(agrDao.isGetByAccountIdCalled);
-        assertFalse(agrDao.isGetBySignerAccountIdCalled);        
-    }
-
-    public void testGetAgreements_bySignerAccountId() throws Exception {
-        request.getGetAgreementsRequestBody().setAccountIdentifier(null);
-        request.getGetAgreementsRequestBody().setSignerAccountIdentifier(getAccountIdentifier(new Long(123)));
-        GetAgreementsResponseType response = helper.getAgreements(request);
-        assertNotNull(response);
-        assertNotNull(response.getGetAgreementsResponseBody().getAgreementInformation());
-        assertHeader(response.getHeader(), "ABC123", "A_PARTNER");
-        assertTrue(agrDao.isGetBySignerAccountIdCalled);
-        assertFalse(agrDao.isGetByAccountIdCalled);        
-    }
+//
+//    public void testGetAgreements_byAccountId() throws Exception {
+//        GetAgreementsResponseType response = helper.getAgreements(request);
+//        assertNotNull(response);
+//        assertNotNull(response.getGetAgreementsResponseBody().getAgreementInformation());
+//        assertHeader(response.getHeader(), "ABC123", "A_PARTNER");
+//        assertTrue(agrDao.isGetByAccountIdCalled);
+//        assertFalse(agrDao.isGetBySignerAccountIdCalled);
+//    }
+//
+//    public void testGetAgreements_bySignerAccountId() throws Exception {
+//        request.getGetAgreementsRequestBody().setAccountIdentifier(null);
+//        request.getGetAgreementsRequestBody().setSignerAccountIdentifier(getAccountIdentifier(new Long(123)));
+//        GetAgreementsResponseType response = helper.getAgreements(request);
+//        assertNotNull(response);
+//        assertNotNull(response.getGetAgreementsResponseBody().getAgreementInformation());
+//        assertHeader(response.getHeader(), "ABC123", "A_PARTNER");
+//        assertTrue(agrDao.isGetBySignerAccountIdCalled);
+//        assertFalse(agrDao.isGetByAccountIdCalled);
+//    }
 
     public void testGetAgreementHierarchy_invalidRequest_returnFault() {
         try {
@@ -98,6 +118,128 @@ public class AgreementsHelper_UT extends BaseTestCase {
         assertAgrCategories(categories, 0, "MONSANTO_TRAIT_AGREEMENT", "MT01", "MT02");
         assertAgrCategories(categories, 1, "COMMERCIAL_AGREEMENT", "CM01", "CM02");
     }
+
+    public void testUpdateAgreements_invalidRequest_throwException() {
+        try {
+            agreementsHelper.updateAgreement(new UpdateAgreementRequestType());
+            fail("Exception should have occurred");
+        } catch (AccountAgreementsFault accountAgreementsFault) {
+            System.out.println(accountAgreementsFault.getMessage());
+        }
+    }
+
+    public void testUpdateAgreements_missingEndDateInRequest_throwException() {
+        try {
+            agreementsHelper.updateAgreement(getUpdateAgreementRequestType(false, AccountTypeAttribute.ACCTID, "1234", new Date()));
+            fail("Exception should have occurred");
+        } catch (Exception accountAgreementsFault) {
+            System.out.println(accountAgreementsFault.getMessage());
+        }
+    }
+
+    public void testUpdateAgreements_withAcctId_callUpdateMethod() throws Exception {
+        Date endDate = new Date();
+        EasyMock.expect(agreementsDao.updateAgreement((AgreementInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.replay(agreementsDao);
+        UpdateAgreementResponseType response = agreementsHelper.updateAgreement(getUpdateAgreementRequestType(true, AccountTypeAttribute.ACCTID, "1234", endDate));
+        EasyMock.verify(agreementsDao);
+        assertNotNull(response);
+        assertNotNull(response.getHeader());
+        assertEquals("Success", response.getUpdateAgreementResponseBody().getStatus());
+    }
+
+    public void testUpdateAgreements_withSapId_maptoAcctId_and_callUpdateMethod() throws Exception {
+        Date endDate = new Date();
+        EasyMock.expect(irdDao.getAccountIdByAlias("SAP", "1234")).andReturn(1234L);
+        EasyMock.expect(agreementsDao.updateAgreement((AgreementInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.replay(agreementsDao);
+        EasyMock.replay(irdDao);
+        UpdateAgreementResponseType response = agreementsHelper.updateAgreement(getUpdateAgreementRequestType(true, AccountTypeAttribute.SAP, "1234", endDate));
+        EasyMock.verify(agreementsDao);
+        EasyMock.verify(irdDao);
+        assertNotNull(response);
+        assertNotNull(response.getHeader());
+        assertEquals("Success", response.getUpdateAgreementResponseBody().getStatus());
+    }
+
+    public void testUpdateAgreements_withSapId_cannotFindMatchingAcctId_throwException() throws Exception {
+        Date endDate = new Date();
+        EasyMock.expect(irdDao.getAccountIdByAlias("SAP", "1234")).andReturn(0L);
+        EasyMock.replay(irdDao);
+        UpdateAgreementResponseType response = null;
+        try {
+            response = agreementsHelper.updateAgreement(getUpdateAgreementRequestType(true, AccountTypeAttribute.SAP, "1234", endDate));
+            fail("Exception should have occurred");
+        } catch (Exception e) {
+            assertEquals("Error occurred during operation: updateAgreement", e.getMessage());
+        }
+        EasyMock.verify(irdDao);
+    }
+
+    public void testGetAgreements_byAccount_ACCTID_returnValidResponse() throws Exception {
+        EasyMock.expect(agreementsDao.getAgreementsByAccountId(1234, "STA", "ACCTID")).andReturn(getExpectedAgreements());
+        EasyMock.replay(agreementsDao);
+        GetAgreementsResponseType responseType = agreementsHelper.getAgreements(getAgreementRequest(true, AccountTypeAttribute.ACCTID));
+        EasyMock.verify(agreementsDao);
+        assertNotNull(responseType.getHeader());
+        assertEquals(1, responseType.getGetAgreementsResponseBody().getAgreementInformation().size());
+        assertEquals("ACCTID", responseType.getGetAgreementsResponseBody().getAgreementInformation().get(0).getAccountIdentifier().getType().toString());
+        assertEquals("1234", responseType.getGetAgreementsResponseBody().getAgreementInformation().get(0).getAccountIdentifier().getValue());
+    }
+
+    public void testGetAgreements_byAccount_SAPID_returnValidResponse() throws Exception {
+        EasyMock.expect(irdDao.getAccountIdByAlias("SAP", "1234")).andReturn(5678L);
+        EasyMock.expect(agreementsDao.getAgreementsByAccountId(5678, "STA", "SAP")).andReturn(getExpectedAgreements());
+        EasyMock.replay(agreementsDao);
+        EasyMock.replay(irdDao);
+        GetAgreementsResponseType responseType = agreementsHelper.getAgreements(getAgreementRequest(true, AccountTypeAttribute.SAP));
+        EasyMock.verify(irdDao);
+        EasyMock.verify(agreementsDao);
+        assertNotNull(responseType.getHeader());
+        assertEquals(1, responseType.getGetAgreementsResponseBody().getAgreementInformation().size());
+        assertEquals("SAP", responseType.getGetAgreementsResponseBody().getAgreementInformation().get(0).getAccountIdentifier().getType().toString());
+        assertEquals("5678", responseType.getGetAgreementsResponseBody().getAgreementInformation().get(0).getAccountIdentifier().getValue());
+    }
+
+    public void testGetAgreements_bySignerAccount_ACCTID_returnValidResponse() throws Exception {
+        EasyMock.expect(agreementsDao.getAgreementsBySignerAccountId(1234, "STA", "ACCTID")).andReturn(getExpectedAgreements());
+        EasyMock.replay(agreementsDao);
+        GetAgreementsResponseType responseType = agreementsHelper.getAgreements(getAgreementRequest(false, AccountTypeAttribute.ACCTID));
+        EasyMock.verify(agreementsDao);
+        assertNotNull(responseType.getHeader());
+        assertEquals(1, responseType.getGetAgreementsResponseBody().getAgreementInformation().size());
+        assertEquals("ACCTID", responseType.getGetAgreementsResponseBody().getAgreementInformation().get(0).getAccountIdentifier().getType().toString());
+        assertEquals("1234", responseType.getGetAgreementsResponseBody().getAgreementInformation().get(0).getAccountIdentifier().getValue());
+    }
+
+    public void testGetAgreements_bySignerAccount_SAPID_returnValidResponse() throws Exception {
+        EasyMock.expect(irdDao.getAccountIdByAlias("SAP", "1234")).andReturn(5678L);
+        EasyMock.expect(agreementsDao.getAgreementsBySignerAccountId(5678, "STA", "SAP")).andReturn(getExpectedAgreements());
+        EasyMock.replay(agreementsDao);
+        EasyMock.replay(irdDao);
+        GetAgreementsResponseType responseType = agreementsHelper.getAgreements(getAgreementRequest(false, AccountTypeAttribute.SAP));
+        EasyMock.verify(irdDao);
+        EasyMock.verify(agreementsDao);
+        assertNotNull(responseType.getHeader());
+        assertEquals(1, responseType.getGetAgreementsResponseBody().getAgreementInformation().size());
+        assertEquals("SAP", responseType.getGetAgreementsResponseBody().getAgreementInformation().get(0).getAccountIdentifier().getType().toString());
+        assertEquals("5678", responseType.getGetAgreementsResponseBody().getAgreementInformation().get(0).getAccountIdentifier().getValue());
+    }
+
+
+
+    private List<AgreementInfo> getExpectedAgreements() {
+        List<AgreementInfo> agreementList = new ArrayList<AgreementInfo>();
+        AgreementInfo agreementInfo = new AgreementInfo();
+        agreementInfo.setAccountId(1234);
+        agreementInfo.setAccountAliasId("5678");
+        agreementInfo.setAgreementCode("STA");
+        agreementInfo.setBeginDate(new Date());
+        agreementInfo.setEndDate(new Date());
+        agreementList.add(agreementInfo);
+        return agreementList;
+    }
+
 
     private void assertAgrCategories(List<AgreementCategoryType> categories, int categoryIndex, String categoryName, String cornAgrCode, String soyAgrCode) {
         AgreementCategoryType commCategory = categories.get(categoryIndex);
@@ -149,6 +291,45 @@ public class AgreementsHelper_UT extends BaseTestCase {
         request.setGetAgreementHierarchyRequestBody(requestBody);
         request.setHeader(getValidHeader("1010", "CS"));
         return request;
+    }
+    
+    private UpdateAgreementRequestType getUpdateAgreementRequestType(boolean isValid, AccountTypeAttribute idType, String idValue, Date endDate) throws Exception {
+        UpdateAgreementRequestType updateRequest = new UpdateAgreementRequestType();
+        UpdateAgreementRequestBodyType requestBody = new UpdateAgreementRequestBodyType();
+        AccountIdentifierType acctIdentifier = new AccountIdentifierType();
+        acctIdentifier.setType(idType);
+        acctIdentifier.setValue(idValue);
+        requestBody.setAccountIdentifier(acctIdentifier);
+        requestBody.setAgreementCode("STA");
+        if(isValid) {
+            requestBody.setEndDate(XmlDateTimeUtil.transformToXmlGregorianCalendar(endDate));
+        }
+        HeaderType header = getValidHeader("1010", "IRDServices_Test");
+        PartnerIdentifierType fromPartner = new PartnerIdentifierType();
+        fromPartner.setType(PartnerTypeAttribute.USER_ID);
+        fromPartner.setValue("MKUCHIP");
+        header.getFrom().setPartnerIdentifier(fromPartner);
+        updateRequest.setHeader(header);
+        updateRequest.setUpdateAgreementRequestBody(requestBody);
+        return updateRequest;
+    }
+
+    public GetAgreementsRequestType getAgreementRequest(boolean byAccountId, AccountTypeAttribute identifierType) throws Exception {
+        GetAgreementsRequestType request = new GetAgreementsRequestType();
+        GetAgreementsRequestBodyType requestBody = new GetAgreementsRequestBodyType();
+        requestBody.setAgreementCode("STA");
+        AccountIdentifierType acctIdentifier = new AccountIdentifierType();
+        acctIdentifier.setType(identifierType);
+        acctIdentifier.setValue("1234");
+        if(byAccountId) {
+            requestBody.setAccountIdentifier(acctIdentifier);
+        } else {
+            requestBody.setSignerAccountIdentifier(acctIdentifier);
+        }
+        request.setHeader(getValidHeader("1010", "Test"));
+        request.setGetAgreementsRequestBody(requestBody);
+        return request;
+        
     }
 
     class MockAgreementsDao implements AgreementsDao {

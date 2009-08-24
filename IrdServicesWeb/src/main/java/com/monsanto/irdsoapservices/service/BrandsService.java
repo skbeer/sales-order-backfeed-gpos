@@ -1,15 +1,14 @@
 
 package com.monsanto.irdsoapservices.service;
 
-import com.monsanto.irdsoapservices.brands.schema.GetBrandsRequestType;
-import com.monsanto.irdsoapservices.brands.schema.GetBrandsResponseType;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import com.monsanto.irdsoapservices.brands.schema.GetBrandsRequestType;
+import com.monsanto.irdsoapservices.brands.schema.GetBrandsResponseType;
 
 
 /**
@@ -21,8 +20,8 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @WebService(name = "BrandsService", targetNamespace = "urn:monsanto:ird:services:wsdl:brands:1:0")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
-    com.monsanto.irdsoapservices.brands.schema.ObjectFactory.class,
-    com.monsanto.isdcommon.header.schema.ObjectFactory.class
+    com.monsanto.isdcommon.header.schema.ObjectFactory.class,
+    com.monsanto.irdsoapservices.brands.schema.ObjectFactory.class
 })
 public interface BrandsService {
 

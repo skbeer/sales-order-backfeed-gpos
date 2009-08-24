@@ -9,7 +9,7 @@
   </appender>
 
   <appender name="ApplicationjRollingFileAppender" class="org.apache.log4j.RollingFileAppender">
-    <param name="File" value="${log4j.logfile.dir}/IRDSoapServicesApp.log"/>
+    <param name="File" value="${server.logs}/IRDSoapServicesApp.log"/>
     <param name="Append" value="true"/>
     <param name="MaxFileSize" value="500KB"/>
     <param name="MaxBackupIndex" value="9"/>
@@ -44,7 +44,7 @@
     
   <!--<category name="java.sql" additivity="false">-->
     <!--<priority value="debug" />-->
-    <!--<appender-ref ref="stdout"/>  -->
+    <!--<appender-ref ref="stdout"/>-->
   <!--</category>-->
   
   <root> 

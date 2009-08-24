@@ -13,6 +13,42 @@ public class BrandInfo {
     private String specieName;
     private long brandId;
     private String brandDescr;
+    private long seedCompanyAccountId;
+    private String seedCompanyName;
+    private String accountAttribute;
+    private String sapBrandChannel;
+
+    public long getSeedCompanyAccountId() {
+        return seedCompanyAccountId;
+    }
+
+    public void setSeedCompanyAccountId(long seedCompanyAccountId) {
+        this.seedCompanyAccountId = seedCompanyAccountId;
+    }
+
+    public String getSeedCompanyName() {
+        return seedCompanyName;
+    }
+
+    public void setSeedCompanyName(String seedCompanyName) {
+        this.seedCompanyName = seedCompanyName;
+    }
+
+    public String getAccountAttribute() {
+        return accountAttribute;
+    }
+
+    public void setAccountAttribute(String accountAttribute) {
+        this.accountAttribute = accountAttribute;
+    }
+
+    public String getSapBrandChannel() {
+        return sapBrandChannel;
+    }
+
+    public void setSapBrandChannel(String sapBrandChannel) {
+        this.sapBrandChannel = sapBrandChannel;
+    }
 
     public String getSpecieName() {
         return specieName;
@@ -42,6 +78,10 @@ public class BrandInfo {
         BrandType brandType = new BrandType();
         brandType.setBrandId(getBrandId());
         brandType.setBrandDescription(getBrandDescr());
+        brandType.setSeedCompanyAccountId(getSeedCompanyAccountId());
+        brandType.setSeedCompanyName(getSeedCompanyName());
+        brandType.setSeedCompanyAccountAttribute(getAccountAttribute());
+        brandType.setSAPBrandChannel(getSapBrandChannel());
         return brandType;
     }
 
@@ -51,6 +91,10 @@ public class BrandInfo {
                 "specieName='" + specieName + '\'' +
                 ", brandId=" + brandId +
                 ", brandDescr='" + brandDescr + '\'' +
+                ", seedCompanyAccountId=" + seedCompanyAccountId +
+                ", seedCompanyName='" + seedCompanyName + '\'' +
+                ", accountAttribute='" + accountAttribute + '\'' +
+                ", sapBrandChannel='" + sapBrandChannel + '\'' +
                 '}';
     }
 }

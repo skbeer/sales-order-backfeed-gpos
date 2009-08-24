@@ -251,6 +251,12 @@
         <version>2.9.1</version>
         <scope>provided</scope>
     </dependency>
+    <dependency>
+        <groupId>org.easymock</groupId>
+        <artifactId>easymockclassextension</artifactId>
+        <version>2.4</version>
+        <scope>test</scope>
+    </dependency>        
     </dependencies>
 
     <build>
@@ -261,6 +267,20 @@
                 <version>2.0.2</version>
                 <configuration>
                     <warName>${war.file.name}</warName>
+                </configuration>
+            </plugin>
+            <!-- Remove generated JAXB code from clover coverage -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clover-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>com/monsanto/irdsoapservices/agreements/schema/*.java</exclude>
+                        <exclude>com/monsanto/irdsoapservices/brands/schema/*.java</exclude>
+                        <exclude>com/monsanto/irdsoapservices/schema/*.java</exclude>
+                        <exclude>com/monsanto/irdsoapservices/service/*.java</exclude>
+                        <exclude>com/monsanto/irdsoapservices/test/*.java</exclude>                        
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>

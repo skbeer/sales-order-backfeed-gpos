@@ -15,9 +15,13 @@ import java.util.Date;
 public class XmlDateTimeUtil {
 
     public static XMLGregorianCalendar transformToXmlGregorianCalendar(Date date) throws Exception {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return transformToXmlGregorianCalendar(calendar);
+        if(date!= null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            return transformToXmlGregorianCalendar(calendar);
+        } else {
+            return null;
+        }
     }
 
     public static XMLGregorianCalendar transformToXmlGregorianCalendar(Calendar calendar) throws Exception {
