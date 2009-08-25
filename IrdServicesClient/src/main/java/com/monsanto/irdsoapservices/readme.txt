@@ -1,0 +1,2 @@
+This POM generates jax-ws client stubs for the services in project IrdSoapServices-Web, using the wsimport task.
+All generated code will be added to this package. There is no need to check in this code into CVS.

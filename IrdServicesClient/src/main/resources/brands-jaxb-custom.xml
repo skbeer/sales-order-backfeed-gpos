@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+version="1.0"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<jaxb:bindings schemaLocation="http://services-dint.monsanto.com:80/IrdServices/Brands?SCHEMA%2FIRDServices%2FSchemas%2FBrands"
+node="/xs:schema">
+<jaxb:schemaBindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+<jaxb:package name="com.monsanto.irdsoapservices.brands.client"/>
+</jaxb:schemaBindings>
+</jaxb:bindings>
+</jaxb:bindings>

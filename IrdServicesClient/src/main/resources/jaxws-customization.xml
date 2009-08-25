@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxws:bindings wsdlLocation="http://services-dint.monsanto.com/IrdServices/AccountInformation?wsdl"
+xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+<jaxws:bindings node="s1:definitions" xmlns:s1="http://schemas.xmlsoap.org/wsdl/">
+<jaxws:package name="com.monsanto.irdsoapservices.client"/>
+</jaxws:bindings>
+</jaxws:bindings>
