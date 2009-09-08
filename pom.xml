@@ -10,7 +10,7 @@
 
     <groupId>com.monsanto.commercial.irdsoapservices</groupId>
     <artifactId>irdsoapservices-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>IRDSoapServices - parent POM</name>
     <description>IRD Soap Services Project</description>
@@ -43,5 +43,8 @@
         <module>IrdServicesAcceptanceTests</module>
     </modules>
 
+    <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
 </project>
