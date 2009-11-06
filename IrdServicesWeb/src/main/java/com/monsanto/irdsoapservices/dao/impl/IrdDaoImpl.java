@@ -18,22 +18,6 @@ import java.util.*;
  */
 public class IrdDaoImpl extends SqlMapClientDaoSupport implements IrdDao {
 
-	public List<ContactInfo> getContactsByAcctId(long acctId, String contactType) throws Exception {
-        return getContacts(acctId, 0, contactType);
-	}
-
-    public List<ContactInfo> getContacts(long acctId, long contactId, String contactType) throws Exception {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("acctId", acctId>0 ? acctId+"" : null);
-        params.put("contactId",	contactId>0 ? contactId+"" : null);
-        params.put("contactType", StringUtils.isNullOrEmpty(contactType) ? null : contactType.trim().toUpperCase());
-        return (List<ContactInfo>)getSqlMapClientTemplate().queryForList("Contact.getContacts", params);
-    }
-
-	public ContactInfo getContactByContactId(long contactId, String contactType) throws Exception {
-        return getContacts(0, contactId, contactType).get(0);
-	}
-	
 	public List<AcctToAttr> getAttributesByAcctId(long acctId) throws Exception {
 		return (List<AcctToAttr>)getSqlMapClientTemplate().queryForList("AcctToAttr.getFlags", acctId);
 	}
@@ -67,44 +51,6 @@ public class IrdDaoImpl extends SqlMapClientDaoSupport implements IrdDao {
 	public int deleteAccountDetails(long growerAccountId) throws Exception {
 		getSqlMapClientTemplate().delete("LfaGrowerDetails.deleteDetails", growerAccountId);
 		return 1;
-	}
-
-	public void insertContactInfo(ContactInfo contactInfo) throws Exception {
-		long contactId = insertContact(contactInfo);
-		insertContactFunction(new ContactFunctionInfo(contactInfo));
-		for(ContactPhoneInfo phoneInfo: contactInfo.getPhoneNumbers()) {
-			phoneInfo.setContactId(contactId);
-			insertContactPhone(phoneInfo);
-		}
-		for(ContactEmailInfo emailInfo: contactInfo.getEmailAddresses()) {
-			emailInfo.setContactId(contactId);
-			insertContactEmail(emailInfo);
-		}
-	}
-
-	public void updateContactInfo(ContactInfo mergedContactInfo, String contactType) throws Exception {
-		if(!GrowerContactType.PRIMARY.toString().equalsIgnoreCase(contactType)) {
-			updateContact(mergedContactInfo);
-		}
-		for(ContactPhoneInfo phoneInfo: mergedContactInfo.getPhoneNumbers()) {
-			System.out.println(phoneInfo);
-			if(phoneInfo.getContactPhoneId()==null) {
-				insertContactPhone(phoneInfo);
-			} else if(!StringUtils.isNullOrEmpty(phoneInfo.getPhoneNumber())){
-				updateContactPhone(phoneInfo);
-			} else {
-				deleteContactPhone(phoneInfo.getContactPhoneId());
-			}
-		}
-		for(ContactEmailInfo emailInfo: mergedContactInfo.getEmailAddresses()) {
-			if(emailInfo.getContactEmailId()==null) {
-				insertContactEmail(emailInfo);
-			} else if(!StringUtils.isNullOrEmpty(emailInfo.getEmailAddress())){
-				updateContactEmail(emailInfo);
-			} else {
-				deleteContactEmail(emailInfo.getContactEmailId());
-			}
-		}
 	}
 
 	public int deleteContactInfo(ContactInfo contactInfo) throws Exception {

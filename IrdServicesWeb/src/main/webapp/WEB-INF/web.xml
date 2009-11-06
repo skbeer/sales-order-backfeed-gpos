@@ -58,6 +58,16 @@
         <url-pattern>/BrandsService</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <display-name>ContactService</display-name>
+        <servlet-name>ContactService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactService</servlet-name>
+        <url-pattern>/ContactService</url-pattern>
+    </servlet-mapping>
+
 
 
 </web-app>

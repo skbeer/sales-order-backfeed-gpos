@@ -45,6 +45,11 @@
 		<property name="sqlMapClient" ref="sqlMap" />
 	</bean>
 
+    <bean id="contactsDao" class="com.monsanto.irdsoapservices.dao.impl.ContactsDaoImpl">
+        <property name="dataSource" ref="irdDataSource" />
+		<property name="sqlMapClient" ref="sqlMap" />
+    </bean>
+
 	<bean id="accountAttributesHelper"
 		class="com.monsanto.irdsoapservices.helper.AccountAttributesHelper">
 		<property name="dao" ref="irdDao" />

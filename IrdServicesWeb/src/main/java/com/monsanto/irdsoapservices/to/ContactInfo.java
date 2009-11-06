@@ -1,6 +1,6 @@
 package com.monsanto.irdsoapservices.to;
 
-import com.monsanto.irdsoapservices.schema.*;
+import com.monsanto.irdsoapservices.contacts.schema.*;
 import com.monsanto.irdsoapservices.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ContactInfo {
     private long contactId;
-    private long growerAccountId;
+    private long accountId;
     private String firstName;
     private String lastName;
     private String jobTitle;
@@ -28,6 +28,15 @@ public class ContactInfo {
     private String rowTaskId;
     private String rowUserId;
     private String databaseAction;
+    private List<String> contactFunctions = new ArrayList<String>();
+
+    public List<String> getContactFunctions() {
+        return contactFunctions;
+    }
+
+    public void setContactFunctions(List<String> contactFunctions) {
+        this.contactFunctions = contactFunctions;
+    }
 
     public String getDatabaseAction() {
 		return databaseAction;
@@ -77,12 +86,12 @@ public class ContactInfo {
 		this.rowUserId = rowUserId;
 	}
 
-	public long getGrowerAccountId() {
-		return growerAccountId;
+	public long getAccountId() {
+		return accountId;
 	}
 
-	public void setGrowerAccountId(long growerAccountId) {
-		this.growerAccountId = growerAccountId;
+	public void setAccountId(long accountId) {
+		this.accountId = accountId;
 	}
 
     public String getContactType() {
@@ -147,7 +156,11 @@ public class ContactInfo {
 	@Override
 	public String toString() {
 		StringBuffer sBuffer = new StringBuffer("\n"+"--CONTACT INFO--\n");
-		sBuffer.append("DBAction:"+getDatabaseAction()+" GrowerAccountId:"+getGrowerAccountId()+" ContactId:"+getContactId()+" ContactType:"+getContactType()+" Name"+getFirstName()+" "+getLastName()+" Job:"+getJobTitle());
+		sBuffer.append("AccountId:"+ getAccountId()+" ContactId:"+getContactId()+" Name"+getFirstName()+" "+getLastName()+" Job:"+getJobTitle());
+        sBuffer.append("\n Contact Functions \n");
+        for(String phone: getContactFunctions()) {
+			sBuffer.append(" "+phone);			
+		}
 		for(ContactPhoneInfo phone: getPhoneNumbers()) {
 			sBuffer.append("\n"+phone.toString());			
 		}
@@ -161,11 +174,10 @@ public class ContactInfo {
 	public ContactInfoType extractTypeObject() {
 		ContactInfoType contactInfoType = new ContactInfoType();
 		contactInfoType.setContactId(getContactId());
-		contactInfoType.setContactType(StringUtils.isNullOrEmpty(getContactType())?null:getContactType().trim().toUpperCase());
 		contactInfoType.setFirstName(getFirstName());
 		contactInfoType.setLastName(getLastName());
 		contactInfoType.setJobTitle(getJobTitle());
-		
+
 		ContactPhoneNumberListType phoneNumbersListType = new ContactPhoneNumberListType();
 		List<ContactPhoneNumberType> phTypeList = new ArrayList<ContactPhoneNumberType>();
 		for(ContactPhoneInfo phInfo: getPhoneNumbers()) {
@@ -175,9 +187,9 @@ public class ContactInfo {
 		}
 		phoneNumbersListType.getContactPhoneNumber().addAll(phTypeList);
 		contactInfoType.setPhoneNumberList(phoneNumbersListType);
-		
+
 		EmailAddressListType emailAddressListType = new EmailAddressListType();
-		List<EmailAddressType> emailList = new ArrayList<EmailAddressType>();
+		List<ContactEmailType> emailList = new ArrayList<ContactEmailType>();
 		for(ContactEmailInfo emailInfo: getEmailAddresses()) {
 			if(emailInfo != null) {
 				emailList.add(emailInfo.extractTypeObject());
@@ -185,41 +197,41 @@ public class ContactInfo {
 		}
 		emailAddressListType.getEmailAddress().addAll(emailList);
 		contactInfoType.setEmailAddressList(emailAddressListType);
-		
+        ContactFunctionListType contactFunctionList = new ContactFunctionListType();
+        contactFunctionList.getContactFunction().addAll(getContactFunctions());
+        contactInfoType.setContactFunctionList(contactFunctionList);
+
 		return contactInfoType;
 	}
-	
-	public static ContactInfo parse(PersistableContactInfoType persistableContactInfoType, long growerAccountId) throws Exception {
+
+	public static ContactInfo parse(InsertContactInfoType insertContactInfoType, long accountId) throws Exception {
 		ContactInfo contactInfo = new ContactInfo();
-		if((persistableContactInfoType == null) || (persistableContactInfoType.getContactInfo() == null)) {
+		if(insertContactInfoType == null) {
 			throw new Exception("Invalid PersistableContactInfoType Recieved.");
 		}
-		contactInfo.setDatabaseAction(persistableContactInfoType.getDatabaseAction().toString());
-		ContactInfoType xmlContactInfo = persistableContactInfoType.getContactInfo();
-		if((xmlContactInfo==null) || StringUtils.isNullOrEmpty(xmlContactInfo.getContactType())) {
-			throw new Exception("Invalid PersistableContactInfoType Recieved. Invalid ContactType: "+xmlContactInfo);
+		if(StringUtils.isNullOrEmpty(insertContactInfoType.getContactFunction())) {
+			throw new Exception("Invalid PersistableContactInfoType Recieved. Invalid ContactFunction: "+insertContactInfoType.getContactFunction());
 		}
-		contactInfo.setContactId(xmlContactInfo.getContactId());
-		contactInfo.setContactType(xmlContactInfo.getContactType().trim().toUpperCase());
-		contactInfo.setFirstName(xmlContactInfo.getFirstName());
-		contactInfo.setLastName(xmlContactInfo.getLastName());
-		contactInfo.setJobTitle(xmlContactInfo.getJobTitle());
-		contactInfo.setGrowerAccountId(growerAccountId);
-		if((persistableContactInfoType.getContactInfo().getPhoneNumberList()!= null) && 
-				(persistableContactInfoType.getContactInfo().getPhoneNumberList().getContactPhoneNumber() != null)) {
-			List<ContactPhoneNumberType> xmlPhoneNumberList = persistableContactInfoType.getContactInfo().getPhoneNumberList().getContactPhoneNumber();
+		contactInfo.setContactType(insertContactInfoType.getContactFunction().trim().toUpperCase());
+		contactInfo.setFirstName(insertContactInfoType.getFirstName());
+		contactInfo.setLastName(insertContactInfoType.getLastName());
+		contactInfo.setJobTitle(insertContactInfoType.getJobTitle());
+		contactInfo.setAccountId(accountId);
+		if((insertContactInfoType.getPhoneNumberList()!= null) &&
+				(insertContactInfoType.getPhoneNumberList().getContactPhoneNumber() != null)) {
+			List<ContactPhoneNumberType> xmlPhoneNumberList = insertContactInfoType.getPhoneNumberList().getContactPhoneNumber();
 			for(ContactPhoneNumberType xmlPhoneNumber: xmlPhoneNumberList) {
-				contactInfo.getPhoneNumbers().add(ContactPhoneInfo.parse(xmlPhoneNumber, xmlContactInfo.getContactId()));
-			}			
+				contactInfo.getPhoneNumbers().add(ContactPhoneInfo.parse(xmlPhoneNumber, 0));
+			}
 		}
-		if((persistableContactInfoType.getContactInfo().getEmailAddressList()!= null) && 
-				(persistableContactInfoType.getContactInfo().getEmailAddressList().getEmailAddress() != null)) {
-			List<EmailAddressType> xmlEmailAddressList = persistableContactInfoType.getContactInfo().getEmailAddressList().getEmailAddress();
-			for(EmailAddressType xmlEmailAddress: xmlEmailAddressList) {
-				contactInfo.getEmailAddresses().add(ContactEmailInfo.parse(xmlEmailAddress, xmlContactInfo.getContactId()));
-			}			
+		if((insertContactInfoType.getEmailAddressList()!= null) &&
+				(insertContactInfoType.getEmailAddressList().getEmailAddress() != null)) {
+			List<ContactEmailType> xmlEmailAddressList = insertContactInfoType.getEmailAddressList().getEmailAddress();
+			for(ContactEmailType xmlEmailAddress: xmlEmailAddressList) {
+				contactInfo.getEmailAddresses().add(ContactEmailInfo.parse(xmlEmailAddress, 0));
+			}
 		}
 		return contactInfo;
 	}
-    
+
 }

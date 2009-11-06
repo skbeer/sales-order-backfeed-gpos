@@ -35,6 +35,11 @@
 				<property name="sqlMapClient" ref="sqlMap" />
         </bean>
 
+        <bean id="contactDao" class="com.monsanto.irdsoapservices.dao.impl.ContactsDaoImpl">
+            <property name="dataSource" ref="irdDataSource"/>
+            <property name="sqlMapClient" ref="sqlMap"/>
+        </bean>
+
 		<bean id="accountAttributesHelper" class="com.monsanto.irdsoapservices.helper.AccountAttributesHelper">
 			<property name="dao" ref="irdDao"/>
 		</bean>
@@ -42,7 +47,7 @@
 			<property name="dao" ref="irdDao"/>
 		</bean>
 		<bean id="contactsHelper" class="com.monsanto.irdsoapservices.helper.ContactsHelper">
-			<property name="dao" ref="irdDao"/>
+			<property name="dao" ref="contactDao"/>
 		</bean>
         <bean id="agreementsHelper" class="com.monsanto.irdsoapservices.helper.AgreementsHelper">
             <property name="agreementsDao" ref="agreementsDao"/>

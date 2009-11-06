@@ -1,7 +1,8 @@
 package com.monsanto.irdsoapservices.to;
 
-import com.monsanto.irdsoapservices.schema.ContactPhoneNumberType;
-import com.monsanto.irdsoapservices.schema.PhoneNumberType;
+
+import com.monsanto.irdsoapservices.contacts.schema.ContactPhoneNumberType;
+import com.monsanto.irdsoapservices.contacts.schema.PhoneNumberEnumType;
 
 import java.util.Date;
 
@@ -22,9 +23,17 @@ public class ContactPhoneInfo {
     private Date rowModifyDate;
     private String rowTaskId;
     private String rowUserId;
+    private String databaseAction;
 
-	
-	public Date getRowEntryDate() {
+    public String getDatabaseAction() {
+        return databaseAction;
+    }
+
+    public void setDatabaseAction(String databaseAction) {
+        this.databaseAction = databaseAction;
+    }
+
+    public Date getRowEntryDate() {
 		return rowEntryDate;
 	}
 	public void setRowEntryDate(Date rowEntryDate) {
@@ -92,13 +101,13 @@ public class ContactPhoneInfo {
 	
 	public ContactPhoneNumberType extractTypeObject() {
 		ContactPhoneNumberType phNumberType = new ContactPhoneNumberType();
-		phNumberType.setType(PhoneNumberType.fromValue(getPhoneType()));
+		phNumberType.setType(PhoneNumberEnumType.fromValue(getPhoneType()));
 		phNumberType.setPhoneNumber(getPhoneNumber());
 		phNumberType.setExtension(getPhoneExtension());
 		return phNumberType;
 	}
 	
-	public static ContactPhoneInfo parse(ContactPhoneNumberType xmlPhoneNumber, long contactId) throws Exception {		
+	public static ContactPhoneInfo parse(ContactPhoneNumberType xmlPhoneNumber, long contactId) throws Exception {
 		ContactPhoneInfo phoneInfo = new ContactPhoneInfo();
 		if(xmlPhoneNumber == null) {
 			throw new Exception("Invalid ContactPhoneNumberType Recieved");
@@ -106,7 +115,7 @@ public class ContactPhoneInfo {
 		phoneInfo.setPhoneType(xmlPhoneNumber.getType().toString());
 		phoneInfo.setPhoneNumber(xmlPhoneNumber.getPhoneNumber());
 		phoneInfo.setPhoneExtension(xmlPhoneNumber.getExtension());
-		phoneInfo.setContactId(contactId);
+        phoneInfo.setContactId(contactId);
 		return phoneInfo;
 	}
 	

@@ -2,6 +2,8 @@ package com.monsanto.irdsoapservices.utils.test;
 
 import com.monsanto.irdsoapservices.utils.Configuration;
 import junit.framework.TestCase;
+import sun.misc.Regexp;
+import org.apache.xerces.impl.xpath.regex.RegularExpression;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,6 +40,30 @@ public class Configuration_UT extends TestCase {
 			}catch(Exception r) {
 			}
 	}
+
+    public void test() throws Exception {
+        //String regEx = "\\(?(\\d{3})\\)?-?(\\d{3})-(\\d{4})";
+        String regEx = "^([0-9]( |-)?)?(\\(?[0-9]{3}\\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[0-9]{7})$";
+        RegularExpression exp = new RegularExpression(regEx);
+        System.out.println("3145830521 "+exp.matches("3145830521"));
+        System.out.println("13145830521 "+exp.matches("13145830521"));
+        System.out.println("314-583-0521 "+exp.matches("314-583-0521"));
+        System.out.println("1-314-583-0521 "+exp.matches("1-314-583-0521"));
+        System.out.println("(314)5830521 "+ exp.matches("(314)5830521"));
+        System.out.println("(314) 5830521 "+ exp.matches("(314) 5830521"));
+        System.out.println("(314)-583-0521 "+ exp.matches("(314)-583-0521"));
+        System.out.println("(314)-5830521 "+ exp.matches("(314)-5830521"));
+        System.out.println("314-5830521"+exp.matches("314-5830521"));
+        System.out.println("3145830521-"+exp.matches("3145830521-"));
+        System.out.println("-314-5830521"+exp.matches("-3145830521"));
+        System.out.println("-314583-0521-"+exp.matches("-3145830521"));
+        System.out.println("-3145830521"+exp.matches("-3145830521"));
+        System.out.println("1314583ABCD "+exp.matches("1314583ABCD"));
+        System.out.println("1314583ABCD "+exp.matches("1314583ABCD"));
+
+
+
+    }
 	
 
 }

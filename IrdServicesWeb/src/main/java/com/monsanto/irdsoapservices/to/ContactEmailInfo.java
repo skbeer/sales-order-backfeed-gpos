@@ -1,7 +1,8 @@
 package com.monsanto.irdsoapservices.to;
 
-import com.monsanto.irdsoapservices.schema.EmailAddressType;
-import com.monsanto.irdsoapservices.schema.EmailType;
+
+import com.monsanto.irdsoapservices.contacts.schema.ContactEmailType;
+import com.monsanto.irdsoapservices.contacts.schema.EmailEnumType;
 
 import java.util.Date;
 
@@ -21,9 +22,17 @@ public class ContactEmailInfo {
     private Date rowModifyDate;
     private String rowTaskId;
     private String rowUserId;
+    private String databaseAction;
 
-	
-	public Long getContactEmailId() {
+    public String getDatabaseAction() {
+        return databaseAction;
+    }
+
+    public void setDatabaseAction(String databaseAction) {
+        this.databaseAction = databaseAction;
+    }
+
+    public Long getContactEmailId() {
 		return contactEmailId;
 	}
 	public void setContactEmailId(Long contactEmailId) {
@@ -83,14 +92,14 @@ public class ContactEmailInfo {
 		return "EMAIL [Email_Type:"+getEmailType()+" EmailAddress: "+getEmailAddress()+"]";
 	}
 
-	public EmailAddressType extractTypeObject() {
-		EmailAddressType emailType = new EmailAddressType();
-		emailType.setType(EmailType.fromValue(getEmailType()));
+	public ContactEmailType extractTypeObject() {
+		ContactEmailType emailType = new ContactEmailType();
+		emailType.setType(EmailEnumType.fromValue(getEmailType()));
 		emailType.setValue(getEmailAddress());
 		return emailType;
 	}
 	
-	public static ContactEmailInfo parse(EmailAddressType xmlEmailAddress, long contactId) throws Exception {
+	public static ContactEmailInfo parse(ContactEmailType xmlEmailAddress, long contactId) throws Exception {
 		ContactEmailInfo emailInfo = new ContactEmailInfo();
 		if(xmlEmailAddress == null) {
 			throw new Exception("Invalid EmailAddressType Recieved");

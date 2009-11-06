@@ -33,13 +33,13 @@ public interface AccountInformationService {
      *     returns com.monsanto.irdsoapservices.schema.GetContactsResponseType
      * @throws AccountInformationFault
      */
-    @WebMethod
-    @WebResult(name = "GetContactsResponse", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "GetContactsResponse")
-    public GetContactsResponseType getContacts(
-        @WebParam(name = "GetContactsRequest", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "request")
-        GetContactsRequestType request)
-        throws AccountInformationFault
-    ;
+//    @WebMethod
+//    @WebResult(name = "GetContactsResponse", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "GetContactsResponse")
+//    public GetContactsResponseType getContacts(
+//        @WebParam(name = "GetContactsRequest", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "request")
+//        GetContactsRequestType request)
+//        throws AccountInformationFault
+//    ;
 
     /**
      * 
@@ -108,13 +108,13 @@ public interface AccountInformationService {
      *     returns com.monsanto.irdsoapservices.schema.SaveContactsResponseType
      * @throws AccountInformationFault
      */
-    @WebMethod
-    @WebResult(name = "SaveContactsResponse", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "SaveContactsResponse")
-    public SaveContactsResponseType saveContacts(
-        @WebParam(name = "SaveContactsRequest", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "request")
-        SaveContactsRequestType request)
-        throws AccountInformationFault
-    ;
+//    @WebMethod
+//    @WebResult(name = "SaveContactsResponse", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "SaveContactsResponse")
+//    public SaveContactsResponseType saveContacts(
+//        @WebParam(name = "SaveContactsRequest", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "request")
+//        SaveContactsRequestType request)
+//        throws AccountInformationFault
+//    ;
 
     /**
      * 

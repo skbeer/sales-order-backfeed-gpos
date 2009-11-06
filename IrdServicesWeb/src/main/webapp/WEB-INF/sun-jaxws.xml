@@ -16,4 +16,9 @@
         implementation='com.monsanto.irdsoapservices.service.impl.BrandsServiceImpl'
         url-pattern='/BrandsService'/>
 
+    <endpoint
+        name='ContactService'
+        implementation='com.monsanto.irdsoapservices.service.impl.ContactServiceImpl'
+        url-pattern='/ContactService'/>
+
 </endpoints>

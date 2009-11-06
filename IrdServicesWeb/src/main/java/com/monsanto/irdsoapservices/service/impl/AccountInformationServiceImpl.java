@@ -25,12 +25,12 @@ public class AccountInformationServiceImpl implements AccountInformationService 
     Logger logger = Logger.getLogger(this.getClass());
     ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-    public GetContactsResponseType getContacts(@WebParam(name = "GetContactsRequest", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "request") GetContactsRequestType request)
-            throws AccountInformationFault {
-        logger.debug("Begin: getContacts()");
-        ContactsHelper contactsHelper = (ContactsHelper) appContext.getBean("contactsHelper");
-        return contactsHelper.getContacts(request);
-    }
+//    public GetContactsResponseType getContacts(@WebParam(name = "GetContactsRequest", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "request") GetContactsRequestType request)
+//            throws AccountInformationFault {
+//        logger.debug("Begin: getContacts()");
+//        ContactsHelper contactsHelper = (ContactsHelper) appContext.getBean("contactsHelper");
+//        return contactsHelper.getContacts(request);
+//    }
 
     public GetAccountAttributesResponseType getAccountAttributes(@WebParam(name = "GetAccountAttributesRequest", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "request") GetAccountAttributesRequestType request)
             throws AccountInformationFault {
@@ -60,12 +60,12 @@ public class AccountInformationServiceImpl implements AccountInformationService 
         return accountDetailsHelper.getAccountDetails(request);
     }
 
-    public SaveContactsResponseType saveContacts(@WebParam(name = "SaveContactsRequest", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "request") SaveContactsRequestType request)
-            throws AccountInformationFault {
-        logger.debug("Begin: saveContacts()");
-        ContactsHelper contactsHelper = (ContactsHelper) appContext.getBean("contactsHelper");
-        return contactsHelper.saveContacts(request);
-    }
+//    public SaveContactsResponseType saveContacts(@WebParam(name = "SaveContactsRequest", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "request") SaveContactsRequestType request)
+//            throws AccountInformationFault {
+//        logger.debug("Begin: saveContacts()");
+//        ContactsHelper contactsHelper = (ContactsHelper) appContext.getBean("contactsHelper");
+//        return contactsHelper.saveContacts(request);
+//    }
 
     public GetAssociatedEmployeesResponseType getAssociatedEmployees(@WebParam(name = "GetAssociatedEmployeesRequest", targetNamespace = "urn:monsanto:ird:services:account:information", partName = "request") GetAssociatedEmployeesRequestType request) throws AccountInformationFault {
         logger.debug("Begin: getAssociatedEmployees()");

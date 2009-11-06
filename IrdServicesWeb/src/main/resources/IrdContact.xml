@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" 	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="IrdContact">
+	<typeAlias alias="contact"
+		type="com.monsanto.irdsoapservices.to.ContactInfo" />
+	<typeAlias alias="contactPhone" type="com.monsanto.irdsoapservices.to.ContactPhoneInfo"/>
+	<typeAlias alias="contactEmail" type="com.monsanto.irdsoapservices.to.ContactEmailInfo"/>
+	<typeAlias alias="contactFunction" type="com.monsanto.irdsoapservices.to.ContactFunctionInfo"/>
+
+	<resultMap id="contactResult" class="contact">
+		<result property="contactId" column="CONTACT_ID" />
+		<result property="contactFunctions" column="CONTACT_ID" select="IrdContact.getContactFunctions"/>
+		<result property="firstName" column="NAME_1" />
+		<result property="lastName" column="NAME_3" />
+		<result property="jobTitle" column="JOB_TITLE" />
+		<result property="accountId" column="ACCT_ID"/>
+		<result property="phoneNumbers" column="CONTACT_ID" select="IrdContact.getContactPhoneNumbers"/>
+		<result property="emailAddresses" column="CONTACT_ID" select="IrdContact.getContactEmailAddresses"/>
+	</resultMap>
+
+	<resultMap id="contactPhoneResult" class="contactPhone">
+		<result property="phoneType" column="name_code"/>
+		<result property="phoneNumber" column="phone_number"/>
+		<result property="phoneExtension" column="phone_extension"/>
+		<result property="contactPhoneId" column="contact_phone_id"/>
+		<result property="contactId" column="contact_id"/>
+	</resultMap>
+
+	<resultMap id="contactEmailResult" class="contactEmail">
+		<result property="emailType" column="name_code"/>
+		<result property="emailAddress" column="email"/>
+		<result property="contactEmailId" column="contact_email_id"/>
+		<result property="contactId" column="contact_id"/>
+	</resultMap>
+
+
+    <select id="getContacts" parameterClass="java.util.Map" resultMap="contactResult">
+        SELECT
+            CO.CONTACT_ID, UPPER(CF.FUNCTION_TYPE_CODE) AS CONTACT_TYPE, CO.NAME_1, CO.NAME_3, CO.JOB_TITLE, CO.ACCT_ID
+        FROM
+            I_CONTACT CO, I_CONTACT_FUNCTION CF
+        WHERE CO.CONTACT_ID = CF.CONTACT_ID
+        <isNotNull prepend="AND" property="acctId">
+            CO.ACCT_ID = #acctId#
+        </isNotNull>
+        <isNotNull prepend="AND" property="contactId">
+            CO.CONTACT_ID = #contactId#
+        </isNotNull>
+        <isNotNull property="contactFunctions">
+            <iterate prepend="AND" property="contactFunctions"
+                                open="(" close=")" conjunction="OR">
+                    UPPER(CF.FUNCTION_TYPE_CODE) = #contactFunctions[]#
+            </iterate>
+        </isNotNull>
+    </select>
+
+	<select id="getContactPhoneNumbers" parameterClass="long" resultMap="contactPhoneResult">
+		SELECT  CPT.NAME_CODE, CP.PHONE_NUMBER, CP.PHONE_EXTENSION, CP.CONTACT_PHONE_ID, CP.CONTACT_ID
+		FROM    I_CONTACT_PHONE CP, I_CONTACT_PHONE_TYPE CPT
+        WHERE   CP.CONTACT_ID = #contId# AND CP.CONTACT_PHONE_TYPE_ID = CPT.CONTACT_PHONE_TYPE_ID
+	</select>
+	<select id="getContactEmailAddresses" parameterClass="long" resultMap="contactEmailResult">
+		SELECT  CET.NAME_CODE, CE.EMAIL, CE.CONTACT_EMAIL_ID, CE.CONTACT_ID
+		FROM    I_CONTACT_EMAIL CE, I_CONTACT_EMAIL_TYPE CET
+        WHERE   CE.CONTACT_ID = #contId# AND CE.CONTACT_EMAIL_TYPE_ID = CET.CONTACT_EMAIL_TYPE_ID
+	</select>
+    <select id="getContactFunctions" parameterClass="long" resultClass="string">
+        SELECT  FUNCTION_TYPE_CODE
+        FROM    I_CONTACT_FUNCTION
+        WHERE   CONTACT_ID = #contId#
+    </select>
+
+    <select id="getContactPhoneByType" parameterClass="java.util.Map" resultMap="contactPhoneResult">
+		SELECT  CPT.NAME_CODE, CP.PHONE_NUMBER, CP.PHONE_EXTENSION, CP.CONTACT_PHONE_ID, CP.CONTACT_ID
+		FROM    I_CONTACT_PHONE CP, I_CONTACT_PHONE_TYPE CPT
+        WHERE   CP.CONTACT_ID = #contactId#
+                AND CP.CONTACT_PHONE_TYPE_ID = CPT.CONTACT_PHONE_TYPE_ID
+                AND CPT.NAME_CODE = #phoneType#
+	</select>
+
+    <select id="getContactEmailByType" parameterClass="java.util.Map" resultMap="contactEmailResult">
+		SELECT  CET.NAME_CODE, CE.EMAIL, CE.CONTACT_EMAIL_ID, CE.CONTACT_ID
+		FROM    I_CONTACT_EMAIL CE, I_CONTACT_EMAIL_TYPE CET
+        WHERE   CE.CONTACT_ID = #contactId#
+                AND CE.CONTACT_EMAIL_TYPE_ID = CET.CONTACT_EMAIL_TYPE_ID
+                AND CET.NAME_CODE = #emailType#
+	</select>
+
+
+
+    <insert id="insertContact" parameterClass="contact">
+		<selectKey keyProperty="contactId" type="pre" resultClass="long">
+			SELECT IRD.CONTACT_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO
+		I_CONTACT (CONTACT_ID, ACCT_ID, ORIGINAL_ACCT_ID, NAME_1, NAME_3, JOB_TITLE, MONSANTO_OWNED_FLAG, ROW_ENTRY_DATE, ROW_MODIFY_DATE,
+					ROW_TASK_ID, ROW_USER_ID)
+		VALUES (#contactId#, #accountId#, #accountId#, #firstName#, #lastName#, #jobTitle#, #monsantoOwnedFlag#, #rowEntryDate#,
+				#rowModifyDate#, #rowTaskId#, #rowUserId#)
+	</insert>
+    <insert id="insertContactFunction" parameterClass="contactFunction">
+        INSERT INTO
+        I_CONTACT_FUNCTION (CONTACT_ID, FUNCTION_TYPE_CODE, ORIGINAL_CONTACT_ID, ROW_ENTRY_DATE, ROW_MODIFY_DATE,
+                    ROW_TASK_ID, ROW_USER_ID)
+        VALUES (#contactId#, #contactType#, #contactId#, #rowEntryDate#, #rowModifyDate#, #rowTaskId#, #rowUserId#)
+    </insert>
+	<insert id="insertContactPhone" parameterClass="contactPhone">
+		<selectKey keyProperty="phoneTypeId" type="pre" resultClass="int">
+			SELECT CONTACT_PHONE_TYPE_ID
+			FROM I_CONTACT_PHONE_TYPE
+			WHERE NAME_CODE = #phoneType#
+		</selectKey>
+		INSERT INTO
+			I_CONTACT_PHONE (CONTACT_PHONE_ID, CONTACT_ID, ORIGINAL_CONTACT_ID, CONTACT_PHONE_TYPE_ID, PHONE_NUMBER, PHONE_EXTENSION, ROW_ENTRY_DATE, ROW_MODIFY_DATE, ROW_TASK_ID, ROW_USER_ID)
+		VALUES (IRD.CONTACT_PHONE_SEQ.NEXTVAL, #contactId#, #contactId#, #phoneTypeId#, #phoneNumber#, #phoneExtension#, #rowEntryDate#, #rowModifyDate#, #rowTaskId#, #rowUserId#)
+	</insert>
+	<insert id="insertContactEmail" parameterClass="contactEmail">
+		<selectKey keyProperty="emailTypeId" type="pre" resultClass="int">
+			SELECT CONTACT_EMAIL_TYPE_ID
+			FROM I_CONTACT_EMAIL_TYPE
+			WHERE NAME_CODE = #emailType#
+		</selectKey>
+		INSERT INTO
+			I_CONTACT_EMAIL (CONTACT_EMAIL_ID, CONTACT_ID, ORIGINAL_CONTACT_ID, CONTACT_EMAIL_TYPE_ID, EMAIL, ROW_ENTRY_DATE, ROW_MODIFY_DATE, ROW_TASK_ID, ROW_USER_ID)
+		VALUES (IRD.CONTACT_EMAIL_SEQ.NEXTVAL, #contactId#, #contactId#, #emailTypeId#, #emailAddress#, #rowEntryDate#, #rowModifyDate#, #rowTaskId#, #rowUserId#)
+	</insert>
+    
+    <update id="updateContact" parameterClass="contact">
+        UPDATE I_CONTACT
+        SET NAME_1 = #firstName#, NAME_3 = #lastName#, JOB_TITLE = #jobTitle#, ROW_MODIFY_DATE = #rowModifyDate#
+        WHERE CONTACT_ID = #contactId#
+    </update>
+    <update id="updateContactPhone" parameterClass="contactPhone">
+        UPDATE I_CONTACT_PHONE
+        SET PHONE_NUMBER = #phoneNumber#, PHONE_EXTENSION=#phoneExtension#, ROW_MODIFY_DATE=#rowModifyDate#
+        WHERE CONTACT_ID = #contactId# AND CONTACT_PHONE_TYPE_ID = (SELECT CONTACT_PHONE_TYPE_ID FROM I_CONTACT_PHONE_TYPE WHERE NAME_CODE = #phoneType#)
+    </update>
+    <update id="updateContactEmail" parameterClass="contactEmail">
+        UPDATE I_CONTACT_EMAIL
+        SET EMAIL = #emailAddress#, ROW_MODIFY_DATE=#rowModifyDate#
+        WHERE CONTACT_ID = #contactId# AND CONTACT_EMAIL_TYPE_ID = (SELECT CONTACT_EMAIL_TYPE_ID FROM I_CONTACT_EMAIL_TYPE WHERE NAME_CODE = #emailType#)
+    </update>
+
+    <delete id="deleteContactPhoneNumber" parameterClass="contactPhone">
+		DELETE FROM I_CONTACT_PHONE WHERE CONTACT_ID = #contactId# AND CONTACT_PHONE_TYPE_ID = (SELECT CONTACT_PHONE_TYPE_ID FROM I_CONTACT_PHONE_TYPE WHERE NAME_CODE = #phoneType#)
+	</delete>
+
+	<delete id="deleteContactEmailAddress" parameterClass="contactEmail">
+		DELETE FROM I_CONTACT_EMAIL WHERE CONTACT_ID = #contactId# AND CONTACT_EMAIL_TYPE_ID = (SELECT CONTACT_EMAIL_TYPE_ID FROM I_CONTACT_EMAIL_TYPE WHERE NAME_CODE = #emailType#)
+	</delete>
+
+
+</sqlMap>

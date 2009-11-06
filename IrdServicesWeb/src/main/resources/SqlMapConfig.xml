@@ -2,10 +2,11 @@
 <!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL MAP Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
 <sqlMapConfig>
     <settings useStatementNamespaces="true"/>
-    <sqlMap resource="Contact.xml"/>
+    <!--<sqlMap resource="Contact.xml"/>-->
+    <sqlMap resource="IrdContact.xml"/>
     <sqlMap resource="AcctToAttr.xml"/>
     <sqlMap resource="LfaGrowerDetails.xml"/>
     <sqlMap resource="AcctToAgreements.xml"/>
     <sqlMap resource="Brands.xml"/>
-    <sqlMap resource="Employee.xml"/>
+    <sqlMap resource="Employee.xml"/>    
 </sqlMapConfig>

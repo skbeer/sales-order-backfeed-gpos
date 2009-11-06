@@ -8,6 +8,7 @@ package com.monsanto.irdsoapservices.constants;
  */
 public class DBConstants {
 	public static final String ADD_ACTION_TYPE = "ADD";
+    public static final String INSERT_ACTION_TYPE = "INSERT";
 	public static final String UPDATE_ACTION_TYPE = "UPDATE";
 	public static final String DELETE_ACTION_TYPE = "DELETE";
 	
