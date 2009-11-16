@@ -276,6 +276,7 @@
                     <excludes>
                         <exclude>com/monsanto/irdsoapservices/agreements/schema/*.java</exclude>
                         <exclude>com/monsanto/irdsoapservices/brands/schema/*.java</exclude>
+                        <exclude>com/monsanto/irdsoapservices/contacts/schema/*.java</exclude>
                         <exclude>com/monsanto/irdsoapservices/schema/*.java</exclude>
                         <exclude>com/monsanto/irdsoapservices/service/*.java</exclude>
                         <exclude>com/monsanto/irdsoapservices/test/*.java</exclude>                        
