@@ -36,10 +36,10 @@
 
     <select id="getContacts" parameterClass="java.util.Map" resultMap="contactResult">
         SELECT
-            CO.CONTACT_ID, UPPER(CF.FUNCTION_TYPE_CODE) AS CONTACT_TYPE, CO.NAME_1, CO.NAME_3, CO.JOB_TITLE, CO.ACCT_ID
+            DISTINCT CO.CONTACT_ID, CO.NAME_1, CO.NAME_3, CO.JOB_TITLE, CO.ACCT_ID
         FROM
             I_CONTACT CO, I_CONTACT_FUNCTION CF
-        WHERE CO.CONTACT_ID = CF.CONTACT_ID
+        WHERE CO.CONTACT_ID = CF.CONTACT_ID(+)
         <isNotNull prepend="AND" property="acctId">
             CO.ACCT_ID = #acctId#
         </isNotNull>
@@ -86,7 +86,11 @@
                 AND CET.NAME_CODE = #emailType#
 	</select>
 
-
+    <select id="getContactCount" parameterClass="java.util.Map" resultClass="long">
+        SELECT  COUNT(CONTACT_ID)
+        FROM    I_CONTACT
+        WHERE   ACCT_ID = #accountId# AND CONTACT_ID = #contactId#
+    </select>
 
     <insert id="insertContact" parameterClass="contact">
 		<selectKey keyProperty="contactId" type="pre" resultClass="long">
@@ -149,5 +153,20 @@
 		DELETE FROM I_CONTACT_EMAIL WHERE CONTACT_ID = #contactId# AND CONTACT_EMAIL_TYPE_ID = (SELECT CONTACT_EMAIL_TYPE_ID FROM I_CONTACT_EMAIL_TYPE WHERE NAME_CODE = #emailType#)
 	</delete>
 
+    <delete id="deleteContactFunction" parameterClass="contactFunction">			
+		DELETE FROM I_CONTACT_FUNCTION WHERE CONTACT_ID = #contactId# AND FUNCTION_TYPE_CODE = #contactType#
+	</delete>
+    
+    <delete id="deleteContact" parameterClass="long">
+        DELETE FROM I_CONTACT WHERE CONTACT_ID = #contactId#
+    </delete>
+
+    <delete id="deleteAllContactPhones" parameterClass="long">
+        DELETE FROM I_CONTACT_PHONE WHERE CONTACT_ID = #contactId#
+    </delete>
+
+    <delete id="deleteAllContactEmails" parameterClass="long">
+        DELETE FROM I_CONTACT_EMAIL WHERE CONTACT_ID = #contactId#
+    </delete>
 
 </sqlMap>

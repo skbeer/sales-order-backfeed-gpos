@@ -7,9 +7,7 @@ import com.monsanto.irdsoapservices.utils.Configuration;
 import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 import com.monsanto.irdsoapservices.utils.StringUtils;
 import com.monsanto.irdsoapservices.utils.XmlDateTimeUtil;
-import com.monsanto.isdcommon.header.schema.ContactInformationType;
-import com.monsanto.isdcommon.header.schema.HeaderType;
-import com.monsanto.isdcommon.header.schema.PartnerInformationType;
+import com.monsanto.isdcommon.header.schema.*;
 import org.apache.log4j.Logger;
 
 import java.util.Calendar;
@@ -66,6 +64,15 @@ public abstract class AbstractHelper {
         exception.setFaultCode(error.getMessage());
         exception.setFaultMessage(getStackTrace(error));
         throw new AccountInformationFault("Error occurred during operation: " + operationName, exception, error);
+    }
+
+    protected String getRequestingPartnerUserId(HeaderType header) throws Exception {
+        String userId = null;
+        PartnerIdentifierType requestingPartner = header.getFrom().getPartnerIdentifier();
+        if((requestingPartner != null) && (PartnerTypeAttribute.USER_ID.equals(requestingPartner.getType())) && !StringUtils.isNullOrEmpty(requestingPartner.getValue())) {
+            userId = requestingPartner.getValue();
+        }
+        return userId;
     }
 
     private PartnerInformationType getPartnerInformationType() throws Exception {

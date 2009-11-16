@@ -90,7 +90,7 @@ public class BrandsHelper_UT extends BaseTestCase {
 
     class MockBrandsDao implements BrandsDao {
         public boolean returnData = true;
-        @Override
+
         public List<BrandInfo> getBrandsBySpecies(List<String> species) throws Exception {
             List<BrandInfo> brands = new ArrayList<BrandInfo>();
             if(returnData) {

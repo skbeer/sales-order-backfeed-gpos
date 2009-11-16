@@ -14,5 +14,6 @@ public class DBConstants {
 	
 	public static final String ROW_TASK_ID = "IRDSoapServices";
 	public static final String ROW_USER_ID = "IRDPOS_USER";
-	
+
+    public static final String SUCCESS = "Success";
 }

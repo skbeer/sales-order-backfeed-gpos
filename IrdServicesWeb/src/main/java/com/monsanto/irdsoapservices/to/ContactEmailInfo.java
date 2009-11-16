@@ -3,6 +3,8 @@ package com.monsanto.irdsoapservices.to;
 
 import com.monsanto.irdsoapservices.contacts.schema.ContactEmailType;
 import com.monsanto.irdsoapservices.contacts.schema.EmailEnumType;
+import com.monsanto.irdsoapservices.contacts.schema.PersistableContactEmailType;
+import com.monsanto.irdsoapservices.utils.StringUtils;
 
 import java.util.Date;
 
@@ -99,7 +101,7 @@ public class ContactEmailInfo {
 		return emailType;
 	}
 	
-	public static ContactEmailInfo parse(ContactEmailType xmlEmailAddress, long contactId) throws Exception {
+	public static ContactEmailInfo parse(ContactEmailType xmlEmailAddress, long contactId, String rowUserId) throws Exception {
 		ContactEmailInfo emailInfo = new ContactEmailInfo();
 		if(xmlEmailAddress == null) {
 			throw new Exception("Invalid EmailAddressType Recieved");
@@ -107,6 +109,24 @@ public class ContactEmailInfo {
 		emailInfo.setEmailType(xmlEmailAddress.getType().toString());
 		emailInfo.setEmailAddress(xmlEmailAddress.getValue());
 		emailInfo.setContactId(contactId);
+        if(!StringUtils.isNullOrEmpty(rowUserId)) {
+            emailInfo.setRowUserId(rowUserId);
+        }
+		return emailInfo;
+	}
+
+    public static ContactEmailInfo parse(PersistableContactEmailType xmlEmailAddress, long contactId, String rowUserId) throws Exception {
+		ContactEmailInfo emailInfo = new ContactEmailInfo();
+		if(xmlEmailAddress == null) {
+			throw new Exception("Invalid EmailAddressType Recieved");
+		}
+        emailInfo.setDatabaseAction(xmlEmailAddress.getAction().toString());
+		emailInfo.setEmailType(xmlEmailAddress.getType().toString());
+		emailInfo.setEmailAddress(xmlEmailAddress.getValue());
+		emailInfo.setContactId(contactId);
+        if(!StringUtils.isNullOrEmpty(rowUserId)) {
+            emailInfo.setRowUserId(rowUserId);
+        }
 		return emailInfo;
 	}
 	

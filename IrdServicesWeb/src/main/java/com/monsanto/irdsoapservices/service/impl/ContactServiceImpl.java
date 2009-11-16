@@ -31,22 +31,32 @@ public class ContactServiceImpl implements ContactService {
     }
 
     public InsertContactResponseType insertContacts(@WebParam(name = "InsertContactRequest", targetNamespace = "urn:monsanto:ird:services:contacts", partName = "insertContactsRequest") InsertContactRequestType insertContactsRequest) throws ContactsFault {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("Begin: insertContacts()");
+        ContactsHelper contactsHelper = (ContactsHelper) appContext.getBean("contactsHelper");
+        return contactsHelper.insertContacts(insertContactsRequest);
     }
 
     public UpdateContactsResponseType updateContacts(@WebParam(name = "UpdateContactsRequest", targetNamespace = "urn:monsanto:ird:services:contacts", partName = "updateContactsRequest") UpdateContactsRequestType updateContactsRequest) throws ContactsFault {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("Begin: updateContacts()");
+        ContactsHelper contactsHelper = (ContactsHelper) appContext.getBean("contactsHelper");
+        return contactsHelper.updateContacts(updateContactsRequest);
     }
 
     public DeleteContactResponseType deleteContact(@WebParam(name = "DeleteContactRequest", targetNamespace = "urn:monsanto:ird:services:contacts", partName = "deleteContactRequest") DeleteContactRequestType deleteContactRequest) throws ContactsFault {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("Begin: deleteContacts()");
+        ContactsHelper contactsHelper = (ContactsHelper) appContext.getBean("contactsHelper");
+        return contactsHelper.deleteContacts(deleteContactRequest);
     }
 
     public AddContactFunctionResponseType addContactFunction(@WebParam(name = "AddContactFunctionRequest", targetNamespace = "urn:monsanto:ird:services:contacts", partName = "addContactFunctionRequest") AddContactFunctionRequestType addContactFunctionRequest) throws ContactsFault {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("Begin: addContactFunction()");
+        ContactsHelper contactsHelper = (ContactsHelper) appContext.getBean("contactsHelper");
+        return contactsHelper.addContactFunction(addContactFunctionRequest);
     }
 
     public RemoveContactFunctionResponseType removeContactFunction(@WebParam(name = "RemoveContactFunctionRequest", targetNamespace = "urn:monsanto:ird:services:contacts", partName = "removeContactFunctionRequest") RemoveContactFunctionRequestType removeContactFunctionRequest) throws ContactsFault {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        logger.debug("Begin: removeContactFunction()");
+        ContactsHelper contactsHelper = (ContactsHelper) appContext.getBean("contactsHelper");
+        return contactsHelper.removeContactFunction(removeContactFunctionRequest);
     }
 }

@@ -1,6 +1,7 @@
 package com.monsanto.irdsoapservices.dao;
 
 import com.monsanto.irdsoapservices.to.ContactInfo;
+import com.monsanto.irdsoapservices.to.ContactFunctionInfo;
 
 import java.util.List;
 
@@ -13,8 +14,15 @@ import java.util.List;
  */
 public interface ContactDao {
     List<ContactInfo> getContacts(long acctId, long contactId, List<String> contactFunctions) throws Exception;
+    List<String> getContactFunctions(long contactId) throws Exception;
 
-    long insertContactInfo(ContactInfo contactInfo) throws Exception;
+    long insertContact(ContactInfo contactInfo) throws Exception;
+    int insertContactFunction(ContactFunctionInfo contactFunction) throws Exception;
 
-    int updateContactInfo(ContactInfo contactInfo) throws Exception;
+    boolean isContactExisting(long accountId, long contactId) throws Exception;
+
+    int updateContact(ContactInfo contactInfo) throws Exception;
+
+    int deleteContactFunction(ContactFunctionInfo contactFunction) throws Exception;
+    int deleteContact(long contactId) throws Exception;
 }

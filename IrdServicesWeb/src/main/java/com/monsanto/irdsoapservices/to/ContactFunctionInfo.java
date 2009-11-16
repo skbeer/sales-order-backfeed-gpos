@@ -26,8 +26,13 @@ public class ContactFunctionInfo {
 			this.contactType = contactInfo.getContactType();
 		}
 	}
-	
-	public String getContactType() {
+
+    public ContactFunctionInfo(long contactId, String contactType) {
+        this.contactId = contactId;
+        this.contactType = contactType;
+    }
+
+    public String getContactType() {
 		return contactType;
 	}
 	public void setContactType(String contactType) {

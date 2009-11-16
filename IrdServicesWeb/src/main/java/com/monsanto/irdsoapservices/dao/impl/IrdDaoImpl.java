@@ -2,9 +2,7 @@ package com.monsanto.irdsoapservices.dao.impl;
 
 import com.monsanto.irdsoapservices.constants.DBConstants;
 import com.monsanto.irdsoapservices.dao.IrdDao;
-import com.monsanto.irdsoapservices.schema.GrowerContactType;
 import com.monsanto.irdsoapservices.to.*;
-import com.monsanto.irdsoapservices.utils.StringUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
@@ -76,54 +74,54 @@ public class IrdDaoImpl extends SqlMapClientDaoSupport implements IrdDao {
         return (acctIdObj == null ? 0: ((java.lang.Long)acctIdObj).longValue());
     }
     
-	protected long insertContact(ContactInfo contactInfo) throws Exception {
-		setAuditFields(contactInfo, true);
-		return (Long)getSqlMapClientTemplate().insert("Contact.insertContact", contactInfo);
-	}
-	protected int insertContactFunction(ContactFunctionInfo contactFunction) throws Exception {
-		setAuditFields(contactFunction, true);
-		getSqlMapClientTemplate().insert("Contact.insertContactFunction", contactFunction);
-		return 1;
-	}
-	protected int insertContactPhone(ContactPhoneInfo contactPhone) throws Exception {
-		int rowCount = 0;
-		if(!StringUtils.isNullOrEmpty(contactPhone.getPhoneNumber())) {
-			setAuditFields(contactPhone, true);
-			getSqlMapClientTemplate().insert("Contact.insertContactPhone", contactPhone);
-			rowCount++;
-		}
-		return rowCount;
-	}
-	protected int insertContactEmail(ContactEmailInfo contactEmail) throws Exception {
-		int rowCount = 0;
-		if(!StringUtils.isNullOrEmpty(contactEmail.getEmailAddress())) {
-			setAuditFields(contactEmail, true);
-			getSqlMapClientTemplate().insert("Contact.insertContactEmail", contactEmail);
-			rowCount++;
-		}
-		return rowCount;
-	}
-
-	protected int updateContact(ContactInfo contactInfo) throws Exception {
-		setAuditFields(contactInfo, false);
-		return getSqlMapClientTemplate().update("Contact.updateContact", contactInfo);
-	}
-	protected int updateContactPhone(ContactPhoneInfo contactPhone) throws Exception {
-		setAuditFields(contactPhone, false);
-		return getSqlMapClientTemplate().update("Contact.updateContactPhone", contactPhone);
-	}
-	protected int updateContactEmail(ContactEmailInfo contactEmail) throws Exception {
-		setAuditFields(contactEmail, false);
-		return getSqlMapClientTemplate().update("Contact.updateContactEmail", contactEmail);
-	}
-
-	protected int deleteContactPhone(long contactPhoneId) throws Exception {
-		return getSqlMapClientTemplate().delete("Contact.deleteContactPhoneNumber", contactPhoneId);
-	}
-
-	protected int deleteContactEmail(long contactEmailId) throws Exception {
-		return getSqlMapClientTemplate().delete("Contact.deleteContactEmailAddress", contactEmailId);
-	}
+//	protected long insertContactInfo(ContactInfo contactInfo) throws Exception {
+//		setAuditFields(contactInfo, true);
+//		return (Long)getSqlMapClientTemplate().insert("Contact.insertContactInfo", contactInfo);
+//	}
+//	protected int insertContactFunction(ContactFunctionInfo contactFunction) throws Exception {
+//		setAuditFields(contactFunction, true);
+//		getSqlMapClientTemplate().insert("Contact.insertContactFunction", contactFunction);
+//		return 1;
+//	}
+//	protected int insertContactPhone(ContactPhoneInfo contactPhone) throws Exception {
+//		int rowCount = 0;
+//		if(!StringUtils.isNullOrEmpty(contactPhone.getPhoneNumber())) {
+//			setAuditFields(contactPhone, true);
+//			getSqlMapClientTemplate().insert("Contact.insertContactPhone", contactPhone);
+//			rowCount++;
+//		}
+//		return rowCount;
+//	}
+//	protected int insertContactEmail(ContactEmailInfo contactEmail) throws Exception {
+//		int rowCount = 0;
+//		if(!StringUtils.isNullOrEmpty(contactEmail.getEmailAddress())) {
+//			setAuditFields(contactEmail, true);
+//			getSqlMapClientTemplate().insert("Contact.insertContactEmail", contactEmail);
+//			rowCount++;
+//		}
+//		return rowCount;
+//	}
+//
+//	protected int updateContactInfo(ContactInfo contactInfo) throws Exception {
+//		setAuditFields(contactInfo, false);
+//		return getSqlMapClientTemplate().update("Contact.updateContactInfo", contactInfo);
+//	}
+//	protected int updateContactPhone(ContactPhoneInfo contactPhone) throws Exception {
+//		setAuditFields(contactPhone, false);
+//		return getSqlMapClientTemplate().update("Contact.updateContactPhone", contactPhone);
+//	}
+//	protected int updateContactEmail(ContactEmailInfo contactEmail) throws Exception {
+//		setAuditFields(contactEmail, false);
+//		return getSqlMapClientTemplate().update("Contact.updateContactEmail", contactEmail);
+//	}
+//
+//	protected int deleteContactPhone(long contactPhoneId) throws Exception {
+//		return getSqlMapClientTemplate().delete("Contact.deleteContactPhoneNumber", contactPhoneId);
+//	}
+//
+//	protected int deleteContactEmail(long contactEmailId) throws Exception {
+//		return getSqlMapClientTemplate().delete("Contact.deleteContactEmailAddress", contactEmailId);
+//	}
 
 	protected String getFunctionTypeCode(String description) throws Exception {
 		return (String)getSqlMapClientTemplate().queryForObject("Contact.getFunctionTypeCode", description);

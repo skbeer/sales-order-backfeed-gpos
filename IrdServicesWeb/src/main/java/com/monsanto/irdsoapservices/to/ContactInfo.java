@@ -198,19 +198,23 @@ public class ContactInfo {
 		emailAddressListType.getEmailAddress().addAll(emailList);
 		contactInfoType.setEmailAddressList(emailAddressListType);
         ContactFunctionListType contactFunctionList = new ContactFunctionListType();
-        contactFunctionList.getContactFunction().addAll(getContactFunctions());
+        if(getContactFunctions().size()>0) {
+            contactFunctionList.getContactFunction().addAll(getContactFunctions());
+        } else if(!StringUtils.isNullOrEmpty(getContactType())) {
+            contactFunctionList.getContactFunction().add(getContactType());
+        }
         contactInfoType.setContactFunctionList(contactFunctionList);
 
 		return contactInfoType;
 	}
 
-	public static ContactInfo parse(InsertContactInfoType insertContactInfoType, long accountId) throws Exception {
+	public static ContactInfo parse(InsertContactInfoType insertContactInfoType, long accountId, String rowUserId) throws Exception {
 		ContactInfo contactInfo = new ContactInfo();
 		if(insertContactInfoType == null) {
-			throw new Exception("Invalid PersistableContactInfoType Recieved.");
+			throw new Exception("Invalid InsertContactInfoType Recieved.");
 		}
 		if(StringUtils.isNullOrEmpty(insertContactInfoType.getContactFunction())) {
-			throw new Exception("Invalid PersistableContactInfoType Recieved. Invalid ContactFunction: "+insertContactInfoType.getContactFunction());
+			throw new Exception("Invalid InsertContactInfoType Recieved. Invalid ContactFunction: "+insertContactInfoType.getContactFunction());
 		}
 		contactInfo.setContactType(insertContactInfoType.getContactFunction().trim().toUpperCase());
 		contactInfo.setFirstName(insertContactInfoType.getFirstName());
@@ -221,16 +225,50 @@ public class ContactInfo {
 				(insertContactInfoType.getPhoneNumberList().getContactPhoneNumber() != null)) {
 			List<ContactPhoneNumberType> xmlPhoneNumberList = insertContactInfoType.getPhoneNumberList().getContactPhoneNumber();
 			for(ContactPhoneNumberType xmlPhoneNumber: xmlPhoneNumberList) {
-				contactInfo.getPhoneNumbers().add(ContactPhoneInfo.parse(xmlPhoneNumber, 0));
+				contactInfo.getPhoneNumbers().add(ContactPhoneInfo.parse(xmlPhoneNumber, 0, rowUserId));
 			}
 		}
 		if((insertContactInfoType.getEmailAddressList()!= null) &&
 				(insertContactInfoType.getEmailAddressList().getEmailAddress() != null)) {
 			List<ContactEmailType> xmlEmailAddressList = insertContactInfoType.getEmailAddressList().getEmailAddress();
 			for(ContactEmailType xmlEmailAddress: xmlEmailAddressList) {
-				contactInfo.getEmailAddresses().add(ContactEmailInfo.parse(xmlEmailAddress, 0));
+				contactInfo.getEmailAddresses().add(ContactEmailInfo.parse(xmlEmailAddress, 0, rowUserId));
 			}
 		}
+        if(!StringUtils.isNullOrEmpty(rowUserId)) {
+            contactInfo.setRowUserId(rowUserId);
+        }
+		return contactInfo;
+	}
+
+    public static ContactInfo parse(PersistableContactInfoType persistableContactInfoType, long accountId, String rowUserId) throws Exception {
+		ContactInfo contactInfo = new ContactInfo();
+		if(persistableContactInfoType == null) {
+			throw new Exception("Invalid PersistableContactInfoType Recieved.");
+		}
+        long contactId = persistableContactInfoType.getContactId();
+        contactInfo.setAccountId(accountId);
+        contactInfo.setContactId(contactId);
+		contactInfo.setFirstName(persistableContactInfoType.getFirstName());
+		contactInfo.setLastName(persistableContactInfoType.getLastName());
+		contactInfo.setJobTitle(persistableContactInfoType.getJobTitle());
+		if((persistableContactInfoType.getPhoneNumberList()!= null) &&
+				(persistableContactInfoType.getPhoneNumberList().getContactPhoneNumber() != null)) {
+			List<PersistableContactPhoneNumberType> xmlPhoneNumberList = persistableContactInfoType.getPhoneNumberList().getContactPhoneNumber();
+			for(PersistableContactPhoneNumberType xmlPhoneNumber: xmlPhoneNumberList) {
+				contactInfo.getPhoneNumbers().add(ContactPhoneInfo.parse(xmlPhoneNumber, contactId, rowUserId));
+			}
+		}
+		if((persistableContactInfoType.getEmailAddressList()!= null) &&
+				(persistableContactInfoType.getEmailAddressList().getEmailAddress() != null)) {
+			List<PersistableContactEmailType> xmlEmailAddressList = persistableContactInfoType.getEmailAddressList().getEmailAddress();
+			for(PersistableContactEmailType xmlEmailAddress: xmlEmailAddressList) {
+				contactInfo.getEmailAddresses().add(ContactEmailInfo.parse(xmlEmailAddress, contactId, rowUserId));
+			}
+		}
+        if(!StringUtils.isNullOrEmpty(rowUserId)) {
+            contactInfo.setRowUserId(rowUserId);
+        }
 		return contactInfo;
 	}
 

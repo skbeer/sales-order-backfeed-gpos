@@ -3,6 +3,8 @@ package com.monsanto.irdsoapservices.to;
 
 import com.monsanto.irdsoapservices.contacts.schema.ContactPhoneNumberType;
 import com.monsanto.irdsoapservices.contacts.schema.PhoneNumberEnumType;
+import com.monsanto.irdsoapservices.contacts.schema.PersistableContactPhoneNumberType;
+import com.monsanto.irdsoapservices.utils.StringUtils;
 
 import java.util.Date;
 
@@ -107,7 +109,7 @@ public class ContactPhoneInfo {
 		return phNumberType;
 	}
 	
-	public static ContactPhoneInfo parse(ContactPhoneNumberType xmlPhoneNumber, long contactId) throws Exception {
+	public static ContactPhoneInfo parse(ContactPhoneNumberType xmlPhoneNumber, long contactId, String rowUserId) throws Exception {
 		ContactPhoneInfo phoneInfo = new ContactPhoneInfo();
 		if(xmlPhoneNumber == null) {
 			throw new Exception("Invalid ContactPhoneNumberType Recieved");
@@ -116,7 +118,26 @@ public class ContactPhoneInfo {
 		phoneInfo.setPhoneNumber(xmlPhoneNumber.getPhoneNumber());
 		phoneInfo.setPhoneExtension(xmlPhoneNumber.getExtension());
         phoneInfo.setContactId(contactId);
+        if(!StringUtils.isNullOrEmpty(rowUserId)) {
+            phoneInfo.setRowUserId(rowUserId);
+        }
 		return phoneInfo;
 	}
+
+    public static ContactPhoneInfo parse(PersistableContactPhoneNumberType xmlPhoneNumber, long contactId, String rowUserId) throws Exception {
+        ContactPhoneInfo phoneInfo = new ContactPhoneInfo();
+        if(xmlPhoneNumber == null) {
+			throw new Exception("Invalid ContactPhoneNumberType Recieved");
+		}
+        phoneInfo.setDatabaseAction(xmlPhoneNumber.getAction().toString());
+		phoneInfo.setPhoneType(xmlPhoneNumber.getType().toString());
+		phoneInfo.setPhoneNumber(xmlPhoneNumber.getPhoneNumber());
+		phoneInfo.setPhoneExtension(xmlPhoneNumber.getExtension());
+        phoneInfo.setContactId(contactId);
+        if(!StringUtils.isNullOrEmpty(rowUserId)) {
+            phoneInfo.setRowUserId(rowUserId);
+        }
+		return phoneInfo;
+    }
 	
 }

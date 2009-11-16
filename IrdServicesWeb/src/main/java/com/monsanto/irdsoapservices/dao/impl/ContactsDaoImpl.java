@@ -32,9 +32,9 @@ public class ContactsDaoImpl extends SqlMapClientDaoSupport implements ContactDa
         return (List<ContactInfo>)getSqlMapClientTemplate().queryForList("IrdContact.getContacts", params);
     }
 
-    public long insertContactInfo(ContactInfo contactInfo) throws Exception {
+    public long insertContact(ContactInfo contactInfo) throws Exception {
         setAuditFields(contactInfo, true);
-        long contactId = insertContact(contactInfo);
+        long contactId = insertContactInfo(contactInfo);
         insertContactFunction(new ContactFunctionInfo(contactInfo));
 		for(ContactPhoneInfo phoneInfo: contactInfo.getPhoneNumbers()) {
 			phoneInfo.setContactId(contactId);
@@ -47,13 +47,42 @@ public class ContactsDaoImpl extends SqlMapClientDaoSupport implements ContactDa
         return contactId;
     }
 
-    public int updateContactInfo(ContactInfo contactInfo) throws Exception {
+    public int updateContact(ContactInfo contactInfo) throws Exception {
         int rowCount = 0;
         if(!StringUtils.isNullOrEmpty(contactInfo.getFirstName()) && !StringUtils.isNullOrEmpty(contactInfo.getLastName())) {
-            rowCount+= updateContact(contactInfo);
+            rowCount+= updateContactInfo(contactInfo);
         }
         rowCount += updateContactPhoneNumbers(contactInfo, rowCount);
         rowCount += updateContactEmailAddresses(contactInfo, rowCount);
+        return rowCount;
+    }
+
+    public int insertContactFunction(ContactFunctionInfo contactFunction) throws Exception {
+        setAuditFields(contactFunction, true);
+        getSqlMapClientTemplate().insert("IrdContact.insertContactFunction", contactFunction);
+        return 1;
+    }
+
+    public boolean isContactExisting(long accountId, long contactId) throws Exception {
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("accountId", accountId+"");
+        map.put("contactId", contactId+"");
+        return ((Long)getSqlMapClientTemplate().queryForObject("IrdContact.getContactCount", map)).longValue()==1;
+    }
+
+    public int deleteContactFunction(ContactFunctionInfo contactFunction) throws Exception {
+        return getSqlMapClientTemplate().delete("IrdContact.deleteContactFunction", contactFunction);
+    }
+
+    public List<String> getContactFunctions(long contactId) throws Exception {
+        return (List<String>)getSqlMapClientTemplate().queryForList("IrdContact.getContactFunctions", contactId);
+    }
+
+    public int deleteContact(long contactId) throws Exception {
+        int rowCount = 0;
+        rowCount+= getSqlMapClientTemplate().delete("IrdContact.deleteAllContactPhones", contactId);
+        rowCount+= getSqlMapClientTemplate().delete("IrdContact.deleteAllContactEmails", contactId);
+        rowCount+= getSqlMapClientTemplate().delete("IrdContact.deleteContact", contactId);
         return rowCount;
     }
 
@@ -111,16 +140,11 @@ public class ContactsDaoImpl extends SqlMapClientDaoSupport implements ContactDa
         return (ContactEmailInfo)getSqlMapClientTemplate().queryForObject("IrdContact.getContactEmailByType", map);
     }
 
-    protected long insertContact(ContactInfo contactInfo) throws Exception {
+    protected long insertContactInfo(ContactInfo contactInfo) throws Exception {
         setAuditFields(contactInfo, true);
         return (Long)getSqlMapClientTemplate().insert("IrdContact.insertContact", contactInfo);
     }
-    protected int insertContactFunction(ContactFunctionInfo contactFunction) throws Exception {
-        setAuditFields(contactFunction, true);
-        getSqlMapClientTemplate().insert("IrdContact.insertContactFunction", contactFunction);
-        return 1;
-    }
-    
+
     protected int insertContactPhone(ContactPhoneInfo contactPhone) throws Exception {
         int rowCount = 0;
         ContactPhoneInfo existingPhone = getContactPhoneByType(contactPhone.getContactId(), contactPhone.getPhoneType());
@@ -145,7 +169,7 @@ public class ContactsDaoImpl extends SqlMapClientDaoSupport implements ContactDa
         return rowCount;
     }
 
-    protected int updateContact(ContactInfo contactInfo) throws Exception {
+    protected int updateContactInfo(ContactInfo contactInfo) throws Exception {
         setAuditFields(contactInfo, false);
         return getSqlMapClientTemplate().update("IrdContact.updateContact", contactInfo);
     }
@@ -172,7 +196,9 @@ public class ContactsDaoImpl extends SqlMapClientDaoSupport implements ContactDa
         try {
             BeanUtils.setProperty(auditableObject, "rowModifyDate", timestamp);
             BeanUtils.setProperty(auditableObject, "rowTaskId", DBConstants.ROW_TASK_ID);
-            BeanUtils.setProperty(auditableObject, "rowUserId", DBConstants.ROW_USER_ID);
+            if(StringUtils.isNullOrEmpty(BeanUtils.getProperty(auditableObject, "rowUserId"))) {
+                BeanUtils.setProperty(auditableObject, "rowUserId", DBConstants.ROW_USER_ID);
+            }
             if(setRowEntryDate) {
             	BeanUtils.setProperty(auditableObject, "rowEntryDate", timestamp);
             }
@@ -180,8 +206,6 @@ public class ContactsDaoImpl extends SqlMapClientDaoSupport implements ContactDa
             throw new RuntimeException(e);
         }
     }
-
-
 
 
 }

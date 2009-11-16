@@ -2,7 +2,6 @@ package com.monsanto.irdsoapservices.utils.test;
 
 import com.monsanto.irdsoapservices.utils.Configuration;
 import junit.framework.TestCase;
-import sun.misc.Regexp;
 import org.apache.xerces.impl.xpath.regex.RegularExpression;
 
 /**
