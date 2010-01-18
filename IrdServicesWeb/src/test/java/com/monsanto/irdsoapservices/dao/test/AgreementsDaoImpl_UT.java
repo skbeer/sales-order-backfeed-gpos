@@ -25,13 +25,13 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
     public void testGetAgreementsByAccountId_returnAcctId() throws Exception {
         List<AgreementInfo> agreements = agreementDao.getAgreementsByAccountId(2, "ADDM", AccountTypeAttribute.ACCTID.toString());
         assertEquals(1, agreements.size());
-        assertAgreementInfo(agreements, 0, 2, 2, "ADDM", "01/01/2010", "12/31/2009", "CRKOLA", "01/14/2008", null, null);
+        assertAgreementInfo(agreements, 0, 2, 2, "ADDM", "01/01/2010", "12/31/2010", "CRKOLA", "01/14/2008", null, null);
     }
 
     public void testGetAgreementsByAccountId_returnSAPId() throws Exception {
         List<AgreementInfo> agreements = agreementDao.getAgreementsByAccountId(2, "ADDM", AccountTypeAttribute.SAP.toString());
         assertEquals(1, agreements.size());
-        assertAgreementInfo(agreements, 0, 2, 2, "ADDM", "01/01/2010", "12/31/2009", "CRKOLA", "01/14/2008", "0001696477", "0001696477");
+        assertAgreementInfo(agreements, 0, 2, 2, "ADDM", "01/01/2010", "12/31/2010", "CRKOLA", "01/14/2008", "0001696477", "0001696477");
     }
 
     public void testGetAgreementsBySigner_returnAcctId() throws Exception {
