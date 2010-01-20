@@ -12,7 +12,7 @@
     <artifactId>irdsoapservices-parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>IRDSoapServices - parent POM</name>
+    <name>Service Development IRDSoapServices</name>
     <description>IRD Soap Services Project</description>
     <inceptionYear>2009</inceptionYear>
 
