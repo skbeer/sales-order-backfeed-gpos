@@ -61,7 +61,7 @@ public class Brands_AT extends AbstractAcceptanceTestCase {
         assertEquals("CORN", response.getGetBrandsResponseBody().getBrandsForSpecie().get(0).getSeedSpecieName());
         assertEquals(189, response.getGetBrandsResponseBody().getBrandsForSpecie().get(0).getBrand().size());
         assertEquals("SOYBEAN", response.getGetBrandsResponseBody().getBrandsForSpecie().get(1).getSeedSpecieName());
-        assertEquals(209, response.getGetBrandsResponseBody().getBrandsForSpecie().get(1).getBrand().size());
+        assertEquals(210, response.getGetBrandsResponseBody().getBrandsForSpecie().get(1).getBrand().size());
     }
 
     private GetBrandsRequestType createBrandsRequest(boolean isValid, String[] species) throws Exception {
