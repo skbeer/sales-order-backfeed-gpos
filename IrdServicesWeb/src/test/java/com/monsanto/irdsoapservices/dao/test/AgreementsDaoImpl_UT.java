@@ -5,6 +5,7 @@ import com.monsanto.irdsoapservices.dao.AgreementsDao;
 import com.monsanto.irdsoapservices.dao.impl.AgreementsDaoImpl;
 import com.monsanto.irdsoapservices.to.AgreementInfo;
 import com.monsanto.irdsoapservices.to.AgreementHierarchyInfo;
+import com.monsanto.irdsoapservices.to.SignerInformation;
 import com.monsanto.irdsoapservices.schema.AccountTypeAttribute;
 
 import java.util.List;
@@ -74,6 +75,26 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 //        assertAgrementHierarchyInfo(agrHierarchy, 0, "RRSN", "RRSN-Soybean", null, "C08", "N", "Y");
 //        assertAgrementHierarchyInfo(agrHierarchy, 1, "Z051", "Bean Commercial", "Z05", null, "N", "Y");
 //        assertAgrementHierarchyInfo(agrHierarchy, 2, "Z052", "Bean Testing", "Z05", null, "N", "Y");
+    }
+
+    public void testGetSignersByAgreementsUnexpiredOnly() throws Exception {
+        List<SignerInformation> signers = agreementDao.getSignersByAgreementCode("STA", true);
+        assertEquals(270, signers.size());
+    }
+
+    public void testGetSignersByAgreementsExpiredIncluded() throws Exception {
+        List<SignerInformation> signers = agreementDao.getSignersByAgreementCode("STA", false);
+        assertEquals(271, signers.size());
+    }
+
+    public void testGetSignersByAgreementsNoAgreementCodeExpiredIncludedthrowsException() throws Exception {
+        try {
+        List<SignerInformation> signers = agreementDao.getSignersByAgreementCode(null, false);
+        assertEquals(271, signers.size());
+        fail("Exception should have occurred");
+        } catch(Exception e) {
+            assertNotNull(e);
+        }
     }
 
     private void assertAgrementHierarchyInfo(List<AgreementHierarchyInfo> agrHierarchy, int index, String agrCode, String agrDescr, Object commercialAgr, String monTraitAgr, String cornFlag, String soyFlag) {

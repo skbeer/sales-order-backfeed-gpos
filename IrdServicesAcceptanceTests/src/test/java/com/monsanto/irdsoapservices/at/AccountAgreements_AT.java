@@ -89,6 +89,12 @@ public class AccountAgreements_AT extends AbstractAcceptanceTestCase {
         assertAgrCategories(categories, 1, "COMMERCIAL_AGREEMENT", new AgreementType[]{}, new AgreementType[]{createAgreementType("Z051", "Bean Commercial"), createAgreementType("Z052", "Bean Testing")});
     }
 
+//    public void testGetSignersForAgreement() throws Exception {
+//        GetSignersForAgreementsResponseType signersResponse = acctAgreementClient.getSignersForAgreements(createGetSignersForAgreementsRequest("STA", true));
+//        List<SignerInformationType> signers = signersResponse.getGetSignersForAgreementsResponseBody().getSignerInformation();
+//        assertEquals(270, signers.size());
+//    }
+
     private void assertAgrCategories(List<AgreementCategoryType> categories, int categoryIndex, String categoryName, AgreementType[] cornAgrCodes, AgreementType[] soyAgrCodes) {
         AgreementCategoryType commCategory = categories.get(categoryIndex);
         assertEquals(categoryName, commCategory.getCategoryName().toString());
@@ -201,4 +207,16 @@ public class AccountAgreements_AT extends AbstractAcceptanceTestCase {
         request.setGetAgreementHierarchyRequestBody(requestBody);
         return request;
     }
+
+    private GetSignersForAgreementsRequestType createGetSignersForAgreementsRequest(String agreementCode, boolean unexpiredAccountsOnly) throws Exception {
+        GetSignersForAgreementsRequestType request = new GetSignersForAgreementsRequestType();
+        request.setHeader(getHeaderType());
+        GetSignersForAgreementsRequestBodyType requestBody = new GetSignersForAgreementsRequestBodyType();
+        requestBody.setAgreementCode(agreementCode);
+        requestBody.setSendOnlyUnexpiredAgreement(unexpiredAccountsOnly);
+        request.setGetSignersForAgreementsRequestBody(requestBody);
+        return request;
+    }
+
+
 }

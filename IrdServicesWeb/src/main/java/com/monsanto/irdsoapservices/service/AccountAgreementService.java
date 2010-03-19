@@ -1,14 +1,20 @@
 
 package com.monsanto.irdsoapservices.service;
 
-import com.monsanto.irdsoapservices.agreements.schema.*;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import com.monsanto.irdsoapservices.agreements.schema.GetAgreementHierarchyRequestType;
+import com.monsanto.irdsoapservices.agreements.schema.GetAgreementHierarchyResponseType;
+import com.monsanto.irdsoapservices.agreements.schema.GetAgreementsRequestType;
+import com.monsanto.irdsoapservices.agreements.schema.GetAgreementsResponseType;
+import com.monsanto.irdsoapservices.agreements.schema.GetSignersForAgreementsRequestType;
+import com.monsanto.irdsoapservices.agreements.schema.GetSignersForAgreementsResponseType;
+import com.monsanto.irdsoapservices.agreements.schema.UpdateAgreementRequestType;
+import com.monsanto.irdsoapservices.agreements.schema.UpdateAgreementResponseType;
 
 
 /**
@@ -20,8 +26,8 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @WebService(name = "AccountAgreementService", targetNamespace = "urn:monsanto:ird:services:wsdl:account:agreement:1:0")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
-    com.monsanto.isdcommon.header.schema.ObjectFactory.class,
-    com.monsanto.irdsoapservices.agreements.schema.ObjectFactory.class
+    com.monsanto.irdsoapservices.agreements.schema.ObjectFactory.class,
+    com.monsanto.isdcommon.header.schema.ObjectFactory.class
 })
 public interface AccountAgreementService {
 
@@ -68,6 +74,21 @@ public interface AccountAgreementService {
     public GetAgreementHierarchyResponseType getAgreementHierarchy(
         @WebParam(name = "GetAgreementHierarchyRequest", targetNamespace = "urn:monsanto:ird:services:account:agreement", partName = "request")
         GetAgreementHierarchyRequestType request)
+        throws AccountAgreementsFault
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns com.monsanto.irdsoapservices.agreements.schema.GetSignersForAgreementsResponseType
+     * @throws AccountAgreementsFault
+     */
+    @WebMethod
+    @WebResult(name = "GetSignersForAgreementsResponse", targetNamespace = "urn:monsanto:ird:services:account:agreement", partName = "getSignersForAgreementsResponse")
+    public GetSignersForAgreementsResponseType getSignersForAgreements(
+        @WebParam(name = "GetSignersForAgreementsRequest", targetNamespace = "urn:monsanto:ird:services:account:agreement", partName = "request")
+        GetSignersForAgreementsRequestType request)
         throws AccountAgreementsFault
     ;
 

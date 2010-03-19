@@ -5,6 +5,8 @@
 		type="com.monsanto.irdsoapservices.to.AgreementInfo" />
     <typeAlias alias="agreementHierarchyInfo"
                type="com.monsanto.irdsoapservices.to.AgreementHierarchyInfo"/>
+    <typeAlias alias="signerInformation"
+               type="com.monsanto.irdsoapservices.to.SignerInformation"/>
 
 	<resultMap id="getAgreementsResult" class="agreementInfo">
 		<result property="accountId" column="ACCT_ID" />
@@ -25,6 +27,16 @@
         <result property="cornAgreementFlag" column="CORN_AGREEMENT_FLAG"/>
         <result property="soybeanAgreementFlag" column="SOYBEAN_AGREEMENT_FLAG"/>
     </resultMap>
+
+    <resultMap id="getSignersByAgreementCodeResult" class="signerInformation">
+		<result property="signerAccountId" column="SIGNER_ACCT_ID" nullValue="0"/>
+        <result property="signerAliasId" column="sap_id"/>
+        <result property="signerAccountName" column="name_1" />
+        <result property="addressLine" column="mailing_addr_line_1"/>
+        <result property="cityName" column="mailing_city"/>
+        <result property="stateOrProvince" column="mailing_state_code"/>
+        <result property="postalCode" column="mailing_zip"/>
+	</resultMap>
 
     <select id="getAgreementsByAlias" parameterClass="java.util.Map" resultMap="getAgreementsResult">
         SELECT  AAD.ACCT_ID, XACCT.ALIAS_ID ACCT_ALIAS_ID, AAD.SIGNER_ACCT_ID, XSIGNER.ALIAS_ID SIGNER_ALIAS_ID, AAD.AGREEMENT_CODE, AAD.BEGIN_DATE, AAD.END_DATE,
@@ -102,6 +114,26 @@
         ORDER BY AA.AGREEMENT_CODE
     </select>
 
+    <select id="getSignersByAgreementCode" parameterClass="java.util.Map" resultMap="getSignersByAgreementCodeResult">
+        SELECT DISTINCT signer_acct_id, alias_id AS sap_id, name_1,
+                        mailing_addr_line_1, mailing_city, mailing_state_code,
+                        mailing_zip
+                   FROM i_acct_to_agreement atam,
+                        s_acct_ext_dnml aed,
+                        s_acct_xref axm
+                  WHERE agreement_code = #agrCode#
+                    AND aed.acct_id = atam.signer_acct_id
+                    AND axm.acct_id = atam.signer_acct_id
+                    AND axm.acct_id = aed.acct_id
+                    AND axm.active_flag = 'Y'
+                    AND system_type_code = 'SAP'
+        <isEqual property="unexpiredAgreementsOnly" prepend="AND" compareValue="true">
+                        atam.begin_date &lt;= SYSDATE
+                    </isEqual>
+        <isEqual property="unexpiredAgreementsOnly" prepend="AND" compareValue="true">
+                    atam.end_date >= SYSDATE
+                    </isEqual> 
+    </select>
 
 </sqlMap>
 

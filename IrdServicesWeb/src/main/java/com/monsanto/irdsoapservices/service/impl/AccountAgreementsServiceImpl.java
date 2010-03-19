@@ -40,4 +40,10 @@ public class AccountAgreementsServiceImpl implements AccountAgreementService {
         logger.debug("Begin: getAgreementHierarchy()");
         return helper.getAgreementHierarchy(request);
     }
+
+    public GetSignersForAgreementsResponseType getSignersForAgreements(@WebParam(name = "GetSignersForAgreementsRequest", targetNamespace = "urn:monsanto:ird:services:account:agreement", partName = "request") GetSignersForAgreementsRequestType request) throws AccountAgreementsFault {
+        AgreementsHelper helper = (AgreementsHelper)appContext.getBean("agreementsHelper");
+        logger.debug("Begin: GetSignersForAgreements()");
+        return helper.getSignersForAgreements(request);
+    }
 }

@@ -5,6 +5,7 @@ import com.monsanto.irdsoapservices.dao.AgreementsDao;
 import com.monsanto.irdsoapservices.schema.AccountTypeAttribute;
 import com.monsanto.irdsoapservices.to.AgreementHierarchyInfo;
 import com.monsanto.irdsoapservices.to.AgreementInfo;
+import com.monsanto.irdsoapservices.to.SignerInformation;
 import com.monsanto.irdsoapservices.utils.StringUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
@@ -23,20 +24,21 @@ public class AgreementsDaoImpl extends SqlMapClientDaoSupport implements Agreeme
     private static final String AGREEMENT_CODE = "agrCode";
     private static final String SIGNER_ACCT_ID = "signerAcctId";
     public static final String SYSTEM_TYPE_CODE = "systemTypeCode";
+    public static final String UNEXPIRED_ACCOUNTS_ONLY = "unexpiredAgreementsOnly";
 
     public List<AgreementInfo> getAgreementsByAccountId(long acctId, String agreementCode, String resultAccountType) throws Exception {
-        if(AccountTypeAttribute.ACCTID.toString().equalsIgnoreCase(resultAccountType)) {
-            return (List<AgreementInfo>)getSqlMapClientTemplate().queryForList("AcctToAgreements.getAgreements", createParamMap(acctId, 0, agreementCode, null));
+        if (AccountTypeAttribute.ACCTID.toString().equalsIgnoreCase(resultAccountType)) {
+            return (List<AgreementInfo>) getSqlMapClientTemplate().queryForList("AcctToAgreements.getAgreements", createParamMap(acctId, 0, agreementCode, null));
         } else {
-            return (List<AgreementInfo>)getSqlMapClientTemplate().queryForList("AcctToAgreements.getAgreementsByAlias", createParamMap(acctId, 0, agreementCode, resultAccountType));
+            return (List<AgreementInfo>) getSqlMapClientTemplate().queryForList("AcctToAgreements.getAgreementsByAlias", createParamMap(acctId, 0, agreementCode, resultAccountType));
         }
     }
 
     public List<AgreementInfo> getAgreementsBySignerAccountId(long signerAcctId, String agreementCode, String resultAccountType) throws Exception {
-        if(AccountTypeAttribute.ACCTID.toString().equalsIgnoreCase(resultAccountType)) {
-            return (List<AgreementInfo>)getSqlMapClientTemplate().queryForList("AcctToAgreements.getAgreements", createParamMap(0, signerAcctId, agreementCode, null));
+        if (AccountTypeAttribute.ACCTID.toString().equalsIgnoreCase(resultAccountType)) {
+            return (List<AgreementInfo>) getSqlMapClientTemplate().queryForList("AcctToAgreements.getAgreements", createParamMap(0, signerAcctId, agreementCode, null));
         } else {
-            return (List<AgreementInfo>)getSqlMapClientTemplate().queryForList("AcctToAgreements.getAgreementsByAlias", createParamMap(0, signerAcctId, agreementCode, resultAccountType));
+            return (List<AgreementInfo>) getSqlMapClientTemplate().queryForList("AcctToAgreements.getAgreementsByAlias", createParamMap(0, signerAcctId, agreementCode, resultAccountType));
         }
     }
 
@@ -47,22 +49,32 @@ public class AgreementsDaoImpl extends SqlMapClientDaoSupport implements Agreeme
 
     public List<AgreementHierarchyInfo> getAgreementHierarchy(long accountId, String licensedBy) throws Exception {
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put("accountId", accountId+"");
+        map.put("accountId", accountId + "");
         map.put("licensedBy", licensedBy);
-        return (List<AgreementHierarchyInfo>)getSqlMapClientTemplate().queryForList("AcctToAgreements.getAgreementHierarchy", map);
+        return (List<AgreementHierarchyInfo>) getSqlMapClientTemplate().queryForList("AcctToAgreements.getAgreementHierarchy", map);
     }
+
+    public List<SignerInformation> getSignersByAgreementCode(String agreementCode, boolean unexpiredAgreementsOnly) throws Exception {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put(AGREEMENT_CODE, agreementCode.trim().toUpperCase());
+        params.put(UNEXPIRED_ACCOUNTS_ONLY, unexpiredAgreementsOnly);
+        return (List<SignerInformation>) getSqlMapClientTemplate().queryForList("AcctToAgreements.getSignersByAgreementCode", params);
+    }
+
 
     private Map<String, String> createParamMap(long accountId, long signerAcctId, String agreementCode, String systemTypeCode) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put(ACCT_ID, accountId > 0 ? accountId+"": null);
-        params.put(SIGNER_ACCT_ID, signerAcctId > 0 ? signerAcctId+"": null);        
+        params.put(ACCT_ID, accountId > 0 ? accountId + "" : null);
+        params.put(SIGNER_ACCT_ID, signerAcctId > 0 ? signerAcctId + "" : null);
         params.put(AGREEMENT_CODE, agreementCode.trim().toUpperCase());
-        params.put(SYSTEM_TYPE_CODE, StringUtils.isNullOrEmpty(systemTypeCode)? null : systemTypeCode.trim().toUpperCase());
+        params.put(SYSTEM_TYPE_CODE, StringUtils.isNullOrEmpty(systemTypeCode) ? null : systemTypeCode.trim().toUpperCase());
         return params;
     }
 
     private void setAuditFields(Object auditableObject, String rowUserId) throws RuntimeException {
-        if (auditableObject == null) {return;}
+        if (auditableObject == null) {
+            return;
+        }
         Date timestamp = Calendar.getInstance().getTime();
         try {
             BeanUtils.setProperty(auditableObject, "rowModifyDate", timestamp);

@@ -24,7 +24,9 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _GetSignersForAgreementsResponse_QNAME = new QName("urn:monsanto:ird:services:account:agreement", "GetSignersForAgreementsResponse");
     private final static QName _AccountAgreementsFault_QNAME = new QName("urn:monsanto:ird:services:account:agreement", "AccountAgreementsFault");
+    private final static QName _GetSignersForAgreementsRequest_QNAME = new QName("urn:monsanto:ird:services:account:agreement", "GetSignersForAgreementsRequest");
     private final static QName _GetAgreementsResponse_QNAME = new QName("urn:monsanto:ird:services:account:agreement", "GetAgreementsResponse");
     private final static QName _GetAgreementsRequest_QNAME = new QName("urn:monsanto:ird:services:account:agreement", "GetAgreementsRequest");
     private final static QName _UpdateAgreementRequest_QNAME = new QName("urn:monsanto:ird:services:account:agreement", "UpdateAgreementRequest");
@@ -40,51 +42,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link UpdateAgreementRequestType }
+     * Create an instance of {@link AccountIdentifierType }
      * 
      */
-    public UpdateAgreementRequestType createUpdateAgreementRequestType() {
-        return new UpdateAgreementRequestType();
+    public AccountIdentifierType createAccountIdentifierType() {
+        return new AccountIdentifierType();
     }
 
     /**
-     * Create an instance of {@link GetAgreementsRequestBodyType }
+     * Create an instance of {@link AgreementInformationType }
      * 
      */
-    public GetAgreementsRequestBodyType createGetAgreementsRequestBodyType() {
-        return new GetAgreementsRequestBodyType();
+    public AgreementInformationType createAgreementInformationType() {
+        return new AgreementInformationType();
     }
 
     /**
-     * Create an instance of {@link SuccessResponseType }
+     * Create an instance of {@link SignerInformationType }
      * 
      */
-    public SuccessResponseType createSuccessResponseType() {
-        return new SuccessResponseType();
-    }
-
-    /**
-     * Create an instance of {@link GetAgreementHierarchyResponseType }
-     * 
-     */
-    public GetAgreementHierarchyResponseType createGetAgreementHierarchyResponseType() {
-        return new GetAgreementHierarchyResponseType();
-    }
-
-    /**
-     * Create an instance of {@link ExceptionType }
-     * 
-     */
-    public ExceptionType createExceptionType() {
-        return new ExceptionType();
-    }
-
-    /**
-     * Create an instance of {@link GetAgreementHierarchyResponseBodyType }
-     * 
-     */
-    public GetAgreementHierarchyResponseBodyType createGetAgreementHierarchyResponseBodyType() {
-        return new GetAgreementHierarchyResponseBodyType();
+    public SignerInformationType createSignerInformationType() {
+        return new SignerInformationType();
     }
 
     /**
@@ -93,6 +71,14 @@ public class ObjectFactory {
      */
     public UpdateAgreementResponseType createUpdateAgreementResponseType() {
         return new UpdateAgreementResponseType();
+    }
+
+    /**
+     * Create an instance of {@link GetAgreementsRequestType }
+     * 
+     */
+    public GetAgreementsRequestType createGetAgreementsRequestType() {
+        return new GetAgreementsRequestType();
     }
 
     /**
@@ -112,6 +98,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AddressInformationType }
+     * 
+     */
+    public AddressInformationType createAddressInformationType() {
+        return new AddressInformationType();
+    }
+
+    /**
      * Create an instance of {@link AgreementType }
      * 
      */
@@ -120,27 +114,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetAgreementsResponseType }
+     * Create an instance of {@link GetSignersForAgreementsRequestBodyType }
      * 
      */
-    public GetAgreementsResponseType createGetAgreementsResponseType() {
-        return new GetAgreementsResponseType();
+    public GetSignersForAgreementsRequestBodyType createGetSignersForAgreementsRequestBodyType() {
+        return new GetSignersForAgreementsRequestBodyType();
     }
 
     /**
-     * Create an instance of {@link GetAgreementHierarchyRequestType }
+     * Create an instance of {@link GetAgreementHierarchyResponseType }
      * 
      */
-    public GetAgreementHierarchyRequestType createGetAgreementHierarchyRequestType() {
-        return new GetAgreementHierarchyRequestType();
-    }
-
-    /**
-     * Create an instance of {@link AccountIdentifierType }
-     * 
-     */
-    public AccountIdentifierType createAccountIdentifierType() {
-        return new AccountIdentifierType();
+    public GetAgreementHierarchyResponseType createGetAgreementHierarchyResponseType() {
+        return new GetAgreementHierarchyResponseType();
     }
 
     /**
@@ -152,11 +138,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetAgreementsRequestType }
+     * Create an instance of {@link ExceptionType }
      * 
      */
-    public GetAgreementsRequestType createGetAgreementsRequestType() {
-        return new GetAgreementsRequestType();
+    public ExceptionType createExceptionType() {
+        return new ExceptionType();
+    }
+
+    /**
+     * Create an instance of {@link GetAgreementsResponseType }
+     * 
+     */
+    public GetAgreementsResponseType createGetAgreementsResponseType() {
+        return new GetAgreementsResponseType();
+    }
+
+    /**
+     * Create an instance of {@link GetSignersForAgreementsResponseBodyType }
+     * 
+     */
+    public GetSignersForAgreementsResponseBodyType createGetSignersForAgreementsResponseBodyType() {
+        return new GetSignersForAgreementsResponseBodyType();
+    }
+
+    /**
+     * Create an instance of {@link GetSignersForAgreementsResponseType }
+     * 
+     */
+    public GetSignersForAgreementsResponseType createGetSignersForAgreementsResponseType() {
+        return new GetSignersForAgreementsResponseType();
     }
 
     /**
@@ -168,6 +178,46 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link SuccessResponseType }
+     * 
+     */
+    public SuccessResponseType createSuccessResponseType() {
+        return new SuccessResponseType();
+    }
+
+    /**
+     * Create an instance of {@link GetSignersForAgreementsRequestType }
+     * 
+     */
+    public GetSignersForAgreementsRequestType createGetSignersForAgreementsRequestType() {
+        return new GetSignersForAgreementsRequestType();
+    }
+
+    /**
+     * Create an instance of {@link UpdateAgreementRequestType }
+     * 
+     */
+    public UpdateAgreementRequestType createUpdateAgreementRequestType() {
+        return new UpdateAgreementRequestType();
+    }
+
+    /**
+     * Create an instance of {@link GetAgreementHierarchyResponseBodyType }
+     * 
+     */
+    public GetAgreementHierarchyResponseBodyType createGetAgreementHierarchyResponseBodyType() {
+        return new GetAgreementHierarchyResponseBodyType();
+    }
+
+    /**
+     * Create an instance of {@link GetAgreementsRequestBodyType }
+     * 
+     */
+    public GetAgreementsRequestBodyType createGetAgreementsRequestBodyType() {
+        return new GetAgreementsRequestBodyType();
+    }
+
+    /**
      * Create an instance of {@link AgreementsBySpecieType }
      * 
      */
@@ -176,11 +226,20 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AgreementInformationType }
+     * Create an instance of {@link GetAgreementHierarchyRequestType }
      * 
      */
-    public AgreementInformationType createAgreementInformationType() {
-        return new AgreementInformationType();
+    public GetAgreementHierarchyRequestType createGetAgreementHierarchyRequestType() {
+        return new GetAgreementHierarchyRequestType();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignersForAgreementsResponseType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "urn:monsanto:ird:services:account:agreement", name = "GetSignersForAgreementsResponse")
+    public JAXBElement<GetSignersForAgreementsResponseType> createGetSignersForAgreementsResponse(GetSignersForAgreementsResponseType value) {
+        return new JAXBElement<GetSignersForAgreementsResponseType>(_GetSignersForAgreementsResponse_QNAME, GetSignersForAgreementsResponseType.class, null, value);
     }
 
     /**
@@ -190,6 +249,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "urn:monsanto:ird:services:account:agreement", name = "AccountAgreementsFault")
     public JAXBElement<ExceptionType> createAccountAgreementsFault(ExceptionType value) {
         return new JAXBElement<ExceptionType>(_AccountAgreementsFault_QNAME, ExceptionType.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetSignersForAgreementsRequestType }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "urn:monsanto:ird:services:account:agreement", name = "GetSignersForAgreementsRequest")
+    public JAXBElement<GetSignersForAgreementsRequestType> createGetSignersForAgreementsRequest(GetSignersForAgreementsRequestType value) {
+        return new JAXBElement<GetSignersForAgreementsRequestType>(_GetSignersForAgreementsRequest_QNAME, GetSignersForAgreementsRequestType.class, null, value);
     }
 
     /**

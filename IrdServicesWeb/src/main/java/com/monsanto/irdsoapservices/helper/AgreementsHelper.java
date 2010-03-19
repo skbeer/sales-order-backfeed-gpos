@@ -6,6 +6,7 @@ import com.monsanto.irdsoapservices.dao.IrdDao;
 import com.monsanto.irdsoapservices.service.AccountAgreementsFault;
 import com.monsanto.irdsoapservices.to.AgreementHierarchyInfo;
 import com.monsanto.irdsoapservices.to.AgreementInfo;
+import com.monsanto.irdsoapservices.to.SignerInformation;
 import com.monsanto.irdsoapservices.utils.StringUtils;
 import com.monsanto.irdsoapservices.utils.XmlDateTimeUtil;
 import com.monsanto.isdcommon.header.schema.PartnerIdentifierType;
@@ -230,4 +231,39 @@ public class AgreementsHelper extends AbstractHelper {
         return successResponse;
     }
 
+    public GetSignersForAgreementsResponseType getSignersForAgreements(GetSignersForAgreementsRequestType request) throws AccountAgreementsFault {
+        GetSignersForAgreementsResponseType response = new GetSignersForAgreementsResponseType();
+        try {
+            logger.debug("Validating getSignersForAgreementsRequest");
+            validateGetSignersForAgreementsRequest(request);
+            GetSignersForAgreementsResponseBodyType responseBody = new GetSignersForAgreementsResponseBodyType();
+            GetSignersForAgreementsRequestBodyType requestBody = request.getGetSignersForAgreementsRequestBody();
+
+            List<SignerInformation> signers = null;
+            logger.info("Retreiving Signers by Agreement Code");
+            if(request.getGetSignersForAgreementsRequestBody().isSendOnlyUnexpiredAgreement() != null && request.getGetSignersForAgreementsRequestBody().isSendOnlyUnexpiredAgreement()) {
+                signers = agreementsDao.getSignersByAgreementCode(requestBody.getAgreementCode(), true);
+            }
+           else {
+                signers = agreementsDao.getSignersByAgreementCode(requestBody.getAgreementCode(), false);
+            }
+            for(SignerInformation signer : signers) {
+                responseBody.getSignerInformation().add(signer.extractSignerInformationType());
+            }
+            response.setGetSignersForAgreementsResponseBody(responseBody);
+            response.setHeader(getResponseHeader(request.getHeader()));
+            logger.info("Found "+signers.size()+" Signers. Sending back to the client.");
+        } catch (Exception e) {
+            handleException(e, "getSignersForAgreements");
+        }
+        logger.debug("End: getSignersForAgreements()");
+        return response;
+    }
+
+    private void validateGetSignersForAgreementsRequest(GetSignersForAgreementsRequestType request) throws Exception {
+        if(request == null ||   request.getGetSignersForAgreementsRequestBody() == null ||
+                StringUtils.isNullOrEmpty(request.getGetSignersForAgreementsRequestBody().getAgreementCode())) {
+            throw new Exception("Received in-complete GetSignersForAgreementsRequest object");
+        }
+    }
 }

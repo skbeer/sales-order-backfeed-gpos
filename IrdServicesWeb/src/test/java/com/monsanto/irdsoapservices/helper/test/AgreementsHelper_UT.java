@@ -4,6 +4,7 @@ import com.monsanto.irdsoapservices.dao.AgreementsDao;
 import com.monsanto.irdsoapservices.dao.IrdDao;
 import com.monsanto.irdsoapservices.to.AgreementInfo;
 import com.monsanto.irdsoapservices.to.AgreementHierarchyInfo;
+import com.monsanto.irdsoapservices.to.SignerInformation;
 import com.monsanto.irdsoapservices.helper.AgreementsHelper;
 import com.monsanto.irdsoapservices.agreements.schema.*;
 import com.monsanto.irdsoapservices.test.BaseTestCase;
@@ -51,7 +52,7 @@ public class AgreementsHelper_UT extends BaseTestCase {
         agreementsDao = EasyMock.createMock(AgreementsDao.class);
         irdDao = EasyMock.createMock(IrdDao.class);
         agreementsHelper.setAgreementsDao(agreementsDao);
-        agreementsHelper.setIrdDao(irdDao);        
+        agreementsHelper.setIrdDao(irdDao);
     }
 
     public void testGetAgreements_invalidRequest_throwError() {
@@ -226,7 +227,101 @@ public class AgreementsHelper_UT extends BaseTestCase {
         assertEquals("5678", responseType.getGetAgreementsResponseBody().getAgreementInformation().get(0).getAccountIdentifier().getValue());
     }
 
+    public void testGetSignersByAgreements_invalidRequest_throwError() throws Exception {
+        GetSignersForAgreementsRequestType signersRequest = new GetSignersForAgreementsRequestType();
+        GetSignersForAgreementsRequestBodyType  signersRequestBody = new GetSignersForAgreementsRequestBodyType();
+        signersRequestBody.setAgreementCode(null);
+        signersRequest.setGetSignersForAgreementsRequestBody(signersRequestBody);
 
+        signersRequest.setHeader(getValidHeader("ABC123", "A_PARTNER"));
+
+        // init EasyMock classes
+        agreementsHelper = new AgreementsHelper();
+        agreementsDao = EasyMock.createMock(AgreementsDao.class);
+        irdDao = EasyMock.createMock(IrdDao.class);
+        agreementsHelper.setAgreementsDao(agreementsDao);
+        agreementsHelper.setIrdDao(irdDao);
+
+        try {
+            helper.getSignersForAgreements(signersRequest);
+            fail("exception shoudl have occurred");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void testGetSignersByAgreements_invalidRequest_badHeader_throwError() throws Exception{
+
+        GetSignersForAgreementsRequestType signersRequest = new GetSignersForAgreementsRequestType();
+        GetSignersForAgreementsRequestBodyType  signersRequestBody = new GetSignersForAgreementsRequestBodyType();
+        signersRequestBody.setAgreementCode(null);
+        signersRequest.setGetSignersForAgreementsRequestBody(signersRequestBody);
+
+        signersRequest.setHeader(getValidHeader("ABC123", "A_PARTNER"));
+        signersRequest.getHeader().setDocumentIdentifier(null);
+        // init EasyMock classes
+        agreementsHelper = new AgreementsHelper();
+        agreementsDao = EasyMock.createMock(AgreementsDao.class);
+        irdDao = EasyMock.createMock(IrdDao.class);
+        agreementsHelper.setAgreementsDao(agreementsDao);
+        agreementsHelper.setIrdDao(irdDao);
+
+        try {
+            helper.getSignersForAgreements(signersRequest);
+            fail("exception shoudl have occurred");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void testGetSignersByAgreements_ValidRequest() throws Exception{
+
+        GetSignersForAgreementsRequestType signersRequest = new GetSignersForAgreementsRequestType();
+        GetSignersForAgreementsRequestBodyType  signersRequestBody = new GetSignersForAgreementsRequestBodyType();
+        signersRequestBody.setAgreementCode("STA");
+        signersRequest.setGetSignersForAgreementsRequestBody(signersRequestBody);
+
+        signersRequest.setHeader(getValidHeader("ABC123", "A_PARTNER"));
+        // init EasyMock classes
+        agreementsHelper = new AgreementsHelper();
+        agreementsDao = EasyMock.createMock(AgreementsDao.class);
+        irdDao = EasyMock.createMock(IrdDao.class);
+        agreementsHelper.setAgreementsDao(agreementsDao);
+        agreementsHelper.setIrdDao(irdDao);
+
+        GetSignersForAgreementsResponseType signersWithAgreements = helper.getSignersForAgreements(signersRequest);
+        List<SignerInformationType> signersInformation = signersWithAgreements.getGetSignersForAgreementsResponseBody().getSignerInformation();
+        SignerInformationType signer = signersInformation.get(0);
+        assertEquals("Joe Signer", signer.getSignerAccountName());
+        assertEquals("1234", signer.getSignerAccountIdentifier().getValue());
+        assertEquals("0001234000", signer.getSignerAliasIdentifier().getValue());
+        AddressInformationType address = signer.getAddressInformation();
+        assertEquals("123 Main Street", address.getAddressLine().get(0));
+        assertEquals("Rolla", address.getCityName());
+        assertEquals("56780", address.getPostalCode());
+        assertEquals("MO", address.getStateOrProvince());
+    }
+
+    public void testGetSignersByAgreements_ValidRequestUnexpiredAgreementsOnly() throws Exception{
+
+        GetSignersForAgreementsRequestType signersRequest = new GetSignersForAgreementsRequestType();
+        GetSignersForAgreementsRequestBodyType  signersRequestBody = new GetSignersForAgreementsRequestBodyType();
+        signersRequestBody.setAgreementCode("STA");
+        signersRequestBody.setSendOnlyUnexpiredAgreement(true);
+        signersRequest.setGetSignersForAgreementsRequestBody(signersRequestBody);
+
+        signersRequest.setHeader(getValidHeader("ABC123", "A_PARTNER"));
+        // init EasyMock classes
+        agreementsHelper = new AgreementsHelper();
+        agreementsDao = EasyMock.createMock(AgreementsDao.class);
+        irdDao = EasyMock.createMock(IrdDao.class);
+        agreementsHelper.setAgreementsDao(agreementsDao);
+        agreementsHelper.setIrdDao(irdDao);
+
+        GetSignersForAgreementsResponseType signersWithAgreements = helper.getSignersForAgreements(signersRequest);
+        List<SignerInformationType> signersInformation = signersWithAgreements.getGetSignersForAgreementsResponseBody().getSignerInformation();
+        assertTrue(signersInformation.isEmpty());
+    }
 
     private List<AgreementInfo> getExpectedAgreements() {
         List<AgreementInfo> agreementList = new ArrayList<AgreementInfo>();
@@ -292,7 +387,7 @@ public class AgreementsHelper_UT extends BaseTestCase {
         request.setHeader(getValidHeader("1010", "CS"));
         return request;
     }
-    
+
     private UpdateAgreementRequestType getUpdateAgreementRequestType(boolean isValid, AccountTypeAttribute idType, String idValue, Date endDate) throws Exception {
         UpdateAgreementRequestType updateRequest = new UpdateAgreementRequestType();
         UpdateAgreementRequestBodyType requestBody = new UpdateAgreementRequestBodyType();
@@ -329,11 +424,12 @@ public class AgreementsHelper_UT extends BaseTestCase {
         request.setHeader(getValidHeader("1010", "Test"));
         request.setGetAgreementsRequestBody(requestBody);
         return request;
-        
+
     }
 
     class MockAgreementsDao implements AgreementsDao {
         public boolean isGetByAccountIdCalled = false;
+
         public boolean isGetBySignerAccountIdCalled = false;
         public boolean isGetAgrHierarchyCalled = false;
         public boolean returnHierarchyData = true;
@@ -377,6 +473,24 @@ public class AgreementsHelper_UT extends BaseTestCase {
             agrInfo.setSoybeanAgreementFlag(soybeanAgreementFlag);
             return agrInfo;
         }
+
+        public List<SignerInformation> getSignersByAgreementCode(String agreementCode, boolean unexpiredAgreementsOnly) throws Exception {
+            List<SignerInformation> signers = new ArrayList<SignerInformation>();
+            if("STA".equalsIgnoreCase(agreementCode) && !unexpiredAgreementsOnly) {
+                SignerInformation signerOne = new SignerInformation();
+                signerOne.setSignerAccountId(1234);
+                signerOne.setSignerAccountName("Joe Signer");
+                signerOne.setAddressLine("123 Main Street");
+                signerOne.setCityName("Rolla");
+                signerOne.setPostalCode("56780");
+                signerOne.setSignerAliasId("0001234000");
+                signerOne.setStateOrProvince("MO");
+                signers.add(signerOne);
+            }
+            return signers;
+        }
+
+
     }
 
 

@@ -2,6 +2,7 @@ package com.monsanto.irdsoapservices.dao;
 
 import com.monsanto.irdsoapservices.to.AgreementHierarchyInfo;
 import com.monsanto.irdsoapservices.to.AgreementInfo;
+import com.monsanto.irdsoapservices.to.SignerInformation;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface AgreementsDao {
 
     int updateAgreement(AgreementInfo agreementInfo) throws Exception;
     List<AgreementHierarchyInfo> getAgreementHierarchy(long accountId, String licensedBy) throws Exception;
+
+    List<SignerInformation> getSignersByAgreementCode(String agreementCode, boolean unexpiredAgreementsOnly) throws Exception;
 }
