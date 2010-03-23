@@ -89,11 +89,11 @@ public class AccountAgreements_AT extends AbstractAcceptanceTestCase {
         assertAgrCategories(categories, 1, "COMMERCIAL_AGREEMENT", new AgreementType[]{}, new AgreementType[]{createAgreementType("Z051", "Bean Commercial"), createAgreementType("Z052", "Bean Testing")});
     }
 
-//    public void testGetSignersForAgreement() throws Exception {
-//        GetSignersForAgreementsResponseType signersResponse = acctAgreementClient.getSignersForAgreements(createGetSignersForAgreementsRequest("STA", true));
-//        List<SignerInformationType> signers = signersResponse.getGetSignersForAgreementsResponseBody().getSignerInformation();
-//        assertEquals(270, signers.size());
-//    }
+    public void testGetSignersForAgreement() throws Exception {
+        GetSignersForAgreementsResponseType signersResponse = acctAgreementClient.getSignersForAgreements(createGetSignersForAgreementsRequest("STA", true));
+        List<SignerInformationType> signers = signersResponse.getGetSignersForAgreementsResponseBody().getSignerInformation();
+        assertTrue(signers.size() > 0);
+    }
 
     private void assertAgrCategories(List<AgreementCategoryType> categories, int categoryIndex, String categoryName, AgreementType[] cornAgrCodes, AgreementType[] soyAgrCodes) {
         AgreementCategoryType commCategory = categories.get(categoryIndex);
