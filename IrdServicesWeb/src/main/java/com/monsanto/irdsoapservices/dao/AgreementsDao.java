@@ -23,6 +23,6 @@ public interface AgreementsDao {
 
     List<SignerInformation> getSignersByAgreementCode(String agreementCode, boolean unexpiredAgreementsOnly) throws Exception;
 
-    List<SignerInformation> getSignersByAgreementCodeForExpiredAgreements(String agreementCode, Date fromDate) throws Exception;    
+    List<SignerInformation> getSignersByAgreementCodeForExpiredAgreements(String agreementCode, Date fromDate, Date toDate) throws Exception;
 
 }

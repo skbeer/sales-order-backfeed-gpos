@@ -3,7 +3,6 @@ package com.monsanto.irdsoapservices.at;
 import com.monsanto.irdsoapservices.agreements.client.*;
 import com.monsanto.irdsoapservices.clientutil.ClientFactory;
 import com.monsanto.irdsoapservices.clientutil.EnvironmentEnum;
-import com.monsanto.irdsoapservices.at.AbstractAcceptanceTestCase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -92,6 +91,12 @@ public class AccountAgreements_AT extends AbstractAcceptanceTestCase {
     public void testGetSignersForAgreement() throws Exception {
         GetSignersForAgreementsResponseType signersResponse = acctAgreementClient.getSignersForAgreements(createGetSignersForAgreementsRequest("STA", true));
         List<SignerInformationType> signers = signersResponse.getGetSignersForAgreementsResponseBody().getSignerInformation();
+        assertTrue(signers.size() > 0);
+    }
+
+    public void testGetSignersForExpiredAgreement() throws Exception {
+        GetSignersForExpiredAgreementsResponseType signersResponse = acctAgreementClient.getSignersForExpiredAgreements(createGetSignersForExpiredAgreementsRequest("STA", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/2003"), new Date()));
+        List<SignerInformationType> signers = signersResponse.getGetSignersForExpiredAgreementsResponseBody().getSignerInformation();
         assertTrue(signers.size() > 0);
     }
 
@@ -218,5 +223,14 @@ public class AccountAgreements_AT extends AbstractAcceptanceTestCase {
         return request;
     }
 
-
+    private GetSignersForExpiredAgreementsRequestType createGetSignersForExpiredAgreementsRequest(String agreementCode, Date fromDate, Date endDate)  throws Exception{
+       GetSignersForExpiredAgreementsRequestType request = new GetSignersForExpiredAgreementsRequestType();
+       request.setHeader(getHeaderType());
+        GetSignersForExpiredAgreementsRequestBodyType requestBody = new GetSignersForExpiredAgreementsRequestBodyType();
+        requestBody.setAgreementCode(agreementCode);
+        requestBody.setBeginDate(XmlDateTimeUtil.transformToXmlGregorianCalendar(fromDate));
+        requestBody.setEndDate(XmlDateTimeUtil.transformToXmlGregorianCalendar(endDate));
+        request.setGetSignersForExpiredAgreementsRequestBody(requestBody);
+        return request;
+    }
 }

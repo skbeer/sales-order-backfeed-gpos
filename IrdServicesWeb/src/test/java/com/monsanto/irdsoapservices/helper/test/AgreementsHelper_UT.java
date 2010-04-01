@@ -1,24 +1,24 @@
 package com.monsanto.irdsoapservices.helper.test;
 
+import com.monsanto.irdsoapservices.agreements.schema.*;
 import com.monsanto.irdsoapservices.dao.AgreementsDao;
 import com.monsanto.irdsoapservices.dao.IrdDao;
-import com.monsanto.irdsoapservices.to.AgreementInfo;
-import com.monsanto.irdsoapservices.to.AgreementHierarchyInfo;
-import com.monsanto.irdsoapservices.to.SignerInformation;
 import com.monsanto.irdsoapservices.helper.AgreementsHelper;
-import com.monsanto.irdsoapservices.agreements.schema.*;
-import com.monsanto.irdsoapservices.test.BaseTestCase;
 import com.monsanto.irdsoapservices.service.AccountAgreementsFault;
+import com.monsanto.irdsoapservices.test.BaseTestCase;
+import com.monsanto.irdsoapservices.to.AgreementHierarchyInfo;
+import com.monsanto.irdsoapservices.to.AgreementInfo;
+import com.monsanto.irdsoapservices.to.SignerInformation;
 import com.monsanto.irdsoapservices.utils.XmlDateTimeUtil;
 import com.monsanto.isdcommon.header.schema.HeaderType;
 import com.monsanto.isdcommon.header.schema.PartnerIdentifierType;
 import com.monsanto.isdcommon.header.schema.PartnerTypeAttribute;
+import org.easymock.EasyMock;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import org.easymock.EasyMock;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -323,6 +323,88 @@ public class AgreementsHelper_UT extends BaseTestCase {
         assertTrue(signersInformation.isEmpty());
     }
 
+
+    public void testGetSignersForExpiredAgreements_invalidRequest_throwsError() throws Exception {
+        GetSignersForExpiredAgreementsRequestType signersRequest = new GetSignersForExpiredAgreementsRequestType();
+        GetSignersForExpiredAgreementsRequestBodyType  signersRequestBody = new GetSignersForExpiredAgreementsRequestBodyType();
+        signersRequestBody.setAgreementCode(null);
+        signersRequestBody.setBeginDate(null);
+        signersRequestBody.setEndDate(null);
+        signersRequest.setGetSignersForExpiredAgreementsRequestBody(signersRequestBody);
+
+        signersRequest.setHeader(getValidHeader("ABC123", "A_PARTNER"));
+
+        // init EasyMock classes
+        agreementsHelper = new AgreementsHelper();
+        agreementsDao = EasyMock.createMock(AgreementsDao.class);
+        irdDao = EasyMock.createMock(IrdDao.class);
+        agreementsHelper.setAgreementsDao(agreementsDao);
+        agreementsHelper.setIrdDao(irdDao);
+
+        try {
+            helper.getSignersForExpiredAgreements(signersRequest);
+            fail("exception should have occurred");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void testGetSignersForExpiredAgreements_invalidRequest_BadHeader_throwsError() throws Exception {
+        GetSignersForExpiredAgreementsRequestType signersRequest = new GetSignersForExpiredAgreementsRequestType();
+        GetSignersForExpiredAgreementsRequestBodyType  signersRequestBody = new GetSignersForExpiredAgreementsRequestBodyType();
+        signersRequestBody.setAgreementCode(null);
+        signersRequestBody.setBeginDate(null);
+        signersRequestBody.setEndDate(null);
+        signersRequest.setGetSignersForExpiredAgreementsRequestBody(signersRequestBody);
+
+        signersRequest.setHeader(getValidHeader("ABC123", "A_PARTNER"));
+        signersRequest.getHeader().setDocumentIdentifier(null);
+
+        // init EasyMock classes
+        agreementsHelper = new AgreementsHelper();
+        agreementsDao = EasyMock.createMock(AgreementsDao.class);
+        irdDao = EasyMock.createMock(IrdDao.class);
+        agreementsHelper.setAgreementsDao(agreementsDao);
+        agreementsHelper.setIrdDao(irdDao);
+
+        try {
+            helper.getSignersForExpiredAgreements(signersRequest);
+            fail("exception should have occurred");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void testGetSignersForExpiredAgreements_ValidRequest() throws Exception {
+        GetSignersForExpiredAgreementsRequestType signersRequest = new GetSignersForExpiredAgreementsRequestType();
+        GetSignersForExpiredAgreementsRequestBodyType  signersRequestBody = new GetSignersForExpiredAgreementsRequestBodyType();
+        signersRequestBody.setAgreementCode("STA");
+        signersRequestBody.setBeginDate(XmlDateTimeUtil.transformToXmlGregorianCalendar(new SimpleDateFormat("MM/dd/yyyy").parse("06/11/2003")));
+        signersRequestBody.setEndDate(XmlDateTimeUtil.transformToXmlGregorianCalendar(new Date()));
+        signersRequest.setGetSignersForExpiredAgreementsRequestBody(signersRequestBody);
+
+        signersRequest.setHeader(getValidHeader("ABC123", "A_PARTNER"));
+
+        // init EasyMock classes
+        agreementsHelper = new AgreementsHelper();
+        agreementsDao = EasyMock.createMock(AgreementsDao.class);
+        irdDao = EasyMock.createMock(IrdDao.class);
+        agreementsHelper.setAgreementsDao(agreementsDao);
+        agreementsHelper.setIrdDao(irdDao);
+
+        GetSignersForExpiredAgreementsResponseType signersWithAgreements = helper.getSignersForExpiredAgreements(signersRequest);
+        List<SignerInformationType> signersInformation = signersWithAgreements.getGetSignersForExpiredAgreementsResponseBody().getSignerInformation();
+        SignerInformationType signer = signersInformation.get(0);
+        assertEquals("Joe Signer", signer.getSignerAccountName());
+        assertEquals("1234", signer.getSignerAccountIdentifier().getValue());
+        assertEquals("0001234000", signer.getSignerAliasIdentifier().getValue());
+        AddressInformationType address = signer.getAddressInformation();
+        assertEquals("123 Main Street", address.getAddressLine().get(0));
+        assertEquals("Rolla", address.getCityName());
+        assertEquals("56780", address.getPostalCode());
+        assertEquals("MO", address.getStateOrProvince());
+    }
+
     private List<AgreementInfo> getExpectedAgreements() {
         List<AgreementInfo> agreementList = new ArrayList<AgreementInfo>();
         AgreementInfo agreementInfo = new AgreementInfo();
@@ -490,8 +572,20 @@ public class AgreementsHelper_UT extends BaseTestCase {
             return signers;
         }
 
-
+        public List<SignerInformation> getSignersByAgreementCodeForExpiredAgreements(String agreementCode, Date fromDate, Date toDate) throws Exception {
+            List<SignerInformation> signers = new ArrayList<SignerInformation>();
+            if("STA".equalsIgnoreCase(agreementCode) && fromDate.before(new Date())) {
+                SignerInformation signerOne = new SignerInformation();
+                signerOne.setSignerAccountId(1234);
+                signerOne.setSignerAccountName("Joe Signer");
+                signerOne.setAddressLine("123 Main Street");
+                signerOne.setCityName("Rolla");
+                signerOne.setPostalCode("56780");
+                signerOne.setSignerAliasId("0001234000");
+                signerOne.setStateOrProvince("MO");
+                signers.add(signerOne);
+            }
+            return signers;
+        }
     }
-
-
 }

@@ -266,4 +266,37 @@ public class AgreementsHelper extends AbstractHelper {
             throw new Exception("Received in-complete GetSignersForAgreementsRequest object");
         }
     }
+
+    public GetSignersForExpiredAgreementsResponseType getSignersForExpiredAgreements(GetSignersForExpiredAgreementsRequestType request) throws AccountAgreementsFault {
+        GetSignersForExpiredAgreementsResponseType response = new GetSignersForExpiredAgreementsResponseType();
+        try {
+            logger.debug("Validating getSignersForExpiredAgreementsRequest");
+            validateGetSignersForExpiredAgreementsRequest(request);
+            GetSignersForExpiredAgreementsResponseBodyType responseBody = new GetSignersForExpiredAgreementsResponseBodyType();
+            GetSignersForExpiredAgreementsRequestBodyType requestBody = request.getGetSignersForExpiredAgreementsRequestBody();
+
+            List<SignerInformation> signers = null;
+            logger.info("Retreiving Expired Signers by Agreement Code");
+
+            signers = agreementsDao.getSignersByAgreementCodeForExpiredAgreements(requestBody.getAgreementCode(), XmlDateTimeUtil.transformFromXmlGregorianCalendar(requestBody.getBeginDate()), XmlDateTimeUtil.transformFromXmlGregorianCalendar(requestBody.getEndDate()));
+
+            for(SignerInformation signer : signers) {
+                responseBody.getSignerInformation().add(signer.extractSignerInformationType());
+            }
+            response.setGetSignersForExpiredAgreementsResponseBody(responseBody);
+            response.setHeader(getResponseHeader(request.getHeader()));
+            logger.info("Found "+signers.size()+" Signers. Sending back to the client.");
+        } catch (Exception e) {
+            handleException(e, "getSignersForExpiredAgreements");
+        }
+        logger.debug("End: getSignersForExpiredAgreements()");
+        return response;
+    }
+
+    private void validateGetSignersForExpiredAgreementsRequest(GetSignersForExpiredAgreementsRequestType request) throws Exception {
+        if(request == null ||   request.getGetSignersForExpiredAgreementsRequestBody() == null ||
+                StringUtils.isNullOrEmpty(request.getGetSignersForExpiredAgreementsRequestBody().getAgreementCode())) {
+            throw new Exception("Received in-complete GetSignersForExpiredAgreementsRequest object");
+        }
+    }
 }

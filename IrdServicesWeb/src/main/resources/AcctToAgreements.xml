@@ -149,8 +149,8 @@
                     AND axm.active_flag = 'Y'
                     AND system_type_code = 'SAP'
                     AND atam.row_modify_date >= #fromDate#
-                    AND atam.row_modify_date &lt;= SYSDATE
-                    AND atam.end_date &lt;= SYSDATE
+                    AND atam.row_modify_date &lt;= #toDate#
+                    AND atam.end_date &lt;= #toDate#
     </select>
 
 </sqlMap>

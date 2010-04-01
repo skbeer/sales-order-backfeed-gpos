@@ -46,4 +46,10 @@ public class AccountAgreementsServiceImpl implements AccountAgreementService {
         logger.debug("Begin: GetSignersForAgreements()");
         return helper.getSignersForAgreements(request);
     }
+
+    public GetSignersForExpiredAgreementsResponseType getSignersForExpiredAgreements(@WebParam(name = "GetSignersForExpiredAgreementsRequest", targetNamespace = "urn:monsanto:ird:services:account:agreement", partName = "request") GetSignersForExpiredAgreementsRequestType request) throws AccountAgreementsFault {
+        AgreementsHelper helper = (AgreementsHelper)appContext.getBean("agreementsHelper");
+        logger.debug("Begin: getSignersForExpiredAgreements()");
+        return helper.getSignersForExpiredAgreements(request);
+    }
 }

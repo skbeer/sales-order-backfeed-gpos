@@ -1,20 +1,14 @@
 
 package com.monsanto.irdsoapservices.service;
 
+import com.monsanto.irdsoapservices.agreements.schema.*;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import com.monsanto.irdsoapservices.agreements.schema.GetAgreementHierarchyRequestType;
-import com.monsanto.irdsoapservices.agreements.schema.GetAgreementHierarchyResponseType;
-import com.monsanto.irdsoapservices.agreements.schema.GetAgreementsRequestType;
-import com.monsanto.irdsoapservices.agreements.schema.GetAgreementsResponseType;
-import com.monsanto.irdsoapservices.agreements.schema.GetSignersForAgreementsRequestType;
-import com.monsanto.irdsoapservices.agreements.schema.GetSignersForAgreementsResponseType;
-import com.monsanto.irdsoapservices.agreements.schema.UpdateAgreementRequestType;
-import com.monsanto.irdsoapservices.agreements.schema.UpdateAgreementResponseType;
 
 
 /**
@@ -89,6 +83,21 @@ public interface AccountAgreementService {
     public GetSignersForAgreementsResponseType getSignersForAgreements(
         @WebParam(name = "GetSignersForAgreementsRequest", targetNamespace = "urn:monsanto:ird:services:account:agreement", partName = "request")
         GetSignersForAgreementsRequestType request)
+        throws AccountAgreementsFault
+    ;
+
+    /**
+     * 
+     * @param request
+     * @return
+     *     returns com.monsanto.irdsoapservices.agreements.schema.GetSignersForExpiredAgreementsResponseType
+     * @throws AccountAgreementsFault
+     */
+    @WebMethod
+    @WebResult(name = "GetSignersForExpiredAgreementsResponse", targetNamespace = "urn:monsanto:ird:services:account:agreement", partName = "getSignersForExpiredAgreementsResponse")
+    public GetSignersForExpiredAgreementsResponseType getSignersForExpiredAgreements(
+        @WebParam(name = "GetSignersForExpiredAgreementsRequest", targetNamespace = "urn:monsanto:ird:services:account:agreement", partName = "request")
+        GetSignersForExpiredAgreementsRequestType request)
         throws AccountAgreementsFault
     ;
 

@@ -98,23 +98,23 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
     }
 
     public void testGetSignersByAgreementCodeForExpiredAgreements() throws Exception {
-     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("STA", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/2003"));
+     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("STA", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/2003"), new Date());
      assertTrue(signers.size() > 0);
     }
 
     public void testGetSignersByAgreementCodeForExpiredAgreementsDateInFarFuture() throws Exception {
-     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("STA", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"));
+     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("STA", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"), new Date());
      assertTrue(signers.size() == 0);
     }
 
     public void testGetSignersByAgreementCodeForExpiredAgreementsEmptyAgreementCode() throws Exception {
-     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"));
+     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"), new Date());
      assertTrue(signers.size() == 0);
     }
 
     public void testGetSignersByAgreementCodeForExpiredAgreementsNoAgreementCodeThrowsException() throws Exception {
      try {
-        List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements(null, new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"));
+        List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements(null, new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"), new Date());
         assertTrue(signers.size() == 0);
         fail("Exception should have occurred");
         } catch(Exception e) {
