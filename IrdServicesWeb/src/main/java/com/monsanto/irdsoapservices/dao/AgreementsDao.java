@@ -5,6 +5,7 @@ import com.monsanto.irdsoapservices.to.AgreementInfo;
 import com.monsanto.irdsoapservices.to.SignerInformation;
 
 import java.util.List;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,4 +22,7 @@ public interface AgreementsDao {
     List<AgreementHierarchyInfo> getAgreementHierarchy(long accountId, String licensedBy) throws Exception;
 
     List<SignerInformation> getSignersByAgreementCode(String agreementCode, boolean unexpiredAgreementsOnly) throws Exception;
+
+    List<SignerInformation> getSignersByAgreementCodeForExpiredAgreements(String agreementCode, Date fromDate) throws Exception;    
+
 }

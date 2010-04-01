@@ -97,6 +97,31 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
         }
     }
 
+    public void testGetSignersByAgreementCodeForExpiredAgreements() throws Exception {
+     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("STA", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/2003"));
+     assertTrue(signers.size() > 0);
+    }
+
+    public void testGetSignersByAgreementCodeForExpiredAgreementsDateInFarFuture() throws Exception {
+     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("STA", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"));
+     assertTrue(signers.size() == 0);
+    }
+
+    public void testGetSignersByAgreementCodeForExpiredAgreementsEmptyAgreementCode() throws Exception {
+     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"));
+     assertTrue(signers.size() == 0);
+    }
+
+    public void testGetSignersByAgreementCodeForExpiredAgreementsNoAgreementCodeThrowsException() throws Exception {
+     try {
+        List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements(null, new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"));
+        assertTrue(signers.size() == 0);
+        fail("Exception should have occurred");
+        } catch(Exception e) {
+            assertNotNull(e);
+        }
+    }
+
     private void assertAgrementHierarchyInfo(List<AgreementHierarchyInfo> agrHierarchy, int index, String agrCode, String agrDescr, Object commercialAgr, String monTraitAgr, String cornFlag, String soyFlag) {
         AgreementHierarchyInfo agrInfo = agrHierarchy.get(index);
         assertNotNull(agrInfo);

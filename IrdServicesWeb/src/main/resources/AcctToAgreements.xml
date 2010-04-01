@@ -132,7 +132,25 @@
                     </isEqual>
         <isEqual property="unexpiredAgreementsOnly" prepend="AND" compareValue="true">
                     atam.end_date >= SYSDATE
-                    </isEqual> 
+                    </isEqual>
+    </select>
+
+    <select id="getSignersByAgreementCodeForExpiredAgreements" parameterClass="java.util.Map" resultMap="getSignersByAgreementCodeResult">
+        SELECT DISTINCT signer_acct_id, alias_id AS sap_id, name_1,
+                        mailing_addr_line_1, mailing_city, mailing_state_code,
+                        mailing_zip
+                   FROM i_acct_to_agreement atam,
+                        s_acct_ext_dnml aed,
+                        s_acct_xref axm
+                  WHERE agreement_code = #agrCode#
+                    AND aed.acct_id = atam.signer_acct_id
+                    AND axm.acct_id = atam.signer_acct_id
+                    AND axm.acct_id = aed.acct_id
+                    AND axm.active_flag = 'Y'
+                    AND system_type_code = 'SAP'
+                    AND atam.row_modify_date >= #fromDate#
+                    AND atam.row_modify_date &lt;= SYSDATE
+                    AND atam.end_date &lt;= SYSDATE
     </select>
 
 </sqlMap>

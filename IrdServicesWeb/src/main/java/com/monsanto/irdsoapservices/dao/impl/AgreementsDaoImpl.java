@@ -25,6 +25,7 @@ public class AgreementsDaoImpl extends SqlMapClientDaoSupport implements Agreeme
     private static final String SIGNER_ACCT_ID = "signerAcctId";
     public static final String SYSTEM_TYPE_CODE = "systemTypeCode";
     public static final String UNEXPIRED_ACCOUNTS_ONLY = "unexpiredAgreementsOnly";
+    public static final String FROM_DATE = "fromDate";
 
     public List<AgreementInfo> getAgreementsByAccountId(long acctId, String agreementCode, String resultAccountType) throws Exception {
         if (AccountTypeAttribute.ACCTID.toString().equalsIgnoreCase(resultAccountType)) {
@@ -61,6 +62,12 @@ public class AgreementsDaoImpl extends SqlMapClientDaoSupport implements Agreeme
         return (List<SignerInformation>) getSqlMapClientTemplate().queryForList("AcctToAgreements.getSignersByAgreementCode", params);
     }
 
+    public List<SignerInformation> getSignersByAgreementCodeForExpiredAgreements(String agreementCode, Date fromDate) throws Exception {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put(AGREEMENT_CODE, agreementCode.trim().toUpperCase());
+        params.put(FROM_DATE, fromDate);
+        return (List<SignerInformation>) getSqlMapClientTemplate().queryForList("AcctToAgreements.getSignersByAgreementCodeForExpiredAgreements", params);
+    }
 
     private Map<String, String> createParamMap(long accountId, long signerAcctId, String agreementCode, String systemTypeCode) {
         Map<String, String> params = new HashMap<String, String>();
