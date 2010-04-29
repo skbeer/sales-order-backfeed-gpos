@@ -3,6 +3,7 @@ package com.monsanto.irdsoapservices.clientutil;
 import com.monsanto.irdsoapservices.agreements.client.AccountAgreementService_Service;
 import com.monsanto.irdsoapservices.brands.client.BrandsService_Service;
 import com.monsanto.irdsoapservices.client.AccountInformationService_Service;
+import com.monsanto.irdsoapservices.contacts.client.ContactService_Service;
 import org.apache.log4j.Logger;
 
 import javax.xml.namespace.QName;
@@ -21,6 +22,7 @@ public class ClientFactory {
     public static QName ACCT_INFORMATION_QNAME = new QName("urn:monsanto:ird:services:wsdl:account:information:1:0", "AccountInformationService");
     public static QName ACCT_AGREEMENTS_QNAME = new QName("urn:monsanto:ird:services:wsdl:account:agreement:1:0", "AccountAgreementService");
     public static QName BRANDS_QNAME = new QName("urn:monsanto:ird:services:wsdl:brands:1:0", "BrandsService");
+    public static QName CONTACTS_QNAME = new QName("urn:monsanto:ird:services:wsdl:contacts:1:0", "ContactService");
 
     public static AccountInformationService_Service getAccountInformationClient(EnvironmentEnum environment, String username, String password) throws Exception {
         String wsdlLocation = Configuration.getInstance().getWsdlLocation(environment, Configuration.ACCOUNT_INFORMATION_SERVICE);
@@ -53,6 +55,17 @@ public class ClientFactory {
             brandsService.setHandlerResolver(new SecurityHandlerResolver(username, password));
         }
         return brandsService;
+    }
+
+    public static ContactService_Service getContactsClient(EnvironmentEnum environment, String username, String password) throws Exception  {
+        String wsdlLocation = Configuration.getInstance().getWsdlLocation(environment, Configuration.CONTACTS_SERVICE);
+        logger.info("ClientFactory:: Creating new Service Stub using WSDL - " + wsdlLocation);
+        URL url =  new URL(wsdlLocation);
+        ContactService_Service contactService = new ContactService_Service(url, CONTACTS_QNAME);
+        if(!isNullOrEmpty(username) || !isNullOrEmpty(password)) {
+            contactService.setHandlerResolver(new SecurityHandlerResolver(username, password));
+        }
+        return contactService;
     }
     
     private static boolean isNullOrEmpty(String str) {

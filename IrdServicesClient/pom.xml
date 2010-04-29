@@ -11,7 +11,7 @@
    
     <groupId>com.monsanto.commercial.irdsoapservices-client</groupId>
     <artifactId>irdsoapservices-client</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <packaging>jar</packaging>
     <name>IrdSoapServices-Client</name>
     <description>JAX_WS CLIENT FOR IRD SOAP SERVICES</description>
@@ -159,6 +159,17 @@
                                             <binding dir="src/main/resources" includes="brands-jaxws-custom.xml"/>
                                             <binding dir="src/main/resources" includes="brands-jaxb-custom.xml"/>
                                             <binding dir="src/main/resources" includes="brands-commonheader-jaxb-custom.xml"/>
+                                         </wsimport>
+                                        <!-- Contacts Service -->
+                                        <wsimport
+                                                wsdl=" http://services-dint.monsanto.com/IrdServices/Contacts?wsdl"
+                                                keep="true"
+                                                verbose="true"
+                                                sourcedestdir="src/main/java"
+                                         >
+                                            <binding dir="src/main/resources" includes="contacts-jaxws-custom.xml"/>
+                                            <binding dir="src/main/resources" includes="contacts-jaxb-custom.xml"/>
+                                            <binding dir="src/main/resources" includes="contacts-commonheader-jaxb-custom.xml"/>
                                          </wsimport>
                                     </tasks>
                                 </configuration>

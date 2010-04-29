@@ -21,6 +21,7 @@ public class Configuration {
     public static final String ACCOUNT_INFORMATION_SERVICE = "account.information.uri";
     public static final String ACCOUNT_AGREEMENTS_SERVICE = "account.agreements.uri";
     public static final String BRANDS_SERVICE = "brands.uri";
+    public static final String CONTACTS_SERVICE = "contacts.uri";
 
     private static final String DEV_EXT = "dev.ext";
     private static final String DEV_INT = "dev.int";
