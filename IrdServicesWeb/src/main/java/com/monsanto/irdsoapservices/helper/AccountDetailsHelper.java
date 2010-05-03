@@ -23,6 +23,7 @@ public class AccountDetailsHelper extends AbstractHelper {
 	private IrdDao dao = null;
 	
 	public GetAccountDetailsResponseType getAccountDetails(GetAccountDetailsRequestType request) throws AccountInformationFault {
+        System.out.println("AccountDetailsHelper.getAccountDetails");
 		GetAccountDetailsResponseType responseType = new GetAccountDetailsResponseType();
         long growerAccountId = 0;
 		try {
@@ -110,6 +111,8 @@ public class AccountDetailsHelper extends AbstractHelper {
 	}
 
 	protected long getValidatedGrowerAccountId(GetAccountDetailsRequestType request) throws Exception {
+        System.out.println("AccountDetailsHelper.getValidatedGrowerAccountId");
+        System.out.println("condition response:"+request == null || request.getGetAccountDetailsRequestBody().getGrowerAccountId()<=0);
 		if(request == null || request.getGetAccountDetailsRequestBody().getGrowerAccountId()<=0) {
 			throw new IrdSoapServicesException("Recieved in-valid request for operation: getAccountDetails");
 		}

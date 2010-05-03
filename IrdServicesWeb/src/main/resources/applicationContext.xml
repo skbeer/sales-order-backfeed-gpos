@@ -40,6 +40,11 @@
             <property name="sqlMapClient" ref="sqlMap"/>
         </bean>
 
+        <bean id="vistiveProcessorDAO" class="com.monsanto.irdsoapservices.dao.impl.VistiveProcessorDAOImpl">
+            <property name="dataSource" ref="irdDataSource"/>
+            <property name="sqlMapClient" ref="sqlMap"/>
+        </bean>
+
 		<bean id="accountAttributesHelper" class="com.monsanto.irdsoapservices.helper.AccountAttributesHelper">
 			<property name="dao" ref="irdDao"/>
 		</bean>
@@ -56,7 +61,10 @@
         <bean id="brandsHelper" class="com.monsanto.irdsoapservices.helper.BrandsHelper">
             <property name="brandsDao" ref="brandsDao"/>
         </bean>
-        
+
+        <bean id="visitveProcessorHelper" class="com.monsanto.irdsoapservices.helper.VistiveProcessorHelper">
+            <property name="vistiveProcessorDAO" ref="vistiveProcessorDAO"/>
+        </bean>
 		
 		<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		    <property name="dataSource" ref="irdDataSource"/>

@@ -7,5 +7,7 @@
     <sqlMap resource="LfaGrowerDetails.xml"/>
     <sqlMap resource="AcctToAgreements.xml"/>
     <sqlMap resource="Brands.xml"/>
-    <sqlMap resource="Employee.xml"/>    
+    <sqlMap resource="Employee.xml"/>
+    <sqlMap resource="VistiveProcessor.xml"/>
+
 </sqlMapConfig>

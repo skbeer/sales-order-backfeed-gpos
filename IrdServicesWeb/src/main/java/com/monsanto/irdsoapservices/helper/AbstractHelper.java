@@ -44,7 +44,7 @@ public abstract class AbstractHelper {
     }
     
     protected void logException(Throwable exception, Logger logger, String operationName) {
-        logger.error(exception);
+        logger.error("Error occurred during operation: " + operationName,exception);
         new ErrorEmailer().sendErrorEmail(exception, "Error occurred during operation: " + operationName);
     }
     

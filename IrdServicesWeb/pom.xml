@@ -248,7 +248,7 @@
         <groupId>xerces</groupId>
         <artifactId>xercesImpl</artifactId>
         <version>2.9.1</version>
-        <scope>provided</scope>
+        <scope>test</scope>
     </dependency>
     <dependency>
         <groupId>org.easymock</groupId>
@@ -443,6 +443,46 @@
                                             <binding dir="src/main/resources" includes="contacts-jaxws-custom.xml"/>
                                             <binding dir="src/main/resources" includes="contacts-jaxb-custom.xml"/>
                                             <binding dir="src/main/resources" includes="contacts-commonheader-jaxb-custom.xml"/>
+                                         </wsimport>
+
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+         <profile>
+            <id>visitveprocessorlistservice-generate-service-stubs-wsimport</id>
+            <build>
+                <plugins>
+                    <!--WSImport-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>service-stubs-wsimport</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+                                            <classpath refid="maven.compile.classpath"/>
+                                        </taskdef>
+
+                                        <echo>Calling wsimport for Vistive Processor List Service</echo>
+                                        <wsimport
+                                                wsdl="IrdServicesWeb/src/main/resources/VistiveProcessor.wsdl"
+                                                keep="true"
+                                                verbose="true"
+                                                sourcedestdir="src/main/java"
+                                         >
+                                            <binding dir="src/main/resources" includes="vistiveprocessorlist-jaxws-custom.xml"/>
+                                            <binding dir="src/main/resources" includes="vistiveprocessorlist-jaxb-custom.xml"/>
                                          </wsimport>
 
                                     </tasks>

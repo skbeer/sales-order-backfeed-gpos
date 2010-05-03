@@ -68,6 +68,18 @@
         <url-pattern>/ContactService</url-pattern>
     </servlet-mapping>
 
+     <servlet>
+        <display-name>VistiveProcessorListService</display-name>
+        <servlet-name>VistiveProcessorListService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VistiveProcessorListService</servlet-name>
+        <url-pattern>/VistiveProcessorListService</url-pattern>
+    </servlet-mapping>
+
+
+
 
 
 </web-app>

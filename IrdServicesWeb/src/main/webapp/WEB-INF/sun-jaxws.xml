@@ -21,4 +21,9 @@
         implementation='com.monsanto.irdsoapservices.service.impl.ContactServiceImpl'
         url-pattern='/ContactService'/>
 
+    <endpoint
+           name='VistiveProcessorListService'
+           implementation='com.monsanto.irdsoapservices.service.impl.VistiveProcessorListServiceImpl'
+           url-pattern='/VistiveProcessorListService'/>
+    
 </endpoints>
