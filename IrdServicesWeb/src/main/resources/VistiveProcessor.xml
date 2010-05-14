@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="processors">
+
+    <select id="getVistiveProcessors" resultClass="com.monsanto.irdsoapservices.to.ProcessorTO">
+        select ata.acct_id acctId,ata.agreement_code processorCode,'Y' activeFlag,
+            ata.row_modify_date acctLastModifiedDateTime,aed.short_name acctName,
+            aed.shipping_addr_line_1 address,aed.shipping_city city,
+            aed.shipping_state_code state,aed.shipping_zip zipCode,aed.ic_code ebId
+        from ird.acct_to_agreement ata, agshare.acct_ext_dnml aed
+        where ATA.ACCT_ID = AED.ACCT_ID
+                and ata.AGREEMENT_CODE = 'VSSP'
+                and ata.END_DATE > sysdate
+        order by acctName
+    </select>
+
+
+</sqlMap>
+

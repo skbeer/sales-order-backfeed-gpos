@@ -1,0 +1,69 @@
+<xsd:schema xmlns="urn:ecms:schema:vistiveprocessorlist:1:0" xmlns:cidx="urn:cidx:names:specification:ces:schema:all:5:0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="urn:ecms:schema:vistiveprocessorlist:1:0"
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="urn:cidx:names:specification:ces:schema:all:5:0" schemaLocation="CIDX_5.0.xsd"/>
+	<xsd:complexType name="VistiveProcessorListRequestType">
+		<xsd:sequence>
+			<xsd:element ref="cidx:Header"/>
+		</xsd:sequence>
+		<xsd:attribute name="Version" use="required" fixed="1.0">
+			<xsd:simpleType>
+				<xsd:restriction base="cidx:cidxToken"/>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="VistiveProcessorListRequest" type="VistiveProcessorListRequestType">
+		<xsd:annotation>
+			<xsd:documentation>This is the document that describes a request to retrieve a list of Vistive Processors.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+    <xsd:element name="VistiveProcessorList" type="VistiveProcessorListType">
+		<xsd:annotation>
+			<xsd:documentation>Comment describing your root element</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+    <xsd:element name="VistiveProcessorListFault" type="VistiveProcessorListFaultType"/>
+	<xsd:complexType name="VistiveProcessorListType">
+		<xsd:sequence>
+			<xsd:element ref="cidx:Header"/>
+			<xsd:element ref="VistiveProcessorListBody"/>
+		</xsd:sequence>
+		<xsd:attribute name="Version" use="required" fixed="1.0">
+			<xsd:simpleType>
+				<xsd:restriction base="cidx:cidxToken"/>
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="VistiveProcessorListBody" type="VistiveProcessorListBodyType"/>
+	<xsd:complexType name="VistiveProcessorListBodyType">
+		<xsd:sequence>
+			<xsd:element ref="VistiveProcessorEntity" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="VistiveProcessorEntity" type="VistiveProcessorEntityType" />
+	<xsd:complexType name="VistiveProcessorEntityType">
+		<xsd:sequence>
+			<xsd:element ref="cidx:PartnerInformation"/>
+            <xsd:element ref="LastModifiedDateTime" minOccurs="0"/>
+            <xsd:element name="VistiveProcessorCode" type="xsd:string"/>
+		</xsd:sequence>
+		<xsd:attribute name="ActiveFlag" type="ActiveFlagType" use="required"/>
+	</xsd:complexType>
+
+    <xsd:element name="LastModifiedDateTime" type="LastModifiedDateTimeType"/>
+    <xsd:simpleType name="LastModifiedDateTimeType">
+		<xsd:restriction base="cidx:cidxDateTime"/>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ActiveFlagType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="True"/>
+			<xsd:enumeration value="False"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+      <xsd:complexType name="VistiveProcessorListFaultType">
+		<xsd:sequence>
+			<xsd:element name="problem" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

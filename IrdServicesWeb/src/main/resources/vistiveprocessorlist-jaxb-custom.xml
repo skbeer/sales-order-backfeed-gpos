@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+version="1.0"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" >
+    <jaxb:bindings schemaLocation="VistiveProcessorSchema.xsd"
+    node="/xsd:schema">
+    <jaxb:schemaBindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+    <jaxb:package name="com.monsanto.irdsoapservices.vistiveprocessorlist.schema"/>
+    </jaxb:schemaBindings>
+    </jaxb:bindings>
+    <jaxb:bindings schemaLocation="CIDX_5.0.xsd"
+    node="/xsd:schema">
+    <jaxb:schemaBindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+    <jaxb:package name="com.monsanto.cidx.header.schema"/>
+    </jaxb:schemaBindings>
+    </jaxb:bindings>  
+</jaxb:bindings>
+        
