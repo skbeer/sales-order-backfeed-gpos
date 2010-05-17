@@ -143,6 +143,19 @@ public class IrdDaoImpl_UT extends AbstractTransactionalDataSourceSpringContextT
         assertEquals("christine.m.luelf@monsanto.com", empInfo.getEmailAddress());
     }
 
+    public void testGetAssocEmployees_withData_returnEmployeeList_WithSTO() throws Exception {
+        List<EmployeeInfo> employees = irdDao.getAssociatedEmployees(50420039);
+        assertNotNull(employees);
+        assertEquals(1, employees.size());
+        EmployeeInfo empInfo = employees.get(0);
+        assertEquals(50420039 ,empInfo.getAccountId());
+        assertEquals("ALGALL", empInfo.getUserId());
+        assertEquals("STO", empInfo.getRoleCode());
+        assertEquals("Amy", empInfo.getFirstName());
+        assertEquals("Gallatin", empInfo.getLastName());
+        assertEquals("amy.l.gallatin@monsanto.com", empInfo.getEmailAddress());
+    }
+
 	private void assertLfaDetails(LfaGrowerDetails details, String spouse, String organizations) {
 		assertEquals(10, details.getAccountId());
 		assertEquals(spouse, details.getSpouse());

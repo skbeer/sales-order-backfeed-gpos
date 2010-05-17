@@ -36,7 +36,7 @@ public class Configuration {
   private Logger logger = null;
   private HashMap<String, String> prefixMap = null;
 
-  private String CONFIG_FILE = "Configuration";
+  private String CONFIG_FILE = "AppConfiguration";
     /**
      * Private constructor.
      */
