@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" 	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="BackfeedData">
+	<typeAlias alias="transactionInfo"
+		type="com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo" />
+
+	<resultMap id="transaction" class="transactionInfo">
+		<result property="name" column="PARTNER_NAME" />
+		<result property="groupCode" column="GROUP_CODE" />
+		<result property="companyCode" column="COMPANY_CODE" />
+        <result property="transactionType" column="TRANSACTION_TYPE" />
+        <result property="startDate" column="START_DATE" />
+        <result property="endDate" column="EXPIRATION_DATE" />
+        <result property="lastTransactionDate" column="LAST_TRANSACTION_DATE" />
+        <result property="lastTransactionNumber" column="LAST_TRANSACTION_NUMBER" />
+	</resultMap>
+    
+	<select id="getTransactionsToBeProcessed" resultMap="transaction">
+	    SELECT  PARTNER_NAME,
+	            GROUP_CODE,
+	            COMPANY_CODE,
+	            CHOREOGRAPHY,
+	            TRANSACTION_TYPE,
+	            START_DATE,
+	            EXPIRATION_DATE,
+	            LAST_TRANSACTION_DATE,
+	            LAST_TRANSACTION_NUMBER
+        FROM    ECOM.PARTNER_BACKFEED_CONTROL
+        WHERE   (START_DATE &lt;= SYSDATE) AND (EXPIRATION_DATE &gt; SYSDATE)
+   		ORDER BY PARTNER_NAME
+	</select>
+
+    <update id="updateLastTransactionStats" parameterClass="transactionInfo">
+        UPDATE  ECOM.PARTNER_BACKFEED_CONTROL
+        SET     LAST_TRANSACTION_DATE = #lastTransactionDate#, LAST_TRANSACTION_NUMBER = #lastTransactionNumber#
+        WHERE   GROUP_CODE = #groupCode# AND TRANSACTION_TYPE = #transactionType#
+    </update>
+
+
+</sqlMap>
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	       	xmlns:aop="http://www.springframework.org/schema/aop"
+		    xmlns:tx="http://www.springframework.org/schema/tx"
+       		xsi:schemaLocation="
+       			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+        <bean id="fsDataSource"
+			class="org.springframework.jndi.JndiObjectFactoryBean">
+			<property name="jndiName">
+				<value>fs_datasource</value>
+			</property>
+		</bean>
+
+		<bean id="fsSqlMap" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		        <property name="configLocation">
+		        	<value>classpath:FsSqlMapConfig.xml</value>
+		        </property>
+		        <property name="dataSource" ref="fsDataSource" />
+		</bean>
+
+        <bean id="transactionDao" class="com.monsanto.irdsoapservices.salesorder.dao.TransactionDaoImpl">
+            <property name="sqlMapClient" ref="fsSqlMap"/>
+            <property name="dataSource" ref="fsDataSource"/>
+        </bean>
+    
+        <bean id="pposHelper" class="com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper">
+            <property name="clientFactory" ref="clientFactory"/>
+            <property name="pposRequestBuilder" ref="pposRequestBuilder"/>
+            <property name="salesOrderDao" ref="salesOrderDao"/>
+        </bean>
+
+        <bean id="salesOrderService" class="com.monsanto.irdsoapservices.salesorder.service.SalesOrderReportService">
+            <property name="transactionDao" ref="transactionDao"/>
+            <property name="pposHelper" ref="pposHelper"/>
+        </bean>
+
+        <bean id="clientFactory" class="com.monsanto.irdsoapservices.salesorder.client.ClientFactory"/>
+        <bean id="pposRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.PPOSRequestBuilder"/>
+
+		<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		    <property name="dataSource" ref="fsDataSource"/>
+	    </bean>
+
+		<tx:advice id="txAdvice" transaction-manager="txManager">
+	        <tx:attributes>
+	            <tx:method name="get*" read-only="true" rollback-for="Exception,RuntimeException"/>
+	            <tx:method name="*" rollback-for="Exception,RuntimeException"/>
+	        </tx:attributes>
+	    </tx:advice>
+
+	    <aop:config>
+	        <aop:pointcut id="serviceOperation" expression="execution(* com.monsanto.irdsoapservices.helper.*.*(..))"/>
+	        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
+    	</aop:config>
+
+
+	</beans>

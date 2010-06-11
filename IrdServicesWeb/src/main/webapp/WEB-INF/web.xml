@@ -78,6 +78,15 @@
         <url-pattern>/VistiveProcessorListService</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SalesOrderServlet</servlet-name>
+        <servlet-class>com.monsanto.irdsoapservices.salesorder.servlet.SalesOrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SalesOrderServlet</servlet-name>
+        <url-pattern>/SalesOrderServlet</url-pattern>
+    </servlet-mapping>
+
 
 
 

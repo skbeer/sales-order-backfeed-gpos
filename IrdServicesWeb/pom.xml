@@ -493,5 +493,44 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+           <id>salesorder-generate-service-stubs-wsimport</id>
+           <build>
+               <plugins>
+                   <!--WSImport-->
+                   <plugin>
+                       <groupId>org.apache.maven.plugins</groupId>
+                       <artifactId>maven-antrun-plugin</artifactId>
+                       <executions>
+                           <execution>
+                               <id>service-stubs-wsimport</id>
+                               <phase>generate-sources</phase>
+                               <goals>
+                                   <goal>run</goal>
+                               </goals>
+                               <configuration>
+                                   <tasks>
+                                       <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+                                           <classpath refid="maven.compile.classpath"/>
+                                       </taskdef>
+
+                                       <echo>Calling wsimport for Vistive Processor List Service</echo>
+                                       <wsimport
+                                               wsdl="http://services-dint.monsanto.com/ECOM_SalesDoc/SalesOrder?wsdl"
+                                               keep="true"
+                                               verbose="true"
+                                               sourcedestdir="src/main/java"
+                                               package="com.monsanto.irdsoapservices.salesorder.schema"
+                                        />
+
+                                   </tasks>
+                               </configuration>
+                           </execution>
+                       </executions>
+                   </plugin>
+               </plugins>
+           </build>
+       </profile>
+
     </profiles>
 </project>
