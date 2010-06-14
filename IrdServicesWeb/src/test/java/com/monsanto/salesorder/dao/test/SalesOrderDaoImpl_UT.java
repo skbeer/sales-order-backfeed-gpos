@@ -38,28 +38,28 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
     }
 
     public void testGetPPOSOrders() throws Exception {
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.set(2010, 04, 20);
-//        List<PPOSOrderInfo> pposOrders = salesOrderDao.getPPOSOrderInfo(calendar.getTime(), "XA");
-//        System.out.println("No of Rows = "+pposOrders.size());
-//        assertTrue(pposOrders.size() > 0);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2010, 04, 20);
+        List<PPOSOrderInfo> pposOrders = salesOrderDao.getPPOSOrderInfo(calendar.getTime(), "XA");
+        System.out.println("No of Rows = "+pposOrders.size());
+        assertTrue(pposOrders.size() > 0);
 //        List<PPOSOrderInfo> someOrders = new ArrayList<PPOSOrderInfo>(4);
 //        someOrders.add(pposOrders.get(0));
 //        someOrders.add(pposOrders.get(1));
 //        someOrders.add(pposOrders.get(2));
 //        someOrders.add(pposOrders.get(3));
-        PPOSHelper helper = new PPOSHelper();
-        TransactionInfo tran = new TransactionInfo();
-        tran.setCompanyCode("0062538350000");
-        tran.setName("WINFIELD SOLUTIONS LLC ");
-        tran.setGroupCode("XA");
-        tran.setStartDate(null);
-        tran.setLastTransactionDate(new SimpleDateFormat("MM/dd/yyyy").parse("05/20/2010"));
-        tran.setLastTransactionNumber(0);
-        helper.setSalesOrderDao(salesOrderDao);
-        helper.setPposRequestBuilder(new PPOSRequestBuilder());
-        helper.setClientFactory(new ClientFactory());
-        helper.processPPOSOrderReport(tran);
+//        PPOSHelper helper = new PPOSHelper();
+//        TransactionInfo tran = new TransactionInfo();
+//        tran.setCompanyCode("0062538350000");
+//        tran.setName("WINFIELD SOLUTIONS LLC ");
+//        tran.setGroupCode("XA");
+//        tran.setStartDate(null);
+//        tran.setLastTransactionDate(new SimpleDateFormat("MM/dd/yyyy").parse("05/20/2010"));
+//        tran.setLastTransactionNumber(0);
+//        helper.setSalesOrderDao(salesOrderDao);
+//        helper.setPposRequestBuilder(new PPOSRequestBuilder());
+//        helper.setClientFactory(new ClientFactory());
+//        helper.processPPOSOrderReport(tran);
     }
 
 }
