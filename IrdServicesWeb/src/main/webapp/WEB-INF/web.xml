@@ -87,6 +87,15 @@
         <url-pattern>/SalesOrderServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <display-name>RetailSellerInformationService</display-name>
+        <servlet-name>RetailSellerInformationService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RetailSellerInformationService</servlet-name>
+        <url-pattern>/RetailSellerService</url-pattern>
+    </servlet-mapping>
 
 
 

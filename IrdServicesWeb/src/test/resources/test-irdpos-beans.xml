@@ -19,7 +19,6 @@
 		<property name="password" value="dev_Pos_2009" />
 	</bean>
 
-
 	<bean id="sqlMap"
 		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
 		<property name="configLocation">
@@ -27,6 +26,15 @@
 		</property>
 		<property name="dataSource" ref="irdDataSource" />
 	</bean>
+
+    <bean id="testSqlMap"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation">
+			<value>classpath:TestSqlMapConfig.xml</value>
+		</property>
+		<property name="dataSource" ref="irdDataSource" />
+	</bean>
+
 	<bean id="irdDao"
 		class="com.monsanto.irdsoapservices.dao.impl.IrdDaoImpl">
 		<property name="dataSource" ref="irdDataSource" />
@@ -55,10 +63,24 @@
 		<property name="sqlMapClient" ref="sqlMap" />
     </bean>
 
+    <bean id="retailSellerDao" class="com.monsanto.irdsoapservices.retailseller.dao.RetailSellerDaoImpl">
+        <property name="dataSource" ref="irdDataSource"/>
+        <property name="sqlMapClient" ref="sqlMap"/>
+    </bean>
+
+    <bean id="testDataDao" class="com.monsanto.retailseller.dao.TestDataDaoImpl">
+        <property name="dataSource" ref="irdDataSource"/>
+        <property name="sqlMapClient" ref="testSqlMap"/>
+    </bean>
+
 	<bean id="accountAttributesHelper"
 		class="com.monsanto.irdsoapservices.helper.AccountAttributesHelper">
 		<property name="dao" ref="irdDao" />
 	</bean>
+
+    <bean id="retailSellerHelper" class="com.monsanto.irdsoapservices.retailseller.helper.RetailSellerHelper">
+        <property name="sellerDao" ref="retailSellerDao"/>
+    </bean>
 
 	<!--<bean id="contactsHelper"-->
 		<!--class="com.monsanto.ird.soap.services.helper.ContactsHelper">-->

@@ -57,7 +57,7 @@
       String logNameFilterType = (String)request.getParameter("logNameFilterType");
     %>
     <div id="content">
-      <h1>Log4J Administration :: EAR Version 1.1.1 :: Date Created: 05/17/2010 11:00 AM</h1>
+      <h1>Log4J Administration :: EAR Version 1.1.1 :: Date Created: 06/30/2010 1:00 PM</h1>
       <div class="filterForm">
         <form action="log4jAdmin.jsp" name="logFilterForm">Filter Loggers:&nbsp;&nbsp;
           <input name="logNameFilter" type="text" size="50" value="<%=(logNameFilter == null ? "":logNameFilter)%>" class="filterText" />

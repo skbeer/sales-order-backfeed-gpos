@@ -255,7 +255,13 @@
         <artifactId>easymockclassextension</artifactId>
         <version>2.4</version>
         <scope>test</scope>
-    </dependency>        
+    </dependency>
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <version>1.8.3</version>
+        <scope>test</scope>
+    </dependency>
     </dependencies>
 
     <build>
@@ -514,13 +520,51 @@
                                            <classpath refid="maven.compile.classpath"/>
                                        </taskdef>
 
-                                       <echo>Calling wsimport for Vistive Processor List Service</echo>
+                                       <echo>Calling wsimport for Sales Order Service</echo>
                                        <wsimport
                                                wsdl="http://services-dint.monsanto.com/ECOM_SalesDoc/SalesOrder?wsdl"
                                                keep="true"
                                                verbose="true"
                                                sourcedestdir="src/main/java"
                                                package="com.monsanto.irdsoapservices.salesorder.schema"
+                                        />
+
+                                   </tasks>
+                               </configuration>
+                           </execution>
+                       </executions>
+                   </plugin>
+               </plugins>
+           </build>
+       </profile>
+       <profile>
+           <id>retailseller-generate-service-stubs-wsimport</id>
+           <build>
+               <plugins>
+                   <!--WSImport-->
+                   <plugin>
+                       <groupId>org.apache.maven.plugins</groupId>
+                       <artifactId>maven-antrun-plugin</artifactId>
+                       <executions>
+                           <execution>
+                               <id>service-stubs-wsimport</id>
+                               <phase>generate-sources</phase>
+                               <goals>
+                                   <goal>run</goal>
+                               </goals>
+                               <configuration>
+                                   <tasks>
+                                       <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+                                           <classpath refid="maven.compile.classpath"/>
+                                       </taskdef>
+
+                                       <echo>Calling wsimport for Retail Seller Information Service</echo>
+                                       <wsimport
+                                               wsdl="http://services-dint.monsanto.com/ECOM_SalesDoc/ProxyServices/RetailSellerInformation?wsdl"
+                                               keep="true"
+                                               verbose="true"
+                                               sourcedestdir="src/main/java"
+                                               package="com.monsanto.irdsoapservices.retailseller.schema"
                                         />
 
                                    </tasks>

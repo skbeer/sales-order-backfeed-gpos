@@ -4,8 +4,6 @@ import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
-import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderService;
-import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderService_Service;
 import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderReportResponseType;
 import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
 import com.monsanto.irdsoapservices.utils.ErrorEmailer;
@@ -32,13 +30,15 @@ public class PPOSHelper {
         int ordersSent = 0;
         try {
             logger.info("Initiating PPOS SalesOrderReport for Partner:"+transaction.getName());
-            List<PPOSOrderInfo> deNormalizedOrders = salesOrderDao.getPPOSOrderInfo(transaction.getLastTransactionDate(), transaction.getGroupCode());
-            logger.info("Total number of Line Items:"+deNormalizedOrders.size());
+            List<PPOSOrderInfo> deNormalizedOrders = salesOrderDao.getPPOSOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
+            logger.info("Total number of PPOS Line Items:"+deNormalizedOrders.size());
             List<PPOSOrderInfo> normalizedOrders = normalizeOrderLineItems(deNormalizedOrders);
-            logger.info("Total number of Orders:"+normalizedOrders.size());
-            logger.info("Calling the Sales Order Service");
-            SalesOrderReportResponseType response = clientFactory.getSalesOrderClient().getSalesOrderReport(pposRequestBuilder.buildPPOSRequest(normalizedOrders.subList(0,1), transaction));
-            logger.info("Received Response from Service:"+response.getStatus());
+            logger.info("Total number of POS Orders:"+normalizedOrders.size());
+            if(normalizedOrders.size() > 0) {
+                logger.info("Calling the Sales Order Service");
+                SalesOrderReportResponseType response = clientFactory.getSalesOrderClient().getSalesOrderReport(pposRequestBuilder.buildPPOSRequest(normalizedOrders, transaction));
+                logger.info("Received Response from Service:"+response.getStatus());
+            }
             ordersSent = normalizedOrders.size();
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,6 +54,9 @@ public class PPOSHelper {
         if(deNormalizedOrders!= null && deNormalizedOrders.size() > 0) {
             PPOSOrderInfo prevNormalizedReport = deNormalizedOrders.get(0);
             prevNormalizedReport.getLineItems().add(prevNormalizedReport.getTempLineItem());
+            if(deNormalizedOrders.size() == 1) {
+                normalizedOrders.add(prevNormalizedReport);
+            }
             PPOSOrderInfo currentNormalizedReport = null;
             for(int index = 1; index < deNormalizedOrders.size(); index++) {
                 currentNormalizedReport = deNormalizedOrders.get(index);

@@ -95,6 +95,8 @@ public class Configuration {
 
     return lValue;
   }
+
+    
   
   private String getPropertyPrefix() throws Exception {
 	  String prefix = System.getProperty(LSI_FUNCTION);

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" 	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="RetailSeller">
+
+    <typeAlias alias="sellerInfo" type="com.monsanto.irdsoapservices.retailseller.domain.SellerInfo"/>
+
+    <insert id="insertSellerInfo" parameterClass="sellerInfo">
+        INSERT INTO IRD.STG_SEEDCO_SALESREP
+           (STG_ID, ALIAS_SS_CODE, NAME_1, NAME_2, ADDR_LINE_1, ADDR_LINE_2, CITY, STATE, ZIP_CODE, COUNTRY, EBID_CODE, HQ_EBID_CODE, PHONE_NUMBER, ROW_ENTRY_DATE, ROW_MODIFY_DATE, ROW_TASK_ID, ROW_USER_ID)
+         VALUES
+           (IRD.SEEDCO_SALESREP_SEQ.NEXTVAL, #aliasCode#, #lastName#, #firstName#, #addressLine1#, #addressLine2#, #city#, #state#, #zip#, #country#, #ebid#, #hqEbid#, #phoneNumber#, sysdate, sysdate, #rowTaskId#, 'IRDPOS_USER')
+    </insert>
+
+</sqlMap>

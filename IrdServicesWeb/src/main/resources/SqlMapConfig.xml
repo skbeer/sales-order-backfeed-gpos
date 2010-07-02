@@ -10,5 +10,6 @@
     <sqlMap resource="Employee.xml"/>
     <sqlMap resource="VistiveProcessor.xml"/>
     <sqlMap resource="SalesOrder.xml"/>
+    <sqlMap resource="RetailSeller.xml"/>            
 
 </sqlMapConfig>

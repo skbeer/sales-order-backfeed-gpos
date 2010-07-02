@@ -5,6 +5,7 @@ import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
+import com.monsanto.irdsoapservices.salesorder.helper.COSHelper;
 import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 
 import java.util.List;
@@ -24,6 +25,7 @@ import org.apache.log4j.Logger;
 public class SalesOrderReportService {
     private TransactionDao transactionDao;
     private PPOSHelper pposHelper;
+    private COSHelper cosHelper;
     Logger logger = Logger.getLogger(this.getClass());
 
     public void startProcessing() throws SalesOrderException {
@@ -32,16 +34,18 @@ public class SalesOrderReportService {
             logger.info("Starting Sales Order Report Job @ "+new Date());
             List<TransactionInfo> transactionsToBeProcessed = transactionDao.getTransactionsToBeProcessed();
             logger.info("Found "+transactionsToBeProcessed.size()+" Transactions to be Processed.");
+            int ordersSent;
             for(int index=0; index < transactionsToBeProcessed.size(); index++) {
                 try {
+                    ordersSent = 0;
                     transaction = transactionsToBeProcessed.get(index);
-                    logger.info("Processing Transaction For Customer:"+transaction.getName()+" Type:"+transaction.getTransactionType());
+                    logger.info("Processing '"+transaction.getTransactionType()+"' Transaction For Customer:"+transaction.getName());
                     if(transaction.getTransactionType().equalsIgnoreCase("PPOS")) {
-                        int ordersSent = pposHelper.processPPOSOrderReport(transaction);
-                        if(ordersSent > 0) {
-                            updateLastTransactionStats(transaction);
-                        }
+                        ordersSent = pposHelper.processPPOSOrderReport(transaction);
+                    } else if(transaction.getTransactionType().equalsIgnoreCase("COS")) {
+                        ordersSent = cosHelper.processCOSOrderReport(transaction);
                     }
+                    updateTransaction(transaction, ordersSent);
                 } catch (SalesOrderException e) {
                     logger.error(e);
                 } catch(Exception e) {
@@ -52,6 +56,15 @@ public class SalesOrderReportService {
         } catch (Exception e) {
             e.printStackTrace();
             throw new SalesOrderException(e.getMessage());
+        }
+    }
+
+    private void updateTransaction(TransactionInfo transaction, int ordersSent) throws Exception {
+        if(ordersSent > 0) {
+            logger.info("Sent "+ordersSent+" Orders. Updating Last Transaction Stats for this Partner.");
+            updateLastTransactionStats(transaction);
+        } else {
+            logger.info("No Orders Found since Last Transaction Date:"+transaction.getLastTransactionDate()+". Last Transaction Stats for this Partner will NOT be updated.");
         }
     }
 
@@ -70,5 +83,9 @@ public class SalesOrderReportService {
 
     public void setPposHelper(PPOSHelper pposHelper) {
         this.pposHelper = pposHelper;
+    }
+
+    public void setCosHelper(COSHelper cosHelper) {
+        this.cosHelper = cosHelper;
     }
 }

@@ -1,6 +1,7 @@
 package com.monsanto.irdsoapservices.salesorder.dao;
 
 import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo;
 
 import java.util.List;
 import java.util.HashMap;
@@ -17,10 +18,19 @@ import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
  */
 public class SalesOrderDaoImpl extends SqlMapClientDaoSupport implements SalesOrderDao {
 
-    public List<PPOSOrderInfo> getPPOSOrderInfo(Date startDate, String groupCode) throws Exception {
+    public List<PPOSOrderInfo> getPPOSOrders(Date startDate, String groupCode) throws Exception {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("groupCode", groupCode);
         map.put("startDate", startDate);
         return (List<PPOSOrderInfo>)getSqlMapClientTemplate().queryForList("SalesOrder.getPPOSOrders", map);
     }
+
+    public List<COSOrderInfo> getCOSOrders(Date startDate, String groupCode) throws Exception {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("groupCode", groupCode);
+        map.put("startDate", startDate);
+        return (List<COSOrderInfo>)getSqlMapClientTemplate().queryForList("SalesOrder.getCOSOrders", map);
+    }
+
+
 }

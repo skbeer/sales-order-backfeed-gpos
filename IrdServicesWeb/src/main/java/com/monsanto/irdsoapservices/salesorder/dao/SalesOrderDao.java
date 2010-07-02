@@ -1,6 +1,7 @@
 package com.monsanto.irdsoapservices.salesorder.dao;
 
 import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo;
 
 import java.util.List;
 import java.util.Date;
@@ -13,5 +14,7 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public interface SalesOrderDao {
-    List<PPOSOrderInfo> getPPOSOrderInfo(Date startDate, String groupCode) throws Exception;
+    List<PPOSOrderInfo> getPPOSOrders(Date startDate, String groupCode) throws Exception;
+
+    List<COSOrderInfo> getCOSOrders(Date startDate, String groupCode) throws Exception;
 }

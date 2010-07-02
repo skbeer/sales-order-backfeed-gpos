@@ -21,11 +21,11 @@ import java.util.List;
  * Time: 9:28:43 AM
  * To change this template use File | Settings | File Templates.
  */
-public class PPOSRequestBuilder {
+public class PPOSRequestBuilder extends AbstractRequestBuilder {
 
     public SalesOrderReport buildPPOSRequest(List<PPOSOrderInfo> pposOrders, TransactionInfo transactionInfo) throws Exception {
         SalesOrderReport salesOrderReport = new SalesOrderReport();
-        salesOrderReport.setHeader(getHeaderType(transactionInfo));
+        salesOrderReport.setHeader(getHeaderType(transactionInfo, XmlConstants.PPOS_TRAN_TYPE));
         salesOrderReport.setVersion("1.0");
         salesOrderReport.setSalesOrderReportBody(getSalesOrderReportBodyType(pposOrders, transactionInfo));
         return salesOrderReport;
@@ -59,10 +59,10 @@ public class PPOSRequestBuilder {
             salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName()));
             salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.UPC, lineItem.getProductUpc(), lineItem.getProductName()));
             ProductQuantityType_0020 productQuantityType_0020 = new ProductQuantityType_0020();
-            productQuantityType_0020.setMeasurement(getMeasurementType(lineItem.getSalesQuantityUom(), lineItem.getSalesQuantity()));
+            productQuantityType_0020.setMeasurement(getMeasurementType(lineItem.getSalesQuantity().getQtyUom(), lineItem.getSalesQuantity().getQtyValue()));
             salesOrderLineItemType.setProductQuantity(productQuantityType_0020);
             ProductQuantityEquivalentType productQuantityEquivalentType = new ProductQuantityEquivalentType();
-            productQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getEquivalentQuantityUom(), lineItem.getEquivalentQuantity()));
+            productQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getEquivalentQuantity().getQtyUom(), lineItem.getEquivalentQuantity().getQtyValue()));
             salesOrderLineItemType.setProductQuantityEquivalent(productQuantityEquivalentType);
             if(!StringUtils.isNullOrEmpty(lineItem.getSalesRepId())) {
                 SalesPersonType salesPersonType = new SalesPersonType();
@@ -120,120 +120,4 @@ public class PPOSRequestBuilder {
         return salesOrderReportPropertiesType;
     }
 
-    private MeasurementType getMeasurementType(String uomValue, String quantity) {
-        MeasurementType measurementType = new MeasurementType();
-        UnitOfMeasureCodeType unitOfMeasureCodeType = new UnitOfMeasureCodeType();
-        unitOfMeasureCodeType.setDomain("UN-Rec-20");
-        unitOfMeasureCodeType.setValue(uomValue);
-        measurementType.setMeasurementValue(new Double(quantity).doubleValue());
-        measurementType.setUnitOfMeasureCode(unitOfMeasureCodeType);
-        return measurementType;
-    }
-
-    private ProductidentificationType getProductionIdentificationType(ListProductIDAgency agency, String value, String productName) {
-        ProductidentificationType productidentificationType = new ProductidentificationType();
-        productidentificationType.setProductIdentifier(getProductIdentifierType(agency, value));
-        productidentificationType.setProductName(productName);
-        return productidentificationType;
-    }
-
-    private ProductIdentifierType getProductIdentifierType(ListProductIDAgency agency, String value) {
-        ProductIdentifierType productIdentifierType = new ProductIdentifierType();
-        productIdentifierType.setAgency(agency);
-        productIdentifierType.setValue(value);
-        return productIdentifierType;
-    }
-
-    private PartnerInformationType getPartnerInformationTypeForBody(PartnerInfo partnerInfo, boolean isGrower) {
-        PartnerInformationType partnerInformationType = new PartnerInformationType();
-
-        PartnerIdentifierType partnerIdentifierType = new PartnerIdentifierType();
-        partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.AGIIS_EBID);
-        partnerIdentifierType.setValue(partnerInfo.getEbid());
-        partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
-        partnerIdentifierType = new PartnerIdentifierType();
-        partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
-        partnerIdentifierType.setValue(partnerInfo.getAcctId());
-        partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
-        if(isGrower) {
-            partnerIdentifierType = new PartnerIdentifierType();
-            partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.AGIIS_NAPD);
-            partnerIdentifierType.setValue(partnerInfo.getNapd());
-            partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
-        }
-        partnerInformationType.getPartnerName().add(partnerInfo.getPartnerName());
-
-        AddressInformationType addressInformationType = new AddressInformationType();
-        addressInformationType.setAddressLine(partnerInfo.getAddress());
-        addressInformationType.setCityName(partnerInfo.getCity());
-        addressInformationType.setStateOrProvince(partnerInfo.getState());
-        addressInformationType.setPostalCode(partnerInfo.getZip());
-        addressInformationType.setCounty(partnerInfo.getCounty());
-
-        partnerInformationType.setAddressInformation(addressInformationType);
-
-        if(isGrower) {
-            ContactInformationType contactInformationType = new ContactInformationType();
-            contactInformationType.getContactName().add(partnerInfo.getContactName());
-            partnerInformationType.getContactInformation().add(contactInformationType);
-        }
-        return partnerInformationType;
-    }
-
-    private HeaderType getHeaderType(TransactionInfo transactionInfo) {
-        HeaderType headerType = new HeaderType();
-
-        FromType fromType = new FromType();
-        PartnerInformationType partnerInformationType = getPartnerInformationForHeader(XmlConstants.MONSANTO_PARTNER_NAME, XmlConstants.MONSANTO_EBID, ListPartnerAgencyAttribute.AGIIS_EBID);
-        fromType.setPartnerInformation(partnerInformationType);
-
-        ToType toType = new ToType();
-        partnerInformationType = getPartnerInformationForHeader(transactionInfo.getName(), transactionInfo.getCompanyCode(), ListPartnerAgencyAttribute.AGIIS_EBID);
-        toType.setPartnerInformation(partnerInformationType);
-
-        ThisDocumentIdentifierType thisDocumentIdentifierType = new ThisDocumentIdentifierType();
-        thisDocumentIdentifierType.setDocumentIdentifier(createDocumentIdentifier(transactionInfo));
-
-        ThisDocumentDateTimeType thisDocumentDateTimeType = new ThisDocumentDateTimeType();
-        thisDocumentDateTimeType.setDateTime(getDateTimeType(new Date()));
-
-        headerType.setFrom(fromType);
-        headerType.setTo(toType);
-        headerType.setThisDocumentIdentifier(thisDocumentIdentifierType);
-        headerType.setThisDocumentDateTime(thisDocumentDateTimeType);
-        headerType.setSalesOrderReportSequenceNumber((transactionInfo.getLastTransactionNumber()+1)+"");
-
-        return headerType;
-    }
-
-    private DateTimeType getDateTimeType(Date date) {
-        DateTimeType dateTimeType = new DateTimeType();
-        dateTimeType.setDateTimeQualifier(ListDateQualifier.ON);
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.setTime(date);
-        dateTimeType.setValue(new XMLGregorianCalendarImpl(gregorianCalendar));
-        return dateTimeType;
-    }
-
-    private String createDocumentIdentifier(TransactionInfo transactionInfo) {
-        StringBuffer sBuffer = new StringBuffer();
-        sBuffer.append("RT");
-        sBuffer.append("_");
-        sBuffer.append((transactionInfo.getLastTransactionNumber()+1)+"");
-        sBuffer.append("_");
-        sBuffer.append(transactionInfo.getCompanyCode());
-        sBuffer.append("_");
-        sBuffer.append(new SimpleDateFormat("MMddyyyyHHmmssSSS").format(new Date()));
-        return sBuffer.toString();
-    }
-
-    private PartnerInformationType getPartnerInformationForHeader(String partnerName, String partnerEbid, ListPartnerAgencyAttribute agency) {
-        PartnerInformationType partnerInformationType = new PartnerInformationType();
-        partnerInformationType.getPartnerName().add(partnerName);
-        PartnerIdentifierType partnerIdentifierType = new PartnerIdentifierType();
-        partnerIdentifierType.setAgency(agency);
-        partnerIdentifierType.setValue(partnerEbid);
-        partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
-        return partnerInformationType;
-    }
 }

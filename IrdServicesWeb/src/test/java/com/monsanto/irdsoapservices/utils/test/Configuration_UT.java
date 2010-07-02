@@ -42,24 +42,34 @@ public class Configuration_UT extends TestCase {
 
     public void test() throws Exception {
         //String regEx = "\\(?(\\d{3})\\)?-?(\\d{3})-(\\d{4})";
-        String regEx = "^([0-9]( |-)?)?(\\(?[0-9]{3}\\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[0-9]{7})$";
+        //String regEx = "^([0-9]( |-)?)?(\\(?[0-9]{3}\\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[0-9]{7})$";
+        //String regEx = "[0-9]{10,16}";
+        String regEx = "^[a-zA-Z0-9]+$";        
         RegularExpression exp = new RegularExpression(regEx);
-        System.out.println("3145830521 "+exp.matches("3145830521"));
-        System.out.println("13145830521 "+exp.matches("13145830521"));
-        System.out.println("314-583-0521 "+exp.matches("314-583-0521"));
-        System.out.println("1-314-583-0521 "+exp.matches("1-314-583-0521"));
-        System.out.println("(314)5830521 "+ exp.matches("(314)5830521"));
-        System.out.println("(314) 5830521 "+ exp.matches("(314) 5830521"));
-        System.out.println("(314)-583-0521 "+ exp.matches("(314)-583-0521"));
-        System.out.println("(314)-5830521 "+ exp.matches("(314)-5830521"));
-        System.out.println("314-5830521"+exp.matches("314-5830521"));
-        System.out.println("3145830521-"+exp.matches("3145830521-"));
-        System.out.println("-314-5830521"+exp.matches("-3145830521"));
-        System.out.println("-314583-0521-"+exp.matches("-3145830521"));
-        System.out.println("-3145830521"+exp.matches("-3145830521"));
+//        System.out.println("3145830521 "+exp.matches("3145830521"));
+//        System.out.println("13145830521 "+exp.matches("13145830521"));
+//        System.out.println("0119113145830521 "+exp.matches("13145830521"));
+//        System.out.println("314-583-0521 "+exp.matches("314-583-0521"));
+//        System.out.println("1-314-583-0521 "+exp.matches("1-314-583-0521"));
+//        System.out.println("(314)5830521 "+ exp.matches("(314)5830521"));
+//        System.out.println("(314) 5830521 "+ exp.matches("(314) 5830521"));
+//        System.out.println("(314)-583-0521 "+ exp.matches("(314)-583-0521"));
+//        System.out.println("(314)-5830521 "+ exp.matches("(314)-5830521"));
+//        System.out.println("314-5830521"+exp.matches("314-5830521"));
+//        System.out.println("3145830521-"+exp.matches("3145830521-"));
+//        System.out.println("-314-5830521"+exp.matches("-3145830521"));
+//        System.out.println("-314583-0521-"+exp.matches("-3145830521"));
+//        System.out.println("-3145830521"+exp.matches("-3145830521"));
+//        System.out.println("1314583ABCD "+exp.matches("1314583ABCD"));
+//        System.out.println("1314583ABCD "+exp.matches("1314583ABCD"));
         System.out.println("1314583ABCD "+exp.matches("1314583ABCD"));
-        System.out.println("1314583ABCD "+exp.matches("1314583ABCD"));
-
+        System.out.println("A314583ABCD "+exp.matches("A1314583ABCD"));
+        System.out.println("1314583ABCD_ "+exp.matches("1314583ABCD_"));
+        System.out.println("1314583ABCD$ "+exp.matches("1314583ABCD$"));
+        System.out.println("1314583ABCD^ "+exp.matches("1314583ABCD^"));
+        System.out.println("1 "+exp.matches("1"));
+        System.out.println("a "+exp.matches("a"));
+        System.out.println(""+exp.matches(""));
 
 
     }

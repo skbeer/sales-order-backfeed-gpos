@@ -77,10 +77,10 @@ public class PPOSRequestBuilder_UT extends TestCase {
         lineItemInfo.setProductName(productName);
         lineItemInfo.setProductGtin(productGtin);
         lineItemInfo.setProductUpc(productUpc);
-        lineItemInfo.setEquivalentQuantity(equivalentQuantity);
-        lineItemInfo.setEquivalentQuantityUom(equivalentQuantityUom);
-        lineItemInfo.setSalesQuantity(salesQuantity);
-        lineItemInfo.setSalesQuantityUom(salesQuantityUom);
+        lineItemInfo.getEquivalentQuantity().setQtyValue(equivalentQuantity);
+        lineItemInfo.getEquivalentQuantity().setQtyUom(equivalentQuantityUom);
+        lineItemInfo.getSalesQuantity().setQtyValue(salesQuantity);
+        lineItemInfo.getSalesQuantity().setQtyUom(salesQuantityUom);
         lineItemInfo.setSalesRepId(salesRepId);
         lineItemInfo.setSalesRepName(salesRepName);
         return lineItemInfo;

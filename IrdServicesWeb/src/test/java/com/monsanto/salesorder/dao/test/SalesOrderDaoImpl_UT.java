@@ -2,18 +2,12 @@ package com.monsanto.salesorder.dao.test;
 
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
-import com.monsanto.irdsoapservices.salesorder.dao.TransactionDaoImpl;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDaoImpl;
 import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
-import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
-import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
-import com.monsanto.irdsoapservices.salesorder.helper.PPOSRequestBuilder;
-import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
+import com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.text.SimpleDateFormat;
 
 /**
  * Created by IntelliJ IDEA.
@@ -40,7 +34,7 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
     public void testGetPPOSOrders() throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2010, 04, 20);
-        List<PPOSOrderInfo> pposOrders = salesOrderDao.getPPOSOrderInfo(calendar.getTime(), "XA");
+        List<PPOSOrderInfo> pposOrders = salesOrderDao.getPPOSOrders(calendar.getTime(), "XA");
         System.out.println("No of Rows = "+pposOrders.size());
         assertTrue(pposOrders.size() > 0);
 //        List<PPOSOrderInfo> someOrders = new ArrayList<PPOSOrderInfo>(4);
@@ -59,7 +53,15 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 //        helper.setSalesOrderDao(salesOrderDao);
 //        helper.setPposRequestBuilder(new PPOSRequestBuilder());
 //        helper.setClientFactory(new ClientFactory());
-//        helper.processPPOSOrderReport(tran);
+//        helper.processCOSOrderReport(tran);
+    }
+
+    public void testGetCOSOrders() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2010, 04, 17);
+        List<COSOrderInfo> cosOrders = salesOrderDao.getCOSOrders(calendar.getTime(), "XA");
+        System.out.println("No of Rows = "+cosOrders.size());
+        assertTrue(cosOrders.size() > 0);   
     }
 
 }
