@@ -266,6 +266,30 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.0-beta-2</version>
+                <configuration>
+                    <format>{0,time}, {0,date}</format>
+                    <items>
+                        <item>timestamp</item>
+                    </items>
+                    <buildNumberPropertyName>current.timestamp</buildNumberPropertyName>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>buildnumber-create</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
