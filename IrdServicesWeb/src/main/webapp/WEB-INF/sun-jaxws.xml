@@ -29,5 +29,9 @@
     <endpoint name="RetailSellerService"
               implementation="com.monsanto.irdsoapservices.retailseller.service.RetailSellerInformationServiceImpl"
               url-pattern="/RetailSellerService"/>
-    
+
+    <endpoint name="AgreementStatusService"
+              implementation="com.monsanto.irdsoapservices.agreementstatus.service.AgreementStatusServiceImpl"
+              url-pattern="/AgreementStatusService"/>
+
 </endpoints>

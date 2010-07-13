@@ -97,6 +97,16 @@
         <url-pattern>/RetailSellerService</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <display-name>AgreementStatusService</display-name>
+        <servlet-name>AgreementStatusService</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AgreementStatusService</servlet-name>
+        <url-pattern>/AgreementStatusService</url-pattern>
+    </servlet-mapping>
+
 
 
 

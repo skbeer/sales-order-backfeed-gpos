@@ -58,6 +58,18 @@
     <bean id="retailSellerHelper" class="com.monsanto.irdsoapservices.retailseller.helper.RetailSellerHelper">
         <property name="sellerDao" ref="retailSellerDao"/>
     </bean>
+    
+    <bean id="agreementStatusDao" class="com.monsanto.irdsoapservices.agreementstatus.dao.AgreementStatusDaoImpl">
+        <property name="sqlMapClient" ref="fsSqlMap"/>
+        <property name="dataSource" ref="fsDataSource"/>
+    </bean>
+
+    <bean id="agreementStatusRequestBuilder" class="com.monsanto.irdsoapservices.agreementstatus.helper.AgreementStatusResponseBuilder"/>
+
+    <bean id="agreementStatusHelper" class="com.monsanto.irdsoapservices.agreementstatus.helper.AgreementStatusHelper">
+        <property name="agreementStatusDao" ref="agreementStatusDao"/>
+        <property name="responseBuilder" ref="agreementStatusRequestBuilder"/>
+    </bean>
 
     <bean id="clientFactory" class="com.monsanto.irdsoapservices.salesorder.client.ClientFactory"/>
     <bean id="pposRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.PPOSRequestBuilder"/>

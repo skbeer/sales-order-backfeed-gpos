@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+version="1.0"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" >
+    <jaxb:bindings schemaLocation="AgreementStatusRequest_2-0.xsd"
+    node="/xsd:schema">
+    <jaxb:schemaBindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+    <jaxb:package name="com.monsanto.irdsoapservices.agreementstatus.schema.request"/>
+    </jaxb:schemaBindings>
+    </jaxb:bindings>
+    <jaxb:bindings schemaLocation="AgreementStatusResponse_2-0.xsd"
+    node="/xsd:schema">
+    <jaxb:schemaBindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+    <jaxb:package name="com.monsanto.irdsoapservices.agreementstatus.schema.response"/>
+    </jaxb:schemaBindings>
+    </jaxb:bindings>
+</jaxb:bindings>

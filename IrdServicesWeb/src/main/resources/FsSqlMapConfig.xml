@@ -3,5 +3,6 @@
 <sqlMapConfig>
     <settings useStatementNamespaces="true"/>
     <sqlMap resource="BackfeedPartnersControl.xml"/>
+    <sqlMap resource="GrowerLicenseZone.xml"/>
 
 </sqlMapConfig>

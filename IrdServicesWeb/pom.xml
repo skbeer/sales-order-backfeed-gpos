@@ -19,6 +19,7 @@
         <war.file.name>IrdSoapServices</war.file.name>
         <dev.stage.directory>\\w3d-repliweb\javaapps_dev_staging\seedconnectivity\webapps</dev.stage.directory>
         <default.weblogic.domain>${env.WEBLOGIC_DOMAIN}</default.weblogic.domain>
+        <sonar.exclusions>com/monsanto/**/schema/**/*.java,com/monsanto/irdsoapservices/service/**/*.java</sonar.exclusions>
     </properties>
 
     <dependencies>
@@ -584,13 +585,52 @@
 
                                        <echo>Calling wsimport for Retail Seller Information Service</echo>
                                        <wsimport
-                                               wsdl="http://services-dint.monsanto.com/ECOM_SalesDoc/ProxyServices/RetailSellerInformation?wsdl"
+                                               wsdl="http://services-dint.monsanto.com/ECOM_SalesDoc/RetailSellerInformation?wsdl"
                                                keep="true"
                                                verbose="true"
                                                sourcedestdir="src/main/java"
                                                package="com.monsanto.irdsoapservices.retailseller.schema"
                                         />
 
+                                   </tasks>
+                               </configuration>
+                           </execution>
+                       </executions>
+                   </plugin>
+               </plugins>
+           </build>
+       </profile>
+
+        <profile>
+           <id>agreementstatus-generate-service-stubs-wsimport</id>
+           <build>
+               <plugins>
+                   <!--WSImport-->
+                   <plugin>
+                       <groupId>org.apache.maven.plugins</groupId>
+                       <artifactId>maven-antrun-plugin</artifactId>
+                       <executions>
+                           <execution>
+                               <id>service-stubs-wsimport</id>
+                               <phase>generate-sources</phase>
+                               <goals>
+                                   <goal>run</goal>
+                               </goals>
+                               <configuration>
+                                   <tasks>
+                                       <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+                                           <classpath refid="maven.compile.classpath"/>
+                                       </taskdef>
+                                       <echo>Calling wsimport for AgreementStatus_2-0 Service</echo>
+                                       <wsimport
+                                                wsdl="IrdServicesWeb/src/main/resources/AgreementStatus_2-0.wsdl"
+                                                keep="true"
+                                                verbose="true"
+                                                sourcedestdir="src/main/java"
+                                         >
+                                            <binding dir="src/main/resources" includes="agreementstatus-jaxws-custom.xml"/>
+                                            <binding dir="src/main/resources" includes="agreementstatus-jaxb-custom.xml"/>
+                                         </wsimport>
                                    </tasks>
                                </configuration>
                            </execution>

@@ -1,0 +1,259 @@
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Mark Hollowell (Monsanto Company) -->
+<xsd:schema xmlns="urn:ecms:schema:agreement:response:2:0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:ecms:schema:agreement:response:2:0" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:element name="AgreementStatusResponse" type="AgreementStatusResponseType">
+		<xsd:annotation>
+			<xsd:documentation>Comment describing your root
+        element</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AgreementStatusResponseType">
+		<xsd:sequence>
+			<xsd:element ref="Header"/>
+			<xsd:element ref="AgreementStatusResponseBody"/>
+		</xsd:sequence>
+		<xsd:attribute name="Version" type="xsd:token" fixed="2.0"/>
+	</xsd:complexType>
+	<xsd:element name="AgreementStatusResponseBody" type="AgreementStatusResponseBodyType"/>
+	<xsd:complexType name="AgreementStatusResponseBodyType">
+		<xsd:sequence>
+			<xsd:element ref="AgreementStatusResponseDetails" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AgreementStatusResponseProperties" type="AgreementStatusResponsePropertiesType"/>
+	<xsd:complexType name="AgreementStatusResponsePropertiesType">
+		<xsd:sequence>
+			<xsd:element ref="Action"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PartnerInformation" type="PartnerInformationType"/>
+	<xsd:complexType name="PartnerInformationType">
+		<xsd:sequence>
+			<xsd:element name="PartnerName" type="xsd:token" maxOccurs="unbounded"/>
+			<xsd:element ref="PartnerIdentifier" maxOccurs="unbounded"/>
+			<xsd:element ref="ContactInformation" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="AddressInformation" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AddressInformation" type="AddressInformationType"/>
+	<xsd:complexType name="AddressInformationType">
+		<xsd:sequence>
+			<xsd:element name="AddressLine" type="xsd:token" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="PostBoxNumber" type="xsd:token" minOccurs="0"/>
+			<xsd:element name="CityName" type="xsd:token" minOccurs="0"/>
+			<xsd:element name="StateOrProvince" type="xsd:token" minOccurs="0"/>
+			<xsd:element name="PostalCode" type="xsd:token" minOccurs="0"/>
+			<xsd:element name="PostalCountry" type="xsd:token" minOccurs="0"/>
+			<xsd:element name="County" type="xsd:token" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PartnerIdentifier" type="PartnerIdentifierType"/>
+	<xsd:element name="ContactInformation" type="ContactInformationType"/>
+	<xsd:complexType name="ContactInformationType">
+		<xsd:sequence>
+			<xsd:element name="ContactName" type="xsd:token" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ContactDescription" type="xsd:token" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ContactNumber" type="xsd:token" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="EmailAddress" type="xsd:token" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="AlternateCommunicationMethod" type="AlternateCommunicationMethodType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AlternateCommunicationMethodType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:token">
+				<xsd:attribute name="CommunicationMethodType" type="ListCommunicationMethodType"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="ListPartnerAgencyAttribute">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="AGIIS-EBID"/>
+			<xsd:enumeration value="AGIIS-NAPD"/>
+			<xsd:enumeration value="AssignedByBuyer"/>
+			<xsd:enumeration value="AssignedByPapiNet"/>
+			<xsd:enumeration value="AssignedBySeller"/>
+			<xsd:enumeration value="AssignedByTestingLaboratory"/>
+			<xsd:enumeration value="D-U-N-S"/>
+			<xsd:enumeration value="EAN"/>
+			<xsd:enumeration value="GLN"/>
+			<xsd:enumeration value="Other"/>
+			<xsd:enumeration value="SCAC"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ListDateQualifier">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="On"/>
+			<xsd:enumeration value="After"/>
+			<xsd:enumeration value="Before"/>
+			<xsd:enumeration value="OnOrAfter"/>
+			<xsd:enumeration value="OnOrBefore"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ListCommunicationMethodType">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="CellPhone"/>
+			<xsd:enumeration value="Fax"/>
+			<xsd:enumeration value="PrinterId"/>
+			<xsd:enumeration value="StationCode"/>
+			<xsd:enumeration value="Telex"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="DocumentIdentifier" type="xsd:token"/>
+	<xsd:complexType name="ThisDocumentIdentifierType">
+		<xsd:sequence>
+			<xsd:element name="DocumentIdentifier" type="xsd:token"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="DateTime" type="DateTimeType"/>
+	<xsd:complexType name="DateTimeType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:dateTime">
+				<xsd:attribute name="DateTimeQualifier" type="ListDateQualifier"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="PartnerIdentifierType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:token">
+				<xsd:attribute name="Agency" type="ListPartnerAgencyAttribute" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="HeaderType">
+		<xsd:sequence>
+			<xsd:element name="ThisDocumentIdentifier" type="ThisDocumentIdentifierType"/>
+			<xsd:element name="ThisDocumentDateTime" type="ThisDocumentDateTimeType"/>
+			<xsd:element name="From" type="FromType"/>
+			<xsd:element name="To" type="ToType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Header" type="HeaderType"/>
+	<xsd:element name="AgreementStatusResponseDetails">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="PartnerInformation"/>
+				<xsd:choice>
+					<xsd:element ref="AgreementStatusList" maxOccurs="unbounded"/>
+					<xsd:element ref="ErrorResponse"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="PartnerDetail" type="PartnerDetailType"/>
+	<xsd:complexType name="PartnerDetailType">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:element name="RequestedPartnerIdentifier" type="PartnerIdentifierType"/>
+	<xsd:element name="AgreementStatusList" type="AgreementStatusListType"/>
+	<xsd:complexType name="AgreementStatusListType">
+		<xsd:sequence>
+			<xsd:element ref="AgreementName"/>
+			<xsd:element ref="AgreementStatus"/>
+			<xsd:element name="LicenseNumber" type="xsd:token"/>
+			<xsd:element ref="Zone" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ErrorResponse" type="ErrorResponseType"/>
+	<xsd:complexType name="ErrorResponseType">
+		<xsd:sequence>
+			<xsd:element ref="ErrorMessage"/>
+			<xsd:element ref="ErrorDescription"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ErrorMessage" type="xsd:string"/>
+	<xsd:element name="ErrorDescription" type="xsd:string"/>
+	<xsd:element name="Zone" type="ZoneType">
+		<xsd:annotation>
+			<xsd:documentation>
+				<Documentation>
+					<Description>Structure to identify and name a Zone.</Description>
+				</Documentation>
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="ZoneType">
+		<xsd:sequence>
+			<xsd:element ref="ZoneID"/>
+			<xsd:element ref="ZoneType" minOccurs="0"/>
+			<xsd:element ref="ZoneName" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ZoneType" type="xsd:token">
+		<xsd:annotation>
+			<xsd:documentation>
+				<Documentation>
+					<Description>Definition of what the Zone is intended for.</Description>
+				</Documentation>
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ZoneID" type="xsd:token">
+		<xsd:annotation>
+			<xsd:documentation>
+				<Documentation>
+					<Description>Unique Identifier for a Zone. Note the Zone Id is unique within a message and should uniquely define a zone for a specific trading partner.</Description>
+				</Documentation>
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="ZoneName" type="xsd:token">
+		<xsd:annotation>
+			<xsd:documentation>
+				<Documentation>
+					<Description>Descriptive name used to describe the zone.</Description>
+				</Documentation>
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Action" type="ActionType">
+		<xsd:annotation>
+			<xsd:documentation>
+				<Documentation>
+					<Description>Structure containing the request action related to the agreement status. agreement=agreement status action
+					demographics=demographics status action, account=account status action</Description>
+				</Documentation>
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:simpleType name="ActionType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="agreement"/>
+			<xsd:enumeration value="demographics"/>
+			<xsd:enumeration value="account"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="Agreement" type="AgreementType">
+		<xsd:annotation>
+			<xsd:documentation>agreement status of agreement</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:complexType name="AgreementType">
+		<xsd:sequence/>
+	</xsd:complexType>
+	<xsd:element name="AgreementMessageType" type="xsd:string"/>
+	<xsd:element name="AgreementName" type="xsd:string"/>
+	<xsd:element name="AgreementStatus" type="xsd:string"/>
+	<xsd:element name="AgreementDescription" type="xsd:string"/>
+	<xsd:element name="Comments" type="xsd:string"/>
+	<xsd:complexType name="ThisDocumentDateTimeType">
+		<xsd:sequence>
+			<xsd:element name="DateTime" type="DateTimeType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ToType">
+		<xsd:sequence>
+			<xsd:element ref="PartnerInformation"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FromType">
+		<xsd:sequence>
+			<xsd:element ref="PartnerInformation"/>
+		</xsd:sequence>
+	</xsd:complexType>
+<xsd:element name="AgreementStatusFault" type="ExceptionType" />
+ <xsd:complexType name="ExceptionType">
+ <xsd:sequence>
+<xsd:element name="faultMessage" type="xsd:string" />
+</xsd:sequence>
+</xsd:complexType>
+
+</xsd:schema>

@@ -31,6 +31,17 @@
         <property name="dataSource" ref="fsDataSource"/>
     </bean>
 
+    <bean id="agreementStatusDao" class="com.monsanto.irdsoapservices.agreementstatus.dao.AgreementStatusDaoImpl">
+        <property name="sqlMapClient" ref="fsSqlMap"/>
+        <property name="dataSource" ref="fsDataSource"/>
+    </bean>
+
+    <bean id="agreementStatusRequestBuilder" class="com.monsanto.irdsoapservices.agreementstatus.helper.AgreementStatusResponseBuilder"/>
+
+    <bean id="agreementStatusHelper" class="com.monsanto.irdsoapservices.agreementstatus.helper.AgreementStatusHelper">
+        <property name="agreementStatusDao" ref="agreementStatusDao"/>
+        <property name="responseBuilder" ref="agreementStatusRequestBuilder"/>
+    </bean>
 
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
