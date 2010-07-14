@@ -19,7 +19,7 @@
         <war.file.name>IrdSoapServices</war.file.name>
         <dev.stage.directory>\\w3d-repliweb\javaapps_dev_staging\seedconnectivity\webapps</dev.stage.directory>
         <default.weblogic.domain>${env.WEBLOGIC_DOMAIN}</default.weblogic.domain>
-        <sonar.exclusions>com/monsanto/**/schema/**/*.java,com/monsanto/irdsoapservices/service/**/*.java</sonar.exclusions>
+        <sonar.exclusions>com/monsanto/**/schema/**/*.java,com/monsanto/irdsoapservices/service/**/*.java,com/monsanto/irdsoapservices/test/**/*.java</sonar.exclusions>
     </properties>
 
     <dependencies>
