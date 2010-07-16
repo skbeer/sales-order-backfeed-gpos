@@ -3,6 +3,7 @@ package com.monsanto.irdsoapservices.retailseller.helper;
 import com.monsanto.irdsoapservices.retailseller.dao.RetailSellerDao;
 import com.monsanto.irdsoapservices.retailseller.domain.SellerInfo;
 import com.monsanto.irdsoapservices.retailseller.schema.*;
+import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 
 
 import java.util.List;
@@ -32,10 +33,11 @@ public class RetailSellerHelper {
             logger.info("Inserted Seller Records in IRD.STG_SEEDCO_SALESREP.");
             retailSellerResponseType.setStatus("Success");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e);
+            new ErrorEmailer().sendErrorEmail(e, "Exception Occurred during saveRetailSellerInformation() operation.");
             ExceptionType exceptionType = new ExceptionType();
             exceptionType.setFaultMessage(e.getMessage());
-            throw new RetailSellerFault("Exception Occurred while performing operation saveRetailSellerInformation", exceptionType);
+            throw new RetailSellerFault("Exception Occurred during saveRetailSellerInformation() operation.", exceptionType);
         }
         return retailSellerResponseType;
     }

@@ -43,6 +43,12 @@ public class RetailSellerInformationService_AT extends AbstractTransactionalData
         assertEquals(4, testDao.getSellerCount("Dealer"));        
     }
 
+    public void test() throws Exception {
+        RetailSellerInformationService_Service ser = new RetailSellerInformationService_Service();
+        RetailSellerResponseType responseType = ser.getRetailSellerInformationServicePort().saveRetailSellerInformation(getRequest());
+        System.out.println(responseType);        
+    }
+
     private RetailSellerInformationType getRequest() {
         RetailSellerInformationType requestType = new RetailSellerInformationType();
         RetailSellerInformationBodyType bodyType = new RetailSellerInformationBodyType();

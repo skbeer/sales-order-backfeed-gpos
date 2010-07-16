@@ -49,6 +49,7 @@ public class PPOSHelper {
         return ordersSent;
     }
 
+    // method is public only to be tested separately
     public List<PPOSOrderInfo> normalizeOrderLineItems(List<PPOSOrderInfo> deNormalizedOrders) {
         List<PPOSOrderInfo> normalizedOrders = new ArrayList<PPOSOrderInfo>();
         if(deNormalizedOrders!= null && deNormalizedOrders.size() > 0) {

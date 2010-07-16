@@ -8,6 +8,9 @@ import com.monsanto.irdsoapservices.agreementstatus.schema.request.AgreementStat
 import com.monsanto.irdsoapservices.agreementstatus.schema.request.PartnerIdentifierType;
 import com.monsanto.irdsoapservices.agreementstatus.schema.response.AgreementStatusResponseType;
 import com.monsanto.irdsoapservices.agreementstatus.schema.response.ListPartnerAgencyAttribute;
+import com.monsanto.irdsoapservices.agreementstatus.schema.response.ExceptionType;
+import com.monsanto.irdsoapservices.agreementstatus.schema.AgreementStatusFault;
+import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -27,18 +30,30 @@ public class AgreementStatusHelper {
 
     Logger logger = Logger.getLogger(this.getClass());
 
-    public AgreementStatusResponseType getAgreementStatus(AgreementStatusRequest agreementStatusRequest) {
-        logger.info("Starting to retrieve Agreement Status information");
-        List<String> glnList = extractGLNsFromRequest(agreementStatusRequest);
-        logger.info("Found "+glnList.size()+" GLNs in the request");
-        List<AgreementStatusInfo> agreementStatusList = agreementStatusDao.getAgreementStatusInfo(glnList);
-        HashMap<String, AgreementStatusInfo> normalizedStatusMap = normalizeAgreementStatusList(agreementStatusList);
-        List<AgreementStatusInfo> agreementList = new ArrayList<AgreementStatusInfo>();
-        agreementList.addAll(normalizedStatusMap.values());
-        logger.info("Found Agreement Status for "+agreementList.size()+" GLNs");
-        return responseBuilder.getAgreementStatusResponse(agreementStatusRequest, agreementList);
+    public AgreementStatusResponseType getAgreementStatus(AgreementStatusRequest agreementStatusRequest) throws AgreementStatusFault {
+        AgreementStatusResponseType response;
+        try {
+            logger.info("Starting to retrieve Agreement Status information");
+            List<String> glnList = extractGLNsFromRequest(agreementStatusRequest);
+            logger.info("Found "+glnList.size()+" GLNs in the request");
+            List<AgreementStatusInfo> agreementStatusList = agreementStatusDao.getAgreementStatusInfo(glnList);
+            HashMap<String, AgreementStatusInfo> normalizedStatusMap = normalizeAgreementStatusList(agreementStatusList);
+            List<AgreementStatusInfo> agreementList = new ArrayList<AgreementStatusInfo>();
+            agreementList.addAll(normalizedStatusMap.values());
+            logger.info("Found Agreement Status for "+agreementList.size()+" GLNs");
+            response = responseBuilder.getAgreementStatusResponse(agreementStatusRequest, agreementList);
+        } catch (Exception e) {
+            logger.error(e);
+            new ErrorEmailer().sendErrorEmail(e, "Error occurred during getAgreementStatus() operation.");
+            ExceptionType exceptionType = new ExceptionType();
+            exceptionType.setFaultMessage(e.getMessage());
+            throw new AgreementStatusFault("Error occurred during getAgreementStatus() operation", exceptionType, e);
+        }
+
+        return response;
     }
 
+    // method is public only to be tested separately
     public List<String> extractGLNsFromRequest(AgreementStatusRequest request) {
         List<String> glns = new ArrayList<String>();
         List<AgreementStatusRequestDetailsType> requestDetails = request.getAgreementStatusRequestBody().getAgreementStatusRequestDetails();
@@ -52,6 +67,7 @@ public class AgreementStatusHelper {
         return glns;
     }
 
+    // method is public only to be tested separately
     public HashMap<String, AgreementStatusInfo> normalizeAgreementStatusList(List<AgreementStatusInfo> denormalizedStatusList) {
         HashMap<String, AgreementStatusInfo> normalizedStatusMap = new HashMap<String, AgreementStatusInfo>();
         List<AgreementInfo> agreementList = null;

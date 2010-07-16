@@ -48,7 +48,8 @@ public class COSHelper {
         }
         return ordersSent;
     }
-
+    
+    // method is public only to be tested separately
     public List<COSOrderInfo> normalizeOrderLineItems(List<COSOrderInfo> deNormalizedOrders) {
         List<COSOrderInfo> normalizedOrders = new ArrayList<COSOrderInfo>();
         if(deNormalizedOrders!= null && deNormalizedOrders.size() > 0) {

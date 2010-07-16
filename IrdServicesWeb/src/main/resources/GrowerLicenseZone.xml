@@ -27,15 +27,16 @@
                 SPECIES_CODE,
                 ZONE_DESCR,
                 ZONE_CODE,
-                'CORN TYPE' ZONE_TYPE,
-                'MTA1' AGREEMENT_NAME,
+                ZONE_STRUCT_DESCR ZONE_TYPE,
+                DECODE(SPECIES_CODE, 'T', 'MTA1', 'MTA2')  AGREEMENT_NAME,
                 LICENSE_STATUS,
                 CONTACT_FIRST_NAME ||' ' ||CONTACT_LAST_NAME AS CONTACT_NAME
         FROM    ECOM.GROWER_LICENSE_ZONE_VW
-        WHERE   PURCHASER_ACCT_ID IN
+        WHERE   GLN IN
                 <iterate open="(" close=")" conjunction=",">
                   #[]#
                 </iterate>
+        ORDER BY GLN, AGREEMENT_NAME
     </select>
 
 </sqlMap>

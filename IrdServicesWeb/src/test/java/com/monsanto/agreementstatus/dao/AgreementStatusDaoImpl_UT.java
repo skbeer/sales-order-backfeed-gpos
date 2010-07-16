@@ -29,7 +29,7 @@ public class AgreementStatusDaoImpl_UT extends AbstractTransactionalDataSourceSp
     }
 
     public void testGetAgreementStatus_withData_returnList() throws Exception {
-        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(Arrays.asList(new String[]{"101010", "216520"}));
+        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(Arrays.asList(new String[]{"101010", "0629245000011"}));
         assertTrue(agrStatusList.size()>0);
     }
 
