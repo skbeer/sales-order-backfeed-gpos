@@ -30,7 +30,7 @@ public class RetailSellerInformationService_Service
         try {
             URL baseUrl;
             baseUrl = com.monsanto.irdsoapservices.retailseller.schema.RetailSellerInformationService_Service.class.getResource(".");
-            url = new URL(baseUrl, "http://services-dint.monsanto.com/ECOM_SalesDoc/ProxyServices/RetailSellerInformation_Async?wsdl");
+            url = new URL(baseUrl, "http://services-dint.monsanto.com/ECOM_SalesDoc/ProxyServices/RetailSellerInformation?wsdl");
         } catch (MalformedURLException e) {
             logger.warning("Failed to create URL for the wsdl Location: 'http://services-dint.monsanto.com/ECOM_SalesDoc/ProxyServices/RetailSellerInformation?wsdl', retrying as a local file");
             logger.warning(e.getMessage());
