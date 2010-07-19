@@ -24,7 +24,7 @@ public class AgreementStatusServiceImpl_AT extends TestCase {
         AgreementStatusServiceImpl serviceImpl = new AgreementStatusServiceImpl();
         AgreementStatusResponseType responseType = serviceImpl.getAgreementStatus(getRequest());
         assertNotNull(responseType);
-        System.out.println(responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().get(0).getPartnerInformation().getPartnerName().get(0));
+        assertTrue("Agreement Status expected.", (responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().size()>0));
     }
 
     private AgreementStatusRequest getRequest() {
@@ -32,7 +32,7 @@ public class AgreementStatusServiceImpl_AT extends TestCase {
         request.setHeader(getHeaderType());
         AgreementStatusRequestDetailsType detailsType = new AgreementStatusRequestDetailsType();
         detailsType.setStateOrProvince("MO");
-        detailsType.getPartnerIdentifier().add(getPartnerIdentifierType("216520", "GLN"));
+        detailsType.getPartnerIdentifier().add(getPartnerIdentifierType("0629245000011", "GLN"));
         AgreementStatusRequestBodyType bodyType = new AgreementStatusRequestBodyType();
         bodyType.getAgreementStatusRequestDetails().add(detailsType);
         request.setAgreementStatusRequestBody(bodyType);
