@@ -125,9 +125,9 @@ DROPPING IN THE JSP PAGE AND INVOKING IT THROUGH A STANDARD WEB BROWSER.
         -->
     </style>
 </head>
-<body onLoad="javascript:document.logFilterForm.logNameFilter.focus();"> lo
+<body onLoad="javascript:document.logFilterForm.logNameFilter.focus();"> 
 <%
-    InputStream inputStream = getServletConfig().getServletContext().getResourceAsStream("/META-INF/MANIFEST.MF");
+    InputStream inputStream = application.getResourceAsStream("/META-INF/MANIFEST.MF");
     Manifest manifest = new Manifest(inputStream);
     String timestamp = manifest.getMainAttributes().getValue("Implementation-Version");
 
