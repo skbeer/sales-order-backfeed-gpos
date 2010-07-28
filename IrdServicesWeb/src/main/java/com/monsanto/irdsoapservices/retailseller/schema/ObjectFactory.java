@@ -48,131 +48,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RetailSellerInformationType }
+     * Create an instance of {@link BuyerType }
      * 
      */
-    public RetailSellerInformationType createRetailSellerInformationType() {
-        return new RetailSellerInformationType();
-    }
-
-    /**
-     * Create an instance of {@link DealerType }
-     * 
-     */
-    public DealerType createDealerType() {
-        return new DealerType();
-    }
-
-    /**
-     * Create an instance of {@link ToType }
-     * 
-     */
-    public ToType createToType() {
-        return new ToType();
-    }
-
-    /**
-     * Create an instance of {@link AlternateCommunicationMethodType }
-     * 
-     */
-    public AlternateCommunicationMethodType createAlternateCommunicationMethodType() {
-        return new AlternateCommunicationMethodType();
-    }
-
-    /**
-     * Create an instance of {@link RetailSellerInformationBodyType }
-     * 
-     */
-    public RetailSellerInformationBodyType createRetailSellerInformationBodyType() {
-        return new RetailSellerInformationBodyType();
-    }
-
-    /**
-     * Create an instance of {@link ThisDocumentIdentifierType }
-     * 
-     */
-    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
-        return new ThisDocumentIdentifierType();
-    }
-
-    /**
-     * Create an instance of {@link SellerType }
-     * 
-     */
-    public SellerType createSellerType() {
-        return new SellerType();
-    }
-
-    /**
-     * Create an instance of {@link SalespersonType }
-     * 
-     */
-    public SalespersonType createSalespersonType() {
-        return new SalespersonType();
-    }
-
-    /**
-     * Create an instance of {@link ExceptionType }
-     * 
-     */
-    public ExceptionType createExceptionType() {
-        return new ExceptionType();
-    }
-
-    /**
-     * Create an instance of {@link RetailSellerInformationPartnersType }
-     * 
-     */
-    public RetailSellerInformationPartnersType createRetailSellerInformationPartnersType() {
-        return new RetailSellerInformationPartnersType();
-    }
-
-    /**
-     * Create an instance of {@link DateTimeType }
-     * 
-     */
-    public DateTimeType createDateTimeType() {
-        return new DateTimeType();
-    }
-
-    /**
-     * Create an instance of {@link PartnerInformationType }
-     * 
-     */
-    public PartnerInformationType createPartnerInformationType() {
-        return new PartnerInformationType();
-    }
-
-    /**
-     * Create an instance of {@link AddressInformationTypeII }
-     * 
-     */
-    public AddressInformationTypeII createAddressInformationTypeII() {
-        return new AddressInformationTypeII();
-    }
-
-    /**
-     * Create an instance of {@link ThisDocumentDateTimeType }
-     * 
-     */
-    public ThisDocumentDateTimeType createThisDocumentDateTimeType() {
-        return new ThisDocumentDateTimeType();
-    }
-
-    /**
-     * Create an instance of {@link RetailSellerResponseType }
-     * 
-     */
-    public RetailSellerResponseType createRetailSellerResponseType() {
-        return new RetailSellerResponseType();
-    }
-
-    /**
-     * Create an instance of {@link AddressInformationType }
-     * 
-     */
-    public AddressInformationType createAddressInformationType() {
-        return new AddressInformationType();
+    public BuyerType createBuyerType() {
+        return new BuyerType();
     }
 
     /**
@@ -184,27 +64,51 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BuyerType }
+     * Create an instance of {@link AlternateCommunicationMethodType }
      * 
      */
-    public BuyerType createBuyerType() {
-        return new BuyerType();
+    public AlternateCommunicationMethodType createAlternateCommunicationMethodType() {
+        return new AlternateCommunicationMethodType();
     }
 
     /**
-     * Create an instance of {@link PartnerIdentifierType }
+     * Create an instance of {@link AddressInformationTypeII }
      * 
      */
-    public PartnerIdentifierType createPartnerIdentifierType() {
-        return new PartnerIdentifierType();
+    public AddressInformationTypeII createAddressInformationTypeII() {
+        return new AddressInformationTypeII();
     }
 
     /**
-     * Create an instance of {@link FromType }
+     * Create an instance of {@link RetailSellerResponseType }
      * 
      */
-    public FromType createFromType() {
-        return new FromType();
+    public RetailSellerResponseType createRetailSellerResponseType() {
+        return new RetailSellerResponseType();
+    }
+
+    /**
+     * Create an instance of {@link RetailSellerInformationBodyType }
+     * 
+     */
+    public RetailSellerInformationBodyType createRetailSellerInformationBodyType() {
+        return new RetailSellerInformationBodyType();
+    }
+
+    /**
+     * Create an instance of {@link ThisDocumentDateTimeType }
+     * 
+     */
+    public ThisDocumentDateTimeType createThisDocumentDateTimeType() {
+        return new ThisDocumentDateTimeType();
+    }
+
+    /**
+     * Create an instance of {@link ToType }
+     * 
+     */
+    public ToType createToType() {
+        return new ToType();
     }
 
     /**
@@ -216,11 +120,107 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RetailSellerInformationType }
+     * 
+     */
+    public RetailSellerInformationType createRetailSellerInformationType() {
+        return new RetailSellerInformationType();
+    }
+
+    /**
+     * Create an instance of {@link AddressInformationType }
+     * 
+     */
+    public AddressInformationType createAddressInformationType() {
+        return new AddressInformationType();
+    }
+
+    /**
+     * Create an instance of {@link FromType }
+     * 
+     */
+    public FromType createFromType() {
+        return new FromType();
+    }
+
+    /**
+     * Create an instance of {@link ExceptionType }
+     * 
+     */
+    public ExceptionType createExceptionType() {
+        return new ExceptionType();
+    }
+
+    /**
+     * Create an instance of {@link PartnerInformationType }
+     * 
+     */
+    public PartnerInformationType createPartnerInformationType() {
+        return new PartnerInformationType();
+    }
+
+    /**
+     * Create an instance of {@link RetailSellerInformationPartnersType }
+     * 
+     */
+    public RetailSellerInformationPartnersType createRetailSellerInformationPartnersType() {
+        return new RetailSellerInformationPartnersType();
+    }
+
+    /**
+     * Create an instance of {@link SalespersonType }
+     * 
+     */
+    public SalespersonType createSalespersonType() {
+        return new SalespersonType();
+    }
+
+    /**
+     * Create an instance of {@link DealerType }
+     * 
+     */
+    public DealerType createDealerType() {
+        return new DealerType();
+    }
+
+    /**
      * Create an instance of {@link ContactInformationType }
      * 
      */
     public ContactInformationType createContactInformationType() {
         return new ContactInformationType();
+    }
+
+    /**
+     * Create an instance of {@link ThisDocumentIdentifierType }
+     * 
+     */
+    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
+        return new ThisDocumentIdentifierType();
+    }
+
+    /**
+     * Create an instance of {@link PartnerIdentifierType }
+     * 
+     */
+    public PartnerIdentifierType createPartnerIdentifierType() {
+        return new PartnerIdentifierType();
+    }
+
+    /**
+     * Create an instance of {@link SellerType }
+     * 
+     */
+    public SellerType createSellerType() {
+        return new SellerType();
+    }
+
+    /**
+     * Create an instance of {@link DateTimeType }
+     * 
+     */
+    public DateTimeType createDateTimeType() {
+        return new DateTimeType();
     }
 
     /**

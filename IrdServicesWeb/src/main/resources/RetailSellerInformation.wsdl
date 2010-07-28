@@ -1,0 +1,47 @@
+<wsdl:definitions name="RetailSellerInformationServiceDefinitions" targetNamespace="urn:monsanto:services:wsdl:salesorder:1:0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ret="urn:ecms:schema:retailsellerinformation:request:1:0" xmlns:retWsdl="urn:monsanto:services:wsdl:salesorder:1:0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import schemaLocation="RetailSellerInformation.xsd" namespace="urn:ecms:schema:retailsellerinformation:request:1:0"/>
+    </xs:schema>
+  </wsdl:types>
+
+  <wsdl:message name="RetailSellerInformation">
+    <wsdl:part element="ret:RetailSellerInformation" name="request"/>
+  </wsdl:message>
+  <wsdl:message name="RetailSellerResponse">
+    <wsdl:part element="ret:RetailSellerResponse" name="retailSellerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RetailSellerFault">
+    <wsdl:part element="ret:RetailSellerFault" name="retailSellerFault"/>
+  </wsdl:message>
+
+  <wsdl:portType name="RetailSellerInformationService">
+    <wsdl:operation name="saveRetailSellerInformation" parameterOrder="request">
+      <wsdl:input message="retWsdl:RetailSellerInformation"/>
+      <wsdl:output message="retWsdl:RetailSellerResponse"/>
+      <wsdl:fault message="retWsdl:RetailSellerFault" name="retailSellerFault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="RetailSellerInformationServiceSoapBinding" type="retWsdl:RetailSellerInformationService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="saveRetailSellerInformation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input>
+        <soap:body parts="request" use="literal"/>
+      </wsdl:input>
+	<wsdl:output>
+		<soap:body parts="retailSellerResponse" use="literal"/>
+	</wsdl:output>
+       <wsdl:fault name="retailSellerFault">
+		<soap:fault name="retailSellerFault" use="literal"/>
+	</wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:service name="RetailSellerInformationService">
+    <wsdl:port binding="retWsdl:RetailSellerInformationServiceSoapBinding" name="RetailSellerInformationServicePort">
+      <soap:address location="http://localhost:7001/IRDSoapServicesWeb/RetailSellerInformationService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

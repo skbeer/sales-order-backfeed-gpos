@@ -120,7 +120,7 @@ public abstract class AbstractRequestBuilder {
         partnerInformationType.getPartnerName().add(partnerInfo.getPartnerName());
 
         AddressInformationType addressInformationType = new AddressInformationType();
-        addressInformationType.setAddressLine(partnerInfo.getAddress());
+        addressInformationType.getAddressLine().add(partnerInfo.getAddress());
         addressInformationType.setCityName(partnerInfo.getCity());
         addressInformationType.setStateOrProvince(partnerInfo.getState());
         addressInformationType.setPostalCode(partnerInfo.getZip());

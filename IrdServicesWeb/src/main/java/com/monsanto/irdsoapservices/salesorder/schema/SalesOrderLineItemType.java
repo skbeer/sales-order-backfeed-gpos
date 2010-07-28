@@ -8,8 +8,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -29,35 +27,26 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="ShippedQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}ShippedQuantityType" minOccurs="0"/>
  *         &lt;element name="ShippedQuantityEquivalent" type="{urn:ecms:schema:salesorderreport:response:1:0}ShippedQuantityEquivalentType" minOccurs="0"/>
  *         &lt;element name="SalesPerson" type="{urn:ecms:schema:salesorderreport:response:1:0}SalesPersonType" minOccurs="0"/>
- *         &lt;element name="RejectReason" minOccurs="0">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element name="RejectReason" type="{http://www.w3.org/2001/XMLSchema}token"/>
- *                   &lt;element name="RejectReasonDescription" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
+ *         &lt;element name="RejectReason" type="{urn:ecms:schema:salesorderreport:response:1:0}RejectReasonType" minOccurs="0"/>
  *         &lt;element name="PendingQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}PendingQuantityType" minOccurs="0"/>
  *         &lt;element name="PendingQuantityEquivalent" type="{urn:ecms:schema:salesorderreport:response:1:0}PendingQuantityEquivalentType" minOccurs="0"/>
- *         &lt;element name="DeliveredQuantity" minOccurs="0">
- *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;sequence>
- *                   &lt;element ref="{urn:ecms:schema:salesorderreport:response:1:0}Measurement"/>
- *                 &lt;/sequence>
- *               &lt;/restriction>
- *             &lt;/complexContent>
- *           &lt;/complexType>
- *         &lt;/element>
+ *         &lt;element name="DeliveredQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}DeliveryQuantityType" minOccurs="0"/>
  *         &lt;element name="DeliveredQuantityEquivalent" type="{urn:ecms:schema:salesorderreport:response:1:0}DeliveryQuantityEquivalentType" minOccurs="0"/>
  *         &lt;element name="OrderDate" type="{urn:ecms:schema:salesorderreport:response:1:0}OrderDateType" minOccurs="0"/>
  *         &lt;element name="ChangeDate" type="{urn:ecms:schema:salesorderreport:response:1:0}ChangeDateType" minOccurs="0"/>
  *         &lt;element name="OrderTransactionType" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="BaseOrderQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}BaseOrderQuantityType" minOccurs="0"/>
+ *         &lt;element name="BaseOrderQuantityEquivalent" type="{urn:ecms:schema:salesorderreport:response:1:0}BaseOrderQuantityEquivalentType" minOccurs="0"/>
+ *         &lt;element name="PrepositionOrderQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}PrepositionOrderQuantityType" minOccurs="0"/>
+ *         &lt;element name="PrepositionOrderQuantityEquivalent" type="{urn:ecms:schema:salesorderreport:response:1:0}PrepositionOrderQuantityEquivalentType" minOccurs="0"/>
+ *         &lt;element name="DirectShipmentsQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}DirectShipmentsQuantityType" minOccurs="0"/>
+ *         &lt;element name="DirectShipmentsQuantityEquivalent" type="{urn:ecms:schema:salesorderreport:response:1:0}DirectShipmentsQuantityEquivalentType" minOccurs="0"/>
+ *         &lt;element name="TransfersInQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}TransfersInQuantityType" minOccurs="0"/>
+ *         &lt;element name="TransfersInQuantityEquivalent" type="{urn:ecms:schema:salesorderreport:response:1:0}TransfersInQuantityEquivalentType" minOccurs="0"/>
+ *         &lt;element name="TransfersOutQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}TransfersOutQuantityType" minOccurs="0"/>
+ *         &lt;element name="TransfersOutQuantityEquivalent" type="{urn:ecms:schema:salesorderreport:response:1:0}TransfersOutQuantityEquivalentType" minOccurs="0"/>
+ *         &lt;element name="ReturnsQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}ReturnsQuantityType" minOccurs="0"/>
+ *         &lt;element name="ReturnsQuantityEquivalent" type="{urn:ecms:schema:salesorderreport:response:1:0}ReturnsQuantityEquivalentType" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -82,7 +71,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "deliveredQuantityEquivalent",
     "orderDate",
     "changeDate",
-    "orderTransactionType"
+    "orderTransactionType",
+    "baseOrderQuantity",
+    "baseOrderQuantityEquivalent",
+    "prepositionOrderQuantity",
+    "prepositionOrderQuantityEquivalent",
+    "directShipmentsQuantity",
+    "directShipmentsQuantityEquivalent",
+    "transfersInQuantity",
+    "transfersInQuantityEquivalent",
+    "transfersOutQuantity",
+    "transfersOutQuantityEquivalent",
+    "returnsQuantity",
+    "returnsQuantityEquivalent"
 })
 public class SalesOrderLineItemType {
 
@@ -102,13 +103,13 @@ public class SalesOrderLineItemType {
     @XmlElement(name = "SalesPerson")
     protected SalesPersonType salesPerson;
     @XmlElement(name = "RejectReason")
-    protected SalesOrderLineItemType.RejectReason rejectReason;
+    protected RejectReasonType rejectReason;
     @XmlElement(name = "PendingQuantity")
     protected PendingQuantityType pendingQuantity;
     @XmlElement(name = "PendingQuantityEquivalent")
     protected PendingQuantityEquivalentType pendingQuantityEquivalent;
     @XmlElement(name = "DeliveredQuantity")
-    protected SalesOrderLineItemType.DeliveredQuantity deliveredQuantity;
+    protected DeliveryQuantityType deliveredQuantity;
     @XmlElement(name = "DeliveredQuantityEquivalent")
     protected DeliveryQuantityEquivalentType deliveredQuantityEquivalent;
     @XmlElement(name = "OrderDate")
@@ -117,6 +118,30 @@ public class SalesOrderLineItemType {
     protected ChangeDateType changeDate;
     @XmlElement(name = "OrderTransactionType")
     protected String orderTransactionType;
+    @XmlElement(name = "BaseOrderQuantity")
+    protected BaseOrderQuantityType baseOrderQuantity;
+    @XmlElement(name = "BaseOrderQuantityEquivalent")
+    protected BaseOrderQuantityEquivalentType baseOrderQuantityEquivalent;
+    @XmlElement(name = "PrepositionOrderQuantity")
+    protected PrepositionOrderQuantityType prepositionOrderQuantity;
+    @XmlElement(name = "PrepositionOrderQuantityEquivalent")
+    protected PrepositionOrderQuantityEquivalentType prepositionOrderQuantityEquivalent;
+    @XmlElement(name = "DirectShipmentsQuantity")
+    protected DirectShipmentsQuantityType directShipmentsQuantity;
+    @XmlElement(name = "DirectShipmentsQuantityEquivalent")
+    protected DirectShipmentsQuantityEquivalentType directShipmentsQuantityEquivalent;
+    @XmlElement(name = "TransfersInQuantity")
+    protected TransfersInQuantityType transfersInQuantity;
+    @XmlElement(name = "TransfersInQuantityEquivalent")
+    protected TransfersInQuantityEquivalentType transfersInQuantityEquivalent;
+    @XmlElement(name = "TransfersOutQuantity")
+    protected TransfersOutQuantityType transfersOutQuantity;
+    @XmlElement(name = "TransfersOutQuantityEquivalent")
+    protected TransfersOutQuantityEquivalentType transfersOutQuantityEquivalent;
+    @XmlElement(name = "ReturnsQuantity")
+    protected ReturnsQuantityType returnsQuantity;
+    @XmlElement(name = "ReturnsQuantityEquivalent")
+    protected ReturnsQuantityEquivalentType returnsQuantityEquivalent;
 
     /**
      * Gets the value of the lineNumber property.
@@ -288,10 +313,10 @@ public class SalesOrderLineItemType {
      * 
      * @return
      *     possible object is
-     *     {@link SalesOrderLineItemType.RejectReason }
+     *     {@link RejectReasonType }
      *     
      */
-    public SalesOrderLineItemType.RejectReason getRejectReason() {
+    public RejectReasonType getRejectReason() {
         return rejectReason;
     }
 
@@ -300,10 +325,10 @@ public class SalesOrderLineItemType {
      * 
      * @param value
      *     allowed object is
-     *     {@link SalesOrderLineItemType.RejectReason }
+     *     {@link RejectReasonType }
      *     
      */
-    public void setRejectReason(SalesOrderLineItemType.RejectReason value) {
+    public void setRejectReason(RejectReasonType value) {
         this.rejectReason = value;
     }
 
@@ -360,10 +385,10 @@ public class SalesOrderLineItemType {
      * 
      * @return
      *     possible object is
-     *     {@link SalesOrderLineItemType.DeliveredQuantity }
+     *     {@link DeliveryQuantityType }
      *     
      */
-    public SalesOrderLineItemType.DeliveredQuantity getDeliveredQuantity() {
+    public DeliveryQuantityType getDeliveredQuantity() {
         return deliveredQuantity;
     }
 
@@ -372,10 +397,10 @@ public class SalesOrderLineItemType {
      * 
      * @param value
      *     allowed object is
-     *     {@link SalesOrderLineItemType.DeliveredQuantity }
+     *     {@link DeliveryQuantityType }
      *     
      */
-    public void setDeliveredQuantity(SalesOrderLineItemType.DeliveredQuantity value) {
+    public void setDeliveredQuantity(DeliveryQuantityType value) {
         this.deliveredQuantity = value;
     }
 
@@ -475,144 +500,292 @@ public class SalesOrderLineItemType {
         this.orderTransactionType = value;
     }
 
-
     /**
-     * <p>Java class for anonymous complex type.
+     * Gets the value of the baseOrderQuantity property.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element ref="{urn:ecms:schema:salesorderreport:response:1:0}Measurement"/>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link BaseOrderQuantityType }
+     *     
      */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "measurement"
-    })
-    public static class DeliveredQuantity {
-
-        @XmlElement(name = "Measurement", required = true)
-        protected MeasurementType measurement;
-
-        /**
-         * Gets the value of the measurement property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link MeasurementType }
-         *     
-         */
-        public MeasurementType getMeasurement() {
-            return measurement;
-        }
-
-        /**
-         * Sets the value of the measurement property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link MeasurementType }
-         *     
-         */
-        public void setMeasurement(MeasurementType value) {
-            this.measurement = value;
-        }
-
+    public BaseOrderQuantityType getBaseOrderQuantity() {
+        return baseOrderQuantity;
     }
 
+    /**
+     * Sets the value of the baseOrderQuantity property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BaseOrderQuantityType }
+     *     
+     */
+    public void setBaseOrderQuantity(BaseOrderQuantityType value) {
+        this.baseOrderQuantity = value;
+    }
 
     /**
-     * <p>Java class for anonymous complex type.
+     * Gets the value of the baseOrderQuantityEquivalent property.
      * 
-     * <p>The following schema fragment specifies the expected content contained within this class.
-     * 
-     * <pre>
-     * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;sequence>
-     *         &lt;element name="RejectReason" type="{http://www.w3.org/2001/XMLSchema}token"/>
-     *         &lt;element name="RejectReasonDescription" type="{http://www.w3.org/2001/XMLSchema}string"/>
-     *       &lt;/sequence>
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
-     * &lt;/complexType>
-     * </pre>
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link BaseOrderQuantityEquivalentType }
+     *     
      */
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "", propOrder = {
-        "rejectReason",
-        "rejectReasonDescription"
-    })
-    public static class RejectReason {
+    public BaseOrderQuantityEquivalentType getBaseOrderQuantityEquivalent() {
+        return baseOrderQuantityEquivalent;
+    }
 
-        @XmlElement(name = "RejectReason", required = true)
-        @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-        @XmlSchemaType(name = "token")
-        protected String rejectReason;
-        @XmlElement(name = "RejectReasonDescription", required = true)
-        protected String rejectReasonDescription;
+    /**
+     * Sets the value of the baseOrderQuantityEquivalent property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BaseOrderQuantityEquivalentType }
+     *     
+     */
+    public void setBaseOrderQuantityEquivalent(BaseOrderQuantityEquivalentType value) {
+        this.baseOrderQuantityEquivalent = value;
+    }
 
-        /**
-         * Gets the value of the rejectReason property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getRejectReason() {
-            return rejectReason;
-        }
+    /**
+     * Gets the value of the prepositionOrderQuantity property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link PrepositionOrderQuantityType }
+     *     
+     */
+    public PrepositionOrderQuantityType getPrepositionOrderQuantity() {
+        return prepositionOrderQuantity;
+    }
 
-        /**
-         * Sets the value of the rejectReason property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setRejectReason(String value) {
-            this.rejectReason = value;
-        }
+    /**
+     * Sets the value of the prepositionOrderQuantity property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PrepositionOrderQuantityType }
+     *     
+     */
+    public void setPrepositionOrderQuantity(PrepositionOrderQuantityType value) {
+        this.prepositionOrderQuantity = value;
+    }
 
-        /**
-         * Gets the value of the rejectReasonDescription property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getRejectReasonDescription() {
-            return rejectReasonDescription;
-        }
+    /**
+     * Gets the value of the prepositionOrderQuantityEquivalent property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link PrepositionOrderQuantityEquivalentType }
+     *     
+     */
+    public PrepositionOrderQuantityEquivalentType getPrepositionOrderQuantityEquivalent() {
+        return prepositionOrderQuantityEquivalent;
+    }
 
-        /**
-         * Sets the value of the rejectReasonDescription property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setRejectReasonDescription(String value) {
-            this.rejectReasonDescription = value;
-        }
+    /**
+     * Sets the value of the prepositionOrderQuantityEquivalent property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PrepositionOrderQuantityEquivalentType }
+     *     
+     */
+    public void setPrepositionOrderQuantityEquivalent(PrepositionOrderQuantityEquivalentType value) {
+        this.prepositionOrderQuantityEquivalent = value;
+    }
 
+    /**
+     * Gets the value of the directShipmentsQuantity property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link DirectShipmentsQuantityType }
+     *     
+     */
+    public DirectShipmentsQuantityType getDirectShipmentsQuantity() {
+        return directShipmentsQuantity;
+    }
+
+    /**
+     * Sets the value of the directShipmentsQuantity property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link DirectShipmentsQuantityType }
+     *     
+     */
+    public void setDirectShipmentsQuantity(DirectShipmentsQuantityType value) {
+        this.directShipmentsQuantity = value;
+    }
+
+    /**
+     * Gets the value of the directShipmentsQuantityEquivalent property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link DirectShipmentsQuantityEquivalentType }
+     *     
+     */
+    public DirectShipmentsQuantityEquivalentType getDirectShipmentsQuantityEquivalent() {
+        return directShipmentsQuantityEquivalent;
+    }
+
+    /**
+     * Sets the value of the directShipmentsQuantityEquivalent property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link DirectShipmentsQuantityEquivalentType }
+     *     
+     */
+    public void setDirectShipmentsQuantityEquivalent(DirectShipmentsQuantityEquivalentType value) {
+        this.directShipmentsQuantityEquivalent = value;
+    }
+
+    /**
+     * Gets the value of the transfersInQuantity property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TransfersInQuantityType }
+     *     
+     */
+    public TransfersInQuantityType getTransfersInQuantity() {
+        return transfersInQuantity;
+    }
+
+    /**
+     * Sets the value of the transfersInQuantity property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TransfersInQuantityType }
+     *     
+     */
+    public void setTransfersInQuantity(TransfersInQuantityType value) {
+        this.transfersInQuantity = value;
+    }
+
+    /**
+     * Gets the value of the transfersInQuantityEquivalent property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TransfersInQuantityEquivalentType }
+     *     
+     */
+    public TransfersInQuantityEquivalentType getTransfersInQuantityEquivalent() {
+        return transfersInQuantityEquivalent;
+    }
+
+    /**
+     * Sets the value of the transfersInQuantityEquivalent property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TransfersInQuantityEquivalentType }
+     *     
+     */
+    public void setTransfersInQuantityEquivalent(TransfersInQuantityEquivalentType value) {
+        this.transfersInQuantityEquivalent = value;
+    }
+
+    /**
+     * Gets the value of the transfersOutQuantity property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TransfersOutQuantityType }
+     *     
+     */
+    public TransfersOutQuantityType getTransfersOutQuantity() {
+        return transfersOutQuantity;
+    }
+
+    /**
+     * Sets the value of the transfersOutQuantity property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TransfersOutQuantityType }
+     *     
+     */
+    public void setTransfersOutQuantity(TransfersOutQuantityType value) {
+        this.transfersOutQuantity = value;
+    }
+
+    /**
+     * Gets the value of the transfersOutQuantityEquivalent property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link TransfersOutQuantityEquivalentType }
+     *     
+     */
+    public TransfersOutQuantityEquivalentType getTransfersOutQuantityEquivalent() {
+        return transfersOutQuantityEquivalent;
+    }
+
+    /**
+     * Sets the value of the transfersOutQuantityEquivalent property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link TransfersOutQuantityEquivalentType }
+     *     
+     */
+    public void setTransfersOutQuantityEquivalent(TransfersOutQuantityEquivalentType value) {
+        this.transfersOutQuantityEquivalent = value;
+    }
+
+    /**
+     * Gets the value of the returnsQuantity property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ReturnsQuantityType }
+     *     
+     */
+    public ReturnsQuantityType getReturnsQuantity() {
+        return returnsQuantity;
+    }
+
+    /**
+     * Sets the value of the returnsQuantity property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ReturnsQuantityType }
+     *     
+     */
+    public void setReturnsQuantity(ReturnsQuantityType value) {
+        this.returnsQuantity = value;
+    }
+
+    /**
+     * Gets the value of the returnsQuantityEquivalent property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ReturnsQuantityEquivalentType }
+     *     
+     */
+    public ReturnsQuantityEquivalentType getReturnsQuantityEquivalent() {
+        return returnsQuantityEquivalent;
+    }
+
+    /**
+     * Sets the value of the returnsQuantityEquivalent property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ReturnsQuantityEquivalentType }
+     *     
+     */
+    public void setReturnsQuantityEquivalent(ReturnsQuantityEquivalentType value) {
+        this.returnsQuantityEquivalent = value;
     }
 
 }

@@ -45,70 +45,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SalesOrderLineItemType.DeliveredQuantity }
-     * 
-     */
-    public SalesOrderLineItemType.DeliveredQuantity createSalesOrderLineItemTypeDeliveredQuantity() {
-        return new SalesOrderLineItemType.DeliveredQuantity();
-    }
-
-    /**
-     * Create an instance of {@link SalesOrderLineItemType.RejectReason }
-     * 
-     */
-    public SalesOrderLineItemType.RejectReason createSalesOrderLineItemTypeRejectReason() {
-        return new SalesOrderLineItemType.RejectReason();
-    }
-
-    /**
-     * Create an instance of {@link ProductQuantityType_0020 }
-     * 
-     */
-    public ProductQuantityType_0020 createProductQuantityType_0020() {
-        return new ProductQuantityType_0020();
-    }
-
-    /**
-     * Create an instance of {@link SalesOrderReportPropertiesType }
-     * 
-     */
-    public SalesOrderReportPropertiesType createSalesOrderReportPropertiesType() {
-        return new SalesOrderReportPropertiesType();
-    }
-
-    /**
-     * Create an instance of {@link SalesOrderReportResponseType }
-     * 
-     */
-    public SalesOrderReportResponseType createSalesOrderReportResponseType() {
-        return new SalesOrderReportResponseType();
-    }
-
-    /**
-     * Create an instance of {@link PartnerIdentifierType }
-     * 
-     */
-    public PartnerIdentifierType createPartnerIdentifierType() {
-        return new PartnerIdentifierType();
-    }
-
-    /**
-     * Create an instance of {@link OtherPartnerTypeOld }
-     * 
-     */
-    public OtherPartnerTypeOld createOtherPartnerTypeOld() {
-        return new OtherPartnerTypeOld();
-    }
-
-    /**
-     * Create an instance of {@link AlternateCommunicationMethodType }
-     * 
-     */
-    public AlternateCommunicationMethodType createAlternateCommunicationMethodType() {
-        return new AlternateCommunicationMethodType();
-    }
-
-    /**
      * Create an instance of {@link SalesOrderReport }
      * 
      */
@@ -117,283 +53,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SalesOrderReportBodyType }
+     * Create an instance of {@link TransfersOutQuantityType }
      * 
      */
-    public SalesOrderReportBodyType createSalesOrderReportBodyType() {
-        return new SalesOrderReportBodyType();
-    }
-
-    /**
-     * Create an instance of {@link SalesOrderTypeCodeType }
-     * 
-     */
-    public SalesOrderTypeCodeType createSalesOrderTypeCodeType() {
-        return new SalesOrderTypeCodeType();
-    }
-
-    /**
-     * Create an instance of {@link FromType }
-     * 
-     */
-    public FromType createFromType() {
-        return new FromType();
-    }
-
-    /**
-     * Create an instance of {@link ShippedQuantityType }
-     * 
-     */
-    public ShippedQuantityType createShippedQuantityType() {
-        return new ShippedQuantityType();
-    }
-
-    /**
-     * Create an instance of {@link OrderDateType }
-     * 
-     */
-    public OrderDateType createOrderDateType() {
-        return new OrderDateType();
-    }
-
-    /**
-     * Create an instance of {@link PendingQuantityType }
-     * 
-     */
-    public PendingQuantityType createPendingQuantityType() {
-        return new PendingQuantityType();
-    }
-
-    /**
-     * Create an instance of {@link RejectReasonType }
-     * 
-     */
-    public RejectReasonType createRejectReasonType() {
-        return new RejectReasonType();
-    }
-
-    /**
-     * Create an instance of {@link MeasurementType }
-     * 
-     */
-    public MeasurementType createMeasurementType() {
-        return new MeasurementType();
-    }
-
-    /**
-     * Create an instance of {@link ExceptionType }
-     * 
-     */
-    public ExceptionType createExceptionType() {
-        return new ExceptionType();
-    }
-
-    /**
-     * Create an instance of {@link SalesOrderNumberType }
-     * 
-     */
-    public SalesOrderNumberType createSalesOrderNumberType() {
-        return new SalesOrderNumberType();
-    }
-
-    /**
-     * Create an instance of {@link ChangeDate }
-     * 
-     */
-    public ChangeDate createChangeDate() {
-        return new ChangeDate();
-    }
-
-    /**
-     * Create an instance of {@link UnitOfMeasureCodeType }
-     * 
-     */
-    public UnitOfMeasureCodeType createUnitOfMeasureCodeType() {
-        return new UnitOfMeasureCodeType();
-    }
-
-    /**
-     * Create an instance of {@link AddressInformationType }
-     * 
-     */
-    public AddressInformationType createAddressInformationType() {
-        return new AddressInformationType();
-    }
-
-    /**
-     * Create an instance of {@link PendingQuantityEquivalentType }
-     * 
-     */
-    public PendingQuantityEquivalentType createPendingQuantityEquivalentType() {
-        return new PendingQuantityEquivalentType();
-    }
-
-    /**
-     * Create an instance of {@link ShipToType }
-     * 
-     */
-    public ShipToType createShipToType() {
-        return new ShipToType();
-    }
-
-    /**
-     * Create an instance of {@link SellerType }
-     * 
-     */
-    public SellerType createSellerType() {
-        return new SellerType();
-    }
-
-    /**
-     * Create an instance of {@link AlternativeCommunicationMethodType }
-     * 
-     */
-    public AlternativeCommunicationMethodType createAlternativeCommunicationMethodType() {
-        return new AlternativeCommunicationMethodType();
-    }
-
-    /**
-     * Create an instance of {@link SalesPersonType }
-     * 
-     */
-    public SalesPersonType createSalesPersonType() {
-        return new SalesPersonType();
-    }
-
-    /**
-     * Create an instance of {@link OtherPartnerType }
-     * 
-     */
-    public OtherPartnerType createOtherPartnerType() {
-        return new OtherPartnerType();
-    }
-
-    /**
-     * Create an instance of {@link ChangeDateType }
-     * 
-     */
-    public ChangeDateType createChangeDateType() {
-        return new ChangeDateType();
-    }
-
-    /**
-     * Create an instance of {@link SalesOrderPartnersType }
-     * 
-     */
-    public SalesOrderPartnersType createSalesOrderPartnersType() {
-        return new SalesOrderPartnersType();
-    }
-
-    /**
-     * Create an instance of {@link HeaderType }
-     * 
-     */
-    public HeaderType createHeaderType() {
-        return new HeaderType();
-    }
-
-    /**
-     * Create an instance of {@link ProductIdentifierType }
-     * 
-     */
-    public ProductIdentifierType createProductIdentifierType() {
-        return new ProductIdentifierType();
-    }
-
-    /**
-     * Create an instance of {@link SalesOrderReportDetailsType }
-     * 
-     */
-    public SalesOrderReportDetailsType createSalesOrderReportDetailsType() {
-        return new SalesOrderReportDetailsType();
-    }
-
-    /**
-     * Create an instance of {@link ThisDocumentIdentifierType }
-     * 
-     */
-    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
-        return new ThisDocumentIdentifierType();
-    }
-
-    /**
-     * Create an instance of {@link DateTimeType }
-     * 
-     */
-    public DateTimeType createDateTimeType() {
-        return new DateTimeType();
-    }
-
-    /**
-     * Create an instance of {@link ProductQuantityEquivalentType }
-     * 
-     */
-    public ProductQuantityEquivalentType createProductQuantityEquivalentType() {
-        return new ProductQuantityEquivalentType();
-    }
-
-    /**
-     * Create an instance of {@link ProductidentificationType }
-     * 
-     */
-    public ProductidentificationType createProductidentificationType() {
-        return new ProductidentificationType();
-    }
-
-    /**
-     * Create an instance of {@link ShippedQuantityEquivalentType }
-     * 
-     */
-    public ShippedQuantityEquivalentType createShippedQuantityEquivalentType() {
-        return new ShippedQuantityEquivalentType();
-    }
-
-    /**
-     * Create an instance of {@link BuyerType }
-     * 
-     */
-    public BuyerType createBuyerType() {
-        return new BuyerType();
-    }
-
-    /**
-     * Create an instance of {@link DeliveryQuantityEquivalentType }
-     * 
-     */
-    public DeliveryQuantityEquivalentType createDeliveryQuantityEquivalentType() {
-        return new DeliveryQuantityEquivalentType();
-    }
-
-    /**
-     * Create an instance of {@link SalesOrderLineItemType }
-     * 
-     */
-    public SalesOrderLineItemType createSalesOrderLineItemType() {
-        return new SalesOrderLineItemType();
-    }
-
-    /**
-     * Create an instance of {@link ContactInformationType }
-     * 
-     */
-    public ContactInformationType createContactInformationType() {
-        return new ContactInformationType();
-    }
-
-    /**
-     * Create an instance of {@link SalesOrderIssuedDateType }
-     * 
-     */
-    public SalesOrderIssuedDateType createSalesOrderIssuedDateType() {
-        return new SalesOrderIssuedDateType();
-    }
-
-    /**
-     * Create an instance of {@link PartnerInformationType }
-     * 
-     */
-    public PartnerInformationType createPartnerInformationType() {
-        return new PartnerInformationType();
+    public TransfersOutQuantityType createTransfersOutQuantityType() {
+        return new TransfersOutQuantityType();
     }
 
     /**
@@ -405,11 +69,163 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SalesOrderTransactionDetailsType }
+     * Create an instance of {@link TransfersOutQuantityEquivalentType }
      * 
      */
-    public SalesOrderTransactionDetailsType createSalesOrderTransactionDetailsType() {
-        return new SalesOrderTransactionDetailsType();
+    public TransfersOutQuantityEquivalentType createTransfersOutQuantityEquivalentType() {
+        return new TransfersOutQuantityEquivalentType();
+    }
+
+    /**
+     * Create an instance of {@link ShipToType }
+     * 
+     */
+    public ShipToType createShipToType() {
+        return new ShipToType();
+    }
+
+    /**
+     * Create an instance of {@link BaseOrderQuantityEquivalentType }
+     * 
+     */
+    public BaseOrderQuantityEquivalentType createBaseOrderQuantityEquivalentType() {
+        return new BaseOrderQuantityEquivalentType();
+    }
+
+    /**
+     * Create an instance of {@link DeliveryQuantityEquivalentType }
+     * 
+     */
+    public DeliveryQuantityEquivalentType createDeliveryQuantityEquivalentType() {
+        return new DeliveryQuantityEquivalentType();
+    }
+
+    /**
+     * Create an instance of {@link BuyerType }
+     * 
+     */
+    public BuyerType createBuyerType() {
+        return new BuyerType();
+    }
+
+    /**
+     * Create an instance of {@link HeaderType }
+     * 
+     */
+    public HeaderType createHeaderType() {
+        return new HeaderType();
+    }
+
+    /**
+     * Create an instance of {@link PendingQuantityType }
+     * 
+     */
+    public PendingQuantityType createPendingQuantityType() {
+        return new PendingQuantityType();
+    }
+
+    /**
+     * Create an instance of {@link MeasurementType }
+     * 
+     */
+    public MeasurementType createMeasurementType() {
+        return new MeasurementType();
+    }
+
+    /**
+     * Create an instance of {@link BaseOrderQuantityType }
+     * 
+     */
+    public BaseOrderQuantityType createBaseOrderQuantityType() {
+        return new BaseOrderQuantityType();
+    }
+
+    /**
+     * Create an instance of {@link SalesOrderReportPropertiesType }
+     * 
+     */
+    public SalesOrderReportPropertiesType createSalesOrderReportPropertiesType() {
+        return new SalesOrderReportPropertiesType();
+    }
+
+    /**
+     * Create an instance of {@link PendingQuantityEquivalentType }
+     * 
+     */
+    public PendingQuantityEquivalentType createPendingQuantityEquivalentType() {
+        return new PendingQuantityEquivalentType();
+    }
+
+    /**
+     * Create an instance of {@link PrepositionOrderQuantityType }
+     * 
+     */
+    public PrepositionOrderQuantityType createPrepositionOrderQuantityType() {
+        return new PrepositionOrderQuantityType();
+    }
+
+    /**
+     * Create an instance of {@link ReturnsQuantityType }
+     * 
+     */
+    public ReturnsQuantityType createReturnsQuantityType() {
+        return new ReturnsQuantityType();
+    }
+
+    /**
+     * Create an instance of {@link ContactInformationType }
+     * 
+     */
+    public ContactInformationType createContactInformationType() {
+        return new ContactInformationType();
+    }
+
+    /**
+     * Create an instance of {@link OtherPartnerType }
+     * 
+     */
+    public OtherPartnerType createOtherPartnerType() {
+        return new OtherPartnerType();
+    }
+
+    /**
+     * Create an instance of {@link FromType }
+     * 
+     */
+    public FromType createFromType() {
+        return new FromType();
+    }
+
+    /**
+     * Create an instance of {@link DirectShipmentsQuantityType }
+     * 
+     */
+    public DirectShipmentsQuantityType createDirectShipmentsQuantityType() {
+        return new DirectShipmentsQuantityType();
+    }
+
+    /**
+     * Create an instance of {@link UnitOfMeasureCodeType }
+     * 
+     */
+    public UnitOfMeasureCodeType createUnitOfMeasureCodeType() {
+        return new UnitOfMeasureCodeType();
+    }
+
+    /**
+     * Create an instance of {@link AlternativeCommunicationMethodType }
+     * 
+     */
+    public AlternativeCommunicationMethodType createAlternativeCommunicationMethodType() {
+        return new AlternativeCommunicationMethodType();
+    }
+
+    /**
+     * Create an instance of {@link ProductQuantityEquivalentType }
+     * 
+     */
+    public ProductQuantityEquivalentType createProductQuantityEquivalentType() {
+        return new ProductQuantityEquivalentType();
     }
 
     /**
@@ -421,11 +237,283 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ShippedQuantityType }
+     * 
+     */
+    public ShippedQuantityType createShippedQuantityType() {
+        return new ShippedQuantityType();
+    }
+
+    /**
+     * Create an instance of {@link ShippedQuantityEquivalentType }
+     * 
+     */
+    public ShippedQuantityEquivalentType createShippedQuantityEquivalentType() {
+        return new ShippedQuantityEquivalentType();
+    }
+
+    /**
+     * Create an instance of {@link PrepositionOrderQuantityEquivalentType }
+     * 
+     */
+    public PrepositionOrderQuantityEquivalentType createPrepositionOrderQuantityEquivalentType() {
+        return new PrepositionOrderQuantityEquivalentType();
+    }
+
+    /**
+     * Create an instance of {@link OrderDateType }
+     * 
+     */
+    public OrderDateType createOrderDateType() {
+        return new OrderDateType();
+    }
+
+    /**
+     * Create an instance of {@link ChangeDateType }
+     * 
+     */
+    public ChangeDateType createChangeDateType() {
+        return new ChangeDateType();
+    }
+
+    /**
+     * Create an instance of {@link ProductidentificationType }
+     * 
+     */
+    public ProductidentificationType createProductidentificationType() {
+        return new ProductidentificationType();
+    }
+
+    /**
+     * Create an instance of {@link ChangeDate }
+     * 
+     */
+    public ChangeDate createChangeDate() {
+        return new ChangeDate();
+    }
+
+    /**
+     * Create an instance of {@link SalesOrderTypeCodeType }
+     * 
+     */
+    public SalesOrderTypeCodeType createSalesOrderTypeCodeType() {
+        return new SalesOrderTypeCodeType();
+    }
+
+    /**
+     * Create an instance of {@link AddressInformationType }
+     * 
+     */
+    public AddressInformationType createAddressInformationType() {
+        return new AddressInformationType();
+    }
+
+    /**
+     * Create an instance of {@link SalesOrderLineItemType }
+     * 
+     */
+    public SalesOrderLineItemType createSalesOrderLineItemType() {
+        return new SalesOrderLineItemType();
+    }
+
+    /**
+     * Create an instance of {@link SalesOrderTransactionDetailsType }
+     * 
+     */
+    public SalesOrderTransactionDetailsType createSalesOrderTransactionDetailsType() {
+        return new SalesOrderTransactionDetailsType();
+    }
+
+    /**
+     * Create an instance of {@link DateTimeType }
+     * 
+     */
+    public DateTimeType createDateTimeType() {
+        return new DateTimeType();
+    }
+
+    /**
+     * Create an instance of {@link RejectReasonType }
+     * 
+     */
+    public RejectReasonType createRejectReasonType() {
+        return new RejectReasonType();
+    }
+
+    /**
+     * Create an instance of {@link SalesOrderReportResponseType }
+     * 
+     */
+    public SalesOrderReportResponseType createSalesOrderReportResponseType() {
+        return new SalesOrderReportResponseType();
+    }
+
+    /**
+     * Create an instance of {@link SalesOrderReportBodyType }
+     * 
+     */
+    public SalesOrderReportBodyType createSalesOrderReportBodyType() {
+        return new SalesOrderReportBodyType();
+    }
+
+    /**
+     * Create an instance of {@link SalesOrderIssuedDateType }
+     * 
+     */
+    public SalesOrderIssuedDateType createSalesOrderIssuedDateType() {
+        return new SalesOrderIssuedDateType();
+    }
+
+    /**
+     * Create an instance of {@link DeliveryQuantityType }
+     * 
+     */
+    public DeliveryQuantityType createDeliveryQuantityType() {
+        return new DeliveryQuantityType();
+    }
+
+    /**
+     * Create an instance of {@link TransfersInQuantityEquivalentType }
+     * 
+     */
+    public TransfersInQuantityEquivalentType createTransfersInQuantityEquivalentType() {
+        return new TransfersInQuantityEquivalentType();
+    }
+
+    /**
+     * Create an instance of {@link PartnerInformationType }
+     * 
+     */
+    public PartnerInformationType createPartnerInformationType() {
+        return new PartnerInformationType();
+    }
+
+    /**
+     * Create an instance of {@link TransfersInQuantityType }
+     * 
+     */
+    public TransfersInQuantityType createTransfersInQuantityType() {
+        return new TransfersInQuantityType();
+    }
+
+    /**
+     * Create an instance of {@link SalesOrderNumberType }
+     * 
+     */
+    public SalesOrderNumberType createSalesOrderNumberType() {
+        return new SalesOrderNumberType();
+    }
+
+    /**
+     * Create an instance of {@link ProductQuantityType_0020 }
+     * 
+     */
+    public ProductQuantityType_0020 createProductQuantityType_0020() {
+        return new ProductQuantityType_0020();
+    }
+
+    /**
+     * Create an instance of {@link ReturnsQuantityEquivalentType }
+     * 
+     */
+    public ReturnsQuantityEquivalentType createReturnsQuantityEquivalentType() {
+        return new ReturnsQuantityEquivalentType();
+    }
+
+    /**
+     * Create an instance of {@link SalesPersonType }
+     * 
+     */
+    public SalesPersonType createSalesPersonType() {
+        return new SalesPersonType();
+    }
+
+    /**
+     * Create an instance of {@link SalesOrderReportDetailsType }
+     * 
+     */
+    public SalesOrderReportDetailsType createSalesOrderReportDetailsType() {
+        return new SalesOrderReportDetailsType();
+    }
+
+    /**
+     * Create an instance of {@link OtherPartnerTypeOld }
+     * 
+     */
+    public OtherPartnerTypeOld createOtherPartnerTypeOld() {
+        return new OtherPartnerTypeOld();
+    }
+
+    /**
+     * Create an instance of {@link ThisDocumentIdentifierType }
+     * 
+     */
+    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
+        return new ThisDocumentIdentifierType();
+    }
+
+    /**
+     * Create an instance of {@link PartnerIdentifierType }
+     * 
+     */
+    public PartnerIdentifierType createPartnerIdentifierType() {
+        return new PartnerIdentifierType();
+    }
+
+    /**
+     * Create an instance of {@link DirectShipmentsQuantityEquivalentType }
+     * 
+     */
+    public DirectShipmentsQuantityEquivalentType createDirectShipmentsQuantityEquivalentType() {
+        return new DirectShipmentsQuantityEquivalentType();
+    }
+
+    /**
+     * Create an instance of {@link SalesOrderPartnersType }
+     * 
+     */
+    public SalesOrderPartnersType createSalesOrderPartnersType() {
+        return new SalesOrderPartnersType();
+    }
+
+    /**
+     * Create an instance of {@link ProductIdentifierType }
+     * 
+     */
+    public ProductIdentifierType createProductIdentifierType() {
+        return new ProductIdentifierType();
+    }
+
+    /**
+     * Create an instance of {@link ExceptionType }
+     * 
+     */
+    public ExceptionType createExceptionType() {
+        return new ExceptionType();
+    }
+
+    /**
+     * Create an instance of {@link SellerType }
+     * 
+     */
+    public SellerType createSellerType() {
+        return new SellerType();
+    }
+
+    /**
      * Create an instance of {@link SalesOrderReportType }
      * 
      */
     public SalesOrderReportType createSalesOrderReportType() {
         return new SalesOrderReportType();
+    }
+
+    /**
+     * Create an instance of {@link AlternateCommunicationMethodType }
+     * 
+     */
+    public AlternateCommunicationMethodType createAlternateCommunicationMethodType() {
+        return new AlternateCommunicationMethodType();
     }
 
     /**

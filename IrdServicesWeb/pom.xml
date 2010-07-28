@@ -601,7 +601,7 @@
 
                                        <echo>Calling wsimport for Retail Seller Information Service</echo>
                                        <wsimport
-                                               wsdl="http://services-dint.monsanto.com/ECOM_SalesDoc/RetailSellerInformation?wsdl"
+                                               wsdl="IrdServicesWeb/src/main/resources/RetailSellerInformation.wsdl"
                                                keep="true"
                                                verbose="true"
                                                sourcedestdir="src/main/java"

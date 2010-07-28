@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.1
  * 
  */
-@WebServiceClient(name = "RetailSellerInformationService", targetNamespace = "urn:monsanto:services:wsdl:salesorder:1:0", wsdlLocation = "http://services-dint.monsanto.com/ECOM_SalesDoc/ProxyServices/RetailSellerInformation?wsdl")
+@WebServiceClient(name = "RetailSellerInformationService", targetNamespace = "urn:monsanto:services:wsdl:salesorder:1:0", wsdlLocation = "file:/C:/SVN-Development/IRDSoapServices/trunk/IrdServicesWeb/src/main/resources/RetailSellerInformation.wsdl")
 public class RetailSellerInformationService_Service
     extends Service
 {
@@ -30,9 +30,9 @@ public class RetailSellerInformationService_Service
         try {
             URL baseUrl;
             baseUrl = com.monsanto.irdsoapservices.retailseller.schema.RetailSellerInformationService_Service.class.getResource(".");
-            url = new URL(baseUrl, "http://services-dint.monsanto.com/ECOM_SalesDoc/RetailSellerInformation?wsdl");
+            url = new URL(baseUrl, "file:/C:/SVN-Development/IRDSoapServices/trunk/IrdServicesWeb/src/main/resources/RetailSellerInformation.wsdl");
         } catch (MalformedURLException e) {
-            logger.warning("Failed to create URL for the wsdl Location: 'http://services-dint.monsanto.com/ECOM_SalesDoc/ProxyServices/RetailSellerInformation?wsdl', retrying as a local file");
+            logger.warning("Failed to create URL for the wsdl Location: 'file:/C:/SVN-Development/IRDSoapServices/trunk/IrdServicesWeb/src/main/resources/RetailSellerInformation.wsdl', retrying as a local file");
             logger.warning(e.getMessage());
         }
         RETAILSELLERINFORMATIONSERVICE_WSDL_LOCATION = url;

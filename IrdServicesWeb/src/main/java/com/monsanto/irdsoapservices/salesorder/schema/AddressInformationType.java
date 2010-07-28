@@ -1,6 +1,8 @@
 
 package com.monsanto.irdsoapservices.salesorder.schema;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -20,10 +22,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;choice>
- *           &lt;element name="AddressLine" type="{http://www.w3.org/2001/XMLSchema}token"/>
- *           &lt;element name="PostBoxNumber" type="{http://www.w3.org/2001/XMLSchema}token"/>
- *         &lt;/choice>
+ *         &lt;element name="AddressLine" type="{http://www.w3.org/2001/XMLSchema}token" maxOccurs="unbounded"/>
+ *         &lt;element name="PostBoxNumber" type="{http://www.w3.org/2001/XMLSchema}token" minOccurs="0"/>
  *         &lt;element name="CityName" type="{http://www.w3.org/2001/XMLSchema}token"/>
  *         &lt;element name="StateOrProvince" type="{http://www.w3.org/2001/XMLSchema}token" minOccurs="0"/>
  *         &lt;element name="PostalCode" type="{http://www.w3.org/2001/XMLSchema}token" minOccurs="0"/>
@@ -49,10 +49,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 public class AddressInformationType {
 
-    @XmlElement(name = "AddressLine")
+    @XmlElement(name = "AddressLine", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
-    protected String addressLine;
+    protected List<String> addressLine;
     @XmlElement(name = "PostBoxNumber")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -81,25 +81,30 @@ public class AddressInformationType {
     /**
      * Gets the value of the addressLine property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAddressLine() {
-        return addressLine;
-    }
-
-    /**
-     * Sets the value of the addressLine property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the addressLine property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getAddressLine().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link String }
+     * 
+     * 
      */
-    public void setAddressLine(String value) {
-        this.addressLine = value;
+    public List<String> getAddressLine() {
+        if (addressLine == null) {
+            addressLine = new ArrayList<String>();
+        }
+        return this.addressLine;
     }
 
     /**

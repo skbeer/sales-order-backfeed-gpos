@@ -1,0 +1,191 @@
+<xsd:schema xmlns="urn:ecms:schema:retailsellerinformation:request:1:0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:ecms:schema:retailsellerinformation:request:1:0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:element name="RetailSellerInformation" type="RetailSellerInformationType"/>
+	<xsd:complexType name="RetailSellerInformationType">
+		<xsd:sequence>
+			<xsd:element name="Header" type="HeaderType"/>
+			<xsd:element name="RetailSellerInformationBody" type="RetailSellerInformationBodyType"/>
+		</xsd:sequence>
+		<xsd:attribute name="Version" type="xsd:token" use="optional" fixed="1.0"/>
+	</xsd:complexType>
+	<xsd:complexType name="RetailSellerInformationBodyType">
+		<xsd:sequence>
+			<xsd:element name="RetailSellerInformationPartners" type="RetailSellerInformationPartnersType"/>
+			<xsd:element name="RetailSellerInformationDetails" type="RetailSellerInformationDetailsType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RetailSellerInformationPartnersType">
+		<xsd:sequence>
+			<xsd:element name="Buyer" type="BuyerType"/>
+			<xsd:element name="Seller" type="SellerType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RetailSellerInformationDetailsType">
+		<xsd:sequence>
+			<xsd:element name="Dealer" type="DealerType"/>
+			<xsd:element name="Salesperson" type="SalespersonType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HeaderType">
+		<xsd:sequence>
+			<xsd:element name="ThisDocumentIdentifier" type="ThisDocumentIdentifierType"/>
+			<xsd:element name="ThisDocumentDateTime" type="ThisDocumentDateTimeType"/>
+			<xsd:element name="From" type="FromType"/>
+			<xsd:element name="To" type="ToType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="DocumentIdentifier" type="xsd:token"/>
+	<xsd:element name="DateTime" type="DateTimeType"/>
+	<xsd:complexType name="DateTimeType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:dateTime">
+				<xsd:attribute name="DateTimeQualifier" type="ListDateQualifier"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="PartnerInformation" type="PartnerInformationType"/>
+	<xsd:complexType name="PartnerInformationType">
+		<xsd:sequence>
+			<xsd:element name="PartnerName" type="xsd:token" maxOccurs="unbounded"/>
+			<xsd:element name="PartnerIdentifier" type="PartnerIdentifierType" maxOccurs="unbounded"/>
+			<xsd:element name="ContactInformation" type="ContactInformationType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="AddressInformation" type="AddressInformationType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PartnerIdentifierType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:token">
+				<xsd:attribute name="Agency" type="ListPartnerAgencyAttribute"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="ContactInformationType">
+		<xsd:sequence>
+			<xsd:element name="ContactName" type="xsd:token" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ContactDescription" type="xsd:token" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ContactNumber" type="xsd:token" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="EmailAddress" type="xsd:token" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="AlternateCommunicationMethod" type="AlternateCommunicationMethodType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AlternateCommunicationMethodType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:token">
+				<xsd:attribute name="CommunicationMethodType" type="ListCommunicationMethodType"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="AddressInformationType">
+		<xsd:sequence>
+			<xsd:element name="AddressLine" type="xsd:token" maxOccurs="unbounded"/>
+			<xsd:element name="PostBoxNumber" type="xsd:token" minOccurs="0"/>
+			<xsd:element name="CityName" type="xsd:token"/>
+			<xsd:element name="StateOrProvince" type="xsd:token"/>
+			<xsd:element name="PostalCode" type="xsd:token"/>
+			<xsd:element name="PostalCountry" type="xsd:token"/>
+			<xsd:element name="County" type="xsd:token" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AddressInformationTypeII">
+		<xsd:sequence>
+			<xsd:element name="AddressLine" maxOccurs="unbounded"/>
+			<xsd:element name="PostBoxNumber" minOccurs="0"/>
+			<xsd:element name="CityName"/>
+			<xsd:element name="StateOrProvince"/>
+			<xsd:element name="PostalCode"/>
+			<xsd:element name="PostalCountry"/>
+			<xsd:element name="County" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ListPartnerAgencyAttribute">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="AGIIS-EBID"/>
+			<xsd:enumeration value="AGIIS-NAPD"/>
+			<xsd:enumeration value="AssignedByBuyer"/>
+			<xsd:enumeration value="AssignedByPapiNet"/>
+			<xsd:enumeration value="AssignedBySeller"/>
+			<xsd:enumeration value="AssignedByTestingLaboratory"/>
+			<xsd:enumeration value="D-U-N-S"/>
+			<xsd:enumeration value="EAN"/>
+			<xsd:enumeration value="GLN"/>
+			<xsd:enumeration value="Other"/>
+			<xsd:enumeration value="SCAC"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ListDateQualifier">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="On"/>
+			<xsd:enumeration value="After"/>
+			<xsd:enumeration value="Before"/>
+			<xsd:enumeration value="OnOrAfter"/>
+			<xsd:enumeration value="OnOrBefore"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ListCommunicationMethodType">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="CellPhone"/>
+			<xsd:enumeration value="Fax"/>
+			<xsd:enumeration value="PrinterId"/>
+			<xsd:enumeration value="StationCode"/>
+			<xsd:enumeration value="Telex"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ThisDocumentIdentifierType">
+		<xsd:sequence>
+			<xsd:element ref="DocumentIdentifier"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ThisDocumentDateTimeType">
+		<xsd:sequence>
+			<xsd:element ref="DateTime"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FromType">
+		<xsd:sequence>
+			<xsd:element ref="PartnerInformation"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ToType">
+		<xsd:sequence>
+			<xsd:element ref="PartnerInformation"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BuyerType">
+		<xsd:sequence>
+			<xsd:element ref="PartnerInformation"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SellerType">
+		<xsd:sequence>
+			<xsd:element ref="PartnerInformation"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DealerType">
+		<xsd:sequence>
+			<xsd:element ref="PartnerInformation"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SalespersonType">
+		<xsd:sequence>
+			<xsd:element ref="PartnerInformation"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="County" type="xsd:token"/>
+	<xsd:element name="PostalCountry" type="xsd:token"/>
+	<xsd:element name="PostalCode" type="xsd:token"/>
+	<xsd:element name="StateOrProvince" type="xsd:token"/>
+	<xsd:element name="CityName" type="xsd:token"/>
+	<xsd:element name="PostBoxNumber" type="xsd:token"/>
+	<xsd:element name="AddressLine" type="xsd:token"/>
+	<xsd:element name="RetailSellerResponse" type="RetailSellerResponseType"/>
+	<xsd:complexType name="RetailSellerResponseType">
+		<xsd:sequence>
+			<xsd:element name="Status" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+        <xsd:element name="RetailSellerFault" type="ExceptionType"/>
+        <xsd:complexType name="ExceptionType">
+		<xsd:sequence>
+			<xsd:element name="faultMessage" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>
