@@ -6,6 +6,7 @@ import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo;
 
 import java.util.List;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,6 +26,15 @@ public class AgreementStatusDaoImpl_UT extends AbstractTransactionalDataSourceSp
 
     public void testGetAgreementStatus_noData_returnEmptyList() throws Exception {
         List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(Arrays.asList(new String[]{"101010"}));
+        assertEquals(0, agrStatusList.size());
+    }
+
+    public void testGetAgreementStatus_noData_bigRequest_returnEmptyList() throws Exception {
+        List<String> glnList = new ArrayList<String>();
+        for (int index = 0; index < 1989; index++) {
+            glnList.add(index+"");
+        }
+        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(glnList);
         assertEquals(0, agrStatusList.size());
     }
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" 	"http://www.ibatis.com/dtd/sql-map-2.dtd">
 <sqlMap namespace="AgreementStatus">
-	<typeAlias alias="agreementStatus"
-		type="com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo" />
+    <typeAlias alias="agreementStatus"
+               type="com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo" />
 
-	<resultMap id="agreementStatusResult" class="agreementStatus">
-		<result property="acctId" column="ACCT_ID" />
+    <resultMap id="agreementStatusResult" class="agreementStatus">
+        <result property="acctId" column="ACCT_ID" />
         <result property="gln" column="GLN" />
         <result property="partnerName" column="ACCT_NAME" />
         <result property="contactName" column="CONTACT_NAME" />
@@ -16,9 +16,9 @@
         <result property="tempAgreement.tempZone.zoneId" column="ZONE_CODE" />
         <result property="tempAgreement.tempZone.zoneType" column="ZONE_TYPE" />
         <result property="tempAgreement.tempZone.zoneName" column="ZONE_DESCR" />
-	</resultMap>
+    </resultMap>
 
-    <select id="getAgreementStatus" resultMap="agreementStatusResult">
+    <select id="getAgreementStatus" resultMap="agreementStatusResult" parameterClass="java.util.Map">
         SELECT  GLN,
                 PURCHASER_ACCT_ID AS ACCT_ID,
                 TECH_LICENSE_NUMBER,
@@ -33,10 +33,50 @@
                 CONTACT_FIRST_NAME ||' ' ||CONTACT_LAST_NAME AS CONTACT_NAME
         FROM    ECOM.GROWER_LICENSE_ZONE_VW
         WHERE   GLN IN
-                <iterate open="(" close=")" conjunction=",">
-                  #[]#
+                <iterate property="Set1" open="(" close=")" conjunction=",">
+                    #Set1[]#
+                </iterate>
+                OR GLN IN
+                <iterate property="Set2" open="(" close=")" conjunction=",">
+                    #Set2[]#
+                </iterate>
+                OR GLN IN
+                <iterate property="Set3" open="(" close=")" conjunction=",">
+                    #Set3[]#
+                </iterate>
+                OR GLN IN
+                <iterate property="Set4" open="(" close=")" conjunction=",">
+                    #Set4[]#
+                </iterate>
+                OR GLN IN
+                <iterate property="Set5" open="(" close=")" conjunction=",">
+                    #Set5[]#
+                </iterate>
+                OR GLN IN
+                <iterate property="Set6" open="(" close=")" conjunction=",">
+                    #Set6[]#
+                </iterate>
+                OR GLN IN
+                <iterate property="Set7" open="(" close=")" conjunction=",">
+                    #Set7[]#
+                </iterate>
+                OR GLN IN
+                <iterate property="Set8" open="(" close=")" conjunction=",">
+                    #Set8[]#
+                </iterate>
+                OR GLN IN
+                <iterate property="Set9" open="(" close=")" conjunction=",">
+                    #Set9[]#
+                </iterate>
+                OR GLN IN
+                <iterate property="Set10" open="(" close=")" conjunction=",">
+                    #Set10[]#
                 </iterate>
         ORDER BY GLN, AGREEMENT_NAME
     </select>
 
 </sqlMap>
+
+
+
+
