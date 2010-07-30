@@ -36,6 +36,9 @@ public class AgreementStatusHelper {
             logger.info("Starting to retrieve Agreement Status information");
             List<String> glnList = extractGLNsFromRequest(agreementStatusRequest);
             logger.info("Found "+glnList.size()+" GLNs in the request");
+            if(glnList.size() > 10000) {
+                throw new Exception("Service can currently support only 10,000 GLNs per Request.");
+            }
             List<AgreementStatusInfo> agreementStatusList = agreementStatusDao.getAgreementStatusInfo(glnList);
             HashMap<String, AgreementStatusInfo> normalizedStatusMap = normalizeAgreementStatusList(agreementStatusList);
             List<AgreementStatusInfo> agreementList = new ArrayList<AgreementStatusInfo>();
