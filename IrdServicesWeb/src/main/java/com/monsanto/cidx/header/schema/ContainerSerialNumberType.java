@@ -1,4 +1,3 @@
-
 package com.monsanto.cidx.header.schema;
 
 import javax.xml.bind.annotation.XmlAccessType;

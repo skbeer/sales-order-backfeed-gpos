@@ -1,4 +1,3 @@
-
 package com.monsanto.cidx.header.schema;
 
 import java.util.ArrayList;

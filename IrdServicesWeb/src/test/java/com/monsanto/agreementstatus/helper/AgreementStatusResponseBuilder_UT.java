@@ -4,6 +4,9 @@ import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementInfo;
 import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo;
 import com.monsanto.irdsoapservices.agreementstatus.domain.ZoneInfo;
 import com.monsanto.irdsoapservices.agreementstatus.helper.AgreementStatusResponseBuilder;
+import com.monsanto.irdsoapservices.agreementstatus.schema.request.*;
+import com.monsanto.irdsoapservices.agreementstatus.schema.response.AgreementStatusResponseType;
+
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import junit.framework.TestCase;
