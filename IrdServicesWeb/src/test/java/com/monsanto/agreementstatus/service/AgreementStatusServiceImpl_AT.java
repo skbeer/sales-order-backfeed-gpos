@@ -1,6 +1,8 @@
 package com.monsanto.agreementstatus.service;
 
 import com.monsanto.irdsoapservices.agreementstatus.service.AgreementStatusServiceImpl;
+import com.monsanto.irdsoapservices.agreementstatus.schema.response.AgreementStatusResponseType;
+import com.monsanto.irdsoapservices.agreementstatus.schema.request.*;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import junit.framework.TestCase;
@@ -25,11 +27,11 @@ public class AgreementStatusServiceImpl_AT extends TestCase {
         AgreementStatusResponseType responseType = serviceImpl.getAgreementStatus(getRequest());
         assertNotNull(responseType);
         assertTrue("Agreement Status expected.", (responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().size()>0));
-        JAXBContext jxContext = JAXBContext.newInstance("com.monsanto.irdsoapservices.agreementstatus.schema.response");
-        Marshaller marshaller = jxContext.createMarshaller();
-        com.monsanto.irdsoapservices.agreementstatus.schema.response.ObjectFactory objectFactory = new com.monsanto.irdsoapservices.agreementstatus.schema.response.ObjectFactory();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, new Boolean(true));
-        marshaller.marshal(objectFactory.createAgreementStatusResponse(responseType), new FileOutputStream("c:\\some.xml"));
+//        JAXBContext jxContext = JAXBContext.newInstance("com.monsanto.irdsoapservices.agreementstatus.schema.response");
+//        Marshaller marshaller = jxContext.createMarshaller();
+//        com.monsanto.irdsoapservices.agreementstatus.schema.response.ObjectFactory objectFactory = new com.monsanto.irdsoapservices.agreementstatus.schema.response.ObjectFactory();
+//        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, new Boolean(true));
+//        marshaller.marshal(objectFactory.createAgreementStatusResponse(responseType), new FileOutputStream("c:\\some.xml"));
     }
 
     private AgreementStatusRequest getRequest() {
