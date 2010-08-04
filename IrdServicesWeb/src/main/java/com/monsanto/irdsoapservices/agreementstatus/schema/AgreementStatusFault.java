@@ -1,9 +1,8 @@
 
 package com.monsanto.irdsoapservices.agreementstatus.schema;
 
-import com.monsanto.irdsoapservices.agreementstatus.schema.response.ExceptionType;
-
 import javax.xml.ws.WebFault;
+import com.monsanto.irdsoapservices.agreementstatus.schema.response.ExceptionType;
 
 
 /**

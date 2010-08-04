@@ -3,12 +3,10 @@ package com.monsanto.irdsoapservices.salesorder.client;
 import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderService;
 import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderService_Service;
 import com.monsanto.irdsoapservices.utils.Configuration;
-
-import java.net.URL;
-
 import org.apache.log4j.Logger;
 
 import javax.xml.namespace.QName;
+import java.net.URL;
 
 
 /**

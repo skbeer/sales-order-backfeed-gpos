@@ -1,9 +1,13 @@
 
 package com.monsanto.irdsoapservices.agreementstatus.schema.response;
 
-import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 
 /**
@@ -38,11 +42,11 @@ import java.util.List;
 @XmlRootElement(name = "AgreementStatusResponseDetails")
 public class AgreementStatusResponseDetails {
 
-    @XmlElement(name = "PartnerInformation", namespace = "urn:ecms:schema:agreement:response:2:0", required = true)
+    @XmlElement(name = "PartnerInformation", required = true)
     protected PartnerInformationType partnerInformation;
-    @XmlElement(name = "AgreementStatusList", namespace = "urn:ecms:schema:agreement:response:2:0")
+    @XmlElement(name = "AgreementStatusList")
     protected List<AgreementStatusListType> agreementStatusList;
-    @XmlElement(name = "ErrorResponse", namespace = "urn:ecms:schema:agreement:response:2:0")
+    @XmlElement(name = "ErrorResponse")
     protected ErrorResponseType errorResponse;
 
     /**

@@ -2,8 +2,8 @@ package com.monsanto.irdsoapservices.to;
 
 
 import com.monsanto.irdsoapservices.contacts.schema.ContactPhoneNumberType;
-import com.monsanto.irdsoapservices.contacts.schema.PhoneNumberEnumType;
 import com.monsanto.irdsoapservices.contacts.schema.PersistableContactPhoneNumberType;
+import com.monsanto.irdsoapservices.contacts.schema.PhoneNumberEnumType;
 import com.monsanto.irdsoapservices.utils.StringUtils;
 
 import java.util.Date;

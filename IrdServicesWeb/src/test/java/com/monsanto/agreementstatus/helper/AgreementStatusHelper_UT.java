@@ -1,24 +1,18 @@
 package com.monsanto.agreementstatus.helper;
 
-import junit.framework.TestCase;
+import com.monsanto.irdsoapservices.agreementstatus.dao.AgreementStatusDao;
+import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementInfo;
+import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo;
+import com.monsanto.irdsoapservices.agreementstatus.domain.ZoneInfo;
 import com.monsanto.irdsoapservices.agreementstatus.helper.AgreementStatusHelper;
 import com.monsanto.irdsoapservices.agreementstatus.helper.AgreementStatusResponseBuilder;
-import com.monsanto.irdsoapservices.agreementstatus.dao.AgreementStatusDao;
-import com.monsanto.irdsoapservices.agreementstatus.schema.request.AgreementStatusRequest;
-import com.monsanto.irdsoapservices.agreementstatus.schema.request.AgreementStatusRequestBodyType;
-import com.monsanto.irdsoapservices.agreementstatus.schema.request.AgreementStatusRequestDetailsType;
-import com.monsanto.irdsoapservices.agreementstatus.schema.request.PartnerIdentifierType;
-import com.monsanto.irdsoapservices.agreementstatus.schema.response.AgreementStatusResponseType;
-import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo;
-import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementInfo;
-import com.monsanto.irdsoapservices.agreementstatus.domain.ZoneInfo;
-
-import static org.mockito.Mockito.*;
+import junit.framework.TestCase;
 import org.mockito.ArgumentMatcher;
+import static org.mockito.Mockito.*;
 
-import java.util.List;
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

@@ -35,19 +35,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DateTimeType }
+     * Create an instance of {@link ThisDocumentIdentifierType }
      * 
      */
-    public DateTimeType createDateTimeType() {
-        return new DateTimeType();
+    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
+        return new ThisDocumentIdentifierType();
     }
 
     /**
-     * Create an instance of {@link AlternateCommunicationMethodType }
+     * Create an instance of {@link AgreementStatusRequest }
      * 
      */
-    public AlternateCommunicationMethodType createAlternateCommunicationMethodType() {
-        return new AlternateCommunicationMethodType();
+    public AgreementStatusRequest createAgreementStatusRequest() {
+        return new AgreementStatusRequest();
+    }
+
+    /**
+     * Create an instance of {@link ToType }
+     * 
+     */
+    public ToType createToType() {
+        return new ToType();
+    }
+
+    /**
+     * Create an instance of {@link PartnerInformationType }
+     * 
+     */
+    public PartnerInformationType createPartnerInformationType() {
+        return new PartnerInformationType();
     }
 
     /**
@@ -56,6 +72,14 @@ public class ObjectFactory {
      */
     public PartnerIdentifierType createPartnerIdentifierType() {
         return new PartnerIdentifierType();
+    }
+
+    /**
+     * Create an instance of {@link ThisDocumentDateTimeType }
+     * 
+     */
+    public ThisDocumentDateTimeType createThisDocumentDateTimeType() {
+        return new ThisDocumentDateTimeType();
     }
 
     /**
@@ -72,6 +96,14 @@ public class ObjectFactory {
      */
     public HeaderType createHeaderType() {
         return new HeaderType();
+    }
+
+    /**
+     * Create an instance of {@link ContactInformationType }
+     * 
+     */
+    public ContactInformationType createContactInformationType() {
+        return new ContactInformationType();
     }
 
     /**
@@ -99,27 +131,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ThisDocumentDateTimeType }
+     * Create an instance of {@link DateTimeType }
      * 
      */
-    public ThisDocumentDateTimeType createThisDocumentDateTimeType() {
-        return new ThisDocumentDateTimeType();
+    public DateTimeType createDateTimeType() {
+        return new DateTimeType();
     }
 
     /**
-     * Create an instance of {@link PartnerInformationType }
+     * Create an instance of {@link AlternateCommunicationMethodType }
      * 
      */
-    public PartnerInformationType createPartnerInformationType() {
-        return new PartnerInformationType();
-    }
-
-    /**
-     * Create an instance of {@link ThisDocumentIdentifierType }
-     * 
-     */
-    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
-        return new ThisDocumentIdentifierType();
+    public AlternateCommunicationMethodType createAlternateCommunicationMethodType() {
+        return new AlternateCommunicationMethodType();
     }
 
     /**
@@ -128,30 +152,6 @@ public class ObjectFactory {
      */
     public AgreementStatusRequestDetailsType createAgreementStatusRequestDetailsType() {
         return new AgreementStatusRequestDetailsType();
-    }
-
-    /**
-     * Create an instance of {@link ToType }
-     * 
-     */
-    public ToType createToType() {
-        return new ToType();
-    }
-
-    /**
-     * Create an instance of {@link AgreementStatusRequest }
-     * 
-     */
-    public AgreementStatusRequest createAgreementStatusRequest() {
-        return new AgreementStatusRequest();
-    }
-
-    /**
-     * Create an instance of {@link ContactInformationType }
-     * 
-     */
-    public ContactInformationType createContactInformationType() {
-        return new ContactInformationType();
     }
 
     /**

@@ -1,11 +1,15 @@
 
 package com.monsanto.irdsoapservices.agreementstatus.schema.response;
 
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -43,11 +47,11 @@ public class PartnerInformationType {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected List<String> partnerName;
-    @XmlElement(name = "PartnerIdentifier", namespace = "urn:ecms:schema:agreement:response:2:0", required = true)
+    @XmlElement(name = "PartnerIdentifier", required = true)
     protected List<PartnerIdentifierType> partnerIdentifier;
-    @XmlElement(name = "ContactInformation", namespace = "urn:ecms:schema:agreement:response:2:0")
+    @XmlElement(name = "ContactInformation")
     protected List<ContactInformationType> contactInformation;
-    @XmlElement(name = "AddressInformation", namespace = "urn:ecms:schema:agreement:response:2:0")
+    @XmlElement(name = "AddressInformation")
     protected AddressInformationType addressInformation;
 
     /**

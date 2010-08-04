@@ -1,7 +1,7 @@
 package com.monsanto.salesorder.client;
 
-import junit.framework.TestCase;
 import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
+import junit.framework.TestCase;
 
 /**
  * Created by IntelliJ IDEA.

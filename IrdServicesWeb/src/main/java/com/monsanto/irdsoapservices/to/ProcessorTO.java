@@ -1,7 +1,7 @@
 package com.monsanto.irdsoapservices.to;
 
-import java.sql.Timestamp;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * Created by IntelliJ IDEA.

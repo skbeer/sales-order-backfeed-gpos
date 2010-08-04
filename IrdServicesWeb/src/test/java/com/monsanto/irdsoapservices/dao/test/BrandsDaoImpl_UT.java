@@ -1,12 +1,12 @@
 package com.monsanto.irdsoapservices.dao.test;
 
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import com.monsanto.irdsoapservices.dao.BrandsDao;
 import com.monsanto.irdsoapservices.dao.impl.BrandsDaoImpl;
 import com.monsanto.irdsoapservices.to.BrandInfo;
+import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

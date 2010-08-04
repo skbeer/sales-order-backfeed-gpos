@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ToType {
 
-    @XmlElement(name = "PartnerInformation", namespace = "urn:ecms:schema:agreement:response:2:0", required = true)
+    @XmlElement(name = "PartnerInformation", required = true)
     protected PartnerInformationType partnerInformation;
 
     /**

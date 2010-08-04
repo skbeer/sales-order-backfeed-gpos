@@ -1,21 +1,20 @@
 package com.monsanto.salesorder.helper.test;
 
-import junit.framework.TestCase;
+import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
+import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
+import com.monsanto.irdsoapservices.salesorder.domain.LineItemInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
+import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
 import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
 import com.monsanto.irdsoapservices.salesorder.helper.PPOSRequestBuilder;
-import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
-import com.monsanto.irdsoapservices.salesorder.domain.LineItemInfo;
-import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
-import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
-import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
 import com.monsanto.irdsoapservices.salesorder.schema.*;
-import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
+import junit.framework.TestCase;
+import org.easymock.classextension.EasyMock;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-
-import org.easymock.classextension.EasyMock;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

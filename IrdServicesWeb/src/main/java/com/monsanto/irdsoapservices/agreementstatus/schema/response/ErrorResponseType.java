@@ -34,9 +34,9 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ErrorResponseType {
 
-    @XmlElement(name = "ErrorMessage", namespace = "urn:ecms:schema:agreement:response:2:0", required = true)
+    @XmlElement(name = "ErrorMessage", required = true)
     protected String errorMessage;
-    @XmlElement(name = "ErrorDescription", namespace = "urn:ecms:schema:agreement:response:2:0", required = true)
+    @XmlElement(name = "ErrorDescription", required = true)
     protected String errorDescription;
 
     /**

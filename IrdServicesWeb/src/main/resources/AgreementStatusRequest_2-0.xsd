@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Mark Hollowell (Monsanto Company) -->
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Donald Judson (Monsanto Company) -->
 <xsd:schema xmlns="urn:ecms:schema:agreement:request:2:0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:ecms:schema:agreement:request:2:0" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xsd:element name="AgreementStatusRequest">
 		<xsd:annotation>
@@ -104,7 +104,7 @@
 	<xsd:complexType name="AgreementStatusRequestDetailsType">
 		<xsd:sequence>
 			<xsd:element ref="PartnerIdentifier" maxOccurs="unbounded"/>
-			<xsd:element name="StateOrProvince" type="xsd:token"/>
+			<xsd:element name="StateOrProvince" type="xsd:token" minOccurs="0"/>
 		</xsd:sequence>
 	</xsd:complexType>
 	<xsd:complexType name="ContactInformationType">

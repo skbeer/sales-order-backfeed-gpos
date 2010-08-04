@@ -1,18 +1,18 @@
 package com.monsanto.irdsoapservices.helper.test;
 
-import com.monsanto.irdsoapservices.test.BaseTestCase;
-import com.monsanto.irdsoapservices.dao.ContactDao;
 import com.monsanto.irdsoapservices.contacts.schema.*;
+import com.monsanto.irdsoapservices.dao.ContactDao;
 import com.monsanto.irdsoapservices.helper.ContactsHelper;
 import com.monsanto.irdsoapservices.service.ContactsFault;
-import com.monsanto.irdsoapservices.to.ContactInfo;
+import com.monsanto.irdsoapservices.test.BaseTestCase;
 import com.monsanto.irdsoapservices.to.ContactEmailInfo;
-import com.monsanto.irdsoapservices.to.ContactPhoneInfo;
 import com.monsanto.irdsoapservices.to.ContactFunctionInfo;
+import com.monsanto.irdsoapservices.to.ContactInfo;
+import com.monsanto.irdsoapservices.to.ContactPhoneInfo;
 import org.easymock.EasyMock;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

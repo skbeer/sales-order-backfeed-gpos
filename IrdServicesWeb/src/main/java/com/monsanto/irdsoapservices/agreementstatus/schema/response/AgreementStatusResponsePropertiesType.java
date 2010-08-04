@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class AgreementStatusResponsePropertiesType {
 
-    @XmlElement(name = "Action", namespace = "urn:ecms:schema:agreement:response:2:0", required = true)
+    @XmlElement(name = "Action", required = true)
     protected ActionType action;
 
     /**

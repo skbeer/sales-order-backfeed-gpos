@@ -1,9 +1,9 @@
 package com.monsanto.irdsoapservices.to;
 
-import com.monsanto.irdsoapservices.agreements.schema.*;
-import com.monsanto.irdsoapservices.utils.XmlDateTimeUtil;
-
-import java.util.Date;
+import com.monsanto.irdsoapservices.agreements.schema.AccountIdentifierType;
+import com.monsanto.irdsoapservices.agreements.schema.AccountTypeAttribute;
+import com.monsanto.irdsoapservices.agreements.schema.AddressInformationType;
+import com.monsanto.irdsoapservices.agreements.schema.SignerInformationType;
 
 /**
  * Created by IntelliJ IDEA.

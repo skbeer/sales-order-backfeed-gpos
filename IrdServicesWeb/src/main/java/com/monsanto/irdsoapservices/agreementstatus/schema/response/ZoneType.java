@@ -1,7 +1,11 @@
 
 package com.monsanto.irdsoapservices.agreementstatus.schema.response;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -35,15 +39,15 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 public class ZoneType {
 
-    @XmlElement(name = "ZoneID", namespace = "urn:ecms:schema:agreement:response:2:0", required = true)
+    @XmlElement(name = "ZoneID", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String zoneID;
-    @XmlElement(name = "ZoneType", namespace = "urn:ecms:schema:agreement:response:2:0")
+    @XmlElement(name = "ZoneType")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String zoneType;
-    @XmlElement(name = "ZoneName", namespace = "urn:ecms:schema:agreement:response:2:0")
+    @XmlElement(name = "ZoneName")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String zoneName;

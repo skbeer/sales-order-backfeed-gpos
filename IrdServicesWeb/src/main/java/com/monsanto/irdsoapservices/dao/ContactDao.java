@@ -1,7 +1,7 @@
 package com.monsanto.irdsoapservices.dao;
 
-import com.monsanto.irdsoapservices.to.ContactInfo;
 import com.monsanto.irdsoapservices.to.ContactFunctionInfo;
+import com.monsanto.irdsoapservices.to.ContactInfo;
 
 import java.util.List;
 

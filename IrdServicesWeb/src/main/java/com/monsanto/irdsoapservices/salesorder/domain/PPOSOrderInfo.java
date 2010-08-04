@@ -1,9 +1,5 @@
 package com.monsanto.irdsoapservices.salesorder.domain;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
-
 /**
  * Created by IntelliJ IDEA.
  * User: MKUCHIP

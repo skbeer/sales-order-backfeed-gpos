@@ -4,8 +4,8 @@ import com.monsanto.irdsoapservices.to.AgreementHierarchyInfo;
 import com.monsanto.irdsoapservices.to.AgreementInfo;
 import com.monsanto.irdsoapservices.to.SignerInformation;
 
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:req="urn:ecms:schema:agreement:request:2:0" xmlns:res="urn:ecms:schema:agreement:response:2:0"  xmlns:agmtWsdl="urn:monsanto:services:wsdl:agreementstatus:1:0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="AgreementStatusServiceDefinitions" targetNamespace="urn:monsanto:services:wsdl:agreementstatus:1:0">
+<wsdl:definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:req="urn:ecms:schema:agreement:request:2:0" xmlns:res="urn:ecms:schema:agreement:response:2:0" xmlns:agmtWsdl="urn:monsanto:services:wsdl:agreementstatus:1:0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="AgreementStatusServiceDefinitions" targetNamespace="urn:monsanto:services:wsdl:agreementstatus:1:0">
 	<wsdl:types>
 		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 			<xs:import schemaLocation="AgreementStatusRequest_2-0.xsd" namespace="urn:ecms:schema:agreement:request:2:0"/>
 			<xs:import schemaLocation="AgreementStatusResponse_2-0.xsd" namespace="urn:ecms:schema:agreement:response:2:0"/>
-		</xs:schema>
+        </xs:schema>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:ecms:schema:agreement:request:2:0"/>
+        <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:ecms:schema:agreement:response:2:0"/>
 	</wsdl:types>
 	<wsdl:message name="AgreementStatus">
 		<wsdl:part name="request" element="req:AgreementStatusRequest"/>

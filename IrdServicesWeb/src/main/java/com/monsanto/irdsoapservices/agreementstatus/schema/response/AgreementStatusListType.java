@@ -1,11 +1,15 @@
 
 package com.monsanto.irdsoapservices.agreementstatus.schema.response;
 
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -39,15 +43,15 @@ import java.util.List;
 })
 public class AgreementStatusListType {
 
-    @XmlElement(name = "AgreementName", namespace = "urn:ecms:schema:agreement:response:2:0", required = true)
+    @XmlElement(name = "AgreementName", required = true)
     protected String agreementName;
-    @XmlElement(name = "AgreementStatus", namespace = "urn:ecms:schema:agreement:response:2:0", required = true)
+    @XmlElement(name = "AgreementStatus", required = true)
     protected String agreementStatus;
     @XmlElement(name = "LicenseNumber", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String licenseNumber;
-    @XmlElement(name = "Zone", namespace = "urn:ecms:schema:agreement:response:2:0")
+    @XmlElement(name = "Zone")
     protected List<ZoneType> zone;
 
     /**

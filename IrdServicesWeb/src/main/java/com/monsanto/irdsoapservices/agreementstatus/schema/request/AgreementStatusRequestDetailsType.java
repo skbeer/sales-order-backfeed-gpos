@@ -1,11 +1,15 @@
 
 package com.monsanto.irdsoapservices.agreementstatus.schema.request;
 
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -19,7 +23,7 @@ import java.util.List;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element ref="{urn:ecms:schema:agreement:request:2:0}PartnerIdentifier" maxOccurs="unbounded"/>
- *         &lt;element name="StateOrProvince" type="{http://www.w3.org/2001/XMLSchema}token"/>
+ *         &lt;element name="StateOrProvince" type="{http://www.w3.org/2001/XMLSchema}token" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,7 +41,7 @@ public class AgreementStatusRequestDetailsType {
 
     @XmlElement(name = "PartnerIdentifier", required = true)
     protected List<PartnerIdentifierType> partnerIdentifier;
-    @XmlElement(name = "StateOrProvince", required = true)
+    @XmlElement(name = "StateOrProvince")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String stateOrProvince;

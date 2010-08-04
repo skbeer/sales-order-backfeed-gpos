@@ -1,17 +1,12 @@
 package com.monsanto.irdsoapservices.salesorder.helper;
 
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
-import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
-import com.monsanto.irdsoapservices.salesorder.domain.PartnerInfo;
-import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.LineItemInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.schema.*;
 import com.monsanto.irdsoapservices.utils.StringUtils;
-import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**

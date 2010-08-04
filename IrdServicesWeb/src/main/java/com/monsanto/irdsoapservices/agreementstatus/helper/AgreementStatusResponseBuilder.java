@@ -3,14 +3,14 @@ package com.monsanto.irdsoapservices.agreementstatus.helper;
 import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementInfo;
 import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo;
 import com.monsanto.irdsoapservices.agreementstatus.domain.ZoneInfo;
-import com.monsanto.irdsoapservices.agreementstatus.schema.request.AgreementStatusRequest;
 import com.monsanto.irdsoapservices.agreementstatus.schema.response.*;
+import com.monsanto.irdsoapservices.agreementstatus.schema.request.AgreementStatusRequest;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.List;                         
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,10 +22,10 @@ import java.util.List;
 public class AgreementStatusResponseBuilder {
 
     public AgreementStatusResponseType getAgreementStatusResponse(AgreementStatusRequest request, List<AgreementStatusInfo> agreementList) {
-        AgreementStatusResponseType responseType = new AgreementStatusResponseType();
-        responseType.setHeader(getHeaderType(request));
-        responseType.setAgreementStatusResponseBody(getResponseBody(agreementList));
-        return responseType;
+        AgreementStatusResponseType response = new AgreementStatusResponseType();
+        response.setHeader(getHeaderType(request));
+        response.setAgreementStatusResponseBody(getResponseBody(agreementList));
+        return response;
     }
 
     private AgreementStatusResponseBodyType getResponseBody(List<AgreementStatusInfo> agreementList) {

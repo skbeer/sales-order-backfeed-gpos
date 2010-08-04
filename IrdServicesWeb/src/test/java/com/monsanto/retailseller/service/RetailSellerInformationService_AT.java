@@ -1,6 +1,5 @@
 package com.monsanto.retailseller.service;
 
-import junit.framework.TestCase;
 import com.monsanto.irdsoapservices.retailseller.schema.*;
 import com.monsanto.irdsoapservices.retailseller.service.RetailSellerInformationServiceImpl;
 import com.monsanto.retailseller.dao.TestDataDaoImpl;

@@ -1,15 +1,14 @@
 
 package com.monsanto.irdsoapservices.agreementstatus.schema;
 
-import com.monsanto.irdsoapservices.agreementstatus.schema.request.AgreementStatusRequest;
-import com.monsanto.irdsoapservices.agreementstatus.schema.response.AgreementStatusResponseType;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import com.monsanto.irdsoapservices.agreementstatus.schema.request.AgreementStatusRequest;
+import com.monsanto.irdsoapservices.agreementstatus.schema.response.AgreementStatusResponseType;
 
 
 /**

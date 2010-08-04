@@ -1,14 +1,17 @@
 package com.monsanto.irdsoapservices.helper.test;
 
-import com.monsanto.irdsoapservices.test.BaseTestCase;
-import com.monsanto.irdsoapservices.helper.BrandsHelper;
+import com.monsanto.irdsoapservices.brands.schema.BrandsForSpecieType;
+import com.monsanto.irdsoapservices.brands.schema.GetBrandsRequestBodyType;
+import com.monsanto.irdsoapservices.brands.schema.GetBrandsRequestType;
+import com.monsanto.irdsoapservices.brands.schema.GetBrandsResponseType;
 import com.monsanto.irdsoapservices.dao.BrandsDao;
-import com.monsanto.irdsoapservices.to.BrandInfo;
-import com.monsanto.irdsoapservices.brands.schema.*;
+import com.monsanto.irdsoapservices.helper.BrandsHelper;
 import com.monsanto.irdsoapservices.service.BrandsFault;
+import com.monsanto.irdsoapservices.test.BaseTestCase;
+import com.monsanto.irdsoapservices.to.BrandInfo;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

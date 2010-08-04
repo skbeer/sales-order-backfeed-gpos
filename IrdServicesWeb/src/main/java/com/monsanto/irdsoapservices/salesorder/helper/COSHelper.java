@@ -1,17 +1,16 @@
 package com.monsanto.irdsoapservices.salesorder.helper;
 
-import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
-import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
-import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
+import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
 import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderReportResponseType;
 import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 import org.apache.log4j.Logger;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

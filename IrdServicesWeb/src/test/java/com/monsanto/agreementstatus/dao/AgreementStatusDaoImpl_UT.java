@@ -1,12 +1,12 @@
 package com.monsanto.agreementstatus.dao;
 
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import com.monsanto.irdsoapservices.agreementstatus.dao.AgreementStatusDao;
 import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo;
+import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
-import java.util.List;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

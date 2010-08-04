@@ -1,7 +1,6 @@
 package com.monsanto.irdsoapservices.dao;
 
 import com.monsanto.irdsoapservices.to.AcctToAttr;
-import com.monsanto.irdsoapservices.to.ContactInfo;
 import com.monsanto.irdsoapservices.to.EmployeeInfo;
 import com.monsanto.irdsoapservices.to.LfaGrowerDetails;
 

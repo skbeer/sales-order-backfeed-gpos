@@ -5,9 +5,6 @@ import com.monsanto.irdsoapservices.to.ProcessorTO;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
-import java.sql.Timestamp;
 
 /**
  * Created by IntelliJ IDEA.

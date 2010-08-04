@@ -1,13 +1,13 @@
 package com.monsanto.irdsoapservices.retailseller.dao;
 
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
-import org.springframework.orm.ibatis.SqlMapClientCallback;
-import org.apache.log4j.Logger;
-import com.monsanto.irdsoapservices.retailseller.domain.SellerInfo;
 import com.ibatis.sqlmap.client.SqlMapExecutor;
+import com.monsanto.irdsoapservices.retailseller.domain.SellerInfo;
+import org.apache.log4j.Logger;
+import org.springframework.orm.ibatis.SqlMapClientCallback;
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
-import java.util.List;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

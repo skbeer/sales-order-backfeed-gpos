@@ -1,11 +1,11 @@
 package com.monsanto.retailseller.dao;
 
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import com.monsanto.irdsoapservices.retailseller.dao.RetailSellerDao;
 import com.monsanto.irdsoapservices.retailseller.domain.SellerInfo;
+import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

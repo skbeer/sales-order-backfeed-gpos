@@ -1,14 +1,14 @@
 package com.monsanto.irdsoapservices.dao.test;
 
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import com.monsanto.irdsoapservices.dao.ContactDao;
-import com.monsanto.irdsoapservices.to.ContactInfo;
-import com.monsanto.irdsoapservices.to.ContactPhoneInfo;
 import com.monsanto.irdsoapservices.to.ContactEmailInfo;
 import com.monsanto.irdsoapservices.to.ContactFunctionInfo;
+import com.monsanto.irdsoapservices.to.ContactInfo;
+import com.monsanto.irdsoapservices.to.ContactPhoneInfo;
+import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,10 +1,10 @@
 package com.monsanto.irdsoapservices.salesorder.dao;
 
-import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
 
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

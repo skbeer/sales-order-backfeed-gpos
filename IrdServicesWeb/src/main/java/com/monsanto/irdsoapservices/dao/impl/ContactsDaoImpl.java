@@ -1,18 +1,17 @@
 package com.monsanto.irdsoapservices.dao.impl;
 
-import com.monsanto.irdsoapservices.to.ContactInfo;
-import com.monsanto.irdsoapservices.to.ContactFunctionInfo;
-import com.monsanto.irdsoapservices.to.ContactPhoneInfo;
-import com.monsanto.irdsoapservices.to.ContactEmailInfo;
-import com.monsanto.irdsoapservices.utils.StringUtils;
-import com.monsanto.irdsoapservices.dao.ContactDao;
 import com.monsanto.irdsoapservices.constants.DBConstants;
+import com.monsanto.irdsoapservices.dao.ContactDao;
 import com.monsanto.irdsoapservices.exception.IrdSoapServicesException;
+import com.monsanto.irdsoapservices.to.ContactEmailInfo;
+import com.monsanto.irdsoapservices.to.ContactFunctionInfo;
+import com.monsanto.irdsoapservices.to.ContactInfo;
+import com.monsanto.irdsoapservices.to.ContactPhoneInfo;
+import com.monsanto.irdsoapservices.utils.StringUtils;
+import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import java.util.*;
-
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
-import org.apache.commons.beanutils.BeanUtils;
 
 /**
  * Created by IntelliJ IDEA.

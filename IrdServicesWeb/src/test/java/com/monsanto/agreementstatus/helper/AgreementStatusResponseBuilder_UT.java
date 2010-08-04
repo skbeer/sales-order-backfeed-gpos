@@ -1,19 +1,17 @@
 package com.monsanto.agreementstatus.helper;
 
-import junit.framework.TestCase;
-import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo;
 import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementInfo;
+import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo;
 import com.monsanto.irdsoapservices.agreementstatus.domain.ZoneInfo;
-import com.monsanto.irdsoapservices.agreementstatus.schema.request.*;
-import com.monsanto.irdsoapservices.agreementstatus.schema.response.AgreementStatusResponseType;
 import com.monsanto.irdsoapservices.agreementstatus.helper.AgreementStatusResponseBuilder;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import junit.framework.TestCase;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -37,6 +35,12 @@ public class AgreementStatusResponseBuilder_UT extends TestCase {
         assertEquals(2, responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().get(0).getAgreementStatusList().size());
         assertEquals(1, responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().get(0).getAgreementStatusList().get(0).getZone().size());
         assertEquals(2, responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().get(0).getAgreementStatusList().get(1).getZone().size());
+
+//        JAXBContext jxContext = JAXBContext.newInstance("com.monsanto.irdsoapservices.agreementstatus.schema.response");
+//        Marshaller marshaller = jxContext.createMarshaller();
+//        ObjectFactory objectFactory = new ObjectFactory();
+//        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, new Boolean(true));
+//        marshaller.marshal(objectFactory.createAgreementStatusResponse(responseType), new FileOutputStream("c:\\some.xml"));
     }
 
     private HeaderType getHeaderType() {

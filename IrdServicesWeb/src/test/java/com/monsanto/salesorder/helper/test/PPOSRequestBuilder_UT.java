@@ -1,16 +1,16 @@
 package com.monsanto.salesorder.helper.test;
 
-import junit.framework.TestCase;
-import com.monsanto.irdsoapservices.salesorder.domain.PartnerInfo;
-import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.LineItemInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.PartnerInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.helper.PPOSRequestBuilder;
 import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderReport;
+import junit.framework.TestCase;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.

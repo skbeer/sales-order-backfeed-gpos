@@ -1,7 +1,7 @@
 package com.monsanto.retailseller.dao;
 
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import com.monsanto.irdsoapservices.utils.StringUtils;
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 /**
  * Created by IntelliJ IDEA.

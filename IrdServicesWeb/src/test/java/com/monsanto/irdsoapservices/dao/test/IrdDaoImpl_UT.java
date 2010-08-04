@@ -1,7 +1,10 @@
 package com.monsanto.irdsoapservices.dao.test;
 
 import com.monsanto.irdsoapservices.dao.impl.IrdDaoImpl;
-import com.monsanto.irdsoapservices.to.*;
+import com.monsanto.irdsoapservices.to.AcctToAttr;
+import com.monsanto.irdsoapservices.to.ContactInfo;
+import com.monsanto.irdsoapservices.to.EmployeeInfo;
+import com.monsanto.irdsoapservices.to.LfaGrowerDetails;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;

@@ -1,7 +1,12 @@
 
 package com.monsanto.irdsoapservices.agreementstatus.schema.response;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -34,9 +39,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 public class AgreementStatusResponseType {
 
-    @XmlElement(name = "Header", namespace = "urn:ecms:schema:agreement:response:2:0", required = true)
+    @XmlElement(name = "Header", required = true)
     protected HeaderType header;
-    @XmlElement(name = "AgreementStatusResponseBody", namespace = "urn:ecms:schema:agreement:response:2:0", required = true)
+    @XmlElement(name = "AgreementStatusResponseBody", required = true)
     protected AgreementStatusResponseBodyType agreementStatusResponseBody;
     @XmlAttribute(name = "Version")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)

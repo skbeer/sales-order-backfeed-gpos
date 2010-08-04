@@ -1,7 +1,7 @@
 package com.monsanto.irdsoapservices.salesorder.dao;
 
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import java.util.List;
 

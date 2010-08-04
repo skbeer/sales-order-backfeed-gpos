@@ -1,12 +1,7 @@
 package com.monsanto.irdsoapservices.utils.test;
 
-import junit.framework.TestCase;
 import com.monsanto.irdsoapservices.utils.StringUtils;
-import com.monsanto.irdsoapservices.utils.XmlDateTimeUtil;
-
-import javax.xml.namespace.QName;
-import java.util.Calendar;
-import java.net.URL;
+import junit.framework.TestCase;
 
 /**
  * Created by IntelliJ IDEA.

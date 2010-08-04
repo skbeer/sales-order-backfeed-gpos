@@ -1,15 +1,15 @@
 package com.monsanto.salesorder.service;
 
-import junit.framework.TestCase;
-import com.monsanto.irdsoapservices.salesorder.service.SalesOrderReportService;
-import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
 import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
+import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
+import com.monsanto.irdsoapservices.salesorder.service.SalesOrderReportService;
+import junit.framework.TestCase;
 import org.easymock.EasyMock;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
