@@ -63,43 +63,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ContactInformationType }
+     * Create an instance of {@link AgreementStatusResponseDetails }
      * 
      */
-    public ContactInformationType createContactInformationType() {
-        return new ContactInformationType();
-    }
-
-    /**
-     * Create an instance of {@link AgreementStatusResponseBodyType }
-     * 
-     */
-    public AgreementStatusResponseBodyType createAgreementStatusResponseBodyType() {
-        return new AgreementStatusResponseBodyType();
-    }
-
-    /**
-     * Create an instance of {@link AgreementStatusListType }
-     * 
-     */
-    public AgreementStatusListType createAgreementStatusListType() {
-        return new AgreementStatusListType();
-    }
-
-    /**
-     * Create an instance of {@link ExceptionType }
-     * 
-     */
-    public ExceptionType createExceptionType() {
-        return new ExceptionType();
-    }
-
-    /**
-     * Create an instance of {@link PartnerDetailType }
-     * 
-     */
-    public PartnerDetailType createPartnerDetailType() {
-        return new PartnerDetailType();
+    public AgreementStatusResponseDetails createAgreementStatusResponseDetails() {
+        return new AgreementStatusResponseDetails();
     }
 
     /**
@@ -111,59 +79,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ThisDocumentIdentifierType }
+     * Create an instance of {@link ZoneType }
      * 
      */
-    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
-        return new ThisDocumentIdentifierType();
-    }
-
-    /**
-     * Create an instance of {@link AgreementStatusResponseType }
-     * 
-     */
-    public AgreementStatusResponseType createAgreementStatusResponseType() {
-        return new AgreementStatusResponseType();
-    }
-
-    /**
-     * Create an instance of {@link PartnerIdentifierType }
-     * 
-     */
-    public PartnerIdentifierType createPartnerIdentifierType() {
-        return new PartnerIdentifierType();
-    }
-
-    /**
-     * Create an instance of {@link AlternateCommunicationMethodType }
-     * 
-     */
-    public AlternateCommunicationMethodType createAlternateCommunicationMethodType() {
-        return new AlternateCommunicationMethodType();
-    }
-
-    /**
-     * Create an instance of {@link AgreementStatusResponsePropertiesType }
-     * 
-     */
-    public AgreementStatusResponsePropertiesType createAgreementStatusResponsePropertiesType() {
-        return new AgreementStatusResponsePropertiesType();
-    }
-
-    /**
-     * Create an instance of {@link ToType }
-     * 
-     */
-    public ToType createToType() {
-        return new ToType();
-    }
-
-    /**
-     * Create an instance of {@link FromType }
-     * 
-     */
-    public FromType createFromType() {
-        return new FromType();
+    public ZoneType createZoneType() {
+        return new ZoneType();
     }
 
     /**
@@ -175,27 +95,43 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AgreementStatusResponsePropertiesType }
+     * 
+     */
+    public AgreementStatusResponsePropertiesType createAgreementStatusResponsePropertiesType() {
+        return new AgreementStatusResponsePropertiesType();
+    }
+
+    /**
+     * Create an instance of {@link AlternateCommunicationMethodType }
+     * 
+     */
+    public AlternateCommunicationMethodType createAlternateCommunicationMethodType() {
+        return new AlternateCommunicationMethodType();
+    }
+
+    /**
+     * Create an instance of {@link FromType }
+     * 
+     */
+    public FromType createFromType() {
+        return new FromType();
+    }
+
+    /**
+     * Create an instance of {@link ToType }
+     * 
+     */
+    public ToType createToType() {
+        return new ToType();
+    }
+
+    /**
      * Create an instance of {@link PartnerInformationType }
      * 
      */
     public PartnerInformationType createPartnerInformationType() {
         return new PartnerInformationType();
-    }
-
-    /**
-     * Create an instance of {@link AgreementStatusResponseDetails }
-     * 
-     */
-    public AgreementStatusResponseDetails createAgreementStatusResponseDetails() {
-        return new AgreementStatusResponseDetails();
-    }
-
-    /**
-     * Create an instance of {@link HeaderType }
-     * 
-     */
-    public HeaderType createHeaderType() {
-        return new HeaderType();
     }
 
     /**
@@ -207,11 +143,59 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ZoneType }
+     * Create an instance of {@link ContactInformationType }
      * 
      */
-    public ZoneType createZoneType() {
-        return new ZoneType();
+    public ContactInformationType createContactInformationType() {
+        return new ContactInformationType();
+    }
+
+    /**
+     * Create an instance of {@link PartnerDetailType }
+     * 
+     */
+    public PartnerDetailType createPartnerDetailType() {
+        return new PartnerDetailType();
+    }
+
+    /**
+     * Create an instance of {@link PartnerIdentifierType }
+     * 
+     */
+    public PartnerIdentifierType createPartnerIdentifierType() {
+        return new PartnerIdentifierType();
+    }
+
+    /**
+     * Create an instance of {@link AgreementStatusResponseBodyType }
+     * 
+     */
+    public AgreementStatusResponseBodyType createAgreementStatusResponseBodyType() {
+        return new AgreementStatusResponseBodyType();
+    }
+
+    /**
+     * Create an instance of {@link AgreementType }
+     * 
+     */
+    public AgreementType createAgreementType() {
+        return new AgreementType();
+    }
+
+    /**
+     * Create an instance of {@link ExceptionType }
+     * 
+     */
+    public ExceptionType createExceptionType() {
+        return new ExceptionType();
+    }
+
+    /**
+     * Create an instance of {@link AgreementStatusResponseType }
+     * 
+     */
+    public AgreementStatusResponseType createAgreementStatusResponseType() {
+        return new AgreementStatusResponseType();
     }
 
     /**
@@ -223,11 +207,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AgreementType }
+     * Create an instance of {@link ThisDocumentIdentifierType }
      * 
      */
-    public AgreementType createAgreementType() {
-        return new AgreementType();
+    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
+        return new ThisDocumentIdentifierType();
+    }
+
+    /**
+     * Create an instance of {@link HeaderType }
+     * 
+     */
+    public HeaderType createHeaderType() {
+        return new HeaderType();
+    }
+
+    /**
+     * Create an instance of {@link AgreementStatusListType }
+     * 
+     */
+    public AgreementStatusListType createAgreementStatusListType() {
+        return new AgreementStatusListType();
     }
 
     /**

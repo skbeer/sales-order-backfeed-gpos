@@ -20,6 +20,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="ProductCropCode" type="{http://www.w3.org/2001/XMLSchema}token"/>
+ *         &lt;element name="ProductCrop" type="{http://www.w3.org/2001/XMLSchema}token"/>
  *         &lt;element ref="{urn:ecms:schema:agreement:response:2:0}ZoneID"/>
  *         &lt;element ref="{urn:ecms:schema:agreement:response:2:0}ZoneType" minOccurs="0"/>
  *         &lt;element ref="{urn:ecms:schema:agreement:response:2:0}ZoneName" minOccurs="0"/>
@@ -33,12 +35,22 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ZoneType", propOrder = {
+    "productCropCode",
+    "productCrop",
     "zoneID",
     "zoneType",
     "zoneName"
 })
 public class ZoneType {
 
+    @XmlElement(name = "ProductCropCode", required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "token")
+    protected String productCropCode;
+    @XmlElement(name = "ProductCrop", required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "token")
+    protected String productCrop;
     @XmlElement(name = "ZoneID", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -51,6 +63,54 @@ public class ZoneType {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String zoneName;
+
+    /**
+     * Gets the value of the productCropCode property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getProductCropCode() {
+        return productCropCode;
+    }
+
+    /**
+     * Sets the value of the productCropCode property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setProductCropCode(String value) {
+        this.productCropCode = value;
+    }
+
+    /**
+     * Gets the value of the productCrop property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getProductCrop() {
+        return productCrop;
+    }
+
+    /**
+     * Sets the value of the productCrop property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setProductCrop(String value) {
+        this.productCrop = value;
+    }
 
     /**
      * Gets the value of the zoneID property.

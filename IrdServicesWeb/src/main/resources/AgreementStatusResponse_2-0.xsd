@@ -172,6 +172,8 @@
 	</xsd:element>
 	<xsd:complexType name="ZoneType">
 		<xsd:sequence>
+            <xsd:element name="ProductCropCode" type="xsd:token"/>
+            <xsd:element name="ProductCrop" type="xsd:token"/>
 			<xsd:element ref="ZoneID"/>
 			<xsd:element ref="ZoneType" minOccurs="0"/>
 			<xsd:element ref="ZoneName" minOccurs="0"/>

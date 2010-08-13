@@ -20,8 +20,8 @@ import com.monsanto.irdsoapservices.agreementstatus.schema.response.AgreementSta
 @WebService(name = "AgreementStatusService", targetNamespace = "urn:monsanto:services:wsdl:agreementstatus:1:0")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
-    com.monsanto.irdsoapservices.agreementstatus.schema.request.ObjectFactory.class,
-    com.monsanto.irdsoapservices.agreementstatus.schema.response.ObjectFactory.class
+    com.monsanto.irdsoapservices.agreementstatus.schema.response.ObjectFactory.class,
+    com.monsanto.irdsoapservices.agreementstatus.schema.request.ObjectFactory.class
 })
 public interface AgreementStatusService {
 

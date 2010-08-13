@@ -11,6 +11,24 @@ public class ZoneInfo {
     String zoneId;
     String zoneType;
     String zoneName;
+    String cropCode;
+    String cropName;
+
+    public String getCropCode() {
+        return cropCode;
+    }
+
+    public void setCropCode(String cropCode) {
+        this.cropCode = cropCode;
+    }
+
+    public String getCropName() {
+        return cropName;
+    }
+
+    public void setCropName(String cropName) {
+        this.cropName = cropName;
+    }
 
     public String getZoneId() {
         return zoneId;

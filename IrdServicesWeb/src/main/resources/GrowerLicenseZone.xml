@@ -9,13 +9,14 @@
         <result property="gln" column="GLN" />
         <result property="partnerName" column="ACCT_NAME" />
         <result property="contactName" column="CONTACT_NAME" />
-        <result property="speciesCode" column="SPECIES_CODE" />
         <result property="tempAgreement.agreementName" column="AGREEMENT_NAME" />
         <result property="tempAgreement.agreementStatus" column="LICENSE_STATUS" />
         <result property="tempAgreement.licenseNumber" column="TECH_LICENSE_NUMBER" />
         <result property="tempAgreement.tempZone.zoneId" column="ZONE_CODE" />
         <result property="tempAgreement.tempZone.zoneType" column="ZONE_TYPE" />
         <result property="tempAgreement.tempZone.zoneName" column="ZONE_DESCR" />
+        <result property="tempAgreement.tempZone.cropCode" column="SPECIES_CODE" />
+        <result property="tempAgreement.tempZone.cropName" column="SPECIES_DESCR" />        
     </resultMap>
 
     <select id="getAgreementStatus" resultMap="agreementStatusResult" parameterClass="java.util.Map">
@@ -25,6 +26,7 @@
                 ACCT_NAME,
                 MAILING_STATE_CODE,
                 SPECIES_CODE,
+                SPECIES_DESCR,        
                 ZONE_DESCR,
                 ZONE_CODE,
                 ZONE_STRUCT_DESCR ZONE_TYPE,

@@ -1,4 +1,3 @@
-
 package com.monsanto.irdsoapservices.schema;
 
 import javax.xml.bind.annotation.XmlAccessType;

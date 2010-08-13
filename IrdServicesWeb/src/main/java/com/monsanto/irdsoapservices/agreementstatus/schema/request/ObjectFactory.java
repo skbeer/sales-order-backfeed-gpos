@@ -35,67 +35,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ThisDocumentIdentifierType }
-     * 
-     */
-    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
-        return new ThisDocumentIdentifierType();
-    }
-
-    /**
-     * Create an instance of {@link AgreementStatusRequest }
-     * 
-     */
-    public AgreementStatusRequest createAgreementStatusRequest() {
-        return new AgreementStatusRequest();
-    }
-
-    /**
-     * Create an instance of {@link ToType }
-     * 
-     */
-    public ToType createToType() {
-        return new ToType();
-    }
-
-    /**
      * Create an instance of {@link PartnerInformationType }
      * 
      */
     public PartnerInformationType createPartnerInformationType() {
         return new PartnerInformationType();
-    }
-
-    /**
-     * Create an instance of {@link PartnerIdentifierType }
-     * 
-     */
-    public PartnerIdentifierType createPartnerIdentifierType() {
-        return new PartnerIdentifierType();
-    }
-
-    /**
-     * Create an instance of {@link ThisDocumentDateTimeType }
-     * 
-     */
-    public ThisDocumentDateTimeType createThisDocumentDateTimeType() {
-        return new ThisDocumentDateTimeType();
-    }
-
-    /**
-     * Create an instance of {@link AgreementStatusRequestBodyType }
-     * 
-     */
-    public AgreementStatusRequestBodyType createAgreementStatusRequestBodyType() {
-        return new AgreementStatusRequestBodyType();
-    }
-
-    /**
-     * Create an instance of {@link HeaderType }
-     * 
-     */
-    public HeaderType createHeaderType() {
-        return new HeaderType();
     }
 
     /**
@@ -107,27 +51,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AgreementStatusRequestType }
+     * Create an instance of {@link AgreementStatusRequestDetailsType }
      * 
      */
-    public AgreementStatusRequestType createAgreementStatusRequestType() {
-        return new AgreementStatusRequestType();
+    public AgreementStatusRequestDetailsType createAgreementStatusRequestDetailsType() {
+        return new AgreementStatusRequestDetailsType();
     }
 
     /**
-     * Create an instance of {@link AddressInformationType }
+     * Create an instance of {@link AgreementStatusRequest }
      * 
      */
-    public AddressInformationType createAddressInformationType() {
-        return new AddressInformationType();
+    public AgreementStatusRequest createAgreementStatusRequest() {
+        return new AgreementStatusRequest();
     }
 
     /**
-     * Create an instance of {@link FromType }
+     * Create an instance of {@link HeaderType }
      * 
      */
-    public FromType createFromType() {
-        return new FromType();
+    public HeaderType createHeaderType() {
+        return new HeaderType();
     }
 
     /**
@@ -139,6 +83,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AgreementStatusRequestType }
+     * 
+     */
+    public AgreementStatusRequestType createAgreementStatusRequestType() {
+        return new AgreementStatusRequestType();
+    }
+
+    /**
+     * Create an instance of {@link ThisDocumentDateTimeType }
+     * 
+     */
+    public ThisDocumentDateTimeType createThisDocumentDateTimeType() {
+        return new ThisDocumentDateTimeType();
+    }
+
+    /**
+     * Create an instance of {@link AddressInformationType }
+     * 
+     */
+    public AddressInformationType createAddressInformationType() {
+        return new AddressInformationType();
+    }
+
+    /**
      * Create an instance of {@link AlternateCommunicationMethodType }
      * 
      */
@@ -147,11 +115,43 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AgreementStatusRequestDetailsType }
+     * Create an instance of {@link AgreementStatusRequestBodyType }
      * 
      */
-    public AgreementStatusRequestDetailsType createAgreementStatusRequestDetailsType() {
-        return new AgreementStatusRequestDetailsType();
+    public AgreementStatusRequestBodyType createAgreementStatusRequestBodyType() {
+        return new AgreementStatusRequestBodyType();
+    }
+
+    /**
+     * Create an instance of {@link FromType }
+     * 
+     */
+    public FromType createFromType() {
+        return new FromType();
+    }
+
+    /**
+     * Create an instance of {@link ToType }
+     * 
+     */
+    public ToType createToType() {
+        return new ToType();
+    }
+
+    /**
+     * Create an instance of {@link ThisDocumentIdentifierType }
+     * 
+     */
+    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
+        return new ThisDocumentIdentifierType();
+    }
+
+    /**
+     * Create an instance of {@link PartnerIdentifierType }
+     * 
+     */
+    public PartnerIdentifierType createPartnerIdentifierType() {
+        return new PartnerIdentifierType();
     }
 
     /**

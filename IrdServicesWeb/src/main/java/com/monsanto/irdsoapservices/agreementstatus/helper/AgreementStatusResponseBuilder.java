@@ -62,6 +62,8 @@ public class AgreementStatusResponseBuilder {
         zoneType.setZoneID(zoneInfo.getZoneId());
         zoneType.setZoneType(zoneInfo.getZoneType());
         zoneType.setZoneName(zoneInfo.getZoneName());
+        zoneType.setProductCropCode(zoneInfo.getCropCode());
+        zoneType.setProductCrop(zoneInfo.getCropName());
         return zoneType;
     }
 
