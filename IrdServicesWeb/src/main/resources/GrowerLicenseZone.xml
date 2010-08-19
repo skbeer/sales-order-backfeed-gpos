@@ -33,7 +33,7 @@
                 DECODE(SPECIES_CODE, 'T', 'MTA1', 'MTA2')  AGREEMENT_NAME,
                 LICENSE_STATUS,
                 CONTACT_FIRST_NAME ||' ' ||CONTACT_LAST_NAME AS CONTACT_NAME
-        FROM    ECOM.GROWER_LICENSE_ZONE_VW
+        FROM    ECOM.GROWER_LICENSE_ZONE_V2_VW
         WHERE   GLN IN
                 <iterate property="Set1" open="(" close=")" conjunction=",">
                     #Set1[]#
