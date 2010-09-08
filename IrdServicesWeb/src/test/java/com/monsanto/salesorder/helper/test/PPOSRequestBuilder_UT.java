@@ -40,8 +40,8 @@ public class PPOSRequestBuilder_UT extends TestCase {
         pposOrderInfo.setOrderType("RT");
         pposOrderInfo.setDealerInfo(getPartnerInfo("Dealer"));
         pposOrderInfo.setGrowerInfo(getPartnerInfo("Grower"));
-        pposOrderInfo.getLineItems().add(getLineItemInfo("1", "Product 1", "GTIN 1", "UPC 1", "100", "BG", "101", "UN", "1001", "Sales Rep 1"));
-        pposOrderInfo.getLineItems().add(getLineItemInfo("2", "Product 2", "GTIN 2", "UPC 2", "200", "BG", "201", "UN", "2001", "Sales Rep 2"));
+        pposOrderInfo.getLineItems().add(getLineItemInfo("1", "Product 1", "GTIN 1", "UPC 1", "100", "BG", "101", "UN", getPartnerInfo("SalesRep1 ")));
+        pposOrderInfo.getLineItems().add(getLineItemInfo("2", "Product 2", "GTIN 2", "UPC 2", "200", "BG", "201", "UN", getPartnerInfo("SalesRep2 ")));
         List<PPOSOrderInfo> list = new ArrayList<PPOSOrderInfo>();
         list.add(pposOrderInfo);
         return list;
@@ -71,7 +71,7 @@ public class PPOSRequestBuilder_UT extends TestCase {
         return partnerInfo;
     }
 
-    private LineItemInfo getLineItemInfo(String itemNumber, String productName, String productGtin, String productUpc, String equivalentQuantity, String equivalentQuantityUom, String salesQuantity, String salesQuantityUom, String salesRepId, String salesRepName) {
+    private LineItemInfo getLineItemInfo(String itemNumber, String productName, String productGtin, String productUpc, String equivalentQuantity, String equivalentQuantityUom, String salesQuantity, String salesQuantityUom, PartnerInfo salesRep) {
         LineItemInfo lineItemInfo = new LineItemInfo();
         lineItemInfo.setItemNumber(itemNumber);
         lineItemInfo.setProductName(productName);
@@ -81,8 +81,8 @@ public class PPOSRequestBuilder_UT extends TestCase {
         lineItemInfo.getEquivalentQuantity().setQtyUom(equivalentQuantityUom);
         lineItemInfo.getSalesQuantity().setQtyValue(salesQuantity);
         lineItemInfo.getSalesQuantity().setQtyUom(salesQuantityUom);
-        lineItemInfo.setSalesRepId(salesRepId);
-        lineItemInfo.setSalesRepName(salesRepName);
+        salesRep.setBuyerId(itemNumber);
+        lineItemInfo.setSalesRep(salesRep);
         return lineItemInfo;
     }
 

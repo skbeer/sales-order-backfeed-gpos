@@ -38,225 +38,159 @@
         <result property="tempLineItem.salesQuantity.qtyUom" column="SALES_UOM" />
         <result property="tempLineItem.equivalentQuantity.qtyValue" column="EQUIVILENT_QTY" />
         <result property="tempLineItem.equivalentQuantity.qtyUom" column="EQUIVILENT_QTY_UOM" />
-        <result property="tempLineItem.salesRepName" column="SALESREP_NAME" />
-        <result property="tempLineItem.salesRepId" column="SALESREP_ID" />
+        <result property="tempLineItem.salesRep.partnerName" column="SALESREP_NAME" />
+        <result property="tempLineItem.salesRep.buyerId" column="SALESREP_ID" />
+        <result property="tempLineItem.salesRep.address" column="SALESREP_ADDRESS_1" />
+        <result property="tempLineItem.salesRep.address2" column="SALESREP_ADDRESS_2" />
+        <result property="tempLineItem.salesRep.city" column="SALESREP_CITY" />
+        <result property="tempLineItem.salesRep.state" column="SALESREP_STATE" />
+        <result property="tempLineItem.salesRep.zip" column="SALESREP_ZIP" />
     </resultMap>
     
     <resultMap id="cos" class="cosOrder">
-        <result property="orderNumber" column="ORDER_ID" />
-        <result property="orderDate" column="ORDER_DATE" />
-
-        <result property="shipTo.acctId" column="SHIP_TO_ACCT_ID" />
-        <result property="shipTo.ebid" column="SHIP_TO_EBID" />
-        <result property="shipTo.partnerName" column="SHIP_TO_ACCT_NAME" />
-        <result property="shipTo.address" column="SHIP_TO_ADDRESS" />
-        <result property="shipTo.city" column="SHIP_TO_CITY" />
-        <result property="shipTo.state" column="SHIP_TO_STATE" />
-        <result property="shipTo.zip" column="SHIP_TO_ZIP" />
-        <result property="shipTo.county" column="SHIP_TO_COUNTY" />
-        
-        <result property="billTo.acctId" column="BILL_TO_ACCT_ID" />
-        <result property="billTo.ebid" column="BILL_TO_EBID" />
-        <result property="billTo.partnerName" column="BILL_TO_ACCT_NAME" />
-        <result property="billTo.address" column="BILL_TO_ADDRESS" />
-        <result property="billTo.city" column="BILL_TO_CITY" />
-        <result property="billTo.state" column="BILL_TO_STATE" />
-        <result property="billTo.zip" column="BILL_TO_ZIP" />
-        <result property="billTo.county" column="BILL_TO_COUNTY" />
-
-        <result property="tempLineItem.itemNumber" column="ORDER_ITEM_ID" />
-        <result property="tempLineItem.productUpc" column="UPC_CODE" />
+        <result property="dealerInfo.ebid" column="DEALER_EBID" />
+        <result property="dealerInfo.acctId" column="DEALER_ACCT_ID" />
+        <result property="dealerInfo.partnerName" column="DEALER_NAME" />
+        <result property="dealerInfo.address" column="DEALER_ADDRESS" />
+        <result property="dealerInfo.address2" column="DEALER_ADDRESS2" />
+        <result property="dealerInfo.city" column="DEALER_CITY" />
+        <result property="dealerInfo.state" column="DEALER_STATE" />
+        <result property="dealerInfo.zip" column="DEALER_ZIP" />
+        <result property="dealerInfo.county" column="DEALER_COUNTY" />
         <result property="tempLineItem.productGtin" column="GTIN" />
-        <result property="tempLineItem.productName" column="PRODUCT_NAME" />
-
-        <result property="tempLineItem.productQuantity.qtyValue" column="OS_ORDER_QTY" />
-        <result property="tempLineItem.productQuantity.qtyUom" column="ORDER_UOM" />
-        <result property="tempLineItem.productQuantityEquivalent.qtyValue" column="OS_ORDER_SSU_QTY" />
-        <result property="tempLineItem.productQuantityEquivalent.qtyUom" column="ORDER_SSU_UOM" />
-
-        <result property="tempLineItem.shippedQuantity.qtyValue" column="OS_SHIPPED_QTY" />
-        <result property="tempLineItem.shippedQuantity.qtyUom" column="SHIPPED_UOM" />
-        <result property="tempLineItem.shippedQuantityEquivalent.qtyValue" column="OS_SHIPPED_SSU_QTY" />
-        <result property="tempLineItem.shippedQuantityEquivalent.qtyUom" column="SHIPPED_SSU_UOM" />
-
-        <result property="tempLineItem.deliveredQuantity.qtyValue" column="OS_INVC_QTY" />
-        <result property="tempLineItem.deliveredQuantity.qtyUom" column="INVC_UOM" />
-        <result property="tempLineItem.deliveredQuantityEquivalent.qtyValue" column="OS_INVC_SSU_QTY" />
-        <result property="tempLineItem.deliveredQuantityEquivalent.qtyUom" column="INVC_SSU_UOM" />
-        
-        <result property="rejectReason" column="REJECT_REASON_CODE"/>
+        <result property="tempLineItem.orderQty" column="ORDER_QTY"/>
+        <result property="tempLineItem.shippedQty" column="SHIPPED_QTY"/>
+        <result property="tempLineItem.pendingQty" column="PENDING_QTY"/>
+        <result property="orderNumber" column="ACCT_ID_CROP_YEAR"/>
     </resultMap>
 
     <select id="getPPOSOrders" resultMap="ppos" parameterClass="java.util.Map">
         SELECT
-            PSGO.CRM_OBJ_ID,
-            PSGO.ORDER_ID,
-            PSGO.ORDER_ITEM_ID,
-            'RT' AS SALES_ORDER_TYPE_CODE,
-            DD.DAY_DATE ORDER_DATE,
-            SUBSTR (DD.FY, 1, 4) FISCAL_YEAR,
-            CAD.NAME_1 DEALER_NAME,
-            CAD.IC_CODE DEALER_EBID,
-            CAD.ACCT_ID DEALER_ACCT_ID,
-            CAD.MAILING_ADDR_LINE_1 DEALER_MAILING_ADDRESS,
-            CAD.MAILING_CITY DEALER_MAILING_CITY,
-            CAD.MAILING_STATE_CODE DEALER_MAILING_STATE,
-            CAD.MAILING_ZIP_CODE DEALER_MAILING_ZIP_CODE,
-            CAD.MAILING_COUNTY DEALER_MAILING_COUNTY,
-            GD.NAME_1 GROWER_NAME,
-            GD.GLN GROWER_GLN,
-            GD.NAPD_ID GROWER_NAPD_ID,
-            GD.ACCT_ID GROWER_ACCT_ID,
-            ACM.CONTACT_FIRST_NAME||' '||ACM.CONTACT_LAST_NAME GROWER_CONTACT_NAME,
-            GD.MAILING_ADDR_LINE_1 GROWER_MAILING_ADDRESS,
-            GD.MAILING_CITY GROWER_MAILING_CITY,
-            GD.MAILING_STATE_CODE GROWER_MAILING_STATE,
-            GD.MAILING_ZIP_CODE GROWER_MAILING_ZIP_CODE,
-            GD.MAILING_COUNTY GROWER_MAILING_COUNTY,
-            SPD.UPC_CODE,
-            SPD.LEGAL_DESCR_1 PRODUCT_NAME,
-            PPS.UPC_SCC_CODE GTIN,
-            PSGO.PPOS_SEED_BASE_QTY SALES_QTY,
-            UD.UOM_CODE SALES_UOM,
-            PSGO.PPOS_SEED_SSU_QTY EQUIVILENT_QTY,
-            'UN' EQUIVILENT_QTY_UOM,
-            SS.NAME_1 || ' ' || SS.NAME_3 SALESREP_NAME,
-            PSGO.SEEDCO_SALES_REP_CODE SALESREP_ID
-        FROM    DM_PPOS_SEED_GROWER_ORDER_C_VW PSGO,
-                (SELECT DISTINCT CRM_OBJ_ID
-                FROM DM_PPOS_SEED_GROWER_ORDER_C_VW
-                WHERE ROW_EFF_DATE > #startDate#
-                ) ORDERS_BY_DATE,
-                DS_SEED_PRODUCT_DIM SPD,
-                DS_CHANNEL_ACCOUNT_DIM CAD,
-                DS_GROWER_DIM GD,
-                S_ACCT_SALES_AREA CGP,
-                DS_DATE_DIM DD,
-                DS_UNIT_OF_MEASURE_DIM UD,
-                S_SEEDCO_SALESREP SS,
-                S_PROD_PACKAGE_STRUCT PPS,
-                S_ACCT_CONTACT_MAILING_DNML ACM,
-                (SELECT   DISTINCT
-                DEST_ALIAS_ID CUST_GRP_CODE, SOURCE_ALIAS_ID CUST_GRP_NAME
-                FROM   BIOTECH_TRANSLATION
-                WHERE       'CDW749RT' = ALIAS_PROGRAM
-                AND #groupCode# = DEST_ALIAS_ID
-                AND 'CustGrp' = SOURCE_ALIAS_TYPE) SC
-        WHERE       PSGO.PRODUCT_KEY = SPD.PRODUCT_KEY
-            AND PSGO.SHIP_FROM_ACCT_KEY = CAD.ACCT_KEY
-            AND PSGO.SHIP_TO_GROWER_KEY = GD.GROWER_KEY
-            AND PSGO.ORDER_DATE_KEY = DD.DATE_KEY
-            AND PSGO.BASE_UOM_KEY = UD.UOM_KEY
-            AND PPS.PROD_ID = SPD.PRODUCT_ID
-            AND PPS.UOM_CODE = UD.UOM_CODE
-            AND CGP.ACCT_ID = CAD.ACCT_ID(+)
-            AND CGP.CUSTOMER_GRP_CODE = SC.CUST_GRP_CODE
-            AND PSGO.SEEDCO_SALES_REP_CODE = SS.SEEDCO_SALESREP_ID(+)
-            AND NVL (CGP.MFD_FLAG, 'N') != 'X'
-            AND CGP.DISTRIBUTION_CHANNEL_CODE = '90'
-            AND CGP.DIVISION_CODE = '17'
-            AND CGP.SALES_ORG_CODE = 'US20'
-            AND GD.PRIMARY_CONTACT_ID = ACM.CONTACT_ID(+)
-            AND DD.CURR_FY_OFFSET = 0
-            AND PSGO.CRM_OBJ_ID = ORDERS_BY_DATE.CRM_OBJ_ID
-        ORDER BY PSGO.CRM_OBJ_ID, ORDER_ITEM_ID
+		 psgo.crm_obj_id,
+         psgo.order_id,
+         psgo.order_item_id,
+         'RT' sales_order_type_code,
+         dd.day_date order_date,
+         SUBSTR (dd.fy, 1, 4) fiscal_year,
+         cad.name_1 dealer_name,
+         cad.ic_code dealer_ebid,
+         cad.acct_id dealer_acct_id,
+         cad.mailing_addr_line_1 dealer_mailing_address,
+         cad.mailing_city dealer_mailing_city,
+         cad.mailing_state_code dealer_mailing_state,
+         cad.mailing_zip_code dealer_mailing_zip_code,
+         cad.mailing_county dealer_mailing_county,
+         gd.name_1 grower_name,
+         gd.gln grower_gln,
+         gd.napd_id grower_napd_id,
+         gd.acct_id grower_acct_id,
+         ACM.CONTACT_FIRST_NAME||' '||ACM.CONTACT_LAST_NAME GROWER_CONTACT_NAME,
+         gd.mailing_addr_line_1 grower_mailing_address,
+         gd.mailing_city grower_mailing_city,
+         gd.mailing_state_code grower_mailing_state,
+         gd.mailing_zip_code grower_mailing_zip_code,
+         gd.mailing_county grower_mailing_county,
+         spd.upc_code,
+         spd.legal_descr_1 product_name,
+         pps.upc_scc_code gtin,
+         psgo.ppos_seed_base_qty sales_qty,
+         ud.uom_code sales_uom,
+         psgo.ppos_seed_ssu_qty equivilent_qty,
+         'UN' equivilent_qty_uom,
+         ss.name_1 || ' ' || ss.name_3 salesrep_name,
+         ss.alias_ss_code salesrep_id,
+         ss.addr_line_1 salesrep_address_1,
+         ss.addr_line_2 salesrep_address_2,
+         ss.city salesrep_city,
+         ss.state_code salesrep_state,
+         ss.zip_code salesrep_zip
+  FROM   dm_ppos_seed_grower_order_c_vw psgo,
+         (select distinct crm_obj_id
+         from dm_ppos_seed_grower_order_c_vw
+         where row_eff_date >= #startDate#) orders_by_date,
+         ds_seed_product_dim spd,
+         ds_channel_account_dim cad,
+         ds_grower_dim gd,
+         s_acct_sales_area cgp,
+         ds_date_dim dd,
+         ds_unit_of_measure_dim ud,
+         s_seedco_salesrep ss,
+         s_prod_package_struct pps,
+         s_acct_contact_mailing_dnml acm,
+         (SELECT   DISTINCT
+                   dest_alias_id cust_grp_code, source_alias_id cust_grp_name
+            FROM   biotech_translation
+           WHERE       'CDW749RT' = alias_program
+                   AND #groupCode# = dest_alias_id
+                   AND 'CustGrp' = source_alias_type) sc
+ WHERE       psgo.product_key = spd.product_key
+         AND psgo.ship_from_acct_key = cad.acct_key
+         AND psgo.ship_to_grower_key = gd.grower_key
+         AND psgo.order_date_key = dd.date_key
+         AND psgo.base_uom_key = ud.uom_key
+         AND pps.prod_id = spd.product_id
+         AND pps.uom_code = ud.uom_code
+         AND cgp.acct_id = cad.acct_id(+)
+         AND cgp.customer_grp_code = sc.cust_grp_code
+         AND psgo.seedco_sales_rep_code = ss.seedco_salesrep_id(+)
+         AND NVL (cgp.mfd_flag, 'N') != 'X'
+         AND cgp.distribution_channel_code = '90'
+         AND cgp.division_code = '17'
+         AND cgp.sales_org_code = 'US20'
+         AND gd.primary_contact_id = acm.contact_id(+)
+         AND dd.curr_fy_offset = 0
+         AND psgo.crm_obj_id = orders_by_date.crm_obj_id
+         order by psgo.crm_obj_id, order_item_id
     </select>
 
     <select id="getCOSOrders" resultMap="cos" parameterClass="java.util.Map">
-        SELECT   OSOI.ORDER_ID,
-             OSOI.ORDER_ITEM_ID,
-             DD2.DAY_DATE ORDER_DATE,
-             DD.DAY_DATE BILLING_DATE,
-             OSBI.BILLING_ID,
-             OSBI.BILLING_ITEM_ID,
-             ORD.ORDER_RSN_CODE,
-             DTD.DOC_TYPE_CODE,
-             DCD.DOC_CATG_CODE,
-             SPD.SAP_MATERIAL_ID,
-             SPD.PRODUCT_ID,
-             SPD.UPC_CODE,
-             SPD.SPECIE_DESCR SPECIE,
-             SPD.LEGAL_DESCR_1 PRODUCT_NAME,
-             PPS.UPC_SCC_CODE GTIN,
-             OSOI.OS_ORDER_QTY,
-             UD.UOM_CODE ORDER_UOM,
-             OSOI.OS_ORDER_SSU_QTY,
-             'UN' ORDER_SSU_UOM,
-             OSBI.OS_INVC_AMT,
-             OSBI.OS_INVC_QTY,
-             UD2.UOM_CODE INVC_UOM,
-             OSBI.OS_INVC_SSU_QTY,
-             'UN' INVC_SSU_UOM,
-             OSDI.OS_SHIPPED_QTY,
-             UD3.UOM_CODE SHIPPED_UOM,
-             OSDI.OS_SHIPPED_SSU_QTY,
-             'UN' SHIPPED_SSU_UOM,
-             BTD.BILLING_TYPE_CODE,
-             ORD2.ORDER_RSN_CODE BILLING_REASON_CODE,
-             CRD.CNCL_RSN_CODE REJECT_REASON_CODE,
-             SHIP_TO.NAME_1 SHIP_TO_ACCT_NAME,
-             SHIP_TO.SAP_CUST_ID SHIP_TO_SAP_ID,
-             SHIP_TO.ACCT_ID SHIP_TO_ACCT_ID,
-             SHIP_TO.IC_CODE SHIP_TO_EBID,
-             SHIP_TO.MAILING_ADDR_LINE_1 SHIP_TO_ADDRESS,
-             SHIP_TO.MAILING_ADDR_LINE_2 SHIP_TO_ADDRESS2,
-             SHIP_TO.MAILING_CITY SHIP_TO_CITY,
-             SHIP_TO.MAILING_COUNTY SHIP_TO_COUNTY,
-             SHIP_TO.MAILING_STATE_CODE SHIP_TO_STATE,
-             SHIP_TO.MAILING_ZIP_CODE SHIP_TO_ZIP,
-             BILL_TO.NAME_1 BILL_TO_ACCT_NAME,
-             BILL_TO.SAP_CUST_ID BILL_TO_SAP_ID,
-             BILL_TO.ACCT_ID BILL_TO_ACCT_ID,
-             BILL_TO.IC_CODE BILL_TO_EBID,
-             BILL_TO.MAILING_ADDR_LINE_1 BILL_TO_ADDRESS,
-             BILL_TO.MAILING_ADDR_LINE_2 BILL_TO_ADDRESS2,
-             BILL_TO.MAILING_CITY BILL_TO_CITY,
-             BILL_TO.MAILING_COUNTY BILL_TO_COUNTY,
-             BILL_TO.MAILING_STATE_CODE BILL_TO_STATE,
-             BILL_TO.MAILING_ZIP_CODE BILL_TO_ZIP
-      FROM   DM_OS_BILLING_ITEM_C_VW OSBI,
-             DM_OS_SALES_ORDER_ITEM_C_VW OSOI,
-             DM_OS_DELIVERY_ITEM_C_VW OSDI,
-             DS_SEED_PRODUCT_DIM SPD,
-             S_PROD_PACKAGE_STRUCT PPS,
-             DS_CHANNEL_ACCOUNT_DIM BILL_TO,
-             DS_CHANNEL_ACCOUNT_DIM SHIP_TO,
-             DS_DATE_DIM DD,
-             DS_DATE_DIM DD2,
-             DS_UNIT_OF_MEASURE_DIM UD,
-             DS_UNIT_OF_MEASURE_DIM UD2,
-             DS_UNIT_OF_MEASURE_DIM UD3,
-             DS_ORDER_REASON_DIM ORD,
-             DS_DOCUMENT_TYPE_DIM DTD,
-             DS_DOCUMENT_CATEGORY_DIM DCD,
-             DS_BILLING_TYPE_DIM BTD,
-             DS_ORDER_REASON_DIM ORD2,
-             DS_CUSTOMER_GROUP_DIM CGD,
-             DS_CANCEL_REASON_DIM CRD
- WHERE       OSOI.PRODUCT_KEY = SPD.PRODUCT_KEY
-             AND PPS.PROD_ID = SPD.PRODUCT_ID
-             AND PPS.UOM_CODE = UD.UOM_CODE
-             AND OSBI.REF_ORDER_ID = OSOI.ORDER_ID
-             AND OSBI.REF_ORDER_ITEM_ID = OSOI.ORDER_ITEM_ID
-             AND OSDI.REF_ORDER_ID = OSOI.ORDER_ID
-             AND OSDI.REF_ORDER_ITEM_ID = OSOI.ORDER_ITEM_ID
-             AND OSOI.DOC_DATE_KEY = DD2.DATE_KEY
-             AND OSBI.BILLING_DATE_KEY = DD.DATE_KEY
-             AND OSOI.ORDER_RSN_KEY = ORD.ORDER_RSN_KEY
-             AND OSOI.DOC_CATG_KEY = DCD.DOC_CATG_KEY
-             AND OSOI.DOC_TYPE_KEY = DTD.DOC_TYPE_KEY
-             AND OSBI.BILLING_TYPE_KEY = BTD.BILLING_TYPE_KEY
-             AND OSBI.ORDER_RSN_KEY = ORD2.ORDER_RSN_KEY
-             AND OSBI.SALES_UOM_KEY = UD2.UOM_KEY
-             AND OSOI.SALES_UOM_KEY = UD.UOM_KEY
-             AND OSDI.SALES_UOM_KEY = UD3.UOM_KEY
-             AND CGD.CUST_GROUP_KEY = OSBI.CUST_GROUP_KEY
-             AND OSOI.SHIP_TO_ACCT_KEY = SHIP_TO.ACCT_KEY
-             AND OSOI.BILL_TO_ACCT_KEY = BILL_TO.ACCT_KEY
-             AND OSOI.CNCL_RSN_KEY = CRD.CNCL_RSN_KEY
-             AND cgd.cust_group_code = #groupCode#
-             AND dd.day_date > #startDate#
-             ORDER BY ORDER_ID, ORDER_ITEM_ID
+        SELECT
+            cad.name_1 dealer_name,
+            cad.ic_code dealer_ebid,
+            cad.acct_id dealer_acct_id,
+            cad.mailing_addr_line_1 dealer_address,
+            cad.mailing_addr_line_2 dealer_address2,
+            cad.mailing_city dealer_city,
+            cad.mailing_county dealer_county,
+            cad.mailing_state_code dealer_state,
+            cad.mailing_zip_code dealer_zip,
+            pps.upc_scc_code gtin,
+            cad.acct_id||dd.mkt_yr acct_id_crop_year,
+            sum(ocf.os_requested_qty) order_qty,
+            sum(ocf.os_shipped_qty) shipped_qty,
+            sum(ocf.os_requested_qty - ocf.os_shipped_qty) pending_qty,
+            sum(ocf.os_open_request_qty) remaining_qty
+        FROM ds_os_daily_order_fulfillment ocf,
+            ds_channel_account_dim cad,
+            dm_date_dim dd,
+            s_acct_sales_area cgp,
+            s_prod_package_struct pps,
+            ds_seed_product_dim spd
+        WHERE cad.acct_key = ocf.rtlr_acct_key
+            AND dd.date_key = ocf.eff_date_key
+            AND dd.curr_fy_offset = 0
+            AND cgp.customer_grp_code = 'XA'
+            AND cgp.acct_id = cad.acct_id
+            AND pps.prod_id = spd.product_id
+            AND spd.product_key = ocf.product_key
+            AND spd.product_class_id != 'N'
+            AND dd.day_date >= #startDate#
+        GROUP BY
+            cad.name_1,
+            cad.ic_code,
+            cad.acct_id,
+            cad.mailing_addr_line_1,
+            cad.mailing_addr_line_2,
+            cad.mailing_city,
+            cad.mailing_county,
+            cad.mailing_state_code,
+            cad.mailing_zip_code,
+            pps.upc_scc_code,
+            cad.acct_id||dd.mkt_yr
+        HAVING sum(ocf.os_requested_qty) != 0
+            OR sum(ocf.os_shipped_qty) != 0
+            OR sum(ocf.os_requested_qty - ocf.os_shipped_qty) != 0
+        ORDER BY cad.acct_id
     </select>
 
 

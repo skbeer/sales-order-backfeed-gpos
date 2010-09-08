@@ -16,4 +16,7 @@ public class DBConstants {
 	public static final String ROW_USER_ID = "IRDPOS_USER";
 
     public static final String SUCCESS = "Success";
+
+    public static final String PPOS_TRAN_TYPE = "PPOS";
+    public static final String COS_TRAN_TYPE = "DOS";
 }

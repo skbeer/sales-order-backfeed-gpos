@@ -18,6 +18,15 @@ public class TransactionInfo {
     Date endDate;
     Date lastTransactionDate;
     long lastTransactionNumber;
+    int maxFileSize;
+
+    public int getMaxFileSize() {
+        return maxFileSize;
+    }
+
+    public void setMaxFileSize(int maxFileSize) {
+        this.maxFileSize = maxFileSize;
+    }
 
     public String getName() {
         return name;

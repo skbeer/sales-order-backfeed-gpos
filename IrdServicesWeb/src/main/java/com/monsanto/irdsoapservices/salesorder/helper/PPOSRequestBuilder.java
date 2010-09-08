@@ -59,9 +59,9 @@ public class PPOSRequestBuilder extends AbstractRequestBuilder {
             ProductQuantityEquivalentType productQuantityEquivalentType = new ProductQuantityEquivalentType();
             productQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getEquivalentQuantity().getQtyUom(), lineItem.getEquivalentQuantity().getQtyValue()));
             salesOrderLineItemType.setProductQuantityEquivalent(productQuantityEquivalentType);
-            if(!StringUtils.isNullOrEmpty(lineItem.getSalesRepId())) {
+            if(!StringUtils.isNullOrEmpty(lineItem.getSalesRep().getBuyerId())) {
                 SalesPersonType salesPersonType = new SalesPersonType();
-                salesPersonType.setPartnerInformation(getPartnerInformationForHeader(lineItem.getSalesRepName(), lineItem.getSalesRepId(), ListPartnerAgencyAttribute.ASSIGNED_BY_BUYER));
+                salesPersonType.setPartnerInformation(getPartnerInformationTypeForBody(lineItem.getSalesRep(), false));
                 salesOrderLineItemType.setSalesPerson(salesPersonType);
             }
             salesOrderTransactionDetailsType.getSalesOrderLineItem().add(salesOrderLineItemType);

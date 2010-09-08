@@ -12,63 +12,52 @@ public class LineItemInfo {
     String productUpc;
     String productGtin;
     String productName;
-    String salesRepName;
-    String salesRepId;
+    PartnerInfo salesRep;
     QuantityInfo salesQuantity = new QuantityInfo();
     QuantityInfo equivalentQuantity = new QuantityInfo();
-    QuantityInfo productQuantity = new QuantityInfo();
-    QuantityInfo productQuantityEquivalent = new QuantityInfo();
-    QuantityInfo shippedQuantity = new QuantityInfo();
-    QuantityInfo shippedQuantityEquivalent = new QuantityInfo();
-    QuantityInfo deliveredQuantity = new QuantityInfo();
-    QuantityInfo deliveredQuantityEquivalent = new QuantityInfo();
+    String orderQty;
+    String shippedQty;
+    String pendingQty;
+    String qtyUom = "UN";
 
-    public QuantityInfo getProductQuantity() {
-        return productQuantity;
+    public String getOrderQty() {
+        return orderQty;
     }
 
-    public void setProductQuantity(QuantityInfo productQuantity) {
-        this.productQuantity = productQuantity;
+    public void setOrderQty(String orderQty) {
+        this.orderQty = orderQty;
     }
 
-    public QuantityInfo getProductQuantityEquivalent() {
-        return productQuantityEquivalent;
+    public String getShippedQty() {
+        return shippedQty;
     }
 
-    public void setProductQuantityEquivalent(QuantityInfo productQuantityEquivalent) {
-        this.productQuantityEquivalent = productQuantityEquivalent;
+    public void setShippedQty(String shippedQty) {
+        this.shippedQty = shippedQty;
     }
 
-    public QuantityInfo getShippedQuantity() {
-        return shippedQuantity;
+    public String getPendingQty() {
+        return pendingQty;
     }
 
-    public void setShippedQuantity(QuantityInfo shippedQuantity) {
-        this.shippedQuantity = shippedQuantity;
+    public void setPendingQty(String pendingQty) {
+        this.pendingQty = pendingQty;
     }
 
-    public QuantityInfo getShippedQuantityEquivalent() {
-        return shippedQuantityEquivalent;
+    public String getQtyUom() {
+        return qtyUom;
     }
 
-    public void setShippedQuantityEquivalent(QuantityInfo shippedQuantityEquivalent) {
-        this.shippedQuantityEquivalent = shippedQuantityEquivalent;
+    public void setQtyUom(String qtyUom) {
+        this.qtyUom = qtyUom;
     }
 
-    public QuantityInfo getDeliveredQuantity() {
-        return deliveredQuantity;
+    public PartnerInfo getSalesRep() {
+        return salesRep;
     }
 
-    public void setDeliveredQuantity(QuantityInfo deliveredQuantity) {
-        this.deliveredQuantity = deliveredQuantity;
-    }
-
-    public QuantityInfo getDeliveredQuantityEquivalent() {
-        return deliveredQuantityEquivalent;
-    }
-
-    public void setDeliveredQuantityEquivalent(QuantityInfo deliveredQuantityEquivalent) {
-        this.deliveredQuantityEquivalent = deliveredQuantityEquivalent;
+    public void setSalesRep(PartnerInfo salesRep) {
+        this.salesRep = salesRep;
     }
 
     public QuantityInfo getSalesQuantity() {
@@ -117,21 +106,5 @@ public class LineItemInfo {
 
     public void setProductName(String productName) {
         this.productName = productName;
-    }
-
-    public String getSalesRepName() {
-        return salesRepName;
-    }
-
-    public void setSalesRepName(String salesRepName) {
-        this.salesRepName = salesRepName;
-    }
-
-    public String getSalesRepId() {
-        return salesRepId;
-    }
-
-    public void setSalesRepId(String salesRepId) {
-        this.salesRepId = salesRepId;
     }
 }

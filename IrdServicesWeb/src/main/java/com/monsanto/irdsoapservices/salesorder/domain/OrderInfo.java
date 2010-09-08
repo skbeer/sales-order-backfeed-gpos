@@ -19,6 +19,15 @@ public abstract class OrderInfo {
     Date orderDate;
     List<LineItemInfo> lineItems = new ArrayList<LineItemInfo>();
     LineItemInfo tempLineItem;
+    PartnerInfo dealerInfo;
+
+    public PartnerInfo getDealerInfo() {
+        return dealerInfo;
+    }
+
+    public void setDealerInfo(PartnerInfo dealerInfo) {
+        this.dealerInfo = dealerInfo;
+    }
 
     public String getCrmOrderNumber() {
         return crmOrderNumber;

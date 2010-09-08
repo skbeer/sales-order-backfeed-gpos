@@ -2,14 +2,15 @@ package com.monsanto.irdsoapservices.salesorder.helper;
 
 import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
+import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
 import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.OrderInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
-import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderReportResponseType;
+import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderReport;
 import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,11 +20,10 @@ import java.util.List;
  * Time: 3:10:03 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PPOSHelper {
+public class PPOSHelper extends AbstractSalesOrderHelper<PPOSOrderInfo> {
     SalesOrderDao salesOrderDao;
     Logger logger = Logger.getLogger(this.getClass());
     PPOSRequestBuilder pposRequestBuilder;
-    ClientFactory clientFactory;
 
     public int processPPOSOrderReport(TransactionInfo transaction) throws SalesOrderException {
         int ordersSent = 0;
@@ -32,13 +32,11 @@ public class PPOSHelper {
             List<PPOSOrderInfo> deNormalizedOrders = salesOrderDao.getPPOSOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
             logger.info("Total number of PPOS Line Items:"+deNormalizedOrders.size());
             List<PPOSOrderInfo> normalizedOrders = normalizeOrderLineItems(deNormalizedOrders);
-            logger.info("Total number of POS Orders:"+normalizedOrders.size());
-            if(normalizedOrders.size() > 0) {
-                logger.info("Calling the Sales Order Service");
-                SalesOrderReportResponseType response = clientFactory.getSalesOrderClient().getSalesOrderReport(pposRequestBuilder.buildPPOSRequest(normalizedOrders, transaction));
-                logger.info("Received Response from Service:"+response.getStatus());
-            }
             ordersSent = normalizedOrders.size();
+            logger.info("Total number of PPOS Orders:"+normalizedOrders.size());
+            if(normalizedOrders.size() > 0) {
+                sendFragmentedOrders(normalizedOrders, transaction);
+            }            
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e);
@@ -48,29 +46,12 @@ public class PPOSHelper {
         return ordersSent;
     }
 
-    // method is public only to be tested separately
-    public List<PPOSOrderInfo> normalizeOrderLineItems(List<PPOSOrderInfo> deNormalizedOrders) {
-        List<PPOSOrderInfo> normalizedOrders = new ArrayList<PPOSOrderInfo>();
-        if(deNormalizedOrders!= null && deNormalizedOrders.size() > 0) {
-            PPOSOrderInfo prevNormalizedReport = deNormalizedOrders.get(0);
-            prevNormalizedReport.getLineItems().add(prevNormalizedReport.getTempLineItem());
-            if(deNormalizedOrders.size() == 1) {
-                normalizedOrders.add(prevNormalizedReport);
-            }
-            PPOSOrderInfo currentNormalizedReport = null;
-            for(int index = 1; index < deNormalizedOrders.size(); index++) {
-                currentNormalizedReport = deNormalizedOrders.get(index);
-                if(!currentNormalizedReport.getCrmOrderNumber().equals(prevNormalizedReport.getCrmOrderNumber())) {
-                    normalizedOrders.add(prevNormalizedReport);
-                    prevNormalizedReport = currentNormalizedReport;
-                }
-                prevNormalizedReport.getLineItems().add(currentNormalizedReport.getTempLineItem());
-                if(index ==(deNormalizedOrders.size()-1)) {
-                    normalizedOrders.add(prevNormalizedReport);
-                }
-            }
-        }
-        return normalizedOrders;
+    protected boolean isSameOrder(OrderInfo firstOrder, OrderInfo secondOrder) {
+        return firstOrder.getCrmOrderNumber().equals(secondOrder.getCrmOrderNumber());
+    }
+
+    protected SalesOrderReport getSalesOrderRequest(List<PPOSOrderInfo> orderReport, TransactionInfo transactionInfo) throws Exception {
+        return pposRequestBuilder.buildPPOSRequest(orderReport, transactionInfo);
     }
 
     public void setSalesOrderDao(SalesOrderDao salesOrderDao) {
@@ -83,5 +64,9 @@ public class PPOSHelper {
 
     public void setClientFactory(ClientFactory clientFactory) {
         this.clientFactory = clientFactory;
+    }
+
+    public void setTransactionDao(TransactionDao transactionDao) {
+        this.transactionDao = transactionDao;
     }
 }

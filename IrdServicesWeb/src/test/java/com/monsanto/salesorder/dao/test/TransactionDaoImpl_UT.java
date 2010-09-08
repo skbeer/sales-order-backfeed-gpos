@@ -40,12 +40,20 @@ public class TransactionDaoImpl_UT extends AbstractTransactionalDataSourceSpring
         cal.add(Calendar.DATE, -1);
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         System.out.println("Yesterday = "+cal.getTime().toString());
-        long expectedLastTranNumber = transactionInfo.getLastTransactionNumber()+1;
         transactionInfo.setLastTransactionDate(dateFormat.parse(dateFormat.format(cal.getTime())));
-        transactionInfo.setLastTransactionNumber(expectedLastTranNumber);
         assertEquals(1, transactionDao.updateLastTransactionStats(transactionInfo));
         transactionInfo = transactionDao.getTransactionsToBeProcessed().get(0);
         assertEquals(dateFormat.parse(dateFormat.format(cal.getTime())).getTime(), transactionInfo.getLastTransactionDate().getTime());
+        //assertEquals(expectedLastTranNumber, transactionInfo.getLastTransactionNumber());
+    }
+
+    public void testUpdateTransactionNumber() throws Exception {
+        TransactionInfo transactionInfo = transactionDao.getTransactionsToBeProcessed().get(0);
+        assertNotNull(transactionInfo);
+        long expectedLastTranNumber = transactionInfo.getLastTransactionNumber()+1;
+        transactionInfo.setLastTransactionNumber(expectedLastTranNumber);
+        assertEquals(1, transactionDao.updateLastTransactionNumber(transactionInfo));
+        transactionInfo = transactionDao.getTransactionsToBeProcessed().get(0);
         assertEquals(expectedLastTranNumber, transactionInfo.getLastTransactionNumber());
     }
 

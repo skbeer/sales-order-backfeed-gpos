@@ -15,4 +15,6 @@ public interface TransactionDao {
     List<TransactionInfo> getTransactionsToBeProcessed() throws Exception;
 
     int updateLastTransactionStats(TransactionInfo transaction) throws Exception;
+
+    int updateLastTransactionNumber(TransactionInfo transaction) throws Exception;
 }

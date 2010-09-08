@@ -21,5 +21,9 @@ public class TransactionDaoImpl extends SqlMapClientDaoSupport implements Transa
     public int updateLastTransactionStats(TransactionInfo transaction) throws Exception {
         return getSqlMapClientTemplate().update("BackfeedData.updateLastTransactionStats", transaction);
     }
+
+    public int updateLastTransactionNumber(TransactionInfo transaction) throws Exception {
+        return getSqlMapClientTemplate().update("BackfeedData.updateLastTransactionNumber", transaction);
+    }
     
 }

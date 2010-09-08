@@ -4,6 +4,7 @@ import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.monsanto.irdsoapservices.salesorder.domain.PartnerInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.schema.*;
+import com.monsanto.irdsoapservices.utils.StringUtils;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 
 import java.text.SimpleDateFormat;
@@ -60,6 +61,8 @@ public abstract class AbstractRequestBuilder {
         sBuffer.append("_");
         sBuffer.append((transactionInfo.getLastTransactionNumber()+1)+"");
         sBuffer.append("_");
+        sBuffer.append("SEQUENCE");
+        sBuffer.append("_");
         sBuffer.append(transactionInfo.getCompanyCode());
         sBuffer.append("_");
         sBuffer.append(new SimpleDateFormat(XmlConstants.DATE_FORMAT_FOR_DOCUMENT_IDENTIFIER).format(new Date()));
@@ -102,21 +105,42 @@ public abstract class AbstractRequestBuilder {
 
     protected PartnerInformationType getPartnerInformationTypeForBody(PartnerInfo partnerInfo, boolean isGrower) {
         PartnerInformationType partnerInformationType = new PartnerInformationType();
+        PartnerIdentifierType partnerIdentifierType;
 
-        PartnerIdentifierType partnerIdentifierType = new PartnerIdentifierType();
-        partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.AGIIS_EBID);
-        partnerIdentifierType.setValue(partnerInfo.getEbid());
-        partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
-        partnerIdentifierType = new PartnerIdentifierType();
-        partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
-        partnerIdentifierType.setValue(partnerInfo.getAcctId());
-        partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
-        if(isGrower) {
+        if(!StringUtils.isNullOrEmpty(partnerInfo.getEbid())) {
+            partnerIdentifierType = new PartnerIdentifierType();
+            partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.AGIIS_EBID);
+            partnerIdentifierType.setValue(partnerInfo.getEbid());
+            partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
+        }
+        if(!StringUtils.isNullOrEmpty(partnerInfo.getAcctId())) {
+            partnerIdentifierType = new PartnerIdentifierType();
+            partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
+            partnerIdentifierType.setValue(partnerInfo.getAcctId());
+            partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
+        }
+
+        if(!StringUtils.isNullOrEmpty(partnerInfo.getNapd())) {
             partnerIdentifierType = new PartnerIdentifierType();
             partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.AGIIS_NAPD);
             partnerIdentifierType.setValue(partnerInfo.getNapd());
             partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
         }
+
+        if(!StringUtils.isNullOrEmpty(partnerInfo.getBuyerId())) {
+            partnerIdentifierType = new PartnerIdentifierType();
+            partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_BUYER);
+            partnerIdentifierType.setValue(partnerInfo.getBuyerId());
+            partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
+        }
+
+        if(!StringUtils.isNullOrEmpty(partnerInfo.getGln())) {
+            partnerIdentifierType = new PartnerIdentifierType();
+            partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.GLN);
+            partnerIdentifierType.setValue(partnerInfo.getGln());
+            partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
+        }
+        
         partnerInformationType.getPartnerName().add(partnerInfo.getPartnerName());
 
         AddressInformationType addressInformationType = new AddressInformationType();
@@ -125,6 +149,7 @@ public abstract class AbstractRequestBuilder {
         addressInformationType.setStateOrProvince(partnerInfo.getState());
         addressInformationType.setPostalCode(partnerInfo.getZip());
         addressInformationType.setCounty(partnerInfo.getCounty());
+        addressInformationType.setPostalCountry(partnerInfo.getPostalCountry());
 
         partnerInformationType.setAddressInformation(addressInformationType);
 

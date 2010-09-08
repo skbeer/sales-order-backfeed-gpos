@@ -12,13 +12,40 @@ public class PartnerInfo {
     String ebid;
     String gln;
     String napd;
+    String buyerId;
     String partnerName;
     String contactName;
     String address;
+    String address2;
     String city;
     String state;
     String zip;
     String county;
+    String postalCountry = "US";
+
+    public String getPostalCountry() {
+        return postalCountry;
+    }
+
+    public void setPostalCountry(String postalCountry) {
+        this.postalCountry = postalCountry;
+    }
+
+    public String getBuyerId() {
+        return buyerId;
+    }
+
+    public void setBuyerId(String buyerId) {
+        this.buyerId = buyerId;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
 
     public String getNapd() {
         return napd;

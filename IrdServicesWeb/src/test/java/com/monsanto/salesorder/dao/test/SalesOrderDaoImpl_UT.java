@@ -33,7 +33,7 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 
     public void testGetPPOSOrders() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2010, 04, 20);
+        calendar.set(2010, 06, 02);
         List<PPOSOrderInfo> pposOrders = salesOrderDao.getPPOSOrders(calendar.getTime(), "XA");
         System.out.println("No of Rows = "+pposOrders.size());
         assertTrue(pposOrders.size() > 0);
@@ -58,10 +58,10 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 
     public void testGetCOSOrders() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2010, 04, 17);
+        calendar.set(2010, 6, 31);
         List<COSOrderInfo> cosOrders = salesOrderDao.getCOSOrders(calendar.getTime(), "XA");
         System.out.println("No of Rows = "+cosOrders.size());
-        assertTrue(cosOrders.size() > 0);   
+        assertTrue(cosOrders.size() > 0);
     }
 
 }

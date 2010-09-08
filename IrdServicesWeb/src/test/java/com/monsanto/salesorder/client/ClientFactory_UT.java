@@ -13,6 +13,7 @@ import junit.framework.TestCase;
 public class ClientFactory_UT extends TestCase {
 
     public void testGetSalesOrderClient() throws Exception {
+        System.setProperty("lsi.function", "win");
         assertNotNull(new ClientFactory().getSalesOrderClient());
     }
 }

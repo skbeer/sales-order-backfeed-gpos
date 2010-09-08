@@ -46,40 +46,32 @@ public class COSRequestBuilder extends AbstractRequestBuilder {
     private SalesOrderTransactionDetailsType getSalesOrderTransactionDetailsType(COSOrderInfo cosOrder) {
         SalesOrderTransactionDetailsType salesOrderTransactionDetailsType = new SalesOrderTransactionDetailsType();
         SalesOrderLineItemType salesOrderLineItemType = null;
-
         for(LineItemInfo lineItem : cosOrder.getLineItems()) {
-            salesOrderLineItemType = new SalesOrderLineItemType();
-            salesOrderLineItemType.setLineNumber(new Long(lineItem.getItemNumber()).longValue());
-            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName()));
-            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.UPC, lineItem.getProductUpc(), lineItem.getProductName()));
+            salesOrderLineItemType =  new SalesOrderLineItemType();
+            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), null));
 
-            ProductQuantityType_0020 productQuantityType_0020 = new ProductQuantityType_0020();
-            productQuantityType_0020.setMeasurement(getMeasurementType(lineItem.getProductQuantity().getQtyUom(), lineItem.getProductQuantity().getQtyValue()));
-            salesOrderLineItemType.setProductQuantity(productQuantityType_0020);
             ProductQuantityEquivalentType productQuantityEquivalentType = new ProductQuantityEquivalentType();
-            productQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getProductQuantityEquivalent().getQtyUom(), lineItem.getProductQuantityEquivalent().getQtyValue()));
+            productQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getQtyUom(), lineItem.getOrderQty()));
             salesOrderLineItemType.setProductQuantityEquivalent(productQuantityEquivalentType);
 
-            ShippedQuantityType shippedQuantityType = new ShippedQuantityType();
-            shippedQuantityType.setMeasurement(getMeasurementType(lineItem.getShippedQuantity().getQtyUom(), lineItem.getShippedQuantity().getQtyValue()));
-            salesOrderLineItemType.setShippedQuantity(shippedQuantityType);
             ShippedQuantityEquivalentType shippedQuantityEquivalentType = new ShippedQuantityEquivalentType();
-            shippedQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getShippedQuantityEquivalent().getQtyUom(), lineItem.getShippedQuantityEquivalent().getQtyValue()));
+            shippedQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getQtyUom(), lineItem.getShippedQty()));
             salesOrderLineItemType.setShippedQuantityEquivalent(shippedQuantityEquivalentType);
 
-            DeliveryQuantityEquivalentType deliveryQuantityEquivalentType = new DeliveryQuantityEquivalentType();
-            deliveryQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getDeliveredQuantityEquivalent().getQtyUom(), lineItem.getDeliveredQuantityEquivalent().getQtyValue()));
-            salesOrderLineItemType.setDeliveredQuantityEquivalent(deliveryQuantityEquivalentType);
+            PendingQuantityEquivalentType pendingQuantityEquivalentType = new PendingQuantityEquivalentType();
+            pendingQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getQtyUom(), lineItem.getPendingQty()));
+            salesOrderLineItemType.setPendingQuantityEquivalent(pendingQuantityEquivalentType);
 
             salesOrderTransactionDetailsType.getSalesOrderLineItem().add(salesOrderLineItemType);
         }
+
         return salesOrderTransactionDetailsType;
     }
 
     private SalesOrderPartnersType getSalesOrderPartnersType(TransactionInfo transactionInfo, COSOrderInfo cosOrder) {
         SalesOrderPartnersType salesOrderPartnersType = new SalesOrderPartnersType();
         ShipToType shipToType = new ShipToType();
-        shipToType.setPartnerInformation(getPartnerInformationTypeForBody(cosOrder.getShipTo(), false));
+        shipToType.setPartnerInformation(getPartnerInformationTypeForBody(cosOrder.getDealerInfo(), false));
 
         BuyerType buyerType = new BuyerType();
         buyerType.setPartnerInformation(getPartnerInformationForHeader(transactionInfo.getName(), transactionInfo.getCompanyCode(), ListPartnerAgencyAttribute.AGIIS_EBID));
@@ -87,15 +79,10 @@ public class COSRequestBuilder extends AbstractRequestBuilder {
         SellerType sellerType = new SellerType();
         sellerType.setPartnerInformation(getPartnerInformationForHeader(XmlConstants.MONSANTO_PARTNER_NAME, XmlConstants.MONSANTO_EBID, ListPartnerAgencyAttribute.AGIIS_EBID));
 
-        OtherPartnerType otherPartnerType = new OtherPartnerType();
-        otherPartnerType.setPartnerRole(ListPartnerRoles.BILL_TO_PARTY);
-        otherPartnerType.setPartnerInformation(getPartnerInformationTypeForBody(cosOrder.getBillTo(), false));
-
         salesOrderPartnersType.setBuyer(buyerType);
         salesOrderPartnersType.setSeller(sellerType);
         salesOrderPartnersType.setShipTo(shipToType);
-        salesOrderPartnersType.getOtherPartner().add(otherPartnerType);
-        
+
         return salesOrderPartnersType;
     }
 
@@ -108,12 +95,9 @@ public class COSRequestBuilder extends AbstractRequestBuilder {
         SalesOrderTypeCodeType salesOrderTypeCodeType = new SalesOrderTypeCodeType();
         salesOrderTypeCodeType.setValue(XmlConstants.COS_TRAN_TYPE);
 
-        SalesOrderIssuedDateType salesOrderIssuedDateType = new SalesOrderIssuedDateType();
-        salesOrderIssuedDateType.setDateTime(getDateTimeType(cosOrder.getOrderDate()));
-
         salesOrderReportPropertiesType.setSalesOrderNumber(salesOrderNumberType);
         salesOrderReportPropertiesType.setSalesOrderTypeCode(salesOrderTypeCodeType);
-        salesOrderReportPropertiesType.setSalesOrderIssuedDate(salesOrderIssuedDateType);
+
         return salesOrderReportPropertiesType;
     }
 }

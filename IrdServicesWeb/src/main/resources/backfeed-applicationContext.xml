@@ -36,12 +36,14 @@
         <property name="clientFactory" ref="clientFactory"/>
         <property name="pposRequestBuilder" ref="pposRequestBuilder"/>
         <property name="salesOrderDao" ref="salesOrderDao"/>
+        <property name="transactionDao" ref="transactionDao"/>
     </bean>
 
     <bean id="cosHelper" class="com.monsanto.irdsoapservices.salesorder.helper.COSHelper">
         <property name="clientFactory" ref="clientFactory"/>
         <property name="cosRequestBuilder" ref="cosRequestBuilder"/>
         <property name="salesOrderDao" ref="salesOrderDao"/>
+        <property name="transactionDao" ref="transactionDao"/>
     </bean>
 
     <bean id="salesOrderService" class="com.monsanto.irdsoapservices.salesorder.service.SalesOrderReportService">
@@ -85,6 +87,7 @@
     <tx:advice id="transactionAdvice" transaction-manager="trasactionManager">
         <tx:attributes>
             <tx:method name="get*" read-only="true" rollback-for="Exception,RuntimeException"/>
+            <tx:method name="process*" no-rollback-for="Exception"/>
             <tx:method name="*" rollback-for="Exception,RuntimeException"/>
         </tx:attributes>
     </tx:advice>

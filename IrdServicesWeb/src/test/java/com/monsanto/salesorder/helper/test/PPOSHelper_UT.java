@@ -2,6 +2,7 @@ package com.monsanto.salesorder.helper.test;
 
 import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
+import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
 import com.monsanto.irdsoapservices.salesorder.domain.LineItemInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
@@ -12,9 +13,7 @@ import com.monsanto.irdsoapservices.salesorder.schema.*;
 import junit.framework.TestCase;
 import org.easymock.classextension.EasyMock;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,6 +29,7 @@ public class PPOSHelper_UT extends TestCase {
     ClientFactory clientFactory;
     PPOSRequestBuilder pposRequestBuilder;
     SalesOrderService salesOrderServiceClient;
+    TransactionDao transactionDao;
 
     @Override
     protected void setUp() throws Exception {
@@ -40,9 +40,9 @@ public class PPOSHelper_UT extends TestCase {
         pposHelper.setClientFactory(clientFactory);
         pposHelper.setPposRequestBuilder(pposRequestBuilder);
         salesOrderServiceClient = org.easymock.EasyMock.createMock(SalesOrderService.class);
+        transactionDao = EasyMock.createMock(TransactionDao.class);
+        pposHelper.setTransactionDao(transactionDao);
     }
-
-
 
     public void testNormalizeOrders() throws Exception {
         pposOrderList.add(getPPOSOrder("1001", "1"));
@@ -111,15 +111,18 @@ public class PPOSHelper_UT extends TestCase {
         EasyMock.expect(pposRequestBuilder.buildPPOSRequest((List<PPOSOrderInfo>)EasyMock.anyObject(), (TransactionInfo)EasyMock.anyObject())).andReturn(new SalesOrderReport());
         EasyMock.expect(clientFactory.getSalesOrderClient()).andReturn(salesOrderServiceClient);
         org.easymock.EasyMock.expect(salesOrderServiceClient.getSalesOrderReport((SalesOrderReport)EasyMock.anyObject())).andReturn(new SalesOrderReportResponseType());
+        EasyMock.expect(transactionDao.updateLastTransactionNumber((TransactionInfo)EasyMock.anyObject())).andReturn(1);
         EasyMock.replay(pposRequestBuilder);
         EasyMock.replay(clientFactory);
         org.easymock.EasyMock.replay(salesOrderDao);
         org.easymock.EasyMock.replay(salesOrderServiceClient);
+        EasyMock.replay(transactionDao);
         assertEquals(1, pposHelper.processPPOSOrderReport(transactionInfo));
         EasyMock.verify(pposRequestBuilder);
         EasyMock.verify(clientFactory);
         org.easymock.EasyMock.verify(salesOrderDao);
         org.easymock.EasyMock.verify(salesOrderServiceClient);
+        EasyMock.verify(transactionDao);
     }
 
     public void testProcessPPOSOrder_withException_return0() throws Exception {
@@ -160,7 +163,37 @@ public class PPOSHelper_UT extends TestCase {
         TransactionInfo tranInfo = new TransactionInfo();
         tranInfo.setLastTransactionDate(lastTransactionDate);
         tranInfo.setGroupCode(groupCode);
+        tranInfo.setMaxFileSize(500);
         return tranInfo;
     }
+
+    public void test() throws Exception {
+        List<String> orig = new ArrayList<String>();
+        orig.add("1");
+        orig.add("2");
+        orig.add("3");
+//        orig.add("4");
+//        orig.add("5");
+//        orig.add("6");
+//        orig.add("7");
+        int splitSize = 1;
+        int endPos = splitSize;
+        while(orig.size() > 0) {
+            if(endPos > orig.size()) {
+                endPos = orig.size();
+            }
+            List<String> splitList = split(orig, 0, endPos);
+            System.out.println("splitList = " + splitList);
+            System.out.println("orig = " + orig);
+        }
+    }
+
+    private List<String> split(List<String> list, int start, int end) {
+        List<String> secondPart = list.subList(start, end);
+        List<String> returnValue = new ArrayList<String>(secondPart);
+        secondPart.clear();
+        return returnValue;
+    }
+
 
 }

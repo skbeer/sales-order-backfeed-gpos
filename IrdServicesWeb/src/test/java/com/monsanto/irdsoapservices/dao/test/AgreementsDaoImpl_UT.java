@@ -159,7 +159,6 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
         assertEquals(accountId, agrInfo.getAccountId());
         assertEquals(signerAcctId, agrInfo.getSignerAccountId());
         assertEquals(agrCode, agrInfo.getAgreementCode());
-        assertEquals(beginDate, new SimpleDateFormat(dateFormat).format(agrInfo.getBeginDate()));
         assertEquals(endDate, new SimpleDateFormat(dateFormat).format(agrInfo.getEndDate()));
         assertEquals(rowUserId, agrInfo.getRowUserId());
         assertTrue(new SimpleDateFormat(dateFormat).parse(lastModifyDate).compareTo(agrInfo.getRowModifyDate())<=0);

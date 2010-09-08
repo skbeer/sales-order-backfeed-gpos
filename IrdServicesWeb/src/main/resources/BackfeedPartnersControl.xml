@@ -13,6 +13,7 @@
         <result property="endDate" column="EXPIRATION_DATE" />
         <result property="lastTransactionDate" column="LAST_TRANSACTION_DATE" />
         <result property="lastTransactionNumber" column="LAST_TRANSACTION_NUMBER" />
+        <result property="maxFileSize" column="MAX_FILE_SIZE"/>
 	</resultMap>
     
 	<select id="getTransactionsToBeProcessed" resultMap="transaction">
@@ -24,7 +25,8 @@
 	            START_DATE,
 	            EXPIRATION_DATE,
 	            LAST_TRANSACTION_DATE,
-	            LAST_TRANSACTION_NUMBER
+	            LAST_TRANSACTION_NUMBER,
+                MAX_FILE_SIZE
         FROM    ECOM.PARTNER_BACKFEED_CONTROL
         WHERE   (START_DATE &lt;= SYSDATE) AND (EXPIRATION_DATE &gt; SYSDATE)
    		ORDER BY PARTNER_NAME
@@ -32,7 +34,13 @@
 
     <update id="updateLastTransactionStats" parameterClass="transactionInfo">
         UPDATE  ECOM.PARTNER_BACKFEED_CONTROL
-        SET     LAST_TRANSACTION_DATE = #lastTransactionDate#, LAST_TRANSACTION_NUMBER = #lastTransactionNumber#
+        SET     LAST_TRANSACTION_DATE = #lastTransactionDate#
+        WHERE   GROUP_CODE = #groupCode# AND TRANSACTION_TYPE = #transactionType#
+    </update>
+
+    <update id="updateLastTransactionNumber" parameterClass="transactionInfo">
+        UPDATE  ECOM.PARTNER_BACKFEED_CONTROL
+        SET     LAST_TRANSACTION_NUMBER = #lastTransactionNumber#
         WHERE   GROUP_CODE = #groupCode# AND TRANSACTION_TYPE = #transactionType#
     </update>
 

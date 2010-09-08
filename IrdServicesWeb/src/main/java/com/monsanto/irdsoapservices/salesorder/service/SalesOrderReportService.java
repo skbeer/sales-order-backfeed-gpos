@@ -6,6 +6,7 @@ import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
 import com.monsanto.irdsoapservices.salesorder.helper.COSHelper;
 import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
 import com.monsanto.irdsoapservices.utils.ErrorEmailer;
+import com.monsanto.irdsoapservices.constants.DBConstants;
 import org.apache.log4j.Logger;
 
 import java.text.SimpleDateFormat;
@@ -38,9 +39,9 @@ public class SalesOrderReportService {
                     ordersSent = 0;
                     transaction = transactionsToBeProcessed.get(index);
                     logger.info("Processing '"+transaction.getTransactionType()+"' Transaction For Customer:"+transaction.getName());
-                    if(transaction.getTransactionType().equalsIgnoreCase("PPOS")) {
+                    if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.PPOS_TRAN_TYPE)) {
                         ordersSent = pposHelper.processPPOSOrderReport(transaction);
-                    } else if(transaction.getTransactionType().equalsIgnoreCase("COS")) {
+                    } else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.COS_TRAN_TYPE)) {
                         ordersSent = cosHelper.processCOSOrderReport(transaction);
                     }
                     updateTransaction(transaction, ordersSent);
@@ -59,7 +60,7 @@ public class SalesOrderReportService {
 
     private void updateTransaction(TransactionInfo transaction, int ordersSent) throws Exception {
         if(ordersSent > 0) {
-            logger.info("Sent "+ordersSent+" Orders. Updating Last Transaction Stats for this Partner.");
+            logger.info("Sent "+ordersSent+" Orders. Updating Last Transaction Date for this Partner.");
             updateLastTransactionStats(transaction);
         } else {
             logger.info("No Orders Found since Last Transaction Date:"+transaction.getLastTransactionDate()+". Last Transaction Stats for this Partner will NOT be updated.");

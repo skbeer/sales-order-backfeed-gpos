@@ -8,7 +8,6 @@ package com.monsanto.irdsoapservices.salesorder.domain;
  * To change this template use File | Settings | File Templates.
  */
 public class PPOSOrderInfo extends OrderInfo {
-    PartnerInfo dealerInfo;
     PartnerInfo growerInfo;
 
     public PartnerInfo getDealerInfo() {
