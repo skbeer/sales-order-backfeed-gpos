@@ -108,7 +108,7 @@ public class PPOSHelper_UT extends TestCase {
         orders.add(getPPOSOrder("1001", "1"));
         TransactionInfo transactionInfo = getTransactionInfo(aDate, "ABC");
         org.easymock.EasyMock.expect(salesOrderDao.getPPOSOrders(aDate, "ABC")).andReturn(orders);
-        EasyMock.expect(pposRequestBuilder.buildPPOSRequest((List<PPOSOrderInfo>)EasyMock.anyObject(), (TransactionInfo)EasyMock.anyObject())).andReturn(new SalesOrderReport());
+        EasyMock.expect(pposRequestBuilder.buildPPOSRequest((List<PPOSOrderInfo>)EasyMock.anyObject(), (TransactionInfo)EasyMock.anyObject())).andReturn(getSalesOrderReport());
         EasyMock.expect(clientFactory.getSalesOrderClient()).andReturn(salesOrderServiceClient);
         org.easymock.EasyMock.expect(salesOrderServiceClient.getSalesOrderReport((SalesOrderReport)EasyMock.anyObject())).andReturn(new SalesOrderReportResponseType());
         EasyMock.expect(transactionDao.updateLastTransactionNumber((TransactionInfo)EasyMock.anyObject())).andReturn(1);
@@ -131,7 +131,7 @@ public class PPOSHelper_UT extends TestCase {
         orders.add(getPPOSOrder("1001", "1"));
         TransactionInfo transactionInfo = getTransactionInfo(aDate, "ABC");
         org.easymock.EasyMock.expect(salesOrderDao.getPPOSOrders(aDate, "ABC")).andReturn(orders);
-        EasyMock.expect(pposRequestBuilder.buildPPOSRequest((List<PPOSOrderInfo>)EasyMock.anyObject(), (TransactionInfo)EasyMock.anyObject())).andReturn(new SalesOrderReport());
+        EasyMock.expect(pposRequestBuilder.buildPPOSRequest((List<PPOSOrderInfo>)EasyMock.anyObject(), (TransactionInfo)EasyMock.anyObject())).andReturn(getSalesOrderReport());
         EasyMock.expect(clientFactory.getSalesOrderClient()).andReturn(salesOrderServiceClient);
         org.easymock.EasyMock.expect(salesOrderServiceClient.getSalesOrderReport((SalesOrderReport)EasyMock.anyObject())).andThrow(new SalesOrderFault("Error Occurred", new ExceptionType()));
         EasyMock.replay(pposRequestBuilder);
@@ -167,33 +167,14 @@ public class PPOSHelper_UT extends TestCase {
         return tranInfo;
     }
 
-    public void test() throws Exception {
-        List<String> orig = new ArrayList<String>();
-        orig.add("1");
-        orig.add("2");
-        orig.add("3");
-//        orig.add("4");
-//        orig.add("5");
-//        orig.add("6");
-//        orig.add("7");
-        int splitSize = 1;
-        int endPos = splitSize;
-        while(orig.size() > 0) {
-            if(endPos > orig.size()) {
-                endPos = orig.size();
-            }
-            List<String> splitList = split(orig, 0, endPos);
-            System.out.println("splitList = " + splitList);
-            System.out.println("orig = " + orig);
-        }
+    private SalesOrderReport getSalesOrderReport() {
+        SalesOrderReport salesOrderReport = new SalesOrderReport();
+        HeaderType headerType = new HeaderType();
+        ThisDocumentIdentifierType thisDocumentIdentifierType = new ThisDocumentIdentifierType();
+        thisDocumentIdentifierType.setDocumentIdentifier("1001");
+        headerType.setThisDocumentIdentifier(thisDocumentIdentifierType);
+        salesOrderReport.setHeader(headerType);
+        return salesOrderReport;
     }
-
-    private List<String> split(List<String> list, int start, int end) {
-        List<String> secondPart = list.subList(start, end);
-        List<String> returnValue = new ArrayList<String>(secondPart);
-        secondPart.clear();
-        return returnValue;
-    }
-
 
 }

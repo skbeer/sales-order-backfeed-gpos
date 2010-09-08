@@ -27,7 +27,7 @@ public class PPOSRequestBuilder_UT extends TestCase {
         SalesOrderReport salesReport = requestBuilder.buildPPOSRequest(getPPOSPposOrderInfo(), getTransactionInfo());
         assertNotNull(salesReport);
         assertEquals("1", salesReport.getHeader().getSalesOrderReportSequenceNumber());
-        assertTrue(salesReport.getHeader().getThisDocumentIdentifier().getDocumentIdentifier().startsWith("RT_1_1001_"));
+        assertTrue(salesReport.getHeader().getThisDocumentIdentifier().getDocumentIdentifier().startsWith("RT_1_SEQUENCE_1001_"));
         assertEquals("MONSANTO AGRICULTURAL CO", salesReport.getHeader().getFrom().getPartnerInformation().getPartnerName().get(0));
         assertEquals(1, salesReport.getSalesOrderReportBody().getSalesOrderReportDetails().size());
     }
@@ -54,6 +54,7 @@ public class PPOSRequestBuilder_UT extends TestCase {
         transactionInfo.setName("Company Name");
         transactionInfo.setLastTransactionNumber(0);
         transactionInfo.setTransactionType("PPOS");
+        transactionInfo.setMaxFileSize(10);
         return transactionInfo;
     }
 

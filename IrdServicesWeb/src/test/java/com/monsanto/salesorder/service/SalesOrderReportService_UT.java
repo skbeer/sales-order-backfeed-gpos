@@ -128,7 +128,7 @@ public class SalesOrderReportService_UT extends TestCase {
         for (int index = 0; index < count; index++) {
             TransactionInfo transactionInfo =  new TransactionInfo();
             transactionInfo.setName("Name "+index);
-            transactionInfo.setTransactionType(index==0 ? "PPOS":"COS");
+            transactionInfo.setTransactionType(index==0 ? "PPOS":"DOS");
             list.add(transactionInfo);
         }
         return list;

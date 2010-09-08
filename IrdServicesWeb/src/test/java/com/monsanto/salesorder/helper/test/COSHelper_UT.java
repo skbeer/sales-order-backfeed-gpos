@@ -46,7 +46,7 @@ public class COSHelper_UT extends TestCase {
         cosHelper.setClientFactory(clientFactory);
         cosHelper.setCosRequestBuilder(cosRequestBuilder);
         cosHelper.setTransactionDao(transactionDao);
-        salesOrderReport = new SalesOrderReport();
+        salesOrderReport = getSalesOrderReport();
     }
 
     public void testProcessCOSOrders_noOrdersToProcess_doNotCallTheService() throws Exception {
@@ -93,6 +93,7 @@ public class COSHelper_UT extends TestCase {
             cosOrderInfo.setOrderNumber("1001"+index);
             PartnerInfo dealerInfo = new PartnerInfo();
             dealerInfo.setEbid("1001"+index);
+            dealerInfo.setAcctId("10"+index);
             cosOrderInfo.setDealerInfo(dealerInfo);
             cosOrders.add(cosOrderInfo);
         }
@@ -104,6 +105,16 @@ public class COSHelper_UT extends TestCase {
         transactionInfo.setGroupCode("XA");
         transactionInfo.setMaxFileSize(500);
         return transactionInfo;
+    }
+
+    private SalesOrderReport getSalesOrderReport() {
+        SalesOrderReport salesOrderReport = new SalesOrderReport();
+        HeaderType headerType = new HeaderType();
+        ThisDocumentIdentifierType thisDocumentIdentifierType = new ThisDocumentIdentifierType();
+        thisDocumentIdentifierType.setDocumentIdentifier("1001");
+        headerType.setThisDocumentIdentifier(thisDocumentIdentifierType);
+        salesOrderReport.setHeader(headerType);
+        return salesOrderReport;
     }
 
     class IsListOfFourElements extends ArgumentMatcher<List> {
