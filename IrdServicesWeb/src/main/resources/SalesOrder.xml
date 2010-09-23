@@ -107,7 +107,7 @@
   FROM   dm_ppos_seed_grower_order_c_vw psgo,
          (select distinct crm_obj_id
          from dm_ppos_seed_grower_order_c_vw
-         where row_eff_date >= #startDate#) orders_by_date,
+         where row_eff_date > #startDate#) orders_by_date,
          ds_seed_product_dim spd,
          ds_channel_account_dim cad,
          ds_grower_dim gd,
@@ -174,7 +174,7 @@
             AND pps.prod_id = spd.product_id
             AND spd.product_key = ocf.product_key
             AND spd.product_class_id != 'N'
-            AND dd.day_date >= #startDate#
+            AND dd.day_date > #startDate#
         GROUP BY
             cad.name_1,
             cad.ic_code,
