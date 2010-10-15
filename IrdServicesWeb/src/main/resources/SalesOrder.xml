@@ -161,6 +161,13 @@
             sum(ocf.os_requested_qty - ocf.os_shipped_qty) pending_qty,
             sum(ocf.os_open_request_qty) remaining_qty
         FROM ds_os_daily_order_fulfillment ocf,
+                         (select distinct ocf.rtlr_acct_key  
+                    from ds_os_daily_order_fulfillment ocf,
+                         dm_date_dim dd
+                    where 1=1
+                    AND dd.date_key = ocf.eff_date_key
+                    AND dd.curr_fy_offset = 0
+                    AND dd.day_date > #startDate#) orders_by_date,
             ds_channel_account_dim cad,
             dm_date_dim dd,
             s_acct_sales_area cgp,
@@ -169,12 +176,12 @@
         WHERE cad.acct_key = ocf.rtlr_acct_key
             AND dd.date_key = ocf.eff_date_key
             AND dd.curr_fy_offset = 0
-            AND cgp.customer_grp_code = 'XA'
+            AND cgp.customer_grp_code = #groupCode#
             AND cgp.acct_id = cad.acct_id
             AND pps.prod_id = spd.product_id
             AND spd.product_key = ocf.product_key
             AND spd.product_class_id != 'N'
-            AND dd.day_date > #startDate#
+            AND cad.acct_key = orders_by_date.rtlr_acct_key
         GROUP BY
             cad.name_1,
             cad.ic_code,
