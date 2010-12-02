@@ -3,6 +3,7 @@ package com.monsanto.salesorder.service;
 import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
+import com.monsanto.irdsoapservices.salesorder.helper.GPOSHelper;
 import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
 import com.monsanto.irdsoapservices.salesorder.helper.COSHelper;
 import com.monsanto.irdsoapservices.salesorder.service.SalesOrderReportService;
@@ -25,16 +26,18 @@ public class SalesOrderReportService_UT extends TestCase {
     PPOSHelper pposHelper;
     TransactionDao transactionDao;
     COSHelper cosHelper;
-
+    GPOSHelper gposHelper;
     @Override
     protected void setUp() throws Exception {
         transactionDao = EasyMock.createMock(TransactionDao.class);
         pposHelper = org.easymock.classextension.EasyMock.createMock(PPOSHelper.class);
         cosHelper = org.easymock.classextension.EasyMock.createMock(COSHelper.class);
+        gposHelper = org.easymock.classextension.EasyMock.createMock(GPOSHelper.class);
         salesOrderReportService = new SalesOrderReportService();
         salesOrderReportService.setTransactionDao(transactionDao);
         salesOrderReportService.setPposHelper(pposHelper);
         salesOrderReportService.setCosHelper(cosHelper);
+        salesOrderReportService.setGposHelper(gposHelper);
     }
 
     public void testStartProcessing_noTransactions_doNothing() throws Exception {

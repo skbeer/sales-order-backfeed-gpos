@@ -4,6 +4,7 @@ import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
 import com.monsanto.irdsoapservices.salesorder.helper.COSHelper;
+import com.monsanto.irdsoapservices.salesorder.helper.GPOSHelper;
 import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
 import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 import com.monsanto.irdsoapservices.constants.DBConstants;
@@ -25,6 +26,7 @@ public class SalesOrderReportService {
     private TransactionDao transactionDao;
     private PPOSHelper pposHelper;
     private COSHelper cosHelper;
+    private GPOSHelper gposHelper;
     Logger logger = Logger.getLogger(this.getClass());
 
     public void startProcessing() throws SalesOrderException {
@@ -43,6 +45,8 @@ public class SalesOrderReportService {
                         ordersSent = pposHelper.processPPOSOrderReport(transaction);
                     } else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.COS_TRAN_TYPE)) {
                         ordersSent = cosHelper.processCOSOrderReport(transaction);
+                    } else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_TRAN_TYPE)) {
+                        ordersSent = gposHelper.processGPOSOrderReport(transaction);
                     }
                     updateTransaction(transaction, ordersSent);
                 } catch (SalesOrderException e) {
@@ -86,5 +90,9 @@ public class SalesOrderReportService {
 
     public void setCosHelper(COSHelper cosHelper) {
         this.cosHelper = cosHelper;
+    }
+
+    public void setGposHelper(GPOSHelper gposHelper) {
+        this.gposHelper = gposHelper;
     }
 }
