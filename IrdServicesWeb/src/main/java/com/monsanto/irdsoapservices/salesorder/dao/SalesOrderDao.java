@@ -1,7 +1,6 @@
 package com.monsanto.irdsoapservices.salesorder.dao;
 
 import com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo;
-import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
 
 import java.util.Date;
@@ -18,6 +17,4 @@ public interface SalesOrderDao {
     List<PPOSOrderInfo> getPPOSOrders(Date startDate, String groupCode) throws Exception;
 
     List<COSOrderInfo> getCOSOrders(Date startDate, String groupCode) throws Exception;
-
-    List<GPOSOrderInfo> getGPOSOrders(Date startDate, String groupCode) throws Exception;
 }

@@ -25,10 +25,6 @@ public class ClientFactory {
         logger.info("ClientFactory:: Creating client for WSDL - " + wsdlLocation);
         URL url = new URL(wsdlLocation);
         SalesOrderService_Service salesOrder = new SalesOrderService_Service(url, SALES_ORDER_QNAME);
-        salesOrder.setHandlerResolver(getSoapHandlerResolver());
         return salesOrder.getSalesOrderServicePort();
-    }
-    private IRDServiceHandlerResolver getSoapHandlerResolver() {
-        return new IRDServiceHandlerResolver();
     }
 }

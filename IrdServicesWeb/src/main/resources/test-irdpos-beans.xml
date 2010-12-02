@@ -16,7 +16,7 @@
 		<property name="url"
 			value="jdbc:oracle:thin:@usmgend.monsanto.com:1521:usmgend" />
 		<property name="username" value="IRDPOS_USER" />
-		<property name="password" value="eagle_b3rt" />
+		<property name="password" value="dev_Pos_2009" />
 	</bean>
 
 

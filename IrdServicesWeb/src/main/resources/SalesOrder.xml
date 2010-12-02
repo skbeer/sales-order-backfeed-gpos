@@ -5,8 +5,6 @@
                type="com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo" />
     <typeAlias alias="cosOrder"
                type="com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo" />
-    <typeAlias alias="gposOrder"
-               type="com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo" />
 
     <resultMap id="ppos" class="pposOrder">
         <result property="crmOrderNumber" column="CRM_OBJ_ID" />
@@ -60,52 +58,10 @@
         <result property="dealerInfo.zip" column="DEALER_ZIP" />
         <result property="dealerInfo.county" column="DEALER_COUNTY" />
         <result property="tempLineItem.productGtin" column="GTIN" />
-        <result property="tempLineItem.productName" column="PRODUCT_NAME" />
         <result property="tempLineItem.orderQty" column="ORDER_QTY"/>
         <result property="tempLineItem.shippedQty" column="SHIPPED_QTY"/>
         <result property="tempLineItem.pendingQty" column="PENDING_QTY"/>
         <result property="orderNumber" column="ACCT_ID_CROP_YEAR"/>
-    </resultMap>
-
-    <resultMap id="gpos" class="gposOrder">
-        <result property="crmOrderNumber" column="CRM_OBJ_ID" />
-        <result property="orderNumber" column="ORDER_ID" />
-        <result property="orderType" column="SALES_ORDER_TYPE_CODE" />
-        <result property="orderFiscalYear" column="FISCAL_YEAR" />
-        <result property="orderDate" column="ORDER_DATE" />
-        <result property="dealerInfo.acctId" column="DEALER_ACCT_ID" />
-        <result property="dealerInfo.ebid" column="DEALER_EBID" />
-        <result property="dealerInfo.partnerName" column="DEALER_NAME" />
-        <result property="dealerInfo.address" column="DEALER_MAILING_ADDRESS" />
-        <result property="dealerInfo.city" column="DEALER_MAILING_CITY" />
-        <result property="dealerInfo.state" column="DEALER_MAILING_STATE" />
-        <result property="dealerInfo.zip" column="DEALER_MAILING_ZIP_CODE" />
-        <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY" />
-        <result property="growerInfo.acctId" column="GROWER_ACCT_ID" />
-        <result property="growerInfo.gln" column="GROWER_GLN" />
-        <result property="growerInfo.napd" column="GROWER_NAPD_ID" />
-        <result property="growerInfo.partnerName" column="GROWER_NAME" />
-        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME" />
-        <result property="growerInfo.address" column="GROWER_MAILING_ADDRESS" />
-        <result property="growerInfo.city" column="GROWER_MAILING_CITY" />
-        <result property="growerInfo.state" column="GROWER_MAILING_STATE" />
-        <result property="growerInfo.zip" column="GROWER_MAILING_ZIP_CODE" />
-        <result property="growerInfo.county" column="GROWER_MAILING_COUNTY" />
-        <result property="tempLineItem.itemNumber" column="ORDER_ITEM_ID" />
-        <result property="tempLineItem.productUpc" column="UPC_CODE" />
-        <result property="tempLineItem.productGtin" column="GTIN" />
-        <result property="tempLineItem.productName" column="PRODUCT_NAME" />
-        <result property="tempLineItem.salesQuantity.qtyValue" column="SALES_QTY" />
-        <result property="tempLineItem.salesQuantity.qtyUom" column="SALES_UOM" />
-        <result property="tempLineItem.equivalentQuantity.qtyValue" column="EQUIVILENT_QTY" />
-        <result property="tempLineItem.equivalentQuantity.qtyUom" column="EQUIVILENT_QTY_UOM" />
-        <result property="tempLineItem.salesRep.partnerName" column="SALESREP_NAME" />
-        <result property="tempLineItem.salesRep.buyerId" column="SALESREP_ID" />
-        <result property="tempLineItem.salesRep.address" column="SALESREP_ADDRESS_1" />
-        <result property="tempLineItem.salesRep.address2" column="SALESREP_ADDRESS_2" />
-        <result property="tempLineItem.salesRep.city" column="SALESREP_CITY" />
-        <result property="tempLineItem.salesRep.state" column="SALESREP_STATE" />
-        <result property="tempLineItem.salesRep.zip" column="SALESREP_ZIP" />
     </resultMap>
 
     <select id="getPPOSOrders" resultMap="ppos" parameterClass="java.util.Map">
@@ -198,7 +154,6 @@
             cad.mailing_county dealer_county,
             cad.mailing_state_code dealer_state,
             cad.mailing_zip_code dealer_zip,
-            spd.legal_descr_1 product_name,
             pps.upc_scc_code gtin,
             cad.acct_id||dd.mkt_yr acct_id_crop_year,
             sum(ocf.os_requested_qty) order_qty,
@@ -237,90 +192,14 @@
             cad.mailing_county,
             cad.mailing_state_code,
             cad.mailing_zip_code,
-            spd.legal_descr_1,
             pps.upc_scc_code,
-            cad.acct_id||dd.mkt_yr        
+            cad.acct_id||dd.mkt_yr
+        HAVING sum(ocf.os_requested_qty) != 0
+            OR sum(ocf.os_shipped_qty) != 0
+            OR sum(ocf.os_requested_qty - ocf.os_shipped_qty) != 0
         ORDER BY cad.acct_id
     </select>
 
-    <select id="getGPOSOrders" resultMap="gpos" parameterClass="java.util.Map">
-        SELECT
-		 psgo.crm_obj_id,
-         psgo.order_id,
-         psgo.order_item_id,
-         'NS' sales_order_type_code,
-         dd.day_date order_date,
-         SUBSTR (dd.fy, 1, 4) fiscal_year,
-         cad.name_1 dealer_name,
-         cad.ic_code dealer_ebid,
-         cad.acct_id dealer_acct_id,
-         cad.mailing_addr_line_1 dealer_mailing_address,
-         cad.mailing_city dealer_mailing_city,
-         cad.mailing_state_code dealer_mailing_state,
-         cad.mailing_zip_code dealer_mailing_zip_code,
-         cad.mailing_county dealer_mailing_county,
-         gd.name_1 grower_name,
-         gd.gln grower_gln,
-         gd.napd_id grower_napd_id,
-         gd.acct_id grower_acct_id,
-         ACM.CONTACT_FIRST_NAME||' '||ACM.CONTACT_LAST_NAME GROWER_CONTACT_NAME,
-         gd.mailing_addr_line_1 grower_mailing_address,
-         gd.mailing_city grower_mailing_city,
-         gd.mailing_state_code grower_mailing_state,
-         gd.mailing_zip_code grower_mailing_zip_code,
-         gd.mailing_county grower_mailing_county,
-         spd.upc_code,
-         spd.legal_descr_1 product_name,
-         pps.upc_scc_code gtin,
-         psgo.ppos_seed_base_qty sales_qty,
-         ud.uom_code sales_uom,
-         psgo.ppos_seed_ssu_qty equivilent_qty,
-         'UN' equivilent_qty_uom,
-         ss.name_1 || ' ' || ss.name_3 salesrep_name,
-         ss.alias_ss_code salesrep_id,
-         ss.addr_line_1 salesrep_address_1,
-         ss.addr_line_2 salesrep_address_2,
-         ss.city salesrep_city,
-         ss.state_code salesrep_state,
-         ss.zip_code salesrep_zip
-        FROM   dm_ppos_seed_grower_order_c_vw psgo,
-         (select distinct crm_obj_id
-         from dm_ppos_seed_grower_order_c_vw
-         where row_eff_date > #startDate#) orders_by_date,
-         ds_seed_product_dim spd,
-         ds_channel_account_dim cad,
-         ds_grower_dim gd,
-         s_acct_sales_area cgp,
-         ds_date_dim dd,
-         ds_unit_of_measure_dim ud,
-         s_seedco_salesrep ss,
-         s_prod_package_struct pps,
-         s_acct_contact_mailing_dnml acm,
-         (SELECT   DISTINCT
-                   dest_alias_id cust_grp_code, source_alias_id cust_grp_name
-            FROM   biotech_translation
-           WHERE       'CDW749RT' = alias_program
-                   AND #groupCode# = dest_alias_id
-                   AND 'CustGrp' = source_alias_type) sc
-        WHERE       psgo.product_key = spd.product_key
-         AND psgo.ship_from_acct_key = cad.acct_key
-         AND psgo.ship_to_grower_key = gd.grower_key
-         AND psgo.order_date_key = dd.date_key
-         AND psgo.base_uom_key = ud.uom_key
-         AND pps.prod_id = spd.product_id
-         AND pps.uom_code = ud.uom_code
-         AND cgp.acct_id = cad.acct_id(+)
-         AND cgp.customer_grp_code = sc.cust_grp_code
-         AND psgo.seedco_sales_rep_code = ss.seedco_salesrep_id(+)
-         AND NVL (cgp.mfd_flag, 'N') != 'X'
-         AND cgp.distribution_channel_code = '90'
-         AND cgp.division_code = '17'
-         AND cgp.sales_org_code = 'US20'
-         AND gd.primary_contact_id = acm.contact_id(+)
-         AND dd.curr_fy_offset = 0
-         AND psgo.crm_obj_id = orders_by_date.crm_obj_id
-         order by psgo.crm_obj_id, order_item_id
-    </select>
 
 </sqlMap>
 

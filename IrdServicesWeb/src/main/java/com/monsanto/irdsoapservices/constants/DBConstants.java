@@ -19,5 +19,4 @@ public class DBConstants {
 
     public static final String PPOS_TRAN_TYPE = "PPOS";
     public static final String COS_TRAN_TYPE = "DOS";
-    public static final String GPOS_TRAN_TYPE = "GPOS";
 }

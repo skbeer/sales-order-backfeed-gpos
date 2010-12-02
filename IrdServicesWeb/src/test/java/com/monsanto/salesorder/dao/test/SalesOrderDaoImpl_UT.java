@@ -3,7 +3,6 @@ package com.monsanto.salesorder.dao.test;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDaoImpl;
 import com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo;
-import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
@@ -64,11 +63,5 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
         System.out.println("No of Rows = "+cosOrders.size());
         assertTrue(cosOrders.size() >= 0);
     }
-    public void testGetGPOSOrders() throws Exception {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2010, 06, 02);
-        List<GPOSOrderInfo> gposOrders = salesOrderDao.getGPOSOrders(calendar.getTime(), "XA");
-        System.out.println("No of Rows = "+gposOrders.size());
-        assertTrue(gposOrders.size() >= 0);
-    }
+
 }
