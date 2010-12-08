@@ -138,7 +138,7 @@
          spd.legal_descr_1 product_name,
          pps.upc_scc_code gtin,
          psgo.ppos_seed_base_qty sales_qty,
-         ud.uom_code sales_uom,
+         decode (ud.uom_code,'LB','LBR', ud.uom_code) sales_uom,
          psgo.ppos_seed_ssu_qty equivilent_qty,
          'UN' equivilent_qty_uom,
          ss.name_1 || ' ' || ss.name_3 salesrep_name,
@@ -173,7 +173,6 @@
          AND psgo.order_date_key = dd.date_key
          AND psgo.base_uom_key = ud.uom_key
          AND pps.prod_id = spd.product_id
-         AND pps.uom_code = ud.uom_code
          AND cgp.acct_id = cad.acct_id(+)
          AND cgp.customer_grp_code = sc.cust_grp_code
          AND psgo.seedco_sales_rep_code = ss.seedco_salesrep_id(+)
