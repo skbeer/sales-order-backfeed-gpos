@@ -205,7 +205,7 @@
             sum(ocf.os_requested_qty - ocf.os_shipped_qty) pending_qty,
             sum(ocf.os_open_request_qty) remaining_qty
         FROM ds_os_daily_order_fulfillment ocf,
-                         (select distinct ocf.rtlr_acct_key  
+                         (select distinct ocf.rtlr_acct_key
                     from ds_os_daily_order_fulfillment ocf,
                          dm_date_dim dd
                     where 1=1
@@ -219,13 +219,13 @@
             ds_seed_product_dim spd
         WHERE cad.acct_key = ocf.rtlr_acct_key
             AND dd.date_key = ocf.eff_date_key
+            AND ocf.rtlr_acct_key = orders_by_date.rtlr_acct_key
             AND dd.curr_fy_offset = 0
             AND cgp.customer_grp_code = #groupCode#
             AND cgp.acct_id = cad.acct_id
             AND pps.prod_id = spd.product_id
             AND spd.product_key = ocf.product_key
             AND spd.product_class_id != 'N'
-            AND cad.acct_key = orders_by_date.rtlr_acct_key
         GROUP BY
             cad.name_1,
             cad.ic_code,
@@ -238,7 +238,7 @@
             cad.mailing_zip_code,
             spd.legal_descr_1,
             pps.upc_scc_code,
-            cad.acct_id||dd.mkt_yr        
+            cad.acct_id||dd.mkt_yr
         ORDER BY cad.acct_id
     </select>
 
