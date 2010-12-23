@@ -57,6 +57,7 @@ public class COSRequestBuilder_UT extends TestCase {
     private LineItemInfo getLineItem(int index) {
         LineItemInfo lineItemInfo = new LineItemInfo();
         lineItemInfo.setProductGtin("GTIN"+index);
+        lineItemInfo.setProductName("Pname");
         lineItemInfo.setOrderQty("10"+index);
         lineItemInfo.setPendingQty("20"+index);
         lineItemInfo.setShippedQty("30"+index);
