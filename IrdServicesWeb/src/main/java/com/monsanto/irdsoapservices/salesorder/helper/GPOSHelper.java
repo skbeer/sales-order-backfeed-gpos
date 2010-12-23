@@ -48,7 +48,17 @@ public class GPOSHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> {
     }
 
     protected boolean isSameOrder(OrderInfo firstOrder, OrderInfo secondOrder) {
-        return firstOrder.getCrmOrderNumber().equals(secondOrder.getCrmOrderNumber());
+        String firstOrderKey=getKey(firstOrder);
+        String secondOrderKey=getKey(secondOrder);
+        return firstOrderKey.equals(secondOrderKey);
+    }
+
+    private String getKey(OrderInfo orderInfo) {
+       String acctId="";
+        if(orderInfo.getDealerInfo()!=null){
+            acctId=orderInfo.getDealerInfo().getAcctId();
+        }
+       return orderInfo.getOrderNumber()+"-"+acctId;
     }
 
     protected SalesOrderReport getSalesOrderRequest(List<GPOSOrderInfo> orderReport, TransactionInfo transactionInfo) throws Exception {

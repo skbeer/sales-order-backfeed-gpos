@@ -25,7 +25,7 @@ public class GPOSRequestBuilder_UT extends TestCase {
     private static final String GPOS_ORDER_TYPE = "NS";
     private static final String GPOS_TRANS_TYPE = "GPOS";
 
-    public void testBuildPPOSRequet() throws Exception {
+    public void testBuildGPOSRequet() throws Exception {
         SalesOrderReport salesReport = requestBuilder.buildGPOSRequest(getGPOSPposOrderInfo(), getTransactionInfo());
         assertNotNull(salesReport);
         assertEquals("1", salesReport.getHeader().getSalesOrderReportSequenceNumber());

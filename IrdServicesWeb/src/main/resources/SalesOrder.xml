@@ -69,11 +69,10 @@
     </resultMap>
 
     <resultMap id="gpos" class="gposOrder">
-        <result property="crmOrderNumber" column="CRM_OBJ_ID" />
-        <result property="orderNumber" column="ORDER_ID" />
+        <result property="orderNumber" column="INVC_ID" />
         <result property="orderType" column="SALES_ORDER_TYPE_CODE" />
         <result property="orderFiscalYear" column="FISCAL_YEAR" />
-        <result property="orderDate" column="ORDER_DATE" />
+        <result property="orderDate" column="INVC_DATE" />
         <result property="dealerInfo.acctId" column="DEALER_ACCT_ID" />
         <result property="dealerInfo.ebid" column="DEALER_EBID" />
         <result property="dealerInfo.partnerName" column="DEALER_NAME" />
@@ -92,7 +91,7 @@
         <result property="growerInfo.state" column="GROWER_MAILING_STATE" />
         <result property="growerInfo.zip" column="GROWER_MAILING_ZIP_CODE" />
         <result property="growerInfo.county" column="GROWER_MAILING_COUNTY" />
-        <result property="tempLineItem.itemNumber" column="ORDER_ITEM_ID" />
+        <result property="tempLineItem.itemNumber" column="INVC_ITEM_ID" />
         <result property="tempLineItem.productUpc" column="UPC_CODE" />
         <result property="tempLineItem.productGtin" column="GTIN" />
         <result property="tempLineItem.productName" column="PRODUCT_NAME" />
@@ -101,6 +100,7 @@
         <result property="tempLineItem.equivalentQuantity.qtyValue" column="EQUIVALENT_QTY" />
         <result property="tempLineItem.equivalentQuantity.qtyUom" column="EQUIVILENT_QTY_UOM" />
         <result property="tempLineItem.salesRep.partnerName" column="SALESREP_NAME" />
+        <result property="tempLineItem.salesRep.contactName" column="CONTACT_NAME" />
         <result property="tempLineItem.salesRep.buyerId" column="SALESREP_ID" />
         <result property="tempLineItem.salesRep.address" column="SALESREP_ADDRESS_1" />
         <result property="tempLineItem.salesRep.city" column="SALESREP_CITY" />
@@ -244,12 +244,11 @@
     </select>
 
     <select id="getGPOSOrders" resultMap="gpos" parameterClass="java.util.Map">
-               SELECT
-                 ''  crm_obj_id,
-                 rpt_sales.invc_id order_id,
-                 ''  order_item_id,
+        SELECT   
+                 rpt_sales.invc_id invc_id,
+                 rpt_sales.invc_item_id invc_item_id,
                  'NS' sales_order_type_code,
-                 dd.day_date order_date,
+                 dd.day_date invc_date,
                  substr(rpt_sales.market_year,1,4) fiscal_year,
                  cad.name_1 dealer_name,
                  cad.ic_code dealer_ebid,
@@ -272,17 +271,18 @@
                  rpt_sales.upc_code upc_code,
                  rpt_sales.upc_legal_descr product_name,
                  rpt_sales.gtin_id gtin,
-                 ROUND ((SUM (delivered_sales_qty) * 100), 0) sales_qty,
+                 sum(delivered_sales_qty) sales_qty,
                  decode (rpt_sales.uom_code,'LB','LBR', rpt_sales.uom_code) sales_uom,
-                 ROUND ((SUM (delivered_ssu_qty) * 100), 0) equivalent_qty,
+                 sum(delivered_ssu_qty) equivalent_qty,
                  'UN' equivilent_qty_uom,
-                 salesrep.name_1 || ' ' || salesrep.name_3 salesrep_name,
+                 cad.name_1 salesrep_name,
+                 salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
                  salesrep.alias_ss_code salesrep_id,
                  cad.mailing_addr_line_1 salesrep_address_1,
                  cad.mailing_city salesrep_city,
                  cad.mailing_state_code salesrep_state,
                  cad.mailing_zip_code salesrep_zip,
-                 cad.mailing_county salesrep_county         
+                 cad.mailing_county salesrep_county
             FROM dm_active_grower_dim g,
                  dm_active_channel_account_dim cad,
                  s_acct_sales_area cgp,
@@ -290,7 +290,7 @@
                  dm_date_dim dd,
                  (SELECT   gec.ship_from_acct_key seller_acct_key,
                            gec.ship_to_grower_key grower_key, gec.invc_date_key,
-                           gec.invc_id, gec.product_key, spd.upc_code,
+                           gec.invc_id, gec.invc_item_id, gec.product_key, spd.upc_code,
                            spd.legal_descr_1 upc_legal_descr,
                            gtin_map.gtin_id, ud.uom_code,
                            SUBSTR (dpm.period_descr, 1, 4) || 'M' market_year,
@@ -419,6 +419,7 @@
                            gec.ship_to_grower_key,
                            gec.invc_date_key,
                            gec.invc_id,
+                           gec.invc_item_id,
                            gec.product_key,
                            spd.upc_code,
                            spd.legal_descr_1,
@@ -470,6 +471,7 @@
                  rpt_sales.gtin_id,
                  rpt_sales.uom_code,
                  rpt_sales.invc_id,
+                 rpt_sales.invc_item_id,
                  dd.day_date,
                  salesrep.alias_ss_code,
                  salesrep.name_1,
