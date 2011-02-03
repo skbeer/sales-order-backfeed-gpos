@@ -244,120 +244,120 @@
     </select>
 
     <select id="getGPOSOrders" resultMap="gpos" parameterClass="java.util.Map">
-        SELECT   
-                 rpt_sales.invc_id invc_id,
-                 rpt_sales.invc_item_id invc_item_id,
-                 'NS' sales_order_type_code,
-                 dd.day_date invc_date,
-                 substr(rpt_sales.market_year,1,4) fiscal_year,
-                 cad.name_1 dealer_name,
-                 cad.ic_code dealer_ebid,
-                 cad.acct_id  dealer_acct_id,
-                 cad.shipping_addr_line_1 dealer_mailing_address,
-                 cad.shipping_city dealer_mailing_city,
-                 cad.shipping_state_code dealer_mailing_state,
-                 cad.shipping_zip_code dealer_mailing_zip_code,
-                 cad.shipping_county dealer_mailing_county,
-                 g.name_1 grower_name,
-                 gln_map.alias_id grower_gln,
-                 g.napd_id grower_napd_id,
-                 g.acct_id grower_acct_id,
-                 g.primary_contact_full_name grower_contact_name,
-                 g.mailing_addr_line_1 grower_mailing_address,
-                 g.mailing_city grower_mailing_city,
-                 g.mailing_state_code grower_mailing_state,
-                 g.mailing_zip_code grower_mailing_zip_code,
-                 g.mailing_county grower_mailing_county,
-                 rpt_sales.upc_code upc_code,
-                 rpt_sales.upc_legal_descr product_name,
-                 rpt_sales.gtin_id gtin,
-                 sum(delivered_sales_qty) sales_qty,
-                 decode (rpt_sales.uom_code,'LB','LBR', rpt_sales.uom_code) sales_uom,
-                 sum(delivered_ssu_qty) equivalent_qty,
-                 'UN' equivilent_qty_uom,
-                 cad.name_1 salesrep_name,
-                 salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
-                 salesrep.alias_ss_code salesrep_id,
-                 cad.mailing_addr_line_1 salesrep_address_1,
-                 cad.mailing_city salesrep_city,
-                 cad.mailing_state_code salesrep_state,
-                 cad.mailing_zip_code salesrep_zip,
-                 cad.mailing_county salesrep_county
-            FROM dm_active_grower_dim g,
-                 dm_active_channel_account_dim cad,
-                 s_acct_sales_area cgp,
-                 s_acct_xref gln_map,
-                 dm_date_dim dd,
-                 (SELECT   gec.ship_from_acct_key seller_acct_key,
-                           gec.ship_to_grower_key grower_key, gec.invc_date_key,
-                           gec.invc_id, gec.invc_item_id, gec.product_key, spd.upc_code,
-                           spd.legal_descr_1 upc_legal_descr,
-                           gtin_map.gtin_id, ud.uom_code,
-                           SUBSTR (dpm.period_descr, 1, 4) || 'M' market_year,
-                           LPAD (NVL (gec.seedco_sales_rep_code, 0),
-                                 12,
-                                 '0'
-                                ) rtl_sales_person_id,
-                           sc.cust_grp_code,
-                           SUM (
-                             CASE
-                               WHEN spd.specie_code IN ('L', 'F')
+        SELECT
+              rpt_sales.invc_id invc_id,
+              rpt_sales.invc_item_id invc_item_id,
+              'NS' sales_order_type_code,
+              dd.day_date invc_date,
+              substr(rpt_sales.market_year,1,4) fiscal_year,
+              cad.name_1 dealer_name,
+              cad.ic_code dealer_ebid,
+              cad.acct_id  dealer_acct_id,
+              cad.shipping_addr_line_1 dealer_mailing_address,
+              cad.shipping_city dealer_mailing_city,
+              cad.shipping_state_code dealer_mailing_state,
+              cad.shipping_zip_code dealer_mailing_zip_code,
+              cad.shipping_county dealer_mailing_county,
+              g.name_1 grower_name,
+              gln_map.alias_id grower_gln,
+              g.napd_id grower_napd_id,
+              g.acct_id grower_acct_id,
+              g.primary_contact_full_name grower_contact_name,
+              g.mailing_addr_line_1 grower_mailing_address,
+              g.mailing_city grower_mailing_city,
+              g.mailing_state_code grower_mailing_state,
+              g.mailing_zip_code grower_mailing_zip_code,
+              g.mailing_county grower_mailing_county,
+              rpt_sales.upc_code upc_code,
+              rpt_sales.upc_legal_descr product_name,
+              rpt_sales.gtin_id gtin,
+              sum(delivered_sales_qty) sales_qty,
+              decode(rpt_sales.SALES_UOM, 'BN','BG',rpt_sales.SALES_UOM) sales_uom,
+              sum(delivered_ssu_qty) equivalent_qty,
+              'UN' equivilent_qty_uom,
+              cad.name_1 salesrep_name,
+              salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
+              salesrep.alias_ss_code salesrep_id,
+              cad.mailing_addr_line_1 salesrep_address_1,
+              cad.mailing_city salesrep_city,
+              cad.mailing_state_code salesrep_state,
+              cad.mailing_zip_code salesrep_zip,
+              cad.mailing_county salesrep_county
+         FROM dm_active_grower_dim g,
+              dm_active_channel_account_dim cad,
+              s_acct_sales_area cgp,
+              s_acct_xref gln_map,
+              dm_date_dim dd,
+              (SELECT   gec.ship_from_acct_key seller_acct_key,
+                        gec.ship_to_grower_key grower_key, gec.invc_date_key,
+                        gec.invc_id, gec.invc_item_id, gec.product_key, spd.upc_code,
+                        spd.legal_descr_1 upc_legal_descr,
+                        gtin_map.gtin_id, ud.uom_code, gtin_map.sales_uom,
+                        SUBSTR (dpm.period_descr, 1, 4) || 'M' market_year,
+                        LPAD (NVL (gec.seedco_sales_rep_code, 0),
+                              12,
+                              '0'
+                             ) rtl_sales_person_id,
+                        sc.cust_grp_code,
+                        SUM (
+                          CASE
+                            WHEN spd.specie_code IN ('L', 'F')
+                              THEN ROUND(
+                                     DECODE(
+                                       SPD.BASE_UOM_ID,
+                                       'AC',0,
+                                       (DATA_CNV.RPT_EQU_QTY(
+                                          SPD.SPECIE_CODE,
+                                          ((gec.GPOS_SEED_BASE_QTY/
+                                            SPD.BASE_QTY)*
+                                           SPD.BASE_TO_SSU_FACTOR),
+                                          SPD.BASE_TO_SSU_FACTOR,
+                                          SPD.GRADE_SIZE_CODE))),2)
+                             ELSE CASE
+                               WHEN s.use_ssu = 'Y'
                                  THEN ROUND(
                                         DECODE(
                                           SPD.BASE_UOM_ID,
                                           'AC',0,
                                           (DATA_CNV.RPT_EQU_QTY(
-                                             SPD.SPECIE_CODE,
+                                            SPD.SPECIE_CODE,
                                              ((gec.GPOS_SEED_BASE_QTY/
                                                SPD.BASE_QTY)*
                                               SPD.BASE_TO_SSU_FACTOR),
                                              SPD.BASE_TO_SSU_FACTOR,
                                              SPD.GRADE_SIZE_CODE))),2)
-                                ELSE CASE
-                                  WHEN s.use_ssu = 'Y'
-                                    THEN ROUND(
-                                           DECODE(
-                                             SPD.BASE_UOM_ID,
-                                             'AC',0,
-                                             (DATA_CNV.RPT_EQU_QTY(
-                                               SPD.SPECIE_CODE,
-                                                ((gec.GPOS_SEED_BASE_QTY/
-                                                  SPD.BASE_QTY)*
-                                                 SPD.BASE_TO_SSU_FACTOR),
-                                                SPD.BASE_TO_SSU_FACTOR,
-                                                SPD.GRADE_SIZE_CODE))),2)
-                                  ELSE
-                                    (ROUND(
-                                       DECODE(
-                                         SPD.BASE_UOM_ID,
-                                         'AC',0,
-                                         (DATA_CNV.RPT_EQU_QTY(
-                                            SPD.SPECIE_CODE,
-                                            ((gec.GPOS_SEED_BASE_QTY/
-                                              SPD.BASE_QTY)*
-                                             SPD.BASE_TO_SSU_FACTOR),
-                                            SPD.BASE_TO_SSU_FACTOR,
-                                            SPD.GRADE_SIZE_CODE))),2) /
-                                            spd.base_to_ssu_factor
-                                    )
-                                END
+                               ELSE
+                                 (ROUND(
+                                    DECODE(
+                                      SPD.BASE_UOM_ID,
+                                      'AC',0,
+                                      (DATA_CNV.RPT_EQU_QTY(
+                                         SPD.SPECIE_CODE,
+                                         ((gec.GPOS_SEED_BASE_QTY/
+                                           SPD.BASE_QTY)*
+                                          SPD.BASE_TO_SSU_FACTOR),
+                                         SPD.BASE_TO_SSU_FACTOR,
+                                         SPD.GRADE_SIZE_CODE))),2) /
+                                         spd.base_to_ssu_factor
+                                 )
                              END
-                           ) delivered_sales_qty,
-                           SUM (ROUND(
-                                  DECODE(
-                                    SPD.BASE_UOM_ID,
-                                    'AC',0,
-                                    (DATA_CNV.RPT_EQU_QTY(
-                                       SPD.SPECIE_CODE,
-                                       ((gec.GPOS_SEED_BASE_QTY/
-                                         SPD.BASE_QTY)*
-                                        SPD.BASE_TO_SSU_FACTOR),
-                                       SPD.BASE_TO_SSU_FACTOR,
-                                       SPD.GRADE_SIZE_CODE))),2)
-                           ) delivered_ssu_qty
-                      FROM dm_os_gpos_seed_dsi_invc_vw gec,
-                              (select distinct invc_id, ship_from_acct_key
-                                    from dm_os_gpos_seed_dsi_invc_vw
+                          END
+                        ) delivered_sales_qty,
+                        SUM (ROUND(
+                               DECODE(
+                                 SPD.BASE_UOM_ID,
+                                 'AC',0,
+                                 (DATA_CNV.RPT_EQU_QTY(
+                                    SPD.SPECIE_CODE,
+                                    ((gec.GPOS_SEED_BASE_QTY/
+                                      SPD.BASE_QTY)*
+                                     SPD.BASE_TO_SSU_FACTOR),
+                                    SPD.BASE_TO_SSU_FACTOR,
+                                    SPD.GRADE_SIZE_CODE))),2)
+                        ) delivered_ssu_qty
+                   FROM dm_os_gpos_seed_dsi_invc_vw gec,
+                           (select distinct invc_id, ship_from_acct_key
+                                 from dm_os_gpos_seed_dsi_invc_vw
                                     where row_eff_date > #startDate#) orders_by_date,
                            dm_active_channel_account_dim cad,
                            dm_seed_product_dim spd,
@@ -366,122 +366,125 @@
                            ( select distinct
                                 t_prod_dim.PRODUCT_KEY as PRODUCT_KEY,
                                 t_uom_dim.UOM_KEY as PKG_UOM_KEY,
-                                t_gtin_map.UPC_SCC_CODE as GTIN_ID
-                             from
-                                s_prod_package_struct t_gtin_map,
-                                dm_seed_product_dim t_prod_dim,
-                                dm_unit_of_measure_dim t_uom_dim
-                             where
-                                   t_gtin_map.PROD_ID = t_prod_dim.PRODUCT_ID
-                               and t_gtin_map.UOM_CODE = t_uom_dim.UOM_CODE
-                           ) gtin_map,
-                           dm_date_period_map dpm,
-                                    (SELECT   DISTINCT
-                                        dest_alias_id cust_grp_code, source_alias_id cust_grp_name
-                                            FROM   biotech_translation
-                                                WHERE       'CDW749RT' = alias_program
-                                                AND #groupCode# = dest_alias_id
-                                                AND 'CustGrp' = source_alias_type) sc,
-                           dm_data_source_dim ds
-                     WHERE gec.invc_id = orders_by_date.invc_id
-                       AND gec.ship_from_acct_key = orders_by_date.ship_from_acct_key
-                       AND gec.ship_date_key = dpm.date_key
-                       AND gec.product_key = gtin_map.product_key(+)
-                       AND gec.base_uom_key = ud.uom_key
-                       AND CASE
-                            WHEN spd.specie_code = 'L'
-                            AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-                            AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                               THEN 'WINTER CANOLA'
-                            ELSE 'MARKET YEAR'
-                         END = dpm.period_type
-                     AND CASE
-                            WHEN spd.specie_code = 'L'
-                            AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-                            AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                               THEN 0
-                            WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
-                               THEN 1
-                            ELSE 0
-                         END = dpm.curr_period_offset
-                       AND gec.curr_flag = 'Y'
-                       AND gec.func_code = 'I'
-                       AND gec.del_flag = 'N'
-                       AND spd.OWNED_LICENSED_CODE = 'OWNED'
-                       AND spd.product_key = gec.product_key
-                       AND spd.product_id = s.prod_id
-                       AND gec.data_src_key = ds.data_src_key
-                       AND gec.rpt_acct_key = cad.acct_key
-                       AND (   ds.data_src_id IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK')
-                            OR (ds.data_src_id = 'WS-XML' AND cad.acct_id != 168618)
-                           )
-                  GROUP BY gec.ship_from_acct_key,
-                           gec.ship_to_grower_key,
-                           gec.invc_date_key,
-                           gec.invc_id,
-                           gec.invc_item_id,
-                           gec.product_key,
-                           spd.upc_code,
-                           spd.legal_descr_1,
-                           gtin_map.gtin_id,
-                           ud.uom_code,
-                           SUBSTR (dpm.period_descr, 1, 4),
-                           LPAD (NVL (gec.seedco_sales_rep_code, 0), 12, '0'),
-                           sc.cust_grp_code) rpt_sales,
-                 s_seedco_salesrep salesrep
-           WHERE g.grower_key = rpt_sales.grower_key
-             AND cad.acct_key = rpt_sales.seller_acct_key
-             AND cad.acct_id = cgp.acct_id
-             AND cgp.customer_grp_code = rpt_sales.cust_grp_code
-             AND NVL (cgp.mfd_flag, 'N') != 'X'
-             AND cgp.distribution_channel_code = '90'
-             AND cgp.division_code = '17'
-             AND cgp.sales_org_code = 'US20'
-             AND rpt_sales.invc_date_key = dd.date_key
-             AND TO_NUMBER (rpt_sales.rtl_sales_person_id) =
-                 TO_NUMBER (salesrep.seedco_salesrep_id(+))
-             AND rpt_sales.cust_grp_code = salesrep.customer_grp_code(+)
-             AND (   RTRIM(g.napd_id) IS NOT NULL
-                  OR RTRIM(gln_map.alias_id) IS NOT NULL)
-             AND g.acct_id = gln_map.acct_id(+)
-             AND gln_map.system_type_code(+) = 'GLN'
-             AND gln_map.rank(+) = 1
-             AND gln_map.active_flag(+) = 'Y'
-        GROUP BY substr(rpt_sales.market_year,1,4),
-                 cad.acct_id,
-                 cad.ic_code,
-                 cad.name_1,
-                 cad.shipping_addr_line_1,
-                 cad.shipping_city,
-                 cad.shipping_state_code,
-                 cad.shipping_zip_code,
-                 cad.shipping_county,
-                 g.acct_id,
-                 g.napd_id,
-                 g.primary_contact_full_name,
-                 g.name_1,
-                 g.mailing_addr_line_1,
-                 g.mailing_city,
-                 g.mailing_state_code,
-                 g.mailing_zip_code,
-                 g.mailing_county,
-                 gln_map.alias_id,
-                 rpt_sales.upc_code,
-                 rpt_sales.upc_legal_descr,
-                 rpt_sales.gtin_id,
-                 rpt_sales.uom_code,
-                 rpt_sales.invc_id,
-                 rpt_sales.invc_item_id,
-                 dd.day_date,
-                 salesrep.alias_ss_code,
-                 salesrep.name_1,
-                 salesrep.name_3,
-                 cad.name_1,
-                 cad.mailing_addr_line_1,
-                 cad.mailing_city,
-                 cad.mailing_state_code,
-                 cad.mailing_zip_code,
-                 cad.mailing_county
+                             t_gtin_map.UPC_SCC_CODE as GTIN_ID,
+                             t_gtin_map.UOM_CODE as SALES_UOM
+                          from
+                             s_prod_package_struct t_gtin_map,
+                             dm_seed_product_dim t_prod_dim,
+                             dm_unit_of_measure_dim t_uom_dim
+                          where
+                                t_gtin_map.PROD_ID = t_prod_dim.PRODUCT_ID
+                            and t_gtin_map.UOM_CODE = t_uom_dim.UOM_CODE
+                        ) gtin_map,
+                        dm_date_period_map dpm,
+                                 (SELECT   DISTINCT
+                                     dest_alias_id cust_grp_code, source_alias_id cust_grp_name
+                                         FROM   biotech_translation
+                                             WHERE       'CDW749RT' = alias_program
+                                             AND #groupCode# = dest_alias_id
+                                             AND 'CustGrp' = source_alias_type) sc,
+                        dm_data_source_dim ds
+                  WHERE gec.invc_id = orders_by_date.invc_id
+                    AND gec.ship_from_acct_key = orders_by_date.ship_from_acct_key
+                    AND gec.ship_date_key = dpm.date_key
+                    AND gec.product_key = gtin_map.product_key(+)
+                    AND gec.base_uom_key = ud.uom_key
+                    AND CASE
+                         WHEN spd.specie_code = 'L'
+                         AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+                         AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+                            THEN 'WINTER CANOLA'
+                         ELSE 'MARKET YEAR'
+                      END = dpm.period_type
+                  AND CASE
+                         WHEN spd.specie_code = 'L'
+                         AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+                         AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+                            THEN 0
+                         WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
+                            THEN 1
+                         ELSE 0
+                      END = dpm.curr_period_offset
+                    AND gec.curr_flag = 'Y'
+                    AND gec.func_code = 'I'
+                    AND gec.del_flag = 'N'
+                    AND spd.OWNED_LICENSED_CODE = 'OWNED'
+                    AND spd.product_key = gec.product_key
+                    AND spd.product_id = s.prod_id
+                    AND gec.data_src_key = ds.data_src_key
+                    AND gec.rpt_acct_key = cad.acct_key
+                    AND (   ds.data_src_id IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK')
+                         OR (ds.data_src_id = 'WS-XML' AND cad.acct_id != 168618)
+                        )
+               GROUP BY gec.ship_from_acct_key,
+                        gec.ship_to_grower_key,
+                        gec.invc_date_key,
+                        gec.invc_id,
+                        gec.invc_item_id,
+                        gec.product_key,
+                        spd.upc_code,
+                        spd.legal_descr_1,
+                        gtin_map.gtin_id,
+                        ud.uom_code,
+                        gtin_map.sales_uom,
+                        SUBSTR (dpm.period_descr, 1, 4),
+                        LPAD (NVL (gec.seedco_sales_rep_code, 0), 12, '0'),
+                        sc.cust_grp_code) rpt_sales,
+              s_seedco_salesrep salesrep
+        WHERE g.grower_key = rpt_sales.grower_key
+          AND cad.acct_key = rpt_sales.seller_acct_key
+          AND cad.acct_id = cgp.acct_id
+          AND cgp.customer_grp_code = rpt_sales.cust_grp_code
+          AND NVL (cgp.mfd_flag, 'N') != 'X'
+          AND cgp.distribution_channel_code = '90'
+          AND cgp.division_code = '17'
+          AND cgp.sales_org_code = 'US20'
+          AND rpt_sales.invc_date_key = dd.date_key
+          AND TO_NUMBER (rpt_sales.rtl_sales_person_id) =
+              TO_NUMBER (salesrep.seedco_salesrep_id(+))
+          AND rpt_sales.cust_grp_code = salesrep.customer_grp_code(+)
+          AND (   RTRIM(g.napd_id) IS NOT NULL
+               OR RTRIM(gln_map.alias_id) IS NOT NULL)
+          AND g.acct_id = gln_map.acct_id(+)
+          AND gln_map.system_type_code(+) = 'GLN'
+          AND gln_map.rank(+) = 1
+          AND gln_map.active_flag(+) = 'Y'
+     GROUP BY substr(rpt_sales.market_year,1,4),
+              cad.acct_id,
+              cad.ic_code,
+              cad.name_1,
+              cad.shipping_addr_line_1,
+              cad.shipping_city,
+              cad.shipping_state_code,
+              cad.shipping_zip_code,
+              cad.shipping_county,
+              g.acct_id,
+              g.napd_id,
+              g.primary_contact_full_name,
+              g.name_1,
+              g.mailing_addr_line_1,
+              g.mailing_city,
+              g.mailing_state_code,
+              g.mailing_zip_code,
+              g.mailing_county,
+              gln_map.alias_id,
+              rpt_sales.upc_code,
+              rpt_sales.upc_legal_descr,
+              rpt_sales.gtin_id,
+              rpt_sales.uom_code,
+              rpt_sales.sales_uom,
+              rpt_sales.invc_id,
+              rpt_sales.invc_item_id,
+              dd.day_date,
+              salesrep.alias_ss_code,
+              salesrep.name_1,
+              salesrep.name_3,
+              cad.name_1,
+              cad.mailing_addr_line_1,
+              cad.mailing_city,
+              cad.mailing_state_code,
+              cad.mailing_zip_code,
+              cad.mailing_county
     </select>
 
 </sqlMap>
