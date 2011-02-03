@@ -74,6 +74,46 @@
                 <iterate property="Set10" open="(" close=")" conjunction=",">
                     #Set10[]#
                 </iterate>
+                OR PURCHASER_ACCT_ID IN
+                <iterate property="SetABS1" open="(" close=")" conjunction=",">
+                    #SetABS1[]#
+                </iterate>
+                OR PURCHASER_ACCT_ID IN
+                <iterate property="SetABS2" open="(" close=")" conjunction=",">
+                    #SetABS2[]#
+                </iterate>
+                OR PURCHASER_ACCT_ID IN
+                <iterate property="SetABS3" open="(" close=")" conjunction=",">
+                    #SetABS3[]#
+                </iterate>
+                OR PURCHASER_ACCT_ID IN
+                <iterate property="SetABS4" open="(" close=")" conjunction=",">
+                    #SetABS4[]#
+                </iterate>
+                OR PURCHASER_ACCT_ID IN
+                <iterate property="SetABS5" open="(" close=")" conjunction=",">
+                    #SetABS5[]#
+                </iterate>
+                OR PURCHASER_ACCT_ID IN
+                <iterate property="SetABS6" open="(" close=")" conjunction=",">
+                    #SetABS6[]#
+                </iterate>
+                OR PURCHASER_ACCT_ID IN
+                <iterate property="SetABS7" open="(" close=")" conjunction=",">
+                    #SetABS7[]#
+                </iterate>
+                OR PURCHASER_ACCT_ID IN
+                <iterate property="SetABS8" open="(" close=")" conjunction=",">
+                    #SetABS8[]#
+                </iterate>
+                OR PURCHASER_ACCT_ID IN
+                <iterate property="SetABS9" open="(" close=")" conjunction=",">
+                    #SetABS9[]#
+                </iterate>
+                OR PURCHASER_ACCT_ID IN
+                <iterate property="SetABS10" open="(" close=")" conjunction=",">
+                    #SetABS10[]#
+                </iterate>
         ORDER BY GLN, AGREEMENT_NAME
     </select>
 

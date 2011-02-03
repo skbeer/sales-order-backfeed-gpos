@@ -30,21 +30,21 @@ public class AgreementStatusHelper {
     AgreementStatusResponseBuilder responseBuilder;
 
     Logger logger = Logger.getLogger(this.getClass());
+    private static final int MAX_LIMIT = 10000;
 
     public AgreementStatusResponseType getAgreementStatus(AgreementStatusRequest agreementStatusRequest) throws AgreementStatusFault {
         AgreementStatusResponseType response;
         try {
             logger.info("Starting to retrieve Agreement Status information");
             List<String> glnList = extractGLNsFromRequest(agreementStatusRequest);
-            logger.info("Found "+glnList.size()+" GLNs in the request");
-            if(glnList.size() > 10000) {
-                throw new Exception("Service can currently support only 10,000 GLNs per Request.");
-            }
-            List<AgreementStatusInfo> agreementStatusList = agreementStatusDao.getAgreementStatusInfo(glnList);
+            checkLimitOfGLNs(glnList);
+            List<String> assignedBySellerList = extractAssignedBySellersFromRequest(agreementStatusRequest);
+            checkLimitOfAssignedBySellers(assignedBySellerList);
+            List<AgreementStatusInfo> agreementStatusList = agreementStatusDao.getAgreementStatusInfo(glnList, assignedBySellerList);
             HashMap<String, AgreementStatusInfo> normalizedStatusMap = normalizeAgreementStatusList(agreementStatusList);
             List<AgreementStatusInfo> agreementList = new ArrayList<AgreementStatusInfo>();
             agreementList.addAll(normalizedStatusMap.values());
-            logger.info("Found Agreement Status for "+agreementList.size()+" GLNs");
+            logger.info("Found Agreement Status for "+agreementList.size()+" GLNs and ASSIGNED_BY_SELLERs");
             response = responseBuilder.getAgreementStatusResponse(agreementStatusRequest, agreementList);
         } catch (Exception e) {
             logger.error(e);
@@ -55,6 +55,20 @@ public class AgreementStatusHelper {
         }
 
         return response;
+    }
+
+    private void checkLimitOfGLNs(List<String> glnList) throws Exception {
+        logger.info("Found "+glnList.size()+" GLNs in the request");
+        if(glnList.size() > MAX_LIMIT) {
+            throw new Exception("Service can currently support only "+MAX_LIMIT+" GLNs per Request.");
+        }
+    }
+
+    private void checkLimitOfAssignedBySellers(List<String> assignedBySellerList) throws Exception {
+        logger.info("Found "+assignedBySellerList.size()+" ASSIGNED_BY_SELLERs in the request");                                        
+        if(assignedBySellerList.size() > MAX_LIMIT) {
+            throw new Exception("Service can currently support only "+MAX_LIMIT+" ASSIGNED_BY_SELLERs per Request.");
+        }
     }
 
     // method is public only to be tested separately
@@ -69,6 +83,19 @@ public class AgreementStatusHelper {
             }
         }
         return glns;
+    }
+
+    public List<String> extractAssignedBySellersFromRequest(AgreementStatusRequest request) {
+        List<String> assignedBySellers = new ArrayList<String>();
+        List<AgreementStatusRequestDetailsType> requestDetails = request.getAgreementStatusRequestBody().getAgreementStatusRequestDetails();
+        for (AgreementStatusRequestDetailsType requestDetailsType: requestDetails) {
+            for(PartnerIdentifierType partnerIdentifierType : requestDetailsType.getPartnerIdentifier()) {
+                if(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER.value().equalsIgnoreCase(partnerIdentifierType.getAgency())) {
+                    assignedBySellers.add(partnerIdentifierType.getValue());
+                }
+            }
+        }
+        return assignedBySellers;
     }
 
     // method is public only to be tested separately

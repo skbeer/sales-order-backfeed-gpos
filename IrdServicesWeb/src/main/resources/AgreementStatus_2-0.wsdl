@@ -41,7 +41,7 @@
 	</wsdl:binding>
 	<wsdl:service name="AgreementStatusService">
 		<wsdl:port name="AgreementStatusServicePort" binding="agmtWsdl:AgreementStatusServiceSoapBinding">
-			<soap:address location="http://localhost:7001/IRDSoapServicesWeb/AgreementStatusService"/>
+			<soap:address location="http://localhost:7001/IrdSoapServices/AgreementStatusService"/>
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

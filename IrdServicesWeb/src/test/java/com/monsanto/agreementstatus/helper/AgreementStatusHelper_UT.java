@@ -44,10 +44,10 @@ public class AgreementStatusHelper_UT extends TestCase {
 
     public void testGetAgreementStatus() throws Exception {
         AgreementStatusRequest request = getRequest();
-        when(dao.getAgreementStatusInfo(argThat(new IsListOfThreeElements()))).thenReturn(new ArrayList<AgreementStatusInfo>());
+        when(dao.getAgreementStatusInfo(argThat(new IsListOfThreeElements()), new ArrayList<String>())).thenReturn(new ArrayList<AgreementStatusInfo>());
         when(responseBuilder.getAgreementStatusResponse(eq(request), anyList())).thenReturn(new AgreementStatusResponseType());
         assertNotNull(helper.getAgreementStatus(request));
-        verify(dao).getAgreementStatusInfo(argThat(new IsListOfThreeElements()));
+        verify(dao).getAgreementStatusInfo(argThat(new IsListOfThreeElements()), null);
         verify(responseBuilder).getAgreementStatusResponse(eq(request), anyList());
     }
 
@@ -60,7 +60,12 @@ public class AgreementStatusHelper_UT extends TestCase {
         assertFalse(glns.contains("1004"));
         assertTrue(glns.contains("1005"));
     }
-
+    public void testGetAssignedBySellersFromRequest() throws Exception {
+        List<String> assignedBySellers = helper.extractAssignedBySellersFromRequest(getRequest());
+        assertEquals(2, assignedBySellers.size());
+        assertTrue(assignedBySellers.contains("1006"));
+        assertTrue(assignedBySellers.contains("1007"));
+    }
     public void testNormalizeAgreements_Scenario_1() throws Exception {
         List<AgreementStatusInfo> agreementStatusList = new ArrayList<AgreementStatusInfo>();
         agreementStatusList.add(getMockAgreementStatusInfo("1001", "MTA1", "Z1"));
@@ -146,6 +151,8 @@ public class AgreementStatusHelper_UT extends TestCase {
         bodyType.getAgreementStatusRequestDetails().add(getDetailsType("1003", "NAPD"));
         bodyType.getAgreementStatusRequestDetails().add(getDetailsType("1004", "ACCTID"));
         bodyType.getAgreementStatusRequestDetails().add(getDetailsType("1005", "GLN"));
+        bodyType.getAgreementStatusRequestDetails().add(getDetailsType("1006", "AssignedBySeller"));
+        bodyType.getAgreementStatusRequestDetails().add(getDetailsType("1007", "AssignedBySeller"));
         request.setAgreementStatusRequestBody(bodyType);
         return request;
     }
