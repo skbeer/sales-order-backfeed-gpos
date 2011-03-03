@@ -485,6 +485,7 @@
               cad.mailing_state_code,
               cad.mailing_zip_code,
               cad.mailing_county
+        ORDER BY rpt_sales.invc_id,cad.acct_id
     </select>
 
 </sqlMap>
