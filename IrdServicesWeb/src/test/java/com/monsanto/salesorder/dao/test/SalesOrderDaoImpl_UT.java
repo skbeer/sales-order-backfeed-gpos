@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringContextTests {
 
-    SalesOrderDao salesOrderDao;
+    private SalesOrderDao salesOrderDao;
 
     @Override
     protected void onSetUp() throws Exception {
