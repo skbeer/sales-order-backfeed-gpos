@@ -11,7 +11,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class AgreementStatusInfo {
-    String gln;
+    String aliasId;
+    String systemTypeCode;
     String acctId;
     String partnerName;
     String contactName;
@@ -19,12 +20,12 @@ public class AgreementStatusInfo {
     AgreementInfo tempAgreement;
     List<AgreementInfo> agreements = new ArrayList<AgreementInfo>();
 
-    public String getGln() {
-        return gln;
+    public String getAliasId() {
+        return aliasId;
     }
 
-    public void setGln(String gln) {
-        this.gln = gln;
+    public void setAliasId(String aliasId) {
+        this.aliasId = aliasId;
     }
 
     public String getAcctId() {
@@ -73,5 +74,13 @@ public class AgreementStatusInfo {
 
     public void setAgreements(List<AgreementInfo> agreements) {
         this.agreements = agreements;
+    }
+
+    public String getSystemTypeCode() {
+        return systemTypeCode;
+    }
+
+    public void setSystemTypeCode(String systemTypeCode) {
+        this.systemTypeCode = systemTypeCode;
     }
 }

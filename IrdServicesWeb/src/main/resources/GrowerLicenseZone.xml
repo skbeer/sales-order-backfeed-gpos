@@ -5,10 +5,12 @@
                type="com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo" />
 
     <resultMap id="agreementStatusResult" class="agreementStatus">
+        <result property="aliasId" column="ALIAS_ID" />
+        <result property="systemTypeCode" column="SYSTEM_TYPE_CODE" />
         <result property="acctId" column="ACCT_ID" />
-        <result property="gln" column="GLN" />
         <result property="partnerName" column="ACCT_NAME" />
         <result property="contactName" column="CONTACT_NAME" />
+        <result property="speciesCode" column="SPECIES_CODE" />
         <result property="tempAgreement.agreementName" column="AGREEMENT_NAME" />
         <result property="tempAgreement.agreementStatus" column="LICENSE_STATUS" />
         <result property="tempAgreement.licenseNumber" column="TECH_LICENSE_NUMBER" />
@@ -16,11 +18,12 @@
         <result property="tempAgreement.tempZone.zoneType" column="ZONE_TYPE" />
         <result property="tempAgreement.tempZone.zoneName" column="ZONE_DESCR" />
         <result property="tempAgreement.tempZone.cropCode" column="SPECIES_CODE" />
-        <result property="tempAgreement.tempZone.cropName" column="SPECIES_DESCR" />        
+        <result property="tempAgreement.tempZone.cropName" column="SPECIES_DESCR" />
     </resultMap>
 
     <select id="getAgreementStatus" resultMap="agreementStatusResult" parameterClass="java.util.Map">
-        SELECT  GLN,
+        SELECT  ALIAS_ID,
+                SYSTEM_TYPE_CODE,
                 PURCHASER_ACCT_ID AS ACCT_ID,
                 TECH_LICENSE_NUMBER,
                 ACCT_NAME,
@@ -34,43 +37,43 @@
                 LICENSE_STATUS,
                 CONTACT_FIRST_NAME ||' ' ||CONTACT_LAST_NAME AS CONTACT_NAME
         FROM    ECOM.GROWER_LICENSE_ZONE_V2_VW
-        WHERE   GLN IN
+        WHERE   ALIAS_ID IN
                 <iterate property="Set1" open="(" close=")" conjunction=",">
                     #Set1[]#
                 </iterate>
-                OR GLN IN
+                OR ALIAS_ID IN
                 <iterate property="Set2" open="(" close=")" conjunction=",">
                     #Set2[]#
                 </iterate>
-                OR GLN IN
+                OR ALIAS_ID IN
                 <iterate property="Set3" open="(" close=")" conjunction=",">
                     #Set3[]#
                 </iterate>
-                OR GLN IN
+                OR ALIAS_ID IN
                 <iterate property="Set4" open="(" close=")" conjunction=",">
                     #Set4[]#
                 </iterate>
-                OR GLN IN
+                OR ALIAS_ID IN
                 <iterate property="Set5" open="(" close=")" conjunction=",">
                     #Set5[]#
                 </iterate>
-                OR GLN IN
+                OR ALIAS_ID IN
                 <iterate property="Set6" open="(" close=")" conjunction=",">
                     #Set6[]#
                 </iterate>
-                OR GLN IN
+                OR ALIAS_ID IN
                 <iterate property="Set7" open="(" close=")" conjunction=",">
                     #Set7[]#
                 </iterate>
-                OR GLN IN
+                OR ALIAS_ID IN
                 <iterate property="Set8" open="(" close=")" conjunction=",">
                     #Set8[]#
                 </iterate>
-                OR GLN IN
+                OR ALIAS_ID IN
                 <iterate property="Set9" open="(" close=")" conjunction=",">
                     #Set9[]#
                 </iterate>
-                OR GLN IN
+                OR ALIAS_ID IN
                 <iterate property="Set10" open="(" close=")" conjunction=",">
                     #Set10[]#
                 </iterate>
@@ -114,7 +117,7 @@
                 <iterate property="SetABS10" open="(" close=")" conjunction=",">
                     #SetABS10[]#
                 </iterate>
-        ORDER BY GLN, AGREEMENT_NAME
+        ORDER BY AGREEMENT_NAME,PURCHASER_ACCT_ID,SPECIES_CODE,SYSTEM_TYPE_CODE
     </select>
 
 </sqlMap>

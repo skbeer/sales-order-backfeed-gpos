@@ -39,7 +39,7 @@ public class AgreementStatusResponseBuilder {
     private AgreementStatusResponseDetails getAgreementStatusResponseDetails(AgreementStatusInfo agreementStatusInfo) {
         AgreementStatusResponseDetails agreementStatusResponseDetails = new AgreementStatusResponseDetails();
         agreementStatusResponseDetails.setPartnerInformation(getPartnerInformationForBody(agreementStatusInfo.getPartnerName(),
-                agreementStatusInfo.getGln(), agreementStatusInfo.getAcctId(), agreementStatusInfo.getContactName()));
+                agreementStatusInfo.getAliasId(), agreementStatusInfo.getSystemTypeCode(), agreementStatusInfo.getAcctId(), agreementStatusInfo.getContactName()));
         for(AgreementInfo agreementInfo : agreementStatusInfo.getAgreements()) {
             agreementStatusResponseDetails.getAgreementStatusList().add(getAgreementStatusListType(agreementInfo));
         }
@@ -67,8 +67,14 @@ public class AgreementStatusResponseBuilder {
         return zoneType;
     }
 
-    private PartnerInformationType getPartnerInformationForBody(String partnerName, String gln, String acctId, String contactName) {
-        PartnerInformationType partnerInformationType = getPartnerInformationForHeader(partnerName, gln, ListPartnerAgencyAttribute.GLN);
+    private PartnerInformationType getPartnerInformationForBody(String partnerName, String gln,String systemTypeCode, String acctId, String contactName) {
+        PartnerInformationType partnerInformationType =null;
+        if(systemTypeCode!=null && systemTypeCode.equals(ListPartnerAgencyAttribute.GLN.value())){
+              partnerInformationType = getPartnerInformationForHeader(partnerName, gln, ListPartnerAgencyAttribute.GLN);
+        }else {
+              partnerInformationType = getPartnerInformationForHeader(partnerName);            
+        }
+
         partnerInformationType.getPartnerIdentifier().add(getPartnerIdentifierType(acctId, ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER));
         ContactInformationType contactInformationType = new ContactInformationType();
         contactInformationType.getContactName().add(contactName);
@@ -109,7 +115,11 @@ public class AgreementStatusResponseBuilder {
         dateTimeType.setValue(new XMLGregorianCalendarImpl(gregorianCalendar));
         return dateTimeType;
     }
-
+    private PartnerInformationType getPartnerInformationForHeader(String partnerName) {
+        PartnerInformationType partnerInformationType = new PartnerInformationType();
+        partnerInformationType.getPartnerName().add(partnerName);
+        return partnerInformationType;
+    }
     private PartnerInformationType getPartnerInformationForHeader(String partnerName, String partnerEbid, ListPartnerAgencyAttribute agency) {
         PartnerInformationType partnerInformationType = new PartnerInformationType();
         partnerInformationType.getPartnerName().add(partnerName);

@@ -14,9 +14,7 @@ import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,6 +29,9 @@ public class AgreementStatusHelper {
 
     Logger logger = Logger.getLogger(this.getClass());
     private static final int MAX_LIMIT = 10000;
+    private static final String SYSTEM_CODE_GLN = "GLN";
+    private static final String SYSTEM_CODE_SAP = "SAP";
+    private static final int MAP_FILTER_SIZE = 50;
 
     public AgreementStatusResponseType getAgreementStatus(AgreementStatusRequest agreementStatusRequest) throws AgreementStatusFault {
         AgreementStatusResponseType response;
@@ -41,7 +42,8 @@ public class AgreementStatusHelper {
             List<String> assignedBySellerList = extractAssignedBySellersFromRequest(agreementStatusRequest);
             checkLimitOfAssignedBySellers(assignedBySellerList);
             List<AgreementStatusInfo> agreementStatusList = agreementStatusDao.getAgreementStatusInfo(glnList, assignedBySellerList);
-            HashMap<String, AgreementStatusInfo> normalizedStatusMap = normalizeAgreementStatusList(agreementStatusList);
+            List<AgreementStatusInfo> filteredAgreementStatusList=filterByGLNORSAP(agreementStatusList);
+            HashMap<String, AgreementStatusInfo> normalizedStatusMap = normalizeAgreementStatusList(filteredAgreementStatusList);
             List<AgreementStatusInfo> agreementList = new ArrayList<AgreementStatusInfo>();
             agreementList.addAll(normalizedStatusMap.values());
             logger.info("Found Agreement Status for "+agreementList.size()+" GLNs and ASSIGNED_BY_SELLERs");
@@ -55,6 +57,49 @@ public class AgreementStatusHelper {
         }
 
         return response;
+    }
+
+    protected List<AgreementStatusInfo> filterByGLNORSAP(List<AgreementStatusInfo> agreementStatusList) {
+        List<AgreementStatusInfo> filteredList=new ArrayList<AgreementStatusInfo>();
+        String currentAcctKey=null;
+        List<AgreementStatusInfo> agreementStatusListByAcctKey=null;
+        for(AgreementStatusInfo currentStatusInfo : agreementStatusList) {
+            if(isNewOrChangeInAcctKey(currentAcctKey, currentStatusInfo)){
+                if(currentAcctKey!=null){
+                    filteredList.addAll(processFilterByAccountKey(agreementStatusListByAcctKey));
+                }
+                currentAcctKey= getCurrentAccountKey(currentStatusInfo);
+                agreementStatusListByAcctKey=new ArrayList<AgreementStatusInfo>();
+            }
+            agreementStatusListByAcctKey.add(currentStatusInfo);
+        }
+        filteredList.addAll(processFilterByAccountKey(agreementStatusListByAcctKey));
+        return filteredList;
+    }
+    
+    private boolean isNewOrChangeInAcctKey(String currentAcctKey, AgreementStatusInfo currentStatusInfo) {
+        return currentAcctKey==null|| !currentAcctKey.equals(getCurrentAccountKey(currentStatusInfo));
+    }
+
+    private String getCurrentAccountKey(AgreementStatusInfo currentStatusInfo) {
+        if(currentStatusInfo.getAcctId()!=null && currentStatusInfo.getSpeciesCode()!=null){
+            return currentStatusInfo.getAcctId()+"||"+currentStatusInfo.getSpeciesCode();
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private List<AgreementStatusInfo> processFilterByAccountKey(List<AgreementStatusInfo> agreementStatusListByAcctId){
+            List<AgreementStatusInfo> filteredList=new ArrayList<AgreementStatusInfo>();
+            Map<String,AgreementStatusInfo> idValueMap=new HashMap();
+            for(AgreementStatusInfo currentStatusInfo : agreementStatusListByAcctId) {
+                idValueMap.put(currentStatusInfo.getSystemTypeCode(),currentStatusInfo);
+            }
+            if(idValueMap.get(SYSTEM_CODE_GLN)!=null){
+                filteredList.add(idValueMap.get(SYSTEM_CODE_GLN));
+            }else if(idValueMap.get(SYSTEM_CODE_SAP)!=null){
+                filteredList.add(idValueMap.get(SYSTEM_CODE_SAP));
+            }
+            return filteredList;
     }
 
     private void checkLimitOfGLNs(List<String> glnList) throws Exception {
@@ -76,7 +121,9 @@ public class AgreementStatusHelper {
         List<String> glns = new ArrayList<String>();
         List<AgreementStatusRequestDetailsType> requestDetails = request.getAgreementStatusRequestBody().getAgreementStatusRequestDetails();
         for (AgreementStatusRequestDetailsType requestDetailsType: requestDetails) {
-            for(PartnerIdentifierType partnerIdentifierType : requestDetailsType.getPartnerIdentifier()) {
+            List<PartnerIdentifierType> partnerIdentifierTypes=requestDetailsType.getPartnerIdentifier();
+            if (isIgnoreGLN(partnerIdentifierTypes)) continue;
+            for(PartnerIdentifierType partnerIdentifierType : partnerIdentifierTypes) {
                 if(ListPartnerAgencyAttribute.GLN.value().equalsIgnoreCase(partnerIdentifierType.getAgency())) {
                     glns.add(partnerIdentifierType.getValue());
                 }
@@ -85,12 +132,22 @@ public class AgreementStatusHelper {
         return glns;
     }
 
+    private boolean isIgnoreGLN(List<PartnerIdentifierType> partnerIdentifierTypes) {
+        for(PartnerIdentifierType partnerIdentifierType : partnerIdentifierTypes) {
+            if(isAssignedBySellerPartnerAgency(partnerIdentifierType.getAgency())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public List<String> extractAssignedBySellersFromRequest(AgreementStatusRequest request) {
         List<String> assignedBySellers = new ArrayList<String>();
         List<AgreementStatusRequestDetailsType> requestDetails = request.getAgreementStatusRequestBody().getAgreementStatusRequestDetails();
         for (AgreementStatusRequestDetailsType requestDetailsType: requestDetails) {
             for(PartnerIdentifierType partnerIdentifierType : requestDetailsType.getPartnerIdentifier()) {
-                if(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER.value().equalsIgnoreCase(partnerIdentifierType.getAgency())) {
+                if(isAssignedBySellerPartnerAgency(partnerIdentifierType.getAgency())) {
                     assignedBySellers.add(partnerIdentifierType.getValue());
                 }
             }
@@ -98,13 +155,17 @@ public class AgreementStatusHelper {
         return assignedBySellers;
     }
 
+    private boolean isAssignedBySellerPartnerAgency(String agency) {
+        return ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER.value().equalsIgnoreCase(agency);
+    }
+
     // method is public only to be tested separately
-    public HashMap<String, AgreementStatusInfo> normalizeAgreementStatusList(List<AgreementStatusInfo> denormalizedStatusList) {
+    protected HashMap<String, AgreementStatusInfo> normalizeAgreementStatusList(List<AgreementStatusInfo> denormalizedStatusList) {
         HashMap<String, AgreementStatusInfo> normalizedStatusMap = new HashMap<String, AgreementStatusInfo>();
         List<AgreementInfo> agreementList = null;
         AgreementInfo agreementInfo;
         for(AgreementStatusInfo currentStatusInfo : denormalizedStatusList) {
-            AgreementStatusInfo existingStatusInfo = normalizedStatusMap.get(currentStatusInfo.getGln());
+            AgreementStatusInfo existingStatusInfo = normalizedStatusMap.get(currentStatusInfo.getAliasId());
             if(existingStatusInfo != null) {
                 agreementList = existingStatusInfo.getAgreements();
                 int existingAgreementIndex = findAgreementIndex(agreementList, currentStatusInfo.getTempAgreement().getAgreementName());
@@ -118,7 +179,7 @@ public class AgreementStatusHelper {
             } else {
                 currentStatusInfo.getTempAgreement().getZones().add(currentStatusInfo.getTempAgreement().getTempZone());
                 currentStatusInfo.getAgreements().add(currentStatusInfo.getTempAgreement());
-                normalizedStatusMap.put(currentStatusInfo.getGln(), currentStatusInfo);
+                normalizedStatusMap.put(currentStatusInfo.getAliasId(), currentStatusInfo);
             }
         }
         return normalizedStatusMap;
@@ -145,40 +206,6 @@ public class AgreementStatusHelper {
         this.responseBuilder = responseBuilder;
     }
 
-//    public List<AgreementStatusInfo> normalizeAgreementStatusList(List<AgreementStatusInfo> denormalizedStatusList) {
-//        List<AgreementStatusInfo> normalizedStatusList = new ArrayList<AgreementStatusInfo>();
-//        if(denormalizedStatusList!= null && denormalizedStatusList.size() > 0) {
-//            AgreementStatusInfo prevStatusInfo = denormalizedStatusList.get(0);
-//            AgreementInfo prevAgreementInfo = prevStatusInfo.getTempAgreement();
-//            prevAgreementInfo.getZones().add(prevAgreementInfo.getTempZone());
-//            prevStatusInfo.getAgreements().add(prevAgreementInfo);
-//            //prevStatusInfo.getAgreements().add(prevStatusInfo.getTempAgreement());
-//            if(denormalizedStatusList.size() == 1) {
-//                normalizedStatusList.add(prevStatusInfo);
-//            }
-//            AgreementStatusInfo currentStatusInfo = null;
-//            AgreementInfo currentAgreementInfo = null;
-//            for(int index = 1; index < denormalizedStatusList.size(); index++) {
-//                currentStatusInfo = denormalizedStatusList.get(index);
-//                currentAgreementInfo = currentStatusInfo.getTempAgreement();
-//                if(!currentStatusInfo.getGln().equals(prevStatusInfo.getGln())) {
-//                    normalizedStatusList.add(prevStatusInfo);
-//                    prevStatusInfo = currentStatusInfo;
-//                    prevAgreementInfo = prevStatusInfo.getTempAgreement();
-//                    prevAgreementInfo.getZones().add(prevAgreementInfo.getTempZone());
-//                }
-//                if(!prevAgreementInfo.getAgreementName().equals(currentAgreementInfo.getAgreementName())) {
-//                    prevStatusInfo.getAgreements().add(prevAgreementInfo);
-//                    prevAgreementInfo = currentAgreementInfo;
-//                }
-//                prevAgreementInfo.getZones().add(currentAgreementInfo.getTempZone());
-//
-//                if(index ==(denormalizedStatusList.size()-1)) {
-//                    normalizedStatusList.add(prevStatusInfo);
-//                }
-//            }
-//        }
-//        return normalizedStatusList;
-//    }
+
 
 }

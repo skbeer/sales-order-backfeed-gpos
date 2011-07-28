@@ -1,12 +1,13 @@
-package com.monsanto.agreementstatus.helper;
+package com.monsanto.irdsoapservices.agreementstatus.helper;
 
+import com.monsanto.irdsoapservices.agreements.schema.LicensedByType;
 import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementInfo;
 import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo;
 import com.monsanto.irdsoapservices.agreementstatus.domain.ZoneInfo;
-import com.monsanto.irdsoapservices.agreementstatus.helper.AgreementStatusResponseBuilder;
 import com.monsanto.irdsoapservices.agreementstatus.schema.request.*;
 import com.monsanto.irdsoapservices.agreementstatus.schema.response.AgreementStatusResponseType;
 
+import com.monsanto.irdsoapservices.agreementstatus.schema.response.ListPartnerAgencyAttribute;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import junit.framework.TestCase;
@@ -39,11 +40,20 @@ public class AgreementStatusResponseBuilder_UT extends TestCase {
         assertEquals(1, responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().get(0).getAgreementStatusList().get(0).getZone().size());
         assertEquals(2, responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().get(0).getAgreementStatusList().get(1).getZone().size());
 
-//        JAXBContext jxContext = JAXBContext.newInstance("com.monsanto.irdsoapservices.agreementstatus.schema.response");
-//        Marshaller marshaller = jxContext.createMarshaller();
-//        ObjectFactory objectFactory = new ObjectFactory();
-//        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, new Boolean(true));
-//        marshaller.marshal(objectFactory.createAgreementStatusResponse(responseType), new FileOutputStream("c:\\some.xml"));
+    }
+
+    public void testCreateAgreementStatusResponse2() throws Exception {
+        AgreementStatusRequest request = new AgreementStatusRequest();
+        request.setHeader(getHeaderType());
+        AgreementStatusResponseType responseType = builder.getAgreementStatusResponse(request, getAgreements2());
+        assertNotNull(responseType);
+        assertEquals("MONSANTO AGRICULTURAL CO", responseType.getHeader().getFrom().getPartnerInformation().getPartnerName().get(0));
+        assertEquals("A Partner", responseType.getHeader().getTo().getPartnerInformation().getPartnerName().get(0));
+//        assertEquals(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER, responseType.getHeader().getTo().getPartnerInformation().getPartnerIdentifier().get(0).getAgency());
+        assertEquals(2, responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().size());
+        assertEquals(2, responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().get(0).getAgreementStatusList().size());
+        assertEquals(1, responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().get(0).getAgreementStatusList().get(0).getZone().size());
+        assertEquals(2, responseType.getAgreementStatusResponseBody().getAgreementStatusResponseDetails().get(0).getAgreementStatusList().get(1).getZone().size());
     }
 
     private HeaderType getHeaderType() {
@@ -99,11 +109,28 @@ public class AgreementStatusResponseBuilder_UT extends TestCase {
         agreementList.add(getAgreementStatusInfo("2001", new String[]{"MTA3", "MTA4"}, new int[]{1,2}));
         return agreementList;
     }
-
     private AgreementStatusInfo getAgreementStatusInfo(String gln, String[] agreements, int[] zoneCount) {
         AgreementStatusInfo agrStatusInfo = new AgreementStatusInfo();
-        agrStatusInfo.setGln(gln);
+        agrStatusInfo.setAliasId(gln);
         agrStatusInfo.setAcctId(gln);
+        agrStatusInfo.setPartnerName("Good Partner");
+        agrStatusInfo.setContactName("Nice Contact");
+        for (int i = 0; i < agreements.length; i++) {
+            agrStatusInfo.getAgreements().add(getAgreementInfo(agreements[i], zoneCount[i]));
+        }
+        return agrStatusInfo;
+    }
+    private List<AgreementStatusInfo> getAgreements2() {
+        List<AgreementStatusInfo> agreementList = new ArrayList<AgreementStatusInfo>();
+        agreementList.add(getAgreementStatusInfo2("1001","GLN","7005", new String[]{"MTA1", "MTA2"}, new int[]{1,2}));
+        agreementList.add(getAgreementStatusInfo2("2001","SAP","4005", new String[]{"MTA1", "MTA2"}, new int[]{1,2}));
+        return agreementList;
+    }
+    private AgreementStatusInfo getAgreementStatusInfo2(String aliasId,String systemTypeCode,String acctId, String[] agreements, int[] zoneCount) {
+        AgreementStatusInfo agrStatusInfo = new AgreementStatusInfo();
+        agrStatusInfo.setAliasId(aliasId);
+        agrStatusInfo.setSystemTypeCode(systemTypeCode);
+        agrStatusInfo.setAcctId(acctId);
         agrStatusInfo.setPartnerName("Good Partner");
         agrStatusInfo.setContactName("Nice Contact");
         for (int i = 0; i < agreements.length; i++) {

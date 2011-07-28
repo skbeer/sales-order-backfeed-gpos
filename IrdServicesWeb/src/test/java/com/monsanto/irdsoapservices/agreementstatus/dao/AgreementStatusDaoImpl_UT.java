@@ -1,6 +1,5 @@
-package com.monsanto.agreementstatus.dao;
+package com.monsanto.irdsoapservices.agreementstatus.dao;
 
-import com.monsanto.irdsoapservices.agreementstatus.dao.AgreementStatusDao;
 import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 

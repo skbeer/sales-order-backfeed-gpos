@@ -1,15 +1,11 @@
-package com.monsanto.agreementstatus.service;
+package com.monsanto.irdsoapservices.agreementstatus.service;
 
-import com.monsanto.irdsoapservices.agreementstatus.service.AgreementStatusServiceImpl;
 import com.monsanto.irdsoapservices.agreementstatus.schema.response.AgreementStatusResponseType;
 import com.monsanto.irdsoapservices.agreementstatus.schema.request.*;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
 import junit.framework.TestCase;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import java.io.FileOutputStream;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
