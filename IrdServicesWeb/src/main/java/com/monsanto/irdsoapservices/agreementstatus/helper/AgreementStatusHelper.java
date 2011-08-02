@@ -89,17 +89,19 @@ public class AgreementStatusHelper {
     }
 
     private List<AgreementStatusInfo> processFilterByAccountKey(List<AgreementStatusInfo> agreementStatusListByAcctId){
-            List<AgreementStatusInfo> filteredList=new ArrayList<AgreementStatusInfo>();
-            Map<String,AgreementStatusInfo> idValueMap=new HashMap();
-            for(AgreementStatusInfo currentStatusInfo : agreementStatusListByAcctId) {
-                idValueMap.put(currentStatusInfo.getSystemTypeCode(),currentStatusInfo);
+        List<AgreementStatusInfo> filteredList = new ArrayList<AgreementStatusInfo>();
+        if (agreementStatusListByAcctId != null) {
+            Map<String, AgreementStatusInfo> idValueMap = new HashMap();
+            for (AgreementStatusInfo currentStatusInfo : agreementStatusListByAcctId) {
+                idValueMap.put(currentStatusInfo.getSystemTypeCode(), currentStatusInfo);
             }
-            if(idValueMap.get(SYSTEM_CODE_GLN)!=null){
+            if (idValueMap.get(SYSTEM_CODE_GLN) != null) {
                 filteredList.add(idValueMap.get(SYSTEM_CODE_GLN));
-            }else if(idValueMap.get(SYSTEM_CODE_SAP)!=null){
+            } else if (idValueMap.get(SYSTEM_CODE_SAP) != null) {
                 filteredList.add(idValueMap.get(SYSTEM_CODE_SAP));
             }
-            return filteredList;
+        }
+        return filteredList;
     }
 
     private void checkLimitOfGLNs(List<String> glnList) throws Exception {
