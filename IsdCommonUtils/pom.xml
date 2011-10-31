@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.monsanto.commercial</groupId>
         <artifactId>commercial-pom</artifactId>
-        <version>1.0.5</version>
+        <version>1.3.2</version>
     </parent>
 
     <groupId>com.monsanto.commercial.isdcommonutils</groupId>
@@ -16,7 +16,18 @@
     <name>ISD_Common_Utils</name>
     <description>ISD COMMON UTILS - JAR</description>
     <inceptionYear>2009</inceptionYear>
-    
+
+  <properties>
+    <default.java.version>1.6</default.java.version>
+    <default.java.home>${env.JAVA_HOME}</default.java.home>
+
+    <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+    <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
+    <oracle.home>${env.ORACLE_HOME}</oracle.home>
+
+    <local.staging.dir>${weblogic.domain}\autodeploy</local.staging.dir>
+  </properties>
+  
     <dependencies>
     <dependency>
             <groupId>log4j</groupId>

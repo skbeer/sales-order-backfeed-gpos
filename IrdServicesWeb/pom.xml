@@ -18,7 +18,7 @@
     <properties>
         <war.file.name>IrdSoapServices</war.file.name>
         <dev.stage.directory>\\w3d-repliweb\javaapps_dev_staging\seedconnectivity\webapps</dev.stage.directory>
-        <default.weblogic.domain>${env.WEBLOGIC_DOMAIN}</default.weblogic.domain>
+        <!--default.weblogic.domain>${env.WEBLOGIC_DOMAIN}</default.weblogic.domain-->
         <sonar.exclusions>com/monsanto/**/schema/**/*.java,com/monsanto/irdsoapservices/service/**/*.java,com/monsanto/irdsoapservices/test/**/*.java</sonar.exclusions>
     </properties>
 
@@ -237,14 +237,18 @@
         <artifactId>cglib</artifactId>
         <version>2.1_3</version>
     </dependency>
-    <dependency>
+    <!--dependency>
         <groupId>oracle</groupId>
         <artifactId>oracle-jdbc</artifactId>
         <version>10.x</version>
         <scope>system</scope>
-        <!--suppress MavenModelInspection -->
         <systemPath>${oracle.home}/jdbc/lib/ojdbc14.jar</systemPath>
-    </dependency>
+    </dependency-->
+      <dependency>
+        <groupId>oracle</groupId>
+        <artifactId>oracle-jdbc</artifactId>
+        <version>11.2.0.2.0</version>
+      </dependency>
     <dependency>
         <groupId>xerces</groupId>
         <artifactId>xercesImpl</artifactId>
@@ -300,7 +304,7 @@
                     <warName>${war.file.name}</warName>
                     <archive>
                         <manifestEntries>
-                            <Implementation-Version>${current.timestamp}</Implementation-Version>
+                            <Implementation-Version>${maven.build.timestamp}</Implementation-Version>
                         </manifestEntries>
                     </archive>
                 </configuration>

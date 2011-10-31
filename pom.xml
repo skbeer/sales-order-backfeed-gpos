@@ -12,7 +12,7 @@
     <parent>
         <groupId>com.monsanto.commercial</groupId>
         <artifactId>commercial-pom</artifactId>
-        <version>1.1.0</version>
+        <version>1.3.2</version>
     </parent>
 
     <groupId>com.monsanto.commercial.irdsoapservices</groupId>
@@ -33,8 +33,14 @@
     </scm>
 
     <properties>
+      <default.java.version>1.6</default.java.version>
+      <default.java.home>${env.JAVA_HOME}</default.java.home>
+
+      <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
+      <oracle.home>${env.ORACLE_HOME}</oracle.home>
+
+      <local.staging.dir>${weblogic.domain}\autodeploy</local.staging.dir>
         <java.version>1.6</java.version>
-        <oracle.home>${env.ORACLE_HOME}</oracle.home>
         <junit.version>4.4</junit.version>
         <spring.version>2.5.6</spring.version>
         <slf4j.version>1.4.3</slf4j.version>

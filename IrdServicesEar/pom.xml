@@ -17,7 +17,7 @@
     <inceptionYear>2009</inceptionYear>
 
     <properties>
-        <default.weblogic.domain>${env.WEBLOGIC_DOMAIN}</default.weblogic.domain>
+        <!--default.weblogic.domain>${env.WEBLOGIC_DOMAIN}</default.weblogic.domain-->
         <default.ear.name>IrdSoapServices</default.ear.name>
     </properties>
 

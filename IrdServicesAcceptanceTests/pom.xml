@@ -15,6 +15,15 @@
     <name>IrdSoapServices-ATs</name>
     <description>ACCEPTANCE TESTS FOR IRD SOAP SERVICES</description>
     <inceptionYear>2009</inceptionYear>
+  <properties>
+    <default.java.version>1.6</default.java.version>
+    <default.java.home>${env.JAVA_HOME}</default.java.home>
+
+    <maven.build.timestamp.format>yyyyMMdd_HHmmss</maven.build.timestamp.format>
+    <oracle.home>${env.ORACLE_HOME}</oracle.home>
+
+  </properties>
+
 
     <dependencies>
         <dependency>                     
