@@ -16,7 +16,7 @@
 
     <groupId>com.monsanto.commercial.irdsoapservices</groupId>
     <artifactId>irdsoapservices-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Service Development IRDSoapServices</name>
     <description>IRD Soap Services Project</description>
@@ -27,8 +27,8 @@
     </organization>
 
     <scm>
-        <connection>scm:svn:http://svn01/commercial/ServiceDevelopment/IRDSoapServices/tags/irdsoapservices-parent-1.0.0</connection>
-        <developerConnection>scm:svn:http://svn01/commercial/ServiceDevelopment/IRDSoapServices/tags/irdsoapservices-parent-1.0.0</developerConnection>
+        <connection>scm:svn:http://svn01/commercial/ServiceDevelopment/IRDSoapServices/trunk</connection>
+        <developerConnection>scm:svn:http://svn01/commercial/ServiceDevelopment/IRDSoapServices/trunk</developerConnection>
     </scm>
 
     <properties>
