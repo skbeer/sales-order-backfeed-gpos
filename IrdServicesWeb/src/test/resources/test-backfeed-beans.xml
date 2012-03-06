@@ -14,7 +14,7 @@
 		<property name="driverClassName"
 			value="oracle.jdbc.OracleDriver" />
 		<property name="url"
-			value="jdbc:oracle:thin:@dev01.monsanto.com:1521:fsdevl01" />
+			value="jdbc:oracle:thin:@fsdevl01:1521:fsdevl01" />
 		<property name="username" value="ECOM_APP" />
 		<property name="password" value="USF00D_2019" />
 	</bean>
