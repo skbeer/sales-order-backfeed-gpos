@@ -26,25 +26,25 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
     public void testGetAgreementsByAccountId_returnAcctId() throws Exception {
         List<AgreementInfo> agreements = agreementDao.getAgreementsByAccountId(2, "ADDM", AccountTypeAttribute.ACCTID.toString());
         assertEquals(1, agreements.size());
-        assertAgreementInfo(agreements, 0, 2, 2, "ADDM", "01/01/2010", "12/31/2011", "RVVAMS", "01/14/2008", null, null);
+        assertAgreementInfo(agreements, 0, 2, 2, "ADDM", "01/01/2010", "12/31/2012", "RVVAMS", "01/14/2008", null, null);
     }
 
     public void testGetAgreementsByAccountId_returnSAPId() throws Exception {
         List<AgreementInfo> agreements = agreementDao.getAgreementsByAccountId(2, "ADDM", AccountTypeAttribute.SAP.toString());
         assertEquals(1, agreements.size());
-        assertAgreementInfo(agreements, 0, 2, 2, "ADDM", "01/01/2010", "12/31/2011", "RVVAMS", "01/14/2008", "0001696477", "0001696477");
+        assertAgreementInfo(agreements, 0, 2, 2, "ADDM", "01/01/2010", "12/31/2012", "RVVAMS", "01/14/2008", "0001696477", "0001696477");
     }
 
     public void testGetAgreementsBySigner_returnAcctId() throws Exception {
         List<AgreementInfo> agreements = agreementDao.getAgreementsBySignerAccountId(5180, "APIT", AccountTypeAttribute.ACCTID.toString());
         assertEquals(1, agreements.size());
-        assertAgreementInfo(agreements, 0, 5180, 5180, "APIT", "04/26/2007", "12/31/4712", "AKJACOB", "01/01/2007", null, null);
+        assertAgreementInfo(agreements, 0, 5180, 5180, "APIT", "04/26/2007", "02/22/2012", "RVVAMS", "01/01/2007", null, null);
     }
 
     public void testGetAgreementsBySigner_returnGLN() throws Exception {
         List<AgreementInfo> agreements = agreementDao.getAgreementsBySignerAccountId(5180, "APIT", AccountTypeAttribute.GLN.toString());
         assertEquals(1, agreements.size());
-        assertAgreementInfo(agreements, 0, 5180, 5180, "APIT", "04/26/2007", "12/31/4712", "AKJACOB", "01/01/2007", "0629245000011", "0629245000011");
+        assertAgreementInfo(agreements, 0, 5180, 5180, "APIT", "04/26/2007", "02/22/2012", "RVVAMS", "01/01/2007", "0629245000011", "0629245000011");
     }
 
     public void testUpdateAgreement() throws Exception {
@@ -68,10 +68,10 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
     public void testGetAgreementHierarchy_withAgreements_returnValidData() throws Exception {
         List<AgreementHierarchyInfo> agrHierarchy = agreementDao.getAgreementHierarchy(1836, "CS");
         assertNotNull(agrHierarchy);
-        assertEquals(3, agrHierarchy.size());
+        assertEquals(2, agrHierarchy.size());
         assertAgrementHierarchyInfo(agrHierarchy, 0, "RRSN", "RRSN-Soybean", null, "C08", "N", "Y");
         assertAgrementHierarchyInfo(agrHierarchy, 1, "Z051", "Bean Commercial", "Z05", null, "N", "Y");
-        assertAgrementHierarchyInfo(agrHierarchy, 2, "Z052", "Bean Testing", "Z05", null, "N", "Y");
+//        assertAgrementHierarchyInfo(agrHierarchy, 2, "Z052", "Bean Testing", "Z05", null, "N", "Y");
 //        assertAgrementHierarchyInfo(agrHierarchy, 0, "RRSN", "RRSN-Soybean", null, "C08", "N", "Y");
 //        assertAgrementHierarchyInfo(agrHierarchy, 1, "Z051", "Bean Commercial", "Z05", null, "N", "Y");
 //        assertAgrementHierarchyInfo(agrHierarchy, 2, "Z052", "Bean Testing", "Z05", null, "N", "Y");
