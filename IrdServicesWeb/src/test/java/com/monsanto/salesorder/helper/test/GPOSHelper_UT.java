@@ -5,6 +5,7 @@ import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
 import com.monsanto.irdsoapservices.salesorder.domain.LineItemInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.PartnerInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
 import com.monsanto.irdsoapservices.salesorder.helper.GPOSHelper;
@@ -47,12 +48,12 @@ public class GPOSHelper_UT extends TestCase {
     }
 
     public void testNormalizeOrders() throws Exception {
-        pposOrderList.add(getGPOSOrder("1001", "1"));
-        pposOrderList.add(getGPOSOrder("1001", "2"));
-        pposOrderList.add(getGPOSOrder("1002", "1"));
-        pposOrderList.add(getGPOSOrder("1003", "1"));
-        pposOrderList.add(getGPOSOrder("1003", "2"));
-        pposOrderList.add(getGPOSOrder("1003", "3"));
+        pposOrderList.add(getGPOSOrder("1001", "1", "1234"));
+        pposOrderList.add(getGPOSOrder("1001", "2", "1234"));
+        pposOrderList.add(getGPOSOrder("1002", "1", "1234"));
+        pposOrderList.add(getGPOSOrder("1003", "1", "1234"));
+        pposOrderList.add(getGPOSOrder("1003", "2", "1234"));
+        pposOrderList.add(getGPOSOrder("1003", "3", "1234"));
         List<GPOSOrderInfo> normalizedOrders = pposHelper.normalizeOrderLineItems(pposOrderList);
         assertEquals(3, normalizedOrders.size());
         assertEquals(2, normalizedOrders.get(0).getLineItems().size());
@@ -61,12 +62,12 @@ public class GPOSHelper_UT extends TestCase {
     }
 
     public void testNormalizeOrders_scenario2() throws Exception {
-        pposOrderList.add(getGPOSOrder("1001", "1"));
-        pposOrderList.add(getGPOSOrder("1002", "1"));
-        pposOrderList.add(getGPOSOrder("1002", "2"));
-        pposOrderList.add(getGPOSOrder("1002", "3"));
-        pposOrderList.add(getGPOSOrder("1002", "4"));
-        pposOrderList.add(getGPOSOrder("1003", "3"));
+        pposOrderList.add(getGPOSOrder("1001", "1", "1234"));
+        pposOrderList.add(getGPOSOrder("1002", "1", "1234"));
+        pposOrderList.add(getGPOSOrder("1002", "2", "1234"));
+        pposOrderList.add(getGPOSOrder("1002", "3", "1234"));
+        pposOrderList.add(getGPOSOrder("1002", "4", "1234"));
+        pposOrderList.add(getGPOSOrder("1003", "3", "1234"));
         List<GPOSOrderInfo> normalizedOrders = pposHelper.normalizeOrderLineItems(pposOrderList);
         assertEquals(3, normalizedOrders.size());
         assertEquals(1, normalizedOrders.get(0).getLineItems().size());
@@ -75,16 +76,16 @@ public class GPOSHelper_UT extends TestCase {
     }
 
     public void testNormalizeOrders_scenario3() throws Exception {
-        pposOrderList.add(getGPOSOrder("1001", "1"));
-        pposOrderList.add(getGPOSOrder("1001", "2"));
-        pposOrderList.add(getGPOSOrder("1002", "1"));
-        pposOrderList.add(getGPOSOrder("1003", "1"));
-        pposOrderList.add(getGPOSOrder("1004", "2"));
-        pposOrderList.add(getGPOSOrder("1005", "1"));
-        pposOrderList.add(getGPOSOrder("1005", "2"));
-        pposOrderList.add(getGPOSOrder("1006", "2"));
-        pposOrderList.add(getGPOSOrder("1007", "2"));
-        pposOrderList.add(getGPOSOrder("1008", "2"));
+        pposOrderList.add(getGPOSOrder("1001", "1", "1234"));
+        pposOrderList.add(getGPOSOrder("1001", "2", "1234"));
+        pposOrderList.add(getGPOSOrder("1002", "1", "1234"));
+        pposOrderList.add(getGPOSOrder("1003", "1", "1234"));
+        pposOrderList.add(getGPOSOrder("1004", "2", "1234"));
+        pposOrderList.add(getGPOSOrder("1005", "1", "1234"));
+        pposOrderList.add(getGPOSOrder("1005", "2", "1234"));
+        pposOrderList.add(getGPOSOrder("1006", "2", "1234"));
+        pposOrderList.add(getGPOSOrder("1007", "2", "1234"));
+        pposOrderList.add(getGPOSOrder("1008", "2", "1234"));
         List<GPOSOrderInfo> normalizedOrders = pposHelper.normalizeOrderLineItems(pposOrderList);
         assertEquals(8, normalizedOrders.size());
         assertEquals(2, normalizedOrders.get(0).getLineItems().size());
@@ -98,7 +99,7 @@ public class GPOSHelper_UT extends TestCase {
     }
 
     public void testNormalizeOrders_scenario4() throws Exception {
-        pposOrderList.add(getGPOSOrder("1001", "1"));
+        pposOrderList.add(getGPOSOrder("1001", "1", "1234"));
         List<GPOSOrderInfo> normalizedOrders = pposHelper.normalizeOrderLineItems(pposOrderList);
         assertEquals(1, normalizedOrders.size());
         assertEquals(1, normalizedOrders.get(0).getLineItems().size());
@@ -107,7 +108,7 @@ public class GPOSHelper_UT extends TestCase {
     public void testProcessGPOSOrder_noException_returnOrdersSent() throws Exception {
         Date aDate = new Date();
         List<GPOSOrderInfo> orders = new ArrayList<GPOSOrderInfo>();
-        orders.add(getGPOSOrder("1001", "1"));
+        orders.add(getGPOSOrder("1001", "1", "1234"));
         TransactionInfo transactionInfo = getTransactionInfo(aDate, "ABC");
         org.easymock.EasyMock.expect(salesOrderDao.getGPOSOrders(aDate, "ABC")).andReturn(orders);
         EasyMock.expect(pposRequestBuilder.buildGPOSRequest((List<GPOSOrderInfo>)EasyMock.anyObject(), (TransactionInfo)EasyMock.anyObject())).andReturn(getSalesOrderReport());
@@ -130,7 +131,7 @@ public class GPOSHelper_UT extends TestCase {
     public void testProcessGPOSOrder_withException_return0() throws Exception {
         Date aDate = new Date();
         List<GPOSOrderInfo> orders = new ArrayList<GPOSOrderInfo>();
-        orders.add(getGPOSOrder("1001", "1"));
+        orders.add(getGPOSOrder("1001", "1", "1234"));
         TransactionInfo transactionInfo = getTransactionInfo(aDate, "ABC");
         org.easymock.EasyMock.expect(salesOrderDao.getGPOSOrders(aDate, "ABC")).andReturn(orders);
         EasyMock.expect(pposRequestBuilder.buildGPOSRequest((List<GPOSOrderInfo>)EasyMock.anyObject(), (TransactionInfo)EasyMock.anyObject())).andReturn(getSalesOrderReport());
@@ -152,12 +153,16 @@ public class GPOSHelper_UT extends TestCase {
         org.easymock.EasyMock.verify(salesOrderServiceClient);
     }
 
-    private GPOSOrderInfo getGPOSOrder(String crmOrderNumber, String lineItemNumber) {
+    private GPOSOrderInfo getGPOSOrder(String crmOrderNumber, String lineItemNumber, String acctId) {
         GPOSOrderInfo pposOrderInfo = new GPOSOrderInfo();
+        pposOrderInfo.setOrderNumber(crmOrderNumber);
         pposOrderInfo.setCrmOrderNumber(crmOrderNumber);
             LineItemInfo lineItem = new LineItemInfo();
             lineItem.setItemNumber(lineItemNumber);
             pposOrderInfo.setTempLineItem(lineItem);
+        PartnerInfo dealerinfo = new PartnerInfo();
+        dealerinfo.setAcctId(acctId);
+        pposOrderInfo.setDealerInfo(dealerinfo);
         return pposOrderInfo;
     }
 
