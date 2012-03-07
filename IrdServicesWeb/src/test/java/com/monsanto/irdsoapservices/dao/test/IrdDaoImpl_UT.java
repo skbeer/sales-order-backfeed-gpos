@@ -128,7 +128,7 @@ public class IrdDaoImpl_UT extends AbstractTransactionalDataSourceSpringContextT
 	}
 
     public void testGetAssEmployees_noData_returnBlankList() throws Exception {
-        List<EmployeeInfo> employees = irdDao.getAssociatedEmployees(5180);
+        List<EmployeeInfo> employees = irdDao.getAssociatedEmployees(6180);
         assertNotNull(employees);
         assertEquals(0, employees.size());
     }
@@ -139,11 +139,11 @@ public class IrdDaoImpl_UT extends AbstractTransactionalDataSourceSpringContextT
         assertEquals(1, employees.size());
         EmployeeInfo empInfo = employees.get(0);
         assertEquals(5188 ,empInfo.getAccountId());
-        assertEquals("CMLUELF", empInfo.getUserId());
-        assertEquals("SAM", empInfo.getRoleCode());
-        assertEquals("Christine", empInfo.getFirstName());
-        assertEquals("Luelf", empInfo.getLastName());
-        assertEquals("christine.m.luelf@monsanto.com", empInfo.getEmailAddress());
+        assertEquals("KDSTEF", empInfo.getUserId());
+        assertEquals("STO", empInfo.getRoleCode());
+        assertEquals("Kristopher", empInfo.getFirstName());
+        assertEquals("Steffen", empInfo.getLastName());
+        assertEquals("kristopher.d.steffen@monsanto.com", empInfo.getEmailAddress());
     }
 
     public void testGetAssocEmployees_withData_returnEmployeeList_WithSTO() throws Exception {
