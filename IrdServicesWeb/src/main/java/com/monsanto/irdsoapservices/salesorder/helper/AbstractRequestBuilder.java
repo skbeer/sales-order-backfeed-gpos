@@ -55,7 +55,7 @@ public abstract class AbstractRequestBuilder {
         return dateTimeType;
     }
 
-    private String createDocumentIdentifier(TransactionInfo transactionInfo, String tranType) {
+    protected String createDocumentIdentifier(TransactionInfo transactionInfo, String tranType) {
         StringBuffer sBuffer = new StringBuffer();
         sBuffer.append(tranType);
         sBuffer.append("_");

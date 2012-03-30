@@ -19,6 +19,7 @@ public class TransactionInfo {
     Date lastTransactionDate;
     long lastTransactionNumber;
     int maxFileSize;
+    String dataSourceType;
 
     public int getMaxFileSize() {
         return maxFileSize;
@@ -92,6 +93,14 @@ public class TransactionInfo {
         this.lastTransactionNumber = lastTransactionNumber;
     }
 
+    public String getDataSourceType() {
+        return dataSourceType;
+    }
+
+    public void setDataSourceType(String dataSourceType) {
+        this.dataSourceType = dataSourceType;
+    }
+
     @Override
     public String toString() {
         return "TransactionInfo{" +
@@ -99,6 +108,7 @@ public class TransactionInfo {
                 ", groupCode='" + groupCode + '\'' +
                 ", companyCode='" + companyCode + '\'' +
                 ", transactionType='" + transactionType + '\'' +
+                ", dataSourceType='" + dataSourceType + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", lastTransactionDate=" + lastTransactionDate +

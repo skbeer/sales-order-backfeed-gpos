@@ -9,6 +9,7 @@ package com.monsanto.irdsoapservices.salesorder.domain;
  */
 public class GPOSOrderInfo extends OrderInfo {
     PartnerInfo growerInfo;
+    PartnerInfo salesRepWinfield;
 
     public PartnerInfo getDealerInfo() {
         return dealerInfo;
@@ -24,5 +25,13 @@ public class GPOSOrderInfo extends OrderInfo {
 
     public void setGrowerInfo(PartnerInfo growerInfo) {
         this.growerInfo = growerInfo;
+    }
+
+    public PartnerInfo getSalesRepWinfield() {
+        return salesRepWinfield;
+    }
+
+    public void setSalesRepWinfield(PartnerInfo salesRepWinfield) {
+        this.salesRepWinfield = salesRepWinfield;
     }
 }

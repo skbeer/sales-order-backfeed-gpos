@@ -5,6 +5,7 @@ import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
 import com.monsanto.irdsoapservices.salesorder.helper.COSHelper;
 import com.monsanto.irdsoapservices.salesorder.helper.GPOSHelper;
+import com.monsanto.irdsoapservices.salesorder.helper.GPOSWinfieldHelper;
 import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
 import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 import com.monsanto.irdsoapservices.constants.DBConstants;
@@ -27,6 +28,7 @@ public class SalesOrderReportService {
     private PPOSHelper pposHelper;
     private COSHelper cosHelper;
     private GPOSHelper gposHelper;
+    private GPOSWinfieldHelper gposWinfieldHelper;
     Logger logger = Logger.getLogger(this.getClass());
 
     public void startProcessing() throws SalesOrderException {
@@ -47,6 +49,18 @@ public class SalesOrderReportService {
                         ordersSent = cosHelper.processCOSOrderReport(transaction);
                     } else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_TRAN_TYPE)) {
                         ordersSent = gposHelper.processGPOSOrderReport(transaction);
+                    }
+                    else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGRIMINE_TRAN_TYPE)) {
+                        transaction.setDataSourceType(DBConstants.AGRIMINE_DATA_SOURCE_TYPE);
+                        ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
+                    }
+                    else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_CLASSIC_TRAN_TYPE)) {
+                        transaction.setDataSourceType(DBConstants.XML_DATA_SOURCE_TYPE);
+                        ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
+                    }
+                    else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_DIRECT_TRAN_TYPE)) {
+                        transaction.setDataSourceType(DBConstants.DIRECT_DATA_SOURCE_TYPE);
+                        ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
                     }
                     updateTransaction(transaction, ordersSent);
                 } catch (SalesOrderException e) {
@@ -94,5 +108,9 @@ public class SalesOrderReportService {
 
     public void setGposHelper(GPOSHelper gposHelper) {
         this.gposHelper = gposHelper;
+    }
+
+    public void setGposWinfieldHelper(GPOSWinfieldHelper gposWinfieldHelper) {
+        this.gposWinfieldHelper = gposWinfieldHelper;
     }
 }

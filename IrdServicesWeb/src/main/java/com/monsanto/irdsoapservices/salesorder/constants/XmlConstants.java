@@ -15,4 +15,5 @@ public class XmlConstants {
     public static final String GPOS_TRAN_TYPE = "NS";    
     public static final String UN_REC_20 = "UN-Rec-20";
     public static final String DATE_FORMAT_FOR_DOCUMENT_IDENTIFIER = "yyyy-MM-dd-HH:mm:ss:SSS";
+    public static final String ORDER_TYPE_MANUAL = "Manual";
 }

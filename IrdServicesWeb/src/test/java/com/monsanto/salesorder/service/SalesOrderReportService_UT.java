@@ -4,6 +4,7 @@ import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
 import com.monsanto.irdsoapservices.salesorder.helper.GPOSHelper;
+import com.monsanto.irdsoapservices.salesorder.helper.GPOSWinfieldHelper;
 import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
 import com.monsanto.irdsoapservices.salesorder.helper.COSHelper;
 import com.monsanto.irdsoapservices.salesorder.service.SalesOrderReportService;
@@ -27,17 +28,20 @@ public class SalesOrderReportService_UT extends TestCase {
     TransactionDao transactionDao;
     COSHelper cosHelper;
     GPOSHelper gposHelper;
+    GPOSWinfieldHelper gposWinfieldHelper;
     @Override
     protected void setUp() throws Exception {
         transactionDao = EasyMock.createMock(TransactionDao.class);
         pposHelper = org.easymock.classextension.EasyMock.createMock(PPOSHelper.class);
         cosHelper = org.easymock.classextension.EasyMock.createMock(COSHelper.class);
         gposHelper = org.easymock.classextension.EasyMock.createMock(GPOSHelper.class);
+        gposWinfieldHelper = org.easymock.classextension.EasyMock.createMock(GPOSWinfieldHelper.class);
         salesOrderReportService = new SalesOrderReportService();
         salesOrderReportService.setTransactionDao(transactionDao);
         salesOrderReportService.setPposHelper(pposHelper);
         salesOrderReportService.setCosHelper(cosHelper);
         salesOrderReportService.setGposHelper(gposHelper);
+        salesOrderReportService.setGposWinfieldHelper(gposWinfieldHelper);
     }
 
     public void testStartProcessing_noTransactions_doNothing() throws Exception {
@@ -81,6 +85,33 @@ public class SalesOrderReportService_UT extends TestCase {
         EasyMock.verify(transactionDao);
         org.easymock.classextension.EasyMock.verify(pposHelper);
         org.easymock.classextension.EasyMock.verify(cosHelper);
+    }
+
+    public void testStartProcessing_AllTypesTransactions_foundOrders_processOrders() throws Exception {
+        EasyMock.expect(transactionDao.getTransactionsToBeProcessed()).andReturn(getTranList(6));
+        org.easymock.classextension.EasyMock.expect(pposHelper.processPPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        org.easymock.classextension.EasyMock.expect(cosHelper.processCOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        org.easymock.classextension.EasyMock.expect(gposHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.replay(transactionDao);
+        org.easymock.classextension.EasyMock.replay(pposHelper);
+        org.easymock.classextension.EasyMock.replay(cosHelper);
+        org.easymock.classextension.EasyMock.replay(gposHelper);
+        org.easymock.classextension.EasyMock.replay(gposWinfieldHelper);
+        salesOrderReportService.startProcessing();
+        EasyMock.verify(transactionDao);
+        org.easymock.classextension.EasyMock.verify(pposHelper);
+        org.easymock.classextension.EasyMock.verify(cosHelper);
+        org.easymock.classextension.EasyMock.verify(gposHelper);
+        org.easymock.classextension.EasyMock.verify(gposWinfieldHelper);
     }
 
     public void testStartProcessing_multipleTransactions_withError_processRemainingTransactions() throws Exception {
@@ -131,7 +162,18 @@ public class SalesOrderReportService_UT extends TestCase {
         for (int index = 0; index < count; index++) {
             TransactionInfo transactionInfo =  new TransactionInfo();
             transactionInfo.setName("Name "+index);
-            transactionInfo.setTransactionType(index==0 ? "PPOS":"DOS");
+            if(index == 0)
+            transactionInfo.setTransactionType("PPOS");
+            else if(index == 1)
+                    transactionInfo.setTransactionType("DOS");
+            else if(index == 2)
+                    transactionInfo.setTransactionType("GPOS");
+            else if(index == 3)
+                    transactionInfo.setTransactionType("GPOS;DIRECT");
+            else if(index == 4)
+                    transactionInfo.setTransactionType("GPOS;CLASSIC");
+            else if(index == 5)
+                    transactionInfo.setTransactionType("GPOS;AGRIMINE");
             list.add(transactionInfo);
         }
         return list;

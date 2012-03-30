@@ -1,5 +1,6 @@
 package com.monsanto.salesorder.dao.test;
 
+import com.monsanto.irdsoapservices.constants.DBConstants;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDaoImpl;
 import com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo;
@@ -70,5 +71,21 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
         List<GPOSOrderInfo> gposOrders = salesOrderDao.getGPOSOrders(calendar.getTime(), "XA");
         System.out.println("No of Rows = "+gposOrders.size());
         assertTrue(gposOrders.size() >= 0);
+    }
+
+    public void testGetGPOSWinfieldOrders() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2011, 9, 1);
+        List<GPOSOrderInfo> gposWinfieldOrders = salesOrderDao.getGPOSWinfieldOrders(calendar.getTime(), "XML", "XML");
+        System.out.println("No of Rows = "+gposWinfieldOrders.size());
+        assertTrue(gposWinfieldOrders.size() >= 0);
+    }
+
+    public void testGetGPOSDirectOrders() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2011, 9, 1);
+        List<GPOSOrderInfo> gposDirectOrders= salesOrderDao.getGPOSDirectOrders(calendar.getTime(), DBConstants.DIRECT_DATA_SOURCE_TYPE);
+        System.out.println("No of Rows = "+gposDirectOrders.size());
+        assertTrue(gposDirectOrders.size() >= 0);
     }
 }

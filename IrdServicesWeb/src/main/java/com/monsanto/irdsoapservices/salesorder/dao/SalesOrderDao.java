@@ -20,4 +20,8 @@ public interface SalesOrderDao {
     List<COSOrderInfo> getCOSOrders(Date startDate, String groupCode) throws Exception;
 
     List<GPOSOrderInfo> getGPOSOrders(Date startDate, String groupCode) throws Exception;
+
+    List<GPOSOrderInfo> getGPOSWinfieldOrders(Date startDate, String groupCode, String transactionType) throws Exception;
+
+    List<GPOSOrderInfo> getGPOSDirectOrders(Date startDate, String groupCode) throws Exception;
 }

@@ -19,6 +19,7 @@ public class LineItemInfo {
     String shippedQty;
     String pendingQty;
     String qtyUom = "UN";
+    String orderTransactionType;
 
     public String getOrderQty() {
         return orderQty;
@@ -106,5 +107,13 @@ public class LineItemInfo {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getOrderTransactionType() {
+        return orderTransactionType;
+    }
+
+    public void setOrderTransactionType(String orderTransactionType) {
+        this.orderTransactionType = orderTransactionType;
     }
 }
