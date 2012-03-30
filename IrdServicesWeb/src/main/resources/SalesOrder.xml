@@ -673,7 +673,7 @@
                 AND cgp.division_code = '17'
                 AND cgp.sales_org_code = 'US20'
                 AND p_st.acct_id = g.acct_id
-                AND ts.source = 'XML'
+                AND ts.source = #transactionType#
                 AND (RTRIM(g.napd_id) IS NOT NULL
                      OR RTRIM(gln_map.alias_id) IS NOT NULL)
                 AND g.acct_id = gln_map.acct_id(+)
