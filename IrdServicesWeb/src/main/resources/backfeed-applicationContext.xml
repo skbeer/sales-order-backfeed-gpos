@@ -32,6 +32,11 @@
         <property name="dataSource" ref="irdDataSource"/>
     </bean>
 
+    <bean id="dataSummaryDao" class="com.monsanto.irdsoapservices.salesorder.dao.DataSummaryDaoImpl">
+        <property name="dataSource" ref="irdDataSource" />
+		<property name="sqlMapClient" ref="sqlMap" />
+    </bean>
+
     <bean id="pposHelper" class="com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper">
         <property name="clientFactory" ref="clientFactory"/>
         <property name="pposRequestBuilder" ref="pposRequestBuilder"/>
@@ -53,11 +58,19 @@
         <property name="transactionDao" ref="transactionDao"/>
     </bean>
 
+    <bean id="gposWinfieldHelper" class="com.monsanto.irdsoapservices.salesorder.helper.GPOSWinfieldHelper">
+        <property name="clientFactory" ref="clientFactory"/>
+        <property name="gposRequestBuilder" ref="gposRequestBuilder"/>
+        <property name="salesOrderDao" ref="salesOrderDao"/>
+        <property name="transactionDao" ref="transactionDao"/>
+    </bean>
+
     <bean id="salesOrderService" class="com.monsanto.irdsoapservices.salesorder.service.SalesOrderReportService">
         <property name="transactionDao" ref="transactionDao"/>
         <property name="pposHelper" ref="pposHelper"/>
         <property name="cosHelper" ref="cosHelper"/>
         <property name="gposHelper" ref="gposHelper"/>
+        <property name="gposWinfieldHelper" ref="gposWinfieldHelper"/>
     </bean>
 
     <bean id="retailSellerDao" class="com.monsanto.irdsoapservices.retailseller.dao.RetailSellerDaoImpl">
