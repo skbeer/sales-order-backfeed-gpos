@@ -60,7 +60,7 @@
 
     <bean id="gposWinfieldHelper" class="com.monsanto.irdsoapservices.salesorder.helper.GPOSWinfieldHelper">
         <property name="clientFactory" ref="clientFactory"/>
-        <property name="gposRequestBuilder" ref="gposRequestBuilder"/>
+        <property name="gposWinfieldRequestBuilder" ref="gposWinfieldRequestBuilder"/>
         <property name="salesOrderDao" ref="salesOrderDao"/>
         <property name="transactionDao" ref="transactionDao"/>
     </bean>
@@ -98,7 +98,7 @@
     <bean id="pposRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.PPOSRequestBuilder"/>
     <bean id="cosRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.COSRequestBuilder"/>
     <bean id="gposRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.GPOSRequestBuilder"/>
-
+    <bean id="gposWinfieldRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.GPOSWinfieldRequestBuilder"/>
 
 
 

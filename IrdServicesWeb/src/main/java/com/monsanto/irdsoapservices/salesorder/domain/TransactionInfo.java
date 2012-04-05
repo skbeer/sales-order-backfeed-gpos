@@ -1,6 +1,8 @@
 package com.monsanto.irdsoapservices.salesorder.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,6 +22,7 @@ public class TransactionInfo {
     long lastTransactionNumber;
     int maxFileSize;
     String dataSourceType;
+    List<String> documentIds = new ArrayList<String>();
 
     public int getMaxFileSize() {
         return maxFileSize;
@@ -101,6 +104,15 @@ public class TransactionInfo {
         this.dataSourceType = dataSourceType;
     }
 
+    public List<String> getDocumentIds() {
+        return documentIds;
+    }
+
+    public void setDocumentIds(List<String> documentIds) {
+        this.documentIds = documentIds;
+    }
+
+    //TODO Add documentIds
     @Override
     public String toString() {
         return "TransactionInfo{" +

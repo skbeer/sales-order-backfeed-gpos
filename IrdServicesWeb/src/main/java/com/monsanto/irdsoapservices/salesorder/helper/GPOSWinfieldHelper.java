@@ -4,6 +4,7 @@ import com.monsanto.irdsoapservices.constants.DBConstants;
 import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
+import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryTotals;
 import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.OrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
@@ -24,7 +25,7 @@ import java.util.List;
 public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> {
     SalesOrderDao salesOrderDao;
     Logger logger = Logger.getLogger(this.getClass());
-    GPOSRequestBuilder gposRequestBuilder;
+    GPOSWinfieldRequestBuilder gposWinfieldRequestBuilder;
 
     public int processGPOSOrderReport(TransactionInfo transaction) throws SalesOrderException {
         int ordersSent = 0;
@@ -69,15 +70,19 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
     }
 
     protected SalesOrderReport getSalesOrderRequest(List<GPOSOrderInfo> orderReport, TransactionInfo transactionInfo) throws Exception {
-        return gposRequestBuilder.buildGPOSRequest(orderReport, transactionInfo);
+        return gposWinfieldRequestBuilder.buildGPOSRequest(orderReport, transactionInfo);
     }
 
     public void setSalesOrderDao(SalesOrderDao salesOrderDao) {
         this.salesOrderDao = salesOrderDao;
     }
 
-    public void setGposRequestBuilder(GPOSRequestBuilder gposRequestBuilder) {
-        this.gposRequestBuilder = gposRequestBuilder;
+    public GPOSWinfieldRequestBuilder getGposWinfieldRequestBuilder() {
+        return gposWinfieldRequestBuilder;
+    }
+
+    public void setGposWinfieldRequestBuilder(GPOSWinfieldRequestBuilder gposWinfieldRequestBuilder) {
+        this.gposWinfieldRequestBuilder = gposWinfieldRequestBuilder;
     }
 
     public void setClientFactory(ClientFactory clientFactory) {

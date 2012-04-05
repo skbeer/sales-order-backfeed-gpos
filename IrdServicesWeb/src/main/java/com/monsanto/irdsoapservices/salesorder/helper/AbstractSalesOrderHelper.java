@@ -72,7 +72,7 @@ public abstract class AbstractSalesOrderHelper<T extends OrderInfo> {
             logger.info("Sending Batch # "+(++count));
             try {
                 SalesOrderReport salesOrderRequest = getSalesOrderRequest(subList(originalOrders, 0, endPos), transactionInfo);
-                updateDocumentIdentifier(salesOrderRequest, count, totalBatches);
+                updateDocumentIdentifierAndAddToDataSummaryDetails(salesOrderRequest, count, totalBatches, transactionInfo);
                 SalesOrderReportResponseType response = clientFactory.getSalesOrderClient().getSalesOrderReport(salesOrderRequest);
             } catch (Exception se) {
                 logger.error("Error occurred while trying to send Batch # "+count);
@@ -87,9 +87,10 @@ public abstract class AbstractSalesOrderHelper<T extends OrderInfo> {
         logger.info("Completed sending Orders.");
     }
 
-    private void updateDocumentIdentifier(SalesOrderReport salesOrderReport, int fileNumber, int totalFiles) {
+    private void updateDocumentIdentifierAndAddToDataSummaryDetails(SalesOrderReport salesOrderReport, int fileNumber, int totalFiles, TransactionInfo transactionInfo) {
         String docId = salesOrderReport.getHeader().getThisDocumentIdentifier().getDocumentIdentifier();
         docId = docId.replaceFirst("SEQUENCE", fileNumber+"_OF_"+totalFiles);
         salesOrderReport.getHeader().getThisDocumentIdentifier().setDocumentIdentifier(docId);
+        transactionInfo.getDocumentIds().add(docId);
     }
 }
