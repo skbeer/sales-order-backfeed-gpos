@@ -546,8 +546,10 @@
                                        </taskdef>
 
                                        <echo>Calling wsimport for Sales Order Service</echo>
-                                       <wsimport wsdl="http://services-dint.monsanto.com/ECOM_SalesDoc/SalesOrder?wsdl" keep="true" verbose="true" sourcedestdir="src/main/java" package="com.monsanto.irdsoapservices.salesorder.schema" />
-
+                                       <wsimport wsdl="http://services-dint.monsanto.com/ECOM_SalesDoc/SalesOrder?wsdl" keep="true" verbose="true" sourcedestdir="src/main/java">
+                                           <binding dir="src/main/resources" includes="salesorder-jaxws-custom.xml" />
+                                            <binding dir="src/main/resources" includes="salesorder-jaxb-custom.xml" />
+                                       </wsimport>
                                    </tasks>
                                </configuration>
                            </execution>

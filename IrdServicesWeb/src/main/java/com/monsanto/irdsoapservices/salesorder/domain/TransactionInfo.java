@@ -23,6 +23,8 @@ public class TransactionInfo {
     int maxFileSize;
     String dataSourceType;
     List<String> documentIds = new ArrayList<String>();
+    String fileType;
+    int fileCount;
 
     public int getMaxFileSize() {
         return maxFileSize;
@@ -112,6 +114,22 @@ public class TransactionInfo {
         this.documentIds = documentIds;
     }
 
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public int getFileCount() {
+        return fileCount;
+    }
+
+    public void setFileCount(int fileCount) {
+        this.fileCount = fileCount;
+    }
+
     //TODO Add documentIds
     @Override
     public String toString() {
@@ -121,8 +139,10 @@ public class TransactionInfo {
                 ", companyCode='" + companyCode + '\'' +
                 ", transactionType='" + transactionType + '\'' +
                 ", dataSourceType='" + dataSourceType + '\'' +
+                ", fileType='" + fileType + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", fileCount=" + fileCount +
                 ", lastTransactionDate=" + lastTransactionDate +
                 ", lastTransactionNumber=" + lastTransactionNumber +
                 '}';

@@ -1,12 +1,10 @@
 package com.monsanto.irdsoapservices.salesorder.service;
 
+import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
-import com.monsanto.irdsoapservices.salesorder.helper.COSHelper;
-import com.monsanto.irdsoapservices.salesorder.helper.GPOSHelper;
-import com.monsanto.irdsoapservices.salesorder.helper.GPOSWinfieldHelper;
-import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
+import com.monsanto.irdsoapservices.salesorder.helper.*;
 import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 import com.monsanto.irdsoapservices.constants.DBConstants;
 import org.apache.log4j.Logger;
@@ -29,6 +27,7 @@ public class SalesOrderReportService {
     private COSHelper cosHelper;
     private GPOSHelper gposHelper;
     private GPOSWinfieldHelper gposWinfieldHelper;
+    private DataSummaryHelper dataSummaryHelper;
     Logger logger = Logger.getLogger(this.getClass());
 
     public void startProcessing() throws SalesOrderException {
@@ -52,15 +51,25 @@ public class SalesOrderReportService {
                     }
                     else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGRIMINE_TRAN_TYPE)) {
                         transaction.setDataSourceType(DBConstants.AGRIMINE_DATA_SOURCE_TYPE);
+                        //TODO add tests for file  type and file count
+                        transaction.setFileType(XmlConstants.FILE_TYPE_MANUAL);
                         ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
+                        transaction.setFileCount(ordersSent);
+                        dataSummaryHelper.processDataSummaryReport(transaction);
                     }
                     else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_CLASSIC_TRAN_TYPE)) {
                         transaction.setDataSourceType(DBConstants.XML_DATA_SOURCE_TYPE);
+                        transaction.setFileType(XmlConstants.FILE_TYPE_AGRIMINE);
                         ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
+                        transaction.setFileCount(ordersSent);
+                        dataSummaryHelper.processDataSummaryReport(transaction);
                     }
                     else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_DIRECT_TRAN_TYPE)) {
                         transaction.setDataSourceType(DBConstants.DIRECT_DATA_SOURCE_TYPE);
+                        transaction.setFileType(XmlConstants.FILE_TYPE_EXTERNAL);
                         ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
+                        transaction.setFileCount(ordersSent);
+                        dataSummaryHelper.processDataSummaryReport(transaction);
                     }
                     updateTransaction(transaction, ordersSent);
                 } catch (SalesOrderException e) {
@@ -112,5 +121,9 @@ public class SalesOrderReportService {
 
     public void setGposWinfieldHelper(GPOSWinfieldHelper gposWinfieldHelper) {
         this.gposWinfieldHelper = gposWinfieldHelper;
+    }
+
+    public void setDataSummaryHelper(DataSummaryHelper dataSummaryHelper) {
+        this.dataSummaryHelper = dataSummaryHelper;
     }
 }

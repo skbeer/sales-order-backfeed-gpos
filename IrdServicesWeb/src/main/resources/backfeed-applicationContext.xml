@@ -65,12 +65,19 @@
         <property name="transactionDao" ref="transactionDao"/>
     </bean>
 
+    <bean id="dataSummaryHelper" class="com.monsanto.irdsoapservices.salesorder.helper.DataSummaryHelper">
+        <property name="clientFactory" ref="clientFactory"/>
+        <property name="dataSummaryDao" ref="dataSummaryDao"/>
+        <property name="dataSummaryRequestBuilder" ref="dataSummaryRequestBuilder"/>
+    </bean>
+
     <bean id="salesOrderService" class="com.monsanto.irdsoapservices.salesorder.service.SalesOrderReportService">
         <property name="transactionDao" ref="transactionDao"/>
         <property name="pposHelper" ref="pposHelper"/>
         <property name="cosHelper" ref="cosHelper"/>
         <property name="gposHelper" ref="gposHelper"/>
         <property name="gposWinfieldHelper" ref="gposWinfieldHelper"/>
+        <property name="dataSummaryHelper" ref="dataSummaryHelper"/>
     </bean>
 
     <bean id="retailSellerDao" class="com.monsanto.irdsoapservices.retailseller.dao.RetailSellerDaoImpl">
@@ -99,8 +106,7 @@
     <bean id="cosRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.COSRequestBuilder"/>
     <bean id="gposRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.GPOSRequestBuilder"/>
     <bean id="gposWinfieldRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.GPOSWinfieldRequestBuilder"/>
-
-
+    <bean id="dataSummaryRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.DataSummaryRequestBuilder"/>
 
     <bean id="trasactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="fsDataSource"/>

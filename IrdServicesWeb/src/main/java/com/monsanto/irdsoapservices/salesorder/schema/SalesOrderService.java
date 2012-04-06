@@ -1,12 +1,14 @@
 
 package com.monsanto.irdsoapservices.salesorder.schema;
 
+import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import com.monsanto.irdsoapservices.datasummary.schema.DataSummaryReport;
 
 
 /**
@@ -18,7 +20,8 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 @WebService(name = "SalesOrderService", targetNamespace = "urn:monsanto:services:wsdl:salesorder:1:0")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @XmlSeeAlso({
-    ObjectFactory.class
+    com.monsanto.irdsoapservices.salesorder.schema.ObjectFactory.class,
+    com.monsanto.irdsoapservices.datasummary.schema.ObjectFactory.class
 })
 public interface SalesOrderService {
 
@@ -37,5 +40,15 @@ public interface SalesOrderService {
         SalesOrderReport request)
         throws SalesOrderFault
     ;
+
+    /**
+     * 
+     * @param request
+     */
+    @WebMethod
+    @Oneway
+    public void getDataSummaryReport(
+        @WebParam(name = "DataSummaryReport", targetNamespace = "urn:ecms:schema:datasummaryreport:response:1:0", partName = "request")
+        DataSummaryReport request);
 
 }

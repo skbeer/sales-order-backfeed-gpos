@@ -53,9 +53,9 @@ public class PPOSRequestBuilder extends AbstractRequestBuilder {
             salesOrderLineItemType.setLineNumber(new Long(lineItem.getItemNumber()).longValue());
             salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName()));
             salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.UPC, lineItem.getProductUpc(), lineItem.getProductName()));
-            ProductQuantityType_0020 productQuantityType_0020 = new ProductQuantityType_0020();
-            productQuantityType_0020.setMeasurement(getMeasurementType(lineItem.getSalesQuantity().getQtyUom(), lineItem.getSalesQuantity().getQtyValue()));
-            salesOrderLineItemType.setProductQuantity(productQuantityType_0020);
+            ProductQuantityType productQuantityType = new ProductQuantityType();
+            productQuantityType.setMeasurement(getMeasurementType(lineItem.getSalesQuantity().getQtyUom(), lineItem.getSalesQuantity().getQtyValue()));
+            salesOrderLineItemType.setProductQuantity(productQuantityType);
             ProductQuantityEquivalentType productQuantityEquivalentType = new ProductQuantityEquivalentType();
             productQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getEquivalentQuantity().getQtyUom(), lineItem.getEquivalentQuantity().getQtyValue()));
             salesOrderLineItemType.setProductQuantityEquivalent(productQuantityEquivalentType);

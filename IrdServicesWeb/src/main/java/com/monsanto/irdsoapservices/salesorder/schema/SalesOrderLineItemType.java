@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="LineNumber" type="{http://www.w3.org/2001/XMLSchema}unsignedInt"/>
  *         &lt;element name="ProductIdentification" type="{urn:ecms:schema:salesorderreport:response:1:0}ProductidentificationType" maxOccurs="unbounded"/>
- *         &lt;element name="ProductQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}ProductQuantityType "/>
+ *         &lt;element name="ProductQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}ProductQuantityType" minOccurs="0"/>
  *         &lt;element name="ProductQuantityEquivalent" type="{urn:ecms:schema:salesorderreport:response:1:0}ProductQuantityEquivalentType" minOccurs="0"/>
  *         &lt;element name="ShippedQuantity" type="{urn:ecms:schema:salesorderreport:response:1:0}ShippedQuantityType" minOccurs="0"/>
  *         &lt;element name="ShippedQuantityEquivalent" type="{urn:ecms:schema:salesorderreport:response:1:0}ShippedQuantityEquivalentType" minOccurs="0"/>
@@ -92,8 +92,8 @@ public class SalesOrderLineItemType {
     protected long lineNumber;
     @XmlElement(name = "ProductIdentification", required = true)
     protected List<ProductidentificationType> productIdentification;
-    @XmlElement(name = "ProductQuantity", required = true)
-    protected ProductQuantityType_0020 productQuantity;
+    @XmlElement(name = "ProductQuantity")
+    protected ProductQuantityType productQuantity;
     @XmlElement(name = "ProductQuantityEquivalent")
     protected ProductQuantityEquivalentType productQuantityEquivalent;
     @XmlElement(name = "ShippedQuantity")
@@ -193,10 +193,10 @@ public class SalesOrderLineItemType {
      * 
      * @return
      *     possible object is
-     *     {@link ProductQuantityType_0020 }
+     *     {@link ProductQuantityType }
      *     
      */
-    public ProductQuantityType_0020 getProductQuantity() {
+    public ProductQuantityType getProductQuantity() {
         return productQuantity;
     }
 
@@ -205,10 +205,10 @@ public class SalesOrderLineItemType {
      * 
      * @param value
      *     allowed object is
-     *     {@link ProductQuantityType_0020 }
+     *     {@link ProductQuantityType }
      *     
      */
-    public void setProductQuantity(ProductQuantityType_0020 value) {
+    public void setProductQuantity(ProductQuantityType value) {
         this.productQuantity = value;
     }
 

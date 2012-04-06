@@ -1,6 +1,7 @@
 package com.monsanto.irdsoapservices.salesorder.helper;
 
 import com.monsanto.irdsoapservices.constants.DBConstants;
+import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
 import com.monsanto.irdsoapservices.salesorder.dao.DataSummaryDao;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryInfo;
@@ -24,7 +25,8 @@ public class DataSummaryHelper {
 
     DataSummaryDao dataSummaryDao;
     Logger logger = Logger.getLogger(this.getClass());
-    DataSummaryRequestBuilder dataSummaryRequestBuilder;
+    DataSummaryRequestBuilder dataSummaryRequestBuilder;     
+    ClientFactory clientFactory;
 
     public void processDataSummaryReport(TransactionInfo transaction) throws SalesOrderException {
         DataSummaryInfo dataSummaryInfo;
@@ -40,18 +42,14 @@ public class DataSummaryHelper {
                 dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsWinfield(transaction.getLastTransactionDate(), transaction.getGroupCode(), transaction.getDataSourceType());
 
             }
-            sendDataSummary(dataSummaryInfo, dataSummaryTotals, transaction);
+            clientFactory.getSalesOrderClient().getDataSummaryReport(dataSummaryRequestBuilder.buildDataSummaryReportRequest(dataSummaryInfo, dataSummaryTotals, transaction));
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e);
             new ErrorEmailer().sendErrorEmail(e, "Exception occurred while running DataSummaryReport for Partner:"+transaction.getName());
             throw new SalesOrderException(e.getMessage());
         }
-    }
-
-    private void sendDataSummary(DataSummaryInfo dataSummaryInfo, DataSummaryTotals dataSummaryTotals, TransactionInfo transactionInfo) {
-        //To change body of created methods use File | Settings | File Templates.
-    }
+    }    
 
     public DataSummaryRequestBuilder getDataSummaryRequestBuilder() {
         return dataSummaryRequestBuilder;
@@ -67,5 +65,9 @@ public class DataSummaryHelper {
 
     public void setDataSummaryDao(DataSummaryDao dataSummaryDao) {
         this.dataSummaryDao = dataSummaryDao;
+    }
+
+    public void setClientFactory(ClientFactory clientFactory) {
+        this.clientFactory = clientFactory;
     }
 }

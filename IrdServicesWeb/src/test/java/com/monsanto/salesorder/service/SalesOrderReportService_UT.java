@@ -3,10 +3,7 @@ package com.monsanto.salesorder.service;
 import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
-import com.monsanto.irdsoapservices.salesorder.helper.GPOSHelper;
-import com.monsanto.irdsoapservices.salesorder.helper.GPOSWinfieldHelper;
-import com.monsanto.irdsoapservices.salesorder.helper.PPOSHelper;
-import com.monsanto.irdsoapservices.salesorder.helper.COSHelper;
+import com.monsanto.irdsoapservices.salesorder.helper.*;
 import com.monsanto.irdsoapservices.salesorder.service.SalesOrderReportService;
 import junit.framework.TestCase;
 import org.easymock.EasyMock;
@@ -29,6 +26,8 @@ public class SalesOrderReportService_UT extends TestCase {
     COSHelper cosHelper;
     GPOSHelper gposHelper;
     GPOSWinfieldHelper gposWinfieldHelper;
+    DataSummaryHelper dataSummaryHelper;
+
     @Override
     protected void setUp() throws Exception {
         transactionDao = EasyMock.createMock(TransactionDao.class);
@@ -36,12 +35,14 @@ public class SalesOrderReportService_UT extends TestCase {
         cosHelper = org.easymock.classextension.EasyMock.createMock(COSHelper.class);
         gposHelper = org.easymock.classextension.EasyMock.createMock(GPOSHelper.class);
         gposWinfieldHelper = org.easymock.classextension.EasyMock.createMock(GPOSWinfieldHelper.class);
+        dataSummaryHelper =  org.easymock.classextension.EasyMock.createMock(DataSummaryHelper.class);
         salesOrderReportService = new SalesOrderReportService();
         salesOrderReportService.setTransactionDao(transactionDao);
         salesOrderReportService.setPposHelper(pposHelper);
         salesOrderReportService.setCosHelper(cosHelper);
         salesOrderReportService.setGposHelper(gposHelper);
         salesOrderReportService.setGposWinfieldHelper(gposWinfieldHelper);
+        salesOrderReportService.setDataSummaryHelper(dataSummaryHelper);
     }
 
     public void testStartProcessing_noTransactions_doNothing() throws Exception {
@@ -97,21 +98,26 @@ public class SalesOrderReportService_UT extends TestCase {
         EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
         org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
         EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        dataSummaryHelper.processDataSummaryReport((TransactionInfo)EasyMock.anyObject());
         org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
         EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        dataSummaryHelper.processDataSummaryReport((TransactionInfo)EasyMock.anyObject());
         org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
         EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        dataSummaryHelper.processDataSummaryReport((TransactionInfo)EasyMock.anyObject());
         EasyMock.replay(transactionDao);
         org.easymock.classextension.EasyMock.replay(pposHelper);
         org.easymock.classextension.EasyMock.replay(cosHelper);
         org.easymock.classextension.EasyMock.replay(gposHelper);
         org.easymock.classextension.EasyMock.replay(gposWinfieldHelper);
+        org.easymock.classextension.EasyMock.replay(dataSummaryHelper);
         salesOrderReportService.startProcessing();
         EasyMock.verify(transactionDao);
         org.easymock.classextension.EasyMock.verify(pposHelper);
         org.easymock.classextension.EasyMock.verify(cosHelper);
         org.easymock.classextension.EasyMock.verify(gposHelper);
         org.easymock.classextension.EasyMock.verify(gposWinfieldHelper);
+        org.easymock.classextension.EasyMock.verify(dataSummaryHelper);
     }
 
     public void testStartProcessing_multipleTransactions_withError_processRemainingTransactions() throws Exception {
