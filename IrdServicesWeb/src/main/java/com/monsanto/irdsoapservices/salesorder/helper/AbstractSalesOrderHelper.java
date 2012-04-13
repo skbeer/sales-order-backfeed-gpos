@@ -63,6 +63,7 @@ public abstract class AbstractSalesOrderHelper<T extends OrderInfo> {
         int endPos = transactionInfo.getMaxFileSize();
         int totalOrders = originalOrders.size();
         int totalBatches = (totalOrders/endPos)+(totalOrders%endPos >0?1:0);
+        transactionInfo.setFileCount(totalBatches);
         logger.info("Sending Orders in Batches of size "+transactionInfo.getMaxFileSize());
         int count = 0;
         while(originalOrders.size() > 0) {
@@ -72,6 +73,7 @@ public abstract class AbstractSalesOrderHelper<T extends OrderInfo> {
             logger.info("Sending Batch # "+(++count));
             try {
                 SalesOrderReport salesOrderRequest = getSalesOrderRequest(subList(originalOrders, 0, endPos), transactionInfo);
+                logger.info("Built sales order request for batch Batch # " + count);
                 updateDocumentIdentifierAndAddToDataSummaryDetails(salesOrderRequest, count, totalBatches, transactionInfo);
                 SalesOrderReportResponseType response = clientFactory.getSalesOrderClient().getSalesOrderReport(salesOrderRequest);
             } catch (Exception se) {

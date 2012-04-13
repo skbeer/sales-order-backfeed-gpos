@@ -123,6 +123,7 @@ public class GPOSWinfieldHelper_UT extends TestCase {
         EasyMock.replay(transactionDao);
         assertEquals(1, helper.processGPOSOrderReport(transactionInfo));
         assertEquals("1001", transactionInfo.getDocumentIds().get(0));
+        assertEquals(1, transactionInfo.getFileCount());
         EasyMock.verify(requestBuilder);
         EasyMock.verify(clientFactory);
         org.easymock.EasyMock.verify(salesOrderDao);
