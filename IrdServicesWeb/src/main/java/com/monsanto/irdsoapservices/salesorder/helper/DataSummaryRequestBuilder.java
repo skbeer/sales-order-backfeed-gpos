@@ -129,7 +129,7 @@ public class DataSummaryRequestBuilder {
 
     protected String createDocumentIdentifier(TransactionInfo transactionInfo, String tranType) {
         StringBuffer sBuffer = new StringBuffer();
-        sBuffer.append("NS_SUMMARY-");
+        sBuffer.append("NS_SUM-");
         sBuffer.append(tranType);
         sBuffer.append("_");
         sBuffer.append(transactionInfo.getCompanyCode());
