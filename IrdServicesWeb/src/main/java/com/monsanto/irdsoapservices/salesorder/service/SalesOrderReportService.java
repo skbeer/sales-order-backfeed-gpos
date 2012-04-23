@@ -51,25 +51,28 @@ public class SalesOrderReportService {
                     }
                     else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGRIMINE_TRAN_TYPE)) {
                         transaction.setDataSourceType(DBConstants.AGRIMINE_DATA_SOURCE_TYPE);
-                        //TODO add tests for file  type and file count
+                        //TODO add tests for file  type
                         transaction.setFileType(XmlConstants.FILE_TYPE_MANUAL);
                         ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
-                        transaction.setFileCount(ordersSent);
+                        if(ordersSent > 0) {
                         dataSummaryHelper.processDataSummaryReport(transaction);
+                        }
                     }
                     else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_CLASSIC_TRAN_TYPE)) {
                         transaction.setDataSourceType(DBConstants.XML_DATA_SOURCE_TYPE);
                         transaction.setFileType(XmlConstants.FILE_TYPE_AGRIMINE);
                         ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
-                        transaction.setFileCount(ordersSent);
-                        dataSummaryHelper.processDataSummaryReport(transaction);
+                        if(ordersSent > 0) {
+                            dataSummaryHelper.processDataSummaryReport(transaction);
+                        }
                     }
                     else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_DIRECT_TRAN_TYPE)) {
                         transaction.setDataSourceType(DBConstants.DIRECT_DATA_SOURCE_TYPE);
                         transaction.setFileType(XmlConstants.FILE_TYPE_EXTERNAL);
                         ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
-                        transaction.setFileCount(ordersSent);
-                        dataSummaryHelper.processDataSummaryReport(transaction);
+                        if(ordersSent > 0) {
+                            dataSummaryHelper.processDataSummaryReport(transaction);
+                        }
                     }
                     updateTransaction(transaction, ordersSent);
                 } catch (SalesOrderException e) {

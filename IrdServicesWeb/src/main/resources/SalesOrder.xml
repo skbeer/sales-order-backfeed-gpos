@@ -731,7 +731,7 @@
                         salesrep_zip,
                         salesrep_county,
                         Touched_Untouched
-               order by dealer_acct_id, rptd_doc_nbr
+               order by rptd_doc_nbr, dealer_acct_id, grower_gln
     </select>
 
     <select id="getGPOSDirectOrders" resultMap="gposWinfield" parameterClass="java.util.Map">
@@ -935,7 +935,7 @@
                         salesrep_zip,
                         salesrep_county,
                         Touched_Untouched
-               order by dealer_acct_id, rptd_doc_nbr
+               order by rptd_doc_nbr, dealer_acct_id, grower_gln
     </select>
 </sqlMap>
 

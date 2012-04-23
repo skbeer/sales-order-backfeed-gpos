@@ -13,6 +13,7 @@ import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderReport;
 import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,18 +56,55 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
         return ordersSent;
     }
 
-    protected boolean isSameOrder(OrderInfo firstOrder, OrderInfo secondOrder) {
+
+    // method is public only to be tested separately
+
+    @Override
+    public List<GPOSOrderInfo> normalizeOrderLineItems(List<GPOSOrderInfo> deNormalizedOrders) {
+        List<GPOSOrderInfo> normalizedOrders = new ArrayList<GPOSOrderInfo>();
+        if(deNormalizedOrders!= null && deNormalizedOrders.size() > 0) {
+            GPOSOrderInfo prevNormalizedReport = deNormalizedOrders.get(0);
+            prevNormalizedReport.getLineItems().add(prevNormalizedReport.getTempLineItem());
+            if(deNormalizedOrders.size() == 1) {
+                normalizedOrders.add(prevNormalizedReport);
+            }
+            GPOSOrderInfo currentNormalizedReport = null;
+            for(int index = 1; index < deNormalizedOrders.size(); index++) {
+                currentNormalizedReport = deNormalizedOrders.get(index);
+                if(!isSameOrderGPOSWinfield(currentNormalizedReport, prevNormalizedReport)) {
+                    normalizedOrders.add(prevNormalizedReport);
+                    prevNormalizedReport = currentNormalizedReport;
+                }
+                prevNormalizedReport.getLineItems().add(currentNormalizedReport.getTempLineItem());
+                if(index ==(deNormalizedOrders.size()-1)) {
+                    normalizedOrders.add(prevNormalizedReport);
+                }
+            }
+        }
+        return normalizedOrders;
+    }
+
+    protected boolean isSameOrderGPOSWinfield(GPOSOrderInfo firstOrder, GPOSOrderInfo secondOrder) {
         String firstOrderKey=getKey(firstOrder);
         String secondOrderKey=getKey(secondOrder);
         return firstOrderKey.equals(secondOrderKey);
     }
 
-    private String getKey(OrderInfo orderInfo) {
+    private String getKey(GPOSOrderInfo orderInfo) {
        String acctId="";
+        String growerAcctId="";
         if(orderInfo.getDealerInfo()!=null){
             acctId=orderInfo.getDealerInfo().getAcctId();
         }
-       return orderInfo.getOrderNumber()+"-"+acctId;
+        if (orderInfo.getGrowerInfo() != null) {
+            growerAcctId=orderInfo.getGrowerInfo().getAcctId();
+        }
+       return orderInfo.getOrderNumber()+"-"+acctId+"-"+growerAcctId;
+    }
+
+    @Override
+    protected boolean isSameOrder(OrderInfo firstOrder, OrderInfo secondOrder) {
+        return false;
     }
 
     protected SalesOrderReport getSalesOrderRequest(List<GPOSOrderInfo> orderReport, TransactionInfo transactionInfo) throws Exception {

@@ -1,7 +1,6 @@
 package com.monsanto.irdsoapservices.salesorder.helper;
 
 import com.monsanto.irdsoapservices.datasummary.schema.DataSummaryReport;
-import com.monsanto.irdsoapservices.datasummary.schema.DataSummaryReportType;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryTotals;
@@ -26,7 +25,7 @@ public class DataSummaryRequestBuilder {
 
     public DataSummaryReport buildDataSummaryReportRequest(DataSummaryInfo dataSummaryInfo, DataSummaryTotals dataSummaryTotals, TransactionInfo transactionInfo) {
         DataSummaryReport dataSummaryReport = new DataSummaryReport();
-        dataSummaryReport.setHeader(getHeaderType(transactionInfo, transactionInfo.getFileType()));
+        dataSummaryReport.setHeader(getHeaderType(transactionInfo, transactionInfo.getDataSourceType()));
         dataSummaryReport.setVersion("1.0");
         DataSummaryReportBodyType bodyType = new DataSummaryReportBodyType();
         bodyType.setReportFileList(getReportFileListType(transactionInfo));

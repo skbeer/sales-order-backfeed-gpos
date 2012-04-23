@@ -27,7 +27,7 @@ public class DataSummaryRequestBuilder_UT extends TestCase {
         DataSummaryReport report = requestBuilder.buildDataSummaryReportRequest(getDataSummaryInfo(), getDataSummaryTotals(), getTransactionInfo());
         assertNotNull(report);
         assertEquals("1.0", report.getVersion());
-        assertTrue(report.getHeader().getThisDocumentIdentifier().getDocumentIdentifier().startsWith("NS_SUM-Manual"));
+        assertTrue(report.getHeader().getThisDocumentIdentifier().getDocumentIdentifier().startsWith("NS_SUM-AGRIMINE"));
         assertEquals("MONSANTO AGRICULTURAL CO", report.getHeader().getFrom().getPartnerInformation().getPartnerName().get(0));
         ReportFileListType fileList = report.getDataSummaryReportBody().getReportFileList();
         assertEquals(2, fileList.getFileCount().intValue());
