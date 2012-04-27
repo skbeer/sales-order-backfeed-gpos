@@ -7,6 +7,7 @@ import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryTotals;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.datasummary.schema.*;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
+import org.apache.commons.lang.StringUtils;
 
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
@@ -48,10 +49,13 @@ public class DataSummaryRequestBuilder {
         invoiceLineItemCountCheckpointType.setValue(String.valueOf(dataSummaryInfo.getTotalLineItems()));
         verificationCheckpointTypeList.add(invoiceLineItemCountCheckpointType);
 
-        DataVerificationCheckpointType totalQuantityEquivalentCheckpointType = new DataVerificationCheckpointType();
-        totalQuantityEquivalentCheckpointType.setName(ListDataVerificationCheckpointAttribute.TOTAL_QUANTITY_EQUIVALENT);
-        totalQuantityEquivalentCheckpointType.setValue(String.valueOf(dataSummaryInfo.getTotalEquivalentQuantity()));
-        verificationCheckpointTypeList.add(totalQuantityEquivalentCheckpointType);
+        String totalEquivalentQuantity = String.valueOf(dataSummaryInfo.getTotalEquivalentQuantity());
+        if (StringUtils.isNotEmpty(totalEquivalentQuantity) && !"null".equals(totalEquivalentQuantity)) {
+            DataVerificationCheckpointType totalQuantityEquivalentCheckpointType = new DataVerificationCheckpointType();
+            totalQuantityEquivalentCheckpointType.setName(ListDataVerificationCheckpointAttribute.TOTAL_QUANTITY_EQUIVALENT);
+            totalQuantityEquivalentCheckpointType.setValue(totalEquivalentQuantity);
+            verificationCheckpointTypeList.add(totalQuantityEquivalentCheckpointType);
+        }
 
         DataVerificationCheckpointType totalDealerCountCheckpointType = new DataVerificationCheckpointType();
         totalDealerCountCheckpointType.setName(ListDataVerificationCheckpointAttribute.TOTAL_DEALER_COUNT);
@@ -63,16 +67,21 @@ public class DataSummaryRequestBuilder {
         totalGrowerCountCheckpointType.setValue(String.valueOf(dataSummaryInfo.getTotalGrowers()));
         verificationCheckpointTypeList.add(totalGrowerCountCheckpointType);
 
-        DataVerificationCheckpointType totalDailyOpenInvoicesCheckpointType = new DataVerificationCheckpointType();
-        totalDailyOpenInvoicesCheckpointType.setName(ListDataVerificationCheckpointAttribute.TOTAL_DAILY_OPEN_INVOICES);
-        totalDailyOpenInvoicesCheckpointType.setValue(dataSummaryTotals.getTotalDailyOpenInvoices());
-        verificationCheckpointTypeList.add(totalDailyOpenInvoicesCheckpointType);
+        String totalDailyOpenInvoices = dataSummaryTotals.getTotalDailyOpenInvoices();
+        if (StringUtils.isNotEmpty(totalDailyOpenInvoices) && !"null".equals(totalDailyOpenInvoices)) {
+            DataVerificationCheckpointType totalDailyOpenInvoicesCheckpointType = new DataVerificationCheckpointType();
+            totalDailyOpenInvoicesCheckpointType.setName(ListDataVerificationCheckpointAttribute.TOTAL_DAILY_OPEN_INVOICES);
+            totalDailyOpenInvoicesCheckpointType.setValue(totalDailyOpenInvoices);
+            verificationCheckpointTypeList.add(totalDailyOpenInvoicesCheckpointType);
+        }
 
-
-        DataVerificationCheckpointType totalOpenInvoicesCheckpointType = new DataVerificationCheckpointType();
-        totalOpenInvoicesCheckpointType.setName(ListDataVerificationCheckpointAttribute.TOTAL_OPEN_INVOICES);
-        totalOpenInvoicesCheckpointType.setValue(dataSummaryTotals.getTotalOpenInvoices());
-        verificationCheckpointTypeList.add(totalOpenInvoicesCheckpointType);
+        String totalOpenInvoices = dataSummaryTotals.getTotalOpenInvoices();
+        if (StringUtils.isNotEmpty(totalOpenInvoices) && !"null".equals(totalOpenInvoices)) {
+            DataVerificationCheckpointType totalOpenInvoicesCheckpointType = new DataVerificationCheckpointType();
+            totalOpenInvoicesCheckpointType.setName(ListDataVerificationCheckpointAttribute.TOTAL_OPEN_INVOICES);
+            totalOpenInvoicesCheckpointType.setValue(totalOpenInvoices);
+            verificationCheckpointTypeList.add(totalOpenInvoicesCheckpointType);
+        }
 
         return verification;
     }

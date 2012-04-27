@@ -65,6 +65,47 @@ public class DataSummaryRequestBuilder_UT extends TestCase {
         assertEquals("3000", checkpointType7.getValue());
     }
 
+    public void testBuildDataSummaryReportRequestNoValues() throws Exception {
+        DataSummaryReport report = requestBuilder.buildDataSummaryReportRequest(getDataSummaryInfoNoValues(), getDataSummaryTotalsNoValues(), getTransactionInfo());
+        assertNotNull(report);
+        assertEquals("1.0", report.getVersion());
+        assertTrue(report.getHeader().getThisDocumentIdentifier().getDocumentIdentifier().startsWith("NS_SUM-AGRIMINE"));
+        assertEquals("MONSANTO AGRICULTURAL CO", report.getHeader().getFrom().getPartnerInformation().getPartnerName().get(0));
+        ReportFileListType fileList = report.getDataSummaryReportBody().getReportFileList();
+        assertEquals(2, fileList.getFileCount().intValue());
+        assertEquals("Manual", fileList.getType());
+        assertEquals("123", fileList.getReportFile().get(0).getDocumentIdentifier());
+        assertEquals("456", fileList.getReportFile().get(1).getDocumentIdentifier());
+        List<DataVerificationCheckpointType> dataVerificationCheckpointTypes = report.getDataSummaryReportBody().getReportDataVerification().getDataVerificationCheckpoint();
+        assertEquals(4, dataVerificationCheckpointTypes.size());
+
+        DataVerificationCheckpointType checkpointType1 = dataVerificationCheckpointTypes.get(0);
+        assertEquals(ListDataVerificationCheckpointAttribute.INVOICE_COUNT.value(), checkpointType1.getName().value());
+        assertEquals("0", checkpointType1.getValue());
+
+        DataVerificationCheckpointType checkpointType2 = dataVerificationCheckpointTypes.get(1);
+        assertEquals(ListDataVerificationCheckpointAttribute.INVOICE_LINE_ITEM_COUNT.value(), checkpointType2.getName().value());
+        assertEquals("0", checkpointType2.getValue());
+
+        DataVerificationCheckpointType checkpointType4 = dataVerificationCheckpointTypes.get(2);
+        assertEquals(ListDataVerificationCheckpointAttribute.TOTAL_DEALER_COUNT.value(), checkpointType4.getName().value());
+        assertEquals("0", checkpointType4.getValue());
+
+        DataVerificationCheckpointType checkpointType5 = dataVerificationCheckpointTypes.get(3);
+        assertEquals(ListDataVerificationCheckpointAttribute.TOTAL_GROWER_COUNT.value(), checkpointType5.getName().value());
+        assertEquals("0", checkpointType5.getValue());
+    }
+
+    private DataSummaryInfo getDataSummaryInfoNoValues() {
+        DataSummaryInfo dataSummaryInfo = new DataSummaryInfo();
+        return dataSummaryInfo;
+    }
+
+    private DataSummaryTotals getDataSummaryTotalsNoValues() {
+        DataSummaryTotals dataSummaryTotals  = new DataSummaryTotals();           
+        return dataSummaryTotals;
+    }
+
     private DataSummaryInfo getDataSummaryInfo() {
         DataSummaryInfo dataSummaryInfo = new DataSummaryInfo();
         dataSummaryInfo.setTotalDealers(234);
