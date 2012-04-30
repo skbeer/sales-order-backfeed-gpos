@@ -29,18 +29,21 @@ public class DataSummaryHelper {
     ClientFactory clientFactory;
 
     public void processDataSummaryReport(TransactionInfo transaction) throws SalesOrderException {
-        DataSummaryInfo dataSummaryInfo;
-        DataSummaryTotals dataSummaryTotals;
+        DataSummaryInfo dataSummaryInfo = new DataSummaryInfo();
+        DataSummaryTotals dataSummaryTotals = new DataSummaryTotals();
         try {
             logger.info("Initiating DataSummaryReport for Partner:"+transaction.getName());
             if (DBConstants.DIRECT_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
                 dataSummaryInfo = dataSummaryDao.getDataSummaryInfoDirect(transaction.getLastTransactionDate(), transaction.getGroupCode());
                 dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsDirect(transaction.getLastTransactionDate(), transaction.getGroupCode());
             }
-            else {
-                dataSummaryInfo = dataSummaryDao.getDataSummaryInfoWinfield(transaction.getLastTransactionDate(), transaction.getGroupCode(), transaction.getDataSourceType());
-                dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsWinfield(transaction.getLastTransactionDate(), transaction.getGroupCode(), transaction.getDataSourceType());
-
+            else  if (DBConstants.XML_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
+                dataSummaryInfo = dataSummaryDao.getDataSummaryInfoXML(transaction.getLastTransactionDate(), transaction.getGroupCode());
+                dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsXML(transaction.getLastTransactionDate(), transaction.getGroupCode());
+            }
+             else  if (DBConstants.AGRIMINE_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
+                dataSummaryInfo = dataSummaryDao.getDataSummaryInfoAgrmine(transaction.getLastTransactionDate(), transaction.getGroupCode());
+                dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsAgrimine(transaction.getLastTransactionDate(), transaction.getGroupCode());
             }
             clientFactory.getSalesOrderClient().getDataSummaryReport(dataSummaryRequestBuilder.buildDataSummaryReportRequest(dataSummaryInfo, dataSummaryTotals, transaction));
         } catch (Exception e) {

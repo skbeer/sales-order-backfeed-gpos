@@ -32,13 +32,15 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
         int ordersSent = 0;
         try {
             logger.info("Initiating GPOS SalesOrderReport for Partner:"+transaction.getName());
-            List<GPOSOrderInfo> deNormalizedOrders;
+            List<GPOSOrderInfo> deNormalizedOrders = new ArrayList<GPOSOrderInfo>();
             if (DBConstants.DIRECT_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
                 deNormalizedOrders = salesOrderDao.getGPOSDirectOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
             }
-            else {
-                deNormalizedOrders = salesOrderDao.getGPOSWinfieldOrders(transaction.getLastTransactionDate(), transaction.getGroupCode(), transaction.getDataSourceType());
-
+            else if (DBConstants.XML_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
+               deNormalizedOrders = salesOrderDao.getGPOSXMLOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
+            }
+            else if (DBConstants.AGRIMINE_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
+               deNormalizedOrders = salesOrderDao.getGPOSAgrimineOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
             }
             logger.info("Total number of GPOS Line Items:"+deNormalizedOrders.size());
             List<GPOSOrderInfo> normalizedOrders = normalizeOrderLineItems(deNormalizedOrders);

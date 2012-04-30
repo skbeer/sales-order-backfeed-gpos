@@ -16,11 +16,15 @@ import java.util.List;
  */
 public interface DataSummaryDao {
 
-    DataSummaryInfo getDataSummaryInfoWinfield(Date startDate, String groupCode, String transactionType) throws Exception;
-
     DataSummaryInfo getDataSummaryInfoDirect(Date startDate, String groupCode) throws Exception;
 
-    DataSummaryTotals getDataSummaryTotalsWinfield(Date startDate, String groupCode, String transactionType) throws Exception;
+    DataSummaryInfo getDataSummaryInfoXML(Date startDate, String groupCode) throws Exception;
+
+    DataSummaryInfo getDataSummaryInfoAgrmine(Date startDate, String groupCode) throws Exception;
 
     DataSummaryTotals getDataSummaryTotalsDirect(Date startDate, String groupCode) throws Exception;
+
+    DataSummaryTotals getDataSummaryTotalsXML(Date startDate, String groupCode) throws Exception;
+
+    DataSummaryTotals getDataSummaryTotalsAgrimine(Date startDate, String groupCode) throws Exception;
 }

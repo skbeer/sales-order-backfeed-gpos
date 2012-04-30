@@ -18,16 +18,6 @@ import java.util.List;
  */
 public class DataSummaryDaoImpl extends SqlMapClientDaoSupport implements DataSummaryDao {
     @Override
-    public DataSummaryInfo getDataSummaryInfoWinfield(Date startDate, String groupCode, String transactionType) throws Exception {
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("groupCode", groupCode);
-        java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
-        map.put("startDate", sqlDate);
-        map.put("transactionType", transactionType);
-        return (DataSummaryInfo)getSqlMapClientTemplate().queryForObject("DataSummary.getDataSummaryWinfield", map);
-    }
-
-    @Override
     public DataSummaryInfo getDataSummaryInfoDirect(Date startDate, String groupCode) throws Exception {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("groupCode", groupCode);
@@ -37,13 +27,21 @@ public class DataSummaryDaoImpl extends SqlMapClientDaoSupport implements DataSu
     }
 
     @Override
-    public DataSummaryTotals getDataSummaryTotalsWinfield(Date startDate, String groupCode, String transactionType) throws Exception {
+    public DataSummaryInfo getDataSummaryInfoXML(Date startDate, String groupCode) throws Exception {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("groupCode", groupCode);
         java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
         map.put("startDate", sqlDate);
-        map.put("transactionType", transactionType);
-        return (DataSummaryTotals)getSqlMapClientTemplate().queryForObject("DataSummary.getTotalsWinfield", map);
+        return (DataSummaryInfo)getSqlMapClientTemplate().queryForObject("DataSummary.getDataSummaryXML", map);
+    }
+
+    @Override
+    public DataSummaryInfo getDataSummaryInfoAgrmine(Date startDate, String groupCode) throws Exception {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("groupCode", groupCode);
+        java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+        map.put("startDate", sqlDate);
+        return (DataSummaryInfo)getSqlMapClientTemplate().queryForObject("DataSummary.getDataSummaryAgrimine", map);
     }
 
     @Override
@@ -53,6 +51,24 @@ public class DataSummaryDaoImpl extends SqlMapClientDaoSupport implements DataSu
         java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
         map.put("startDate", sqlDate);
         return (DataSummaryTotals)getSqlMapClientTemplate().queryForObject("DataSummary.getTotalsDirect", map);
+    }
+
+    @Override
+    public DataSummaryTotals getDataSummaryTotalsXML(Date startDate, String groupCode) throws Exception {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("groupCode", groupCode);
+        java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+        map.put("startDate", sqlDate);
+        return (DataSummaryTotals)getSqlMapClientTemplate().queryForObject("DataSummary.getTotalsXML", map);
+    }
+
+    @Override
+    public DataSummaryTotals getDataSummaryTotalsAgrimine(Date startDate, String groupCode) throws Exception {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("groupCode", groupCode);
+        java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+        map.put("startDate", sqlDate);
+        return (DataSummaryTotals)getSqlMapClientTemplate().queryForObject("DataSummary.getTotalsAgrimine", map);
     }
 
 }

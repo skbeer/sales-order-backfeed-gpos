@@ -45,8 +45,8 @@ public class DataSummaryHelper_UT extends TestCase {
 
     public void testProcessDataSummaryReport() throws Exception {
         Date aDate = new Date();
-        TransactionInfo transactionInfo = getTransactionInfo(aDate, "ABC");
-        transactionInfo.setDataSourceType("DIRECT");
+        TransactionInfo transactionInfo = getTransactionInfo(aDate, "XML");
+        transactionInfo.setDataSourceType("XML");
         DataSummaryInfo dataSummaryInfo = new DataSummaryInfo();
         dataSummaryInfo.setTotalLineItems(2000);
         dataSummaryInfo.setTotalDealers(234);
@@ -57,8 +57,8 @@ public class DataSummaryHelper_UT extends TestCase {
         DataSummaryTotals dataSummaryTotals = new DataSummaryTotals();
         dataSummaryTotals.setTotalDailyOpenInvoices("2345");
         dataSummaryTotals.setTotalOpenInvoices("2445");
-        org.easymock.EasyMock.expect(dataSummaryDao.getDataSummaryInfoDirect(aDate, "ABC")).andReturn(dataSummaryInfo);
-        org.easymock.EasyMock.expect(dataSummaryDao.getDataSummaryTotalsDirect(aDate, "ABC")).andReturn(dataSummaryTotals);
+        org.easymock.EasyMock.expect(dataSummaryDao.getDataSummaryInfoXML(aDate, "XML")).andReturn(dataSummaryInfo);
+        org.easymock.EasyMock.expect(dataSummaryDao.getDataSummaryTotalsXML(aDate, "XML")).andReturn(dataSummaryTotals);
 
         DataSummaryReport summaryReport = getDataSummaryReport();
         EasyMock.expect(requestBuilder.buildDataSummaryReportRequest((DataSummaryInfo) EasyMock.anyObject(), (DataSummaryTotals) EasyMock.anyObject(), (TransactionInfo) EasyMock.anyObject())).andReturn(summaryReport);

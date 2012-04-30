@@ -120,9 +120,9 @@ public class GPOSWinfieldHelper_UT extends TestCase {
         Date aDate = new Date();
         List<GPOSOrderInfo> orders = new ArrayList<GPOSOrderInfo>();
         orders.add(getGPOSOrder("1001", "1", "1234", "456"));
-        TransactionInfo transactionInfo = getTransactionInfo(aDate, "ABC");
-        transactionInfo.setDataSourceType("ABC");
-        org.easymock.EasyMock.expect(salesOrderDao.getGPOSWinfieldOrders(aDate, "ABC", "ABC")).andReturn(orders);
+        TransactionInfo transactionInfo = getTransactionInfo(aDate, "XML");
+        transactionInfo.setDataSourceType("XML");
+        org.easymock.EasyMock.expect(salesOrderDao.getGPOSXMLOrders(aDate, "XML")).andReturn(orders);
         EasyMock.expect(requestBuilder.buildGPOSRequest((List<GPOSOrderInfo>)EasyMock.anyObject(), (TransactionInfo)EasyMock.anyObject())).andReturn(getSalesOrderReport());
         EasyMock.expect(clientFactory.getSalesOrderClient()).andReturn(salesOrderServiceClient);
         org.easymock.EasyMock.expect(salesOrderServiceClient.getSalesOrderReport((SalesOrderReport)EasyMock.anyObject())).andReturn(new SalesOrderReportResponseType());
@@ -146,9 +146,9 @@ public class GPOSWinfieldHelper_UT extends TestCase {
         Date aDate = new Date();
         List<GPOSOrderInfo> orders = new ArrayList<GPOSOrderInfo>();
         orders.add(getGPOSOrder("1001", "1", "1234", "567"));
-        TransactionInfo transactionInfo = getTransactionInfo(aDate, "ABC");
-        transactionInfo.setDataSourceType("ABC");
-        org.easymock.EasyMock.expect(salesOrderDao.getGPOSWinfieldOrders(aDate, "ABC", "ABC")).andReturn(orders);
+        TransactionInfo transactionInfo = getTransactionInfo(aDate, "XML");
+        transactionInfo.setDataSourceType("XML");
+        org.easymock.EasyMock.expect(salesOrderDao.getGPOSXMLOrders(aDate, "XML")).andReturn(orders);
         EasyMock.expect(requestBuilder.buildGPOSRequest((List<GPOSOrderInfo>)EasyMock.anyObject(), (TransactionInfo)EasyMock.anyObject())).andReturn(getSalesOrderReport());
         EasyMock.expect(clientFactory.getSalesOrderClient()).andReturn(salesOrderServiceClient);
         org.easymock.EasyMock.expect(salesOrderServiceClient.getSalesOrderReport((SalesOrderReport)EasyMock.anyObject())).andThrow(new SalesOrderFault("Error Occurred", new ExceptionType()));

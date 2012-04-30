@@ -1,5 +1,6 @@
 package com.monsanto.salesorder.dao.test;
 
+import com.monsanto.irdsoapservices.constants.DBConstants;
 import com.monsanto.irdsoapservices.salesorder.dao.DataSummaryDao;
 import com.monsanto.irdsoapservices.salesorder.dao.DataSummaryDaoImpl;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDaoImpl;
@@ -33,13 +34,6 @@ public class DataSummaryDaoImpl_UT extends AbstractTransactionalDataSourceSpring
         return new String[] { "test-irdpos-beans.xml" };
     }
 
-    public void testGetGPOSWinfieldOrdersSalesOrderCount() throws Exception {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2011, 9, 1);
-        DataSummaryInfo dataSummaryInfo = dataSummaryDao.getDataSummaryInfoWinfield(calendar.getTime(), "XML", "XML");
-        assertTrue(dataSummaryInfo.getTotalLineItems() >= 0);
-    }
-
     public void testGetGPOSDirectOrdersSalesOrderCount() throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2011, 9, 1);
@@ -47,17 +41,38 @@ public class DataSummaryDaoImpl_UT extends AbstractTransactionalDataSourceSpring
         assertTrue(dataSummaryInfo.getTotalLineItems() >= 0);
     }
 
-    public void testGetGPOSWinfieldOrdersTotals() throws Exception {
+    public void testGetGPOSXMLOrdersSalesOrderCount() throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2011, 9, 1);
-        DataSummaryTotals dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsWinfield(calendar.getTime(), "XML", "XML");
-        assertNotNull(dataSummaryTotals);
+        DataSummaryInfo dataSummaryInfo = dataSummaryDao.getDataSummaryInfoXML(calendar.getTime(), "XML");
+        assertTrue(dataSummaryInfo.getTotalLineItems() >= 0);
+    }
+
+    public void testGetGPOSAgrimineOrdersSalesOrderCount() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2011, 9, 1);
+        DataSummaryInfo dataSummaryInfo = dataSummaryDao.getDataSummaryInfoAgrmine(calendar.getTime(), DBConstants.AGRIMINE_DATA_SOURCE_TYPE);
+        assertTrue(dataSummaryInfo.getTotalLineItems() >= 0);
     }
 
     public void testGetGPOSDirectOrdersTotals() throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2011, 9, 1);
         DataSummaryTotals dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsDirect(calendar.getTime(), "XML");
+        assertNotNull(dataSummaryTotals);
+    }
+
+    public void testGetGPOSXMLOrdersTotals() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2011, 9, 1);
+        DataSummaryTotals dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsXML(calendar.getTime(), "XML");
+        assertNotNull(dataSummaryTotals);
+    }
+
+    public void testGetGPOSAgrimineOrdersTotals() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2011, 9, 1);
+        DataSummaryTotals dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsAgrimine(calendar.getTime(), DBConstants.AGRIMINE_DATA_SOURCE_TYPE);
         assertNotNull(dataSummaryTotals);
     }
     
