@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" 	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN"     "http://www.ibatis.com/dtd/sql-map-2.dtd">
 <sqlMap namespace="SalesOrder">
     <typeAlias alias="pposOrder"
-               type="com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo" />
+               type="com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo"/>
     <typeAlias alias="cosOrder"
-               type="com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo" />
+               type="com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo"/>
     <typeAlias alias="gposOrder"
-               type="com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo" />
+               type="com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo"/>
 
     <resultMap id="ppos" class="pposOrder">
-        <result property="crmOrderNumber" column="CRM_OBJ_ID" />
-        <result property="orderNumber" column="ORDER_ID" />
-        <result property="orderType" column="SALES_ORDER_TYPE_CODE" />
-        <result property="orderFiscalYear" column="FISCAL_YEAR" />
-        <result property="orderDate" column="ORDER_DATE" />
-        <result property="dealerInfo.acctId" column="DEALER_ACCT_ID" />
-        <result property="dealerInfo.ebid" column="DEALER_EBID" />
-        <result property="dealerInfo.partnerName" column="DEALER_NAME" />
-        <result property="dealerInfo.address" column="DEALER_MAILING_ADDRESS" />
-        <result property="dealerInfo.city" column="DEALER_MAILING_CITY" />
-        <result property="dealerInfo.state" column="DEALER_MAILING_STATE" />
-        <result property="dealerInfo.zip" column="DEALER_MAILING_ZIP_CODE" />
-        <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY" />
-        <result property="growerInfo.acctId" column="GROWER_ACCT_ID" />
-        <result property="growerInfo.gln" column="GROWER_GLN" />
-        <result property="growerInfo.napd" column="GROWER_NAPD_ID" />
-        <result property="growerInfo.partnerName" column="GROWER_NAME" />
-        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME" />
-        <result property="growerInfo.address" column="GROWER_MAILING_ADDRESS" />
-        <result property="growerInfo.city" column="GROWER_MAILING_CITY" />
-        <result property="growerInfo.state" column="GROWER_MAILING_STATE" />
-        <result property="growerInfo.zip" column="GROWER_MAILING_ZIP_CODE" />
-        <result property="growerInfo.county" column="GROWER_MAILING_COUNTY" />
-        <result property="tempLineItem.itemNumber" column="ORDER_ITEM_ID" />
-        <result property="tempLineItem.productUpc" column="UPC_CODE" />
-        <result property="tempLineItem.productGtin" column="GTIN" />
-        <result property="tempLineItem.productName" column="PRODUCT_NAME" />
-        <result property="tempLineItem.salesQuantity.qtyValue" column="SALES_QTY" />
-        <result property="tempLineItem.salesQuantity.qtyUom" column="SALES_UOM" />
-        <result property="tempLineItem.equivalentQuantity.qtyValue" column="EQUIVILENT_QTY" />
-        <result property="tempLineItem.equivalentQuantity.qtyUom" column="EQUIVILENT_QTY_UOM" />
-        <result property="tempLineItem.salesRep.partnerName" column="SALESREP_NAME" />
-        <result property="tempLineItem.salesRep.buyerId" column="SALESREP_ID" />
-        <result property="tempLineItem.salesRep.address" column="SALESREP_ADDRESS_1" />
-        <result property="tempLineItem.salesRep.address2" column="SALESREP_ADDRESS_2" />
-        <result property="tempLineItem.salesRep.city" column="SALESREP_CITY" />
-        <result property="tempLineItem.salesRep.state" column="SALESREP_STATE" />
-        <result property="tempLineItem.salesRep.zip" column="SALESREP_ZIP" />
+        <result property="crmOrderNumber" column="CRM_OBJ_ID"/>
+        <result property="orderNumber" column="ORDER_ID"/>
+        <result property="orderType" column="SALES_ORDER_TYPE_CODE"/>
+        <result property="orderFiscalYear" column="FISCAL_YEAR"/>
+        <result property="orderDate" column="ORDER_DATE"/>
+        <result property="dealerInfo.acctId" column="DEALER_ACCT_ID"/>
+        <result property="dealerInfo.ebid" column="DEALER_EBID"/>
+        <result property="dealerInfo.partnerName" column="DEALER_NAME"/>
+        <result property="dealerInfo.address" column="DEALER_MAILING_ADDRESS"/>
+        <result property="dealerInfo.city" column="DEALER_MAILING_CITY"/>
+        <result property="dealerInfo.state" column="DEALER_MAILING_STATE"/>
+        <result property="dealerInfo.zip" column="DEALER_MAILING_ZIP_CODE"/>
+        <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY"/>
+        <result property="growerInfo.acctId" column="GROWER_ACCT_ID"/>
+        <result property="growerInfo.gln" column="GROWER_GLN"/>
+        <result property="growerInfo.napd" column="GROWER_NAPD_ID"/>
+        <result property="growerInfo.partnerName" column="GROWER_NAME"/>
+        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME"/>
+        <result property="growerInfo.address" column="GROWER_MAILING_ADDRESS"/>
+        <result property="growerInfo.city" column="GROWER_MAILING_CITY"/>
+        <result property="growerInfo.state" column="GROWER_MAILING_STATE"/>
+        <result property="growerInfo.zip" column="GROWER_MAILING_ZIP_CODE"/>
+        <result property="growerInfo.county" column="GROWER_MAILING_COUNTY"/>
+        <result property="tempLineItem.itemNumber" column="ORDER_ITEM_ID"/>
+        <result property="tempLineItem.productUpc" column="UPC_CODE"/>
+        <result property="tempLineItem.productGtin" column="GTIN"/>
+        <result property="tempLineItem.productName" column="PRODUCT_NAME"/>
+        <result property="tempLineItem.salesQuantity.qtyValue" column="SALES_QTY"/>
+        <result property="tempLineItem.salesQuantity.qtyUom" column="SALES_UOM"/>
+        <result property="tempLineItem.equivalentQuantity.qtyValue" column="EQUIVILENT_QTY"/>
+        <result property="tempLineItem.equivalentQuantity.qtyUom" column="EQUIVILENT_QTY_UOM"/>
+        <result property="tempLineItem.salesRep.partnerName" column="SALESREP_NAME"/>
+        <result property="tempLineItem.salesRep.buyerId" column="SALESREP_ID"/>
+        <result property="tempLineItem.salesRep.address" column="SALESREP_ADDRESS_1"/>
+        <result property="tempLineItem.salesRep.address2" column="SALESREP_ADDRESS_2"/>
+        <result property="tempLineItem.salesRep.city" column="SALESREP_CITY"/>
+        <result property="tempLineItem.salesRep.state" column="SALESREP_STATE"/>
+        <result property="tempLineItem.salesRep.zip" column="SALESREP_ZIP"/>
     </resultMap>
-    
+
     <resultMap id="cos" class="cosOrder">
-        <result property="dealerInfo.ebid" column="DEALER_EBID" />
-        <result property="dealerInfo.acctId" column="DEALER_ACCT_ID" />
-        <result property="dealerInfo.partnerName" column="DEALER_NAME" />
-        <result property="dealerInfo.address" column="DEALER_ADDRESS" />
-        <result property="dealerInfo.address2" column="DEALER_ADDRESS2" />
-        <result property="dealerInfo.city" column="DEALER_CITY" />
-        <result property="dealerInfo.state" column="DEALER_STATE" />
-        <result property="dealerInfo.zip" column="DEALER_ZIP" />
-        <result property="dealerInfo.county" column="DEALER_COUNTY" />
-        <result property="tempLineItem.productName" column="PRODUCT_NAME" />
-        <result property="tempLineItem.productGtin" column="GTIN" />
-        <result property="tempLineItem.productName" column="PRODUCT_NAME" />
+        <result property="dealerInfo.ebid" column="DEALER_EBID"/>
+        <result property="dealerInfo.acctId" column="DEALER_ACCT_ID"/>
+        <result property="dealerInfo.partnerName" column="DEALER_NAME"/>
+        <result property="dealerInfo.address" column="DEALER_ADDRESS"/>
+        <result property="dealerInfo.address2" column="DEALER_ADDRESS2"/>
+        <result property="dealerInfo.city" column="DEALER_CITY"/>
+        <result property="dealerInfo.state" column="DEALER_STATE"/>
+        <result property="dealerInfo.zip" column="DEALER_ZIP"/>
+        <result property="dealerInfo.county" column="DEALER_COUNTY"/>
+        <result property="tempLineItem.productName" column="PRODUCT_NAME"/>
+        <result property="tempLineItem.productGtin" column="GTIN"/>
+        <result property="tempLineItem.productName" column="PRODUCT_NAME"/>
         <result property="tempLineItem.orderQty" column="ORDER_QTY"/>
         <result property="tempLineItem.shippedQty" column="SHIPPED_QTY"/>
         <result property="tempLineItem.pendingQty" column="PENDING_QTY"/>
@@ -69,670 +69,469 @@
     </resultMap>
 
     <resultMap id="gpos" class="gposOrder">
-        <result property="orderNumber" column="INVC_ID" />
-        <result property="orderType" column="SALES_ORDER_TYPE_CODE" />
-        <result property="orderFiscalYear" column="FISCAL_YEAR" />
-        <result property="orderDate" column="INVC_DATE" />
-        <result property="dealerInfo.acctId" column="DEALER_ACCT_ID" />
-        <result property="dealerInfo.ebid" column="DEALER_EBID" />
-        <result property="dealerInfo.partnerName" column="DEALER_NAME" />
-        <result property="dealerInfo.address" column="DEALER_MAILING_ADDRESS" />
-        <result property="dealerInfo.city" column="DEALER_MAILING_CITY" />
-        <result property="dealerInfo.state" column="DEALER_MAILING_STATE" />
-        <result property="dealerInfo.zip" column="DEALER_MAILING_ZIP_CODE" />
-        <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY" />
-        <result property="growerInfo.acctId" column="GROWER_ACCT_ID" />
-        <result property="growerInfo.gln" column="GROWER_GLN" />
-        <result property="growerInfo.napd" column="GROWER_NAPD_ID" />
-        <result property="growerInfo.partnerName" column="GROWER_NAME" />
-        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME" />
-        <result property="growerInfo.address" column="GROWER_MAILING_ADDRESS" />
-        <result property="growerInfo.city" column="GROWER_MAILING_CITY" />
-        <result property="growerInfo.state" column="GROWER_MAILING_STATE" />
-        <result property="growerInfo.zip" column="GROWER_MAILING_ZIP_CODE" />
-        <result property="growerInfo.county" column="GROWER_MAILING_COUNTY" />
-        <result property="tempLineItem.itemNumber" column="INVC_ITEM_ID" />
-        <result property="tempLineItem.productUpc" column="UPC_CODE" />
-        <result property="tempLineItem.productGtin" column="GTIN" />
-        <result property="tempLineItem.productName" column="PRODUCT_NAME" />
-        <result property="tempLineItem.salesQuantity.qtyValue" column="SALES_QTY" />
-        <result property="tempLineItem.salesQuantity.qtyUom" column="SALES_UOM" />
-        <result property="tempLineItem.equivalentQuantity.qtyValue" column="EQUIVALENT_QTY" />
-        <result property="tempLineItem.equivalentQuantity.qtyUom" column="EQUIVILENT_QTY_UOM" />
-        <result property="tempLineItem.salesRep.partnerName" column="SALESREP_NAME" />
-        <result property="tempLineItem.salesRep.contactName" column="CONTACT_NAME" />
-        <result property="tempLineItem.salesRep.buyerId" column="SALESREP_ID" />
-        <result property="tempLineItem.salesRep.address" column="SALESREP_ADDRESS_1" />
-        <result property="tempLineItem.salesRep.city" column="SALESREP_CITY" />
-        <result property="tempLineItem.salesRep.state" column="SALESREP_STATE" />
-        <result property="tempLineItem.salesRep.zip" column="SALESREP_ZIP" />
-        <result property="tempLineItem.salesRep.county" column="SALESREP_COUNTY" />
+        <result property="orderNumber" column="INVC_ID"/>
+        <result property="orderType" column="SALES_ORDER_TYPE_CODE"/>
+        <result property="orderFiscalYear" column="FISCAL_YEAR"/>
+        <result property="orderDate" column="INVC_DATE"/>
+        <result property="dealerInfo.acctId" column="DEALER_ACCT_ID"/>
+        <result property="dealerInfo.ebid" column="DEALER_EBID"/>
+        <result property="dealerInfo.partnerName" column="DEALER_NAME"/>
+        <result property="dealerInfo.address" column="DEALER_MAILING_ADDRESS"/>
+        <result property="dealerInfo.city" column="DEALER_MAILING_CITY"/>
+        <result property="dealerInfo.state" column="DEALER_MAILING_STATE"/>
+        <result property="dealerInfo.zip" column="DEALER_MAILING_ZIP_CODE"/>
+        <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY"/>
+        <result property="growerInfo.acctId" column="GROWER_ACCT_ID"/>
+        <result property="growerInfo.gln" column="GROWER_GLN"/>
+        <result property="growerInfo.napd" column="GROWER_NAPD_ID"/>
+        <result property="growerInfo.partnerName" column="GROWER_NAME"/>
+        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME"/>
+        <result property="growerInfo.address" column="GROWER_MAILING_ADDRESS"/>
+        <result property="growerInfo.city" column="GROWER_MAILING_CITY"/>
+        <result property="growerInfo.state" column="GROWER_MAILING_STATE"/>
+        <result property="growerInfo.zip" column="GROWER_MAILING_ZIP_CODE"/>
+        <result property="growerInfo.county" column="GROWER_MAILING_COUNTY"/>
+        <result property="tempLineItem.itemNumber" column="INVC_ITEM_ID"/>
+        <result property="tempLineItem.productUpc" column="UPC_CODE"/>
+        <result property="tempLineItem.productGtin" column="GTIN"/>
+        <result property="tempLineItem.productName" column="PRODUCT_NAME"/>
+        <result property="tempLineItem.salesQuantity.qtyValue" column="SALES_QTY"/>
+        <result property="tempLineItem.salesQuantity.qtyUom" column="SALES_UOM"/>
+        <result property="tempLineItem.equivalentQuantity.qtyValue" column="EQUIVALENT_QTY"/>
+        <result property="tempLineItem.equivalentQuantity.qtyUom" column="EQUIVILENT_QTY_UOM"/>
+        <result property="tempLineItem.salesRep.partnerName" column="SALESREP_NAME"/>
+        <result property="tempLineItem.salesRep.contactName" column="CONTACT_NAME"/>
+        <result property="tempLineItem.salesRep.buyerId" column="SALESREP_ID"/>
+        <result property="tempLineItem.salesRep.address" column="SALESREP_ADDRESS_1"/>
+        <result property="tempLineItem.salesRep.city" column="SALESREP_CITY"/>
+        <result property="tempLineItem.salesRep.state" column="SALESREP_STATE"/>
+        <result property="tempLineItem.salesRep.zip" column="SALESREP_ZIP"/>
+        <result property="tempLineItem.salesRep.county" column="SALESREP_COUNTY"/>
     </resultMap>
 
     <resultMap id="gposWinfield" class="gposOrder">
-        <result property="orderNumber" column="RPTD_DOC_NBR" />
-        <result property="orderType" column="SALES_ORDER_TYPE_CODE" />
-        <result property="orderFiscalYear" column="FISCAL_YEAR" />
-        <result property="orderDate" column="INVC_DATE" />
-        <result property="dealerInfo.acctId" column="DEALER_ACCT_ID" />
-        <result property="dealerInfo.ebid" column="DEALER_EBID" />
-        <result property="dealerInfo.partnerName" column="DEALER_NAME" />
-        <result property="dealerInfo.address" column="DEALER_MAILING_ADDRESS" />
-        <result property="dealerInfo.city" column="DEALER_MAILING_CITY" />
-        <result property="dealerInfo.state" column="DEALER_MAILING_STATE" />
-        <result property="dealerInfo.zip" column="DEALER_MAILING_ZIP_CODE" />
-        <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY" />
-        <result property="growerInfo.acctId" column="GROWER_ACCT_ID" />
-        <result property="growerInfo.gln" column="GROWER_GLN" />
-        <result property="growerInfo.napd" column="GROWER_NAPD_ID" />
-        <result property="growerInfo.partnerName" column="GROWER_NAME" />
-        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME" />
-        <result property="growerInfo.address" column="GROWER_MAILING_ADDRESS" />
-        <result property="growerInfo.city" column="GROWER_MAILING_CITY" />
-        <result property="growerInfo.state" column="GROWER_MAILING_STATE" />
-        <result property="growerInfo.zip" column="GROWER_MAILING_ZIP_CODE" />
-        <result property="growerInfo.county" column="GROWER_MAILING_COUNTY" />
+        <result property="orderNumber" column="RPTD_DOC_NBR"/>
+        <result property="orderType" column="SALES_ORDER_TYPE_CODE"/>
+        <result property="orderFiscalYear" column="FISCAL_YEAR"/>
+        <result property="orderDate" column="INVC_DATE"/>
+        <result property="dealerInfo.acctId" column="DEALER_ACCT_ID"/>
+        <result property="dealerInfo.ebid" column="DEALER_EBID"/>
+        <result property="dealerInfo.partnerName" column="DEALER_NAME"/>
+        <result property="dealerInfo.address" column="DEALER_MAILING_ADDRESS"/>
+        <result property="dealerInfo.city" column="DEALER_MAILING_CITY"/>
+        <result property="dealerInfo.state" column="DEALER_MAILING_STATE"/>
+        <result property="dealerInfo.zip" column="DEALER_MAILING_ZIP_CODE"/>
+        <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY"/>
+        <result property="growerInfo.acctId" column="GROWER_ACCT_ID"/>
+        <result property="growerInfo.gln" column="GROWER_GLN"/>
+        <result property="growerInfo.napd" column="GROWER_NAPD_ID"/>
+        <result property="growerInfo.partnerName" column="GROWER_NAME"/>
+        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME"/>
+        <result property="growerInfo.address" column="GROWER_MAILING_ADDRESS"/>
+        <result property="growerInfo.city" column="GROWER_MAILING_CITY"/>
+        <result property="growerInfo.state" column="GROWER_MAILING_STATE"/>
+        <result property="growerInfo.zip" column="GROWER_MAILING_ZIP_CODE"/>
+        <result property="growerInfo.county" column="GROWER_MAILING_COUNTY"/>
         <!--<result property="tempLineItem.itemNumber" column="INVC_ITEM_ID" />-->
-        <result property="tempLineItem.productUpc" column="UPC_CODE" />
-        <result property="tempLineItem.productGtin" column="GTIN" />
-        <result property="tempLineItem.productName" column="PRODUCT_NAME" />
-        <result property="tempLineItem.salesQuantity.qtyValue" column="SALES_QTY" />
-        <result property="tempLineItem.salesQuantity.qtyUom" column="SALES_UOM" />
-        <result property="tempLineItem.equivalentQuantity.qtyValue" column="EQUIVALENT_QTY" />
-        <result property="tempLineItem.equivalentQuantity.qtyUom" column="EQUIVILENT_QTY_UOM" />
-        <result property="salesRepWinfield.partnerName" column="SALESREP_NAME" />
-        <result property="salesRepWinfield.contactName" column="CONTACT_NAME" />
-        <result property="salesRepWinfield.buyerId" column="SALESREP_ID" />
-        <result property="salesRepWinfield.address" column="SALESREP_ADDRESS_1" />
-        <result property="salesRepWinfield.city" column="SALESREP_CITY" />
-        <result property="salesRepWinfield.state" column="SALESREP_STATE" />
-        <result property="salesRepWinfield.zip" column="SALESREP_ZIP" />
-        <result property="salesRepWinfield.county" column="SALESREP_COUNTY" />
-        <result property="tempLineItem.orderTransactionType" column="Touched_Untouched" />
+        <result property="tempLineItem.productUpc" column="UPC_CODE"/>
+        <result property="tempLineItem.productGtin" column="GTIN"/>
+        <result property="tempLineItem.productName" column="PRODUCT_NAME"/>
+        <result property="tempLineItem.salesQuantity.qtyValue" column="SALES_QTY"/>
+        <result property="tempLineItem.salesQuantity.qtyUom" column="SALES_UOM"/>
+        <result property="tempLineItem.equivalentQuantity.qtyValue" column="EQUIVALENT_QTY"/>
+        <result property="tempLineItem.equivalentQuantity.qtyUom" column="EQUIVILENT_QTY_UOM"/>
+        <result property="salesRepWinfield.partnerName" column="SALESREP_NAME"/>
+        <result property="salesRepWinfield.contactName" column="CONTACT_NAME"/>
+        <result property="salesRepWinfield.buyerId" column="SALESREP_ID"/>
+        <result property="salesRepWinfield.address" column="SALESREP_ADDRESS_1"/>
+        <result property="salesRepWinfield.city" column="SALESREP_CITY"/>
+        <result property="salesRepWinfield.state" column="SALESREP_STATE"/>
+        <result property="salesRepWinfield.zip" column="SALESREP_ZIP"/>
+        <result property="salesRepWinfield.county" column="SALESREP_COUNTY"/>
+        <result property="tempLineItem.orderTransactionType" column="Touched_Untouched"/>
     </resultMap>
 
     <select id="getPPOSOrders" resultMap="ppos" parameterClass="java.util.Map">
         SELECT
-		 psgo.crm_obj_id,
-         psgo.order_id,
-         psgo.order_item_id,
-         'RT' sales_order_type_code,
-         dd.day_date order_date,
-         SUBSTR (dd.fy, 1, 4) fiscal_year,
-         cad.name_1 dealer_name,
-         cad.ic_code dealer_ebid,
-         cad.acct_id dealer_acct_id,
-         cad.mailing_addr_line_1 dealer_mailing_address,
-         cad.mailing_city dealer_mailing_city,
-         cad.mailing_state_code dealer_mailing_state,
-         cad.mailing_zip_code dealer_mailing_zip_code,
-         cad.mailing_county dealer_mailing_county,
-         gd.name_1 grower_name,
-         gd.gln grower_gln,
-         gd.napd_id grower_napd_id,
-         gd.acct_id grower_acct_id,
-         ACM.CONTACT_FIRST_NAME||' '||ACM.CONTACT_LAST_NAME GROWER_CONTACT_NAME,
-         gd.mailing_addr_line_1 grower_mailing_address,
-         gd.mailing_city grower_mailing_city,
-         gd.mailing_state_code grower_mailing_state,
-         gd.mailing_zip_code grower_mailing_zip_code,
-         gd.mailing_county grower_mailing_county,
-         spd.upc_code,
-         spd.legal_descr_1 product_name,
-         pps.upc_scc_code gtin,
-         psgo.ppos_seed_base_qty sales_qty,
-         decode (ud.uom_code,'LB','LBR', ud.uom_code) sales_uom,
-         psgo.ppos_seed_ssu_qty equivilent_qty,
-         'UN' equivilent_qty_uom,
-         ss.name_1 || ' ' || ss.name_3 salesrep_name,
-         ss.alias_ss_code salesrep_id,
-         ss.addr_line_1 salesrep_address_1,
-         ss.addr_line_2 salesrep_address_2,
-         ss.city salesrep_city,
-         ss.state_code salesrep_state,
-         ss.zip_code salesrep_zip
-  FROM   dm_ppos_seed_grower_order_c_vw psgo,
-         (select distinct crm_obj_id
-         from dm_ppos_seed_grower_order_c_vw
-         where row_eff_date > #startDate#) orders_by_date,
-         ds_seed_product_dim spd,
-         ds_channel_account_dim cad,
-         ds_grower_dim gd,
-         s_acct_sales_area cgp,
-         ds_date_dim dd,
-         ds_unit_of_measure_dim ud,
-         s_seedco_salesrep ss,
-         s_prod_package_struct pps,
-         s_acct_contact_mailing_dnml acm,
-         (SELECT   DISTINCT
-                   dest_alias_id cust_grp_code, source_alias_id cust_grp_name
-            FROM   biotech_translation
-           WHERE       'CDW749RT' = alias_program
-                   AND #groupCode# = dest_alias_id
-                   AND 'CustGrp' = source_alias_type) sc
- WHERE       psgo.product_key = spd.product_key
-         AND psgo.ship_from_acct_key = cad.acct_key
-         AND psgo.ship_to_grower_key = gd.grower_key
-         AND psgo.order_date_key = dd.date_key
-         AND psgo.base_uom_key = ud.uom_key
-         AND pps.prod_id = spd.product_id
-         AND cgp.acct_id = cad.acct_id(+)
-         AND cgp.customer_grp_code = sc.cust_grp_code
-         AND psgo.seedco_sales_rep_code = ss.seedco_salesrep_id(+)
-         AND NVL (cgp.mfd_flag, 'N') != 'X'
-         AND cgp.distribution_channel_code = '90'
-         AND cgp.division_code = '17'
-         AND cgp.sales_org_code = 'US20'
-         AND gd.primary_contact_id = acm.contact_id(+)
-         AND dd.curr_fy_offset = 0
-         AND psgo.crm_obj_id = orders_by_date.crm_obj_id
-         order by psgo.crm_obj_id, order_item_id
+        psgo.crm_obj_id,
+        psgo.order_id,
+        psgo.order_item_id,
+        'RT' sales_order_type_code,
+        dd.day_date order_date,
+        SUBSTR (dd.fy, 1, 4) fiscal_year,
+        cad.name_1 dealer_name,
+        cad.ic_code dealer_ebid,
+        cad.acct_id dealer_acct_id,
+        cad.mailing_addr_line_1 dealer_mailing_address,
+        cad.mailing_city dealer_mailing_city,
+        cad.mailing_state_code dealer_mailing_state,
+        cad.mailing_zip_code dealer_mailing_zip_code,
+        cad.mailing_county dealer_mailing_county,
+        gd.name_1 grower_name,
+        gd.gln grower_gln,
+        gd.napd_id grower_napd_id,
+        gd.acct_id grower_acct_id,
+        ACM.CONTACT_FIRST_NAME||' '||ACM.CONTACT_LAST_NAME GROWER_CONTACT_NAME,
+        gd.mailing_addr_line_1 grower_mailing_address,
+        gd.mailing_city grower_mailing_city,
+        gd.mailing_state_code grower_mailing_state,
+        gd.mailing_zip_code grower_mailing_zip_code,
+        gd.mailing_county grower_mailing_county,
+        spd.upc_code,
+        spd.legal_descr_1 product_name,
+        pps.upc_scc_code gtin,
+        psgo.ppos_seed_base_qty sales_qty,
+        decode (ud.uom_code,'LB','LBR', ud.uom_code) sales_uom,
+        psgo.ppos_seed_ssu_qty equivilent_qty,
+        'UN' equivilent_qty_uom,
+        ss.name_1 || ' ' || ss.name_3 salesrep_name,
+        ss.alias_ss_code salesrep_id,
+        ss.addr_line_1 salesrep_address_1,
+        ss.addr_line_2 salesrep_address_2,
+        ss.city salesrep_city,
+        ss.state_code salesrep_state,
+        ss.zip_code salesrep_zip
+        FROM dm_ppos_seed_grower_order_c_vw psgo,
+        (select distinct crm_obj_id
+        from dm_ppos_seed_grower_order_c_vw
+        where row_eff_date > #startDate#) orders_by_date,
+        ds_seed_product_dim spd,
+        ds_channel_account_dim cad,
+        ds_grower_dim gd,
+        s_acct_sales_area cgp,
+        ds_date_dim dd,
+        ds_unit_of_measure_dim ud,
+        s_seedco_salesrep ss,
+        s_prod_package_struct pps,
+        s_acct_contact_mailing_dnml acm,
+        (SELECT DISTINCT
+        dest_alias_id cust_grp_code, source_alias_id cust_grp_name
+        FROM biotech_translation
+        WHERE 'CDW749RT' = alias_program
+        AND #groupCode# = dest_alias_id
+        AND 'CustGrp' = source_alias_type) sc
+        WHERE psgo.product_key = spd.product_key
+        AND psgo.ship_from_acct_key = cad.acct_key
+        AND psgo.ship_to_grower_key = gd.grower_key
+        AND psgo.order_date_key = dd.date_key
+        AND psgo.base_uom_key = ud.uom_key
+        AND pps.prod_id = spd.product_id
+        AND cgp.acct_id = cad.acct_id(+)
+        AND cgp.customer_grp_code = sc.cust_grp_code
+        AND psgo.seedco_sales_rep_code = ss.seedco_salesrep_id(+)
+        AND NVL (cgp.mfd_flag, 'N') != 'X'
+        AND cgp.distribution_channel_code = '90'
+        AND cgp.division_code = '17'
+        AND cgp.sales_org_code = 'US20'
+        AND gd.primary_contact_id = acm.contact_id(+)
+        AND dd.curr_fy_offset = 0
+        AND psgo.crm_obj_id = orders_by_date.crm_obj_id
+        order by psgo.crm_obj_id, order_item_id
     </select>
 
     <select id="getCOSOrders" resultMap="cos" parameterClass="java.util.Map">
         SELECT
-            cad.name_1 dealer_name,
-            cad.ic_code dealer_ebid,
-            cad.acct_id dealer_acct_id,
-            cad.mailing_addr_line_1 dealer_address,
-            cad.mailing_addr_line_2 dealer_address2,
-            cad.mailing_city dealer_city,
-            cad.mailing_county dealer_county,
-            cad.mailing_state_code dealer_state,
-            cad.mailing_zip_code dealer_zip,
-            spd.legal_descr_1 product_name,
-            pps.upc_scc_code gtin,
-            cad.acct_id||dd.mkt_yr acct_id_crop_year,
-            sum(ocf.os_requested_qty) order_qty,
-            sum(ocf.os_shipped_qty) shipped_qty,
-            sum(ocf.os_requested_qty - ocf.os_shipped_qty) pending_qty,
-            sum(ocf.os_open_request_qty) remaining_qty
+        cad.name_1 dealer_name,
+        cad.ic_code dealer_ebid,
+        cad.acct_id dealer_acct_id,
+        cad.mailing_addr_line_1 dealer_address,
+        cad.mailing_addr_line_2 dealer_address2,
+        cad.mailing_city dealer_city,
+        cad.mailing_county dealer_county,
+        cad.mailing_state_code dealer_state,
+        cad.mailing_zip_code dealer_zip,
+        spd.legal_descr_1 product_name,
+        pps.upc_scc_code gtin,
+        cad.acct_id||dd.mkt_yr acct_id_crop_year,
+        sum(ocf.os_requested_qty) order_qty,
+        sum(ocf.os_shipped_qty) shipped_qty,
+        sum(ocf.os_requested_qty - ocf.os_shipped_qty) pending_qty,
+        sum(ocf.os_open_request_qty) remaining_qty
         FROM ds_os_daily_order_fulfillment ocf,
-                         (select distinct ocf.rtlr_acct_key
-                    from ds_os_daily_order_fulfillment ocf,
-                         dm_date_dim dd
-                    where 1=1
-                    AND dd.date_key = ocf.eff_date_key
-                    AND dd.curr_fy_offset = 0
-                    AND dd.day_date > #startDate#) orders_by_date,
-            ds_channel_account_dim cad,
-            dm_date_dim dd,
-            s_acct_sales_area cgp,
-            s_prod_package_struct pps,
-            ds_seed_product_dim spd
+        (select distinct ocf.rtlr_acct_key
+        from ds_os_daily_order_fulfillment ocf,
+        dm_date_dim dd
+        where 1=1
+        AND dd.date_key = ocf.eff_date_key
+        AND dd.curr_fy_offset = 0
+        AND dd.day_date > #startDate#) orders_by_date,
+        ds_channel_account_dim cad,
+        dm_date_dim dd,
+        s_acct_sales_area cgp,
+        s_prod_package_struct pps,
+        ds_seed_product_dim spd
         WHERE cad.acct_key = ocf.rtlr_acct_key
-            AND dd.date_key = ocf.eff_date_key
-            AND ocf.rtlr_acct_key = orders_by_date.rtlr_acct_key
-            AND dd.curr_fy_offset = 0
-            AND cgp.customer_grp_code = #groupCode#
-            AND cgp.acct_id = cad.acct_id
-            AND pps.prod_id = spd.product_id
-            AND spd.product_key = ocf.product_key
-            AND spd.product_class_id != 'N'
+        AND dd.date_key = ocf.eff_date_key
+        AND ocf.rtlr_acct_key = orders_by_date.rtlr_acct_key
+        AND dd.curr_fy_offset = 0
+        AND cgp.customer_grp_code = #groupCode#
+        AND cgp.acct_id = cad.acct_id
+        AND pps.prod_id = spd.product_id
+        AND spd.product_key = ocf.product_key
+        AND spd.product_class_id != 'N'
         GROUP BY
-            cad.name_1,
-            cad.ic_code,
-            cad.acct_id,
-            cad.mailing_addr_line_1,
-            cad.mailing_addr_line_2,
-            cad.mailing_city,
-            cad.mailing_county,
-            cad.mailing_state_code,
-            cad.mailing_zip_code,
-            spd.legal_descr_1,
-            pps.upc_scc_code,
-            cad.acct_id||dd.mkt_yr
+        cad.name_1,
+        cad.ic_code,
+        cad.acct_id,
+        cad.mailing_addr_line_1,
+        cad.mailing_addr_line_2,
+        cad.mailing_city,
+        cad.mailing_county,
+        cad.mailing_state_code,
+        cad.mailing_zip_code,
+        spd.legal_descr_1,
+        pps.upc_scc_code,
+        cad.acct_id||dd.mkt_yr
         ORDER BY cad.acct_id
     </select>
 
     <select id="getGPOSOrders" resultMap="gpos" parameterClass="java.util.Map">
         SELECT
-              rpt_sales.invc_id invc_id,
-              rpt_sales.invc_item_id invc_item_id,
-              'NS' sales_order_type_code,
-              dd.day_date invc_date,
-              substr(rpt_sales.market_year,1,4) fiscal_year,
-              cad.name_1 dealer_name,
-              cad.ic_code dealer_ebid,
-              cad.acct_id  dealer_acct_id,
-              cad.shipping_addr_line_1 dealer_mailing_address,
-              cad.shipping_city dealer_mailing_city,
-              cad.shipping_state_code dealer_mailing_state,
-              cad.shipping_zip_code dealer_mailing_zip_code,
-              cad.shipping_county dealer_mailing_county,
-              g.name_1 grower_name,
-              gln_map.alias_id grower_gln,
-              g.napd_id grower_napd_id,
-              g.acct_id grower_acct_id,
-              g.primary_contact_full_name grower_contact_name,
-              g.mailing_addr_line_1 grower_mailing_address,
-              g.mailing_city grower_mailing_city,
-              g.mailing_state_code grower_mailing_state,
-              g.mailing_zip_code grower_mailing_zip_code,
-              g.mailing_county grower_mailing_county,
-              rpt_sales.upc_code upc_code,
-              rpt_sales.upc_legal_descr product_name,
-              rpt_sales.gtin_id gtin,
-              sum(delivered_sales_qty) sales_qty,
-              decode(rpt_sales.SALES_UOM, 'BN','BG',rpt_sales.SALES_UOM) sales_uom,
-              sum(delivered_ssu_qty) equivalent_qty,
-              'UN' equivilent_qty_uom,
-              cad.name_1 salesrep_name,
-              salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
-              salesrep.alias_ss_code salesrep_id,
-              cad.mailing_addr_line_1 salesrep_address_1,
-              cad.mailing_city salesrep_city,
-              cad.mailing_state_code salesrep_state,
-              cad.mailing_zip_code salesrep_zip,
-              cad.mailing_county salesrep_county
-         FROM dm_active_grower_dim g,
-              dm_active_channel_account_dim cad,
-              s_acct_sales_area cgp,
-              s_acct_xref gln_map,
-              dm_date_dim dd,
-              (SELECT   gec.ship_from_acct_key seller_acct_key,
-                        gec.ship_to_grower_key grower_key, gec.invc_date_key,
-                        gec.invc_id, gec.invc_item_id, gec.product_key, spd.upc_code,
-                        spd.legal_descr_1 upc_legal_descr,
-                        gtin_map.gtin_id, ud.uom_code, gtin_map.sales_uom,
-                        SUBSTR (dpm.period_descr, 1, 4) || 'M' market_year,
-                        LPAD (NVL (gec.seedco_sales_rep_code, 0),
-                              12,
-                              '0'
-                             ) rtl_sales_person_id,
-                        sc.cust_grp_code,
-                        SUM (
-                          CASE
-                            WHEN spd.specie_code IN ('L', 'F')
-                              THEN ROUND(
-                                     DECODE(
-                                       SPD.BASE_UOM_ID,
-                                       'AC',0,
-                                       (DATA_CNV.RPT_EQU_QTY(
-                                          SPD.SPECIE_CODE,
-                                          ((gec.GPOS_SEED_BASE_QTY/
-                                            SPD.BASE_QTY)*
-                                           SPD.BASE_TO_SSU_FACTOR),
-                                          SPD.BASE_TO_SSU_FACTOR,
-                                          SPD.GRADE_SIZE_CODE))),2)
-                             ELSE CASE
-                               WHEN s.use_ssu = 'Y'
-                                 THEN ROUND(
-                                        DECODE(
-                                          SPD.BASE_UOM_ID,
-                                          'AC',0,
-                                          (DATA_CNV.RPT_EQU_QTY(
-                                            SPD.SPECIE_CODE,
-                                             ((gec.GPOS_SEED_BASE_QTY/
-                                               SPD.BASE_QTY)*
-                                              SPD.BASE_TO_SSU_FACTOR),
-                                             SPD.BASE_TO_SSU_FACTOR,
-                                             SPD.GRADE_SIZE_CODE))),2)
-                               ELSE
-                                 (ROUND(
-                                    DECODE(
-                                      SPD.BASE_UOM_ID,
-                                      'AC',0,
-                                      (DATA_CNV.RPT_EQU_QTY(
-                                         SPD.SPECIE_CODE,
-                                         ((gec.GPOS_SEED_BASE_QTY/
-                                           SPD.BASE_QTY)*
-                                          SPD.BASE_TO_SSU_FACTOR),
-                                         SPD.BASE_TO_SSU_FACTOR,
-                                         SPD.GRADE_SIZE_CODE))),2) /
-                                         spd.base_to_ssu_factor
-                                 )
-                             END
-                          END
-                        ) delivered_sales_qty,
-                        SUM (ROUND(
-                               DECODE(
-                                 SPD.BASE_UOM_ID,
-                                 'AC',0,
-                                 (DATA_CNV.RPT_EQU_QTY(
-                                    SPD.SPECIE_CODE,
-                                    ((gec.GPOS_SEED_BASE_QTY/
-                                      SPD.BASE_QTY)*
-                                     SPD.BASE_TO_SSU_FACTOR),
-                                    SPD.BASE_TO_SSU_FACTOR,
-                                    SPD.GRADE_SIZE_CODE))),2)
-                        ) delivered_ssu_qty
-                   FROM dm_os_gpos_seed_dsi_invc_vw gec,
-                           (select distinct invc_id, ship_from_acct_key
-                                 from dm_os_gpos_seed_dsi_invc_vw
-                                    where row_eff_date > #startDate#) orders_by_date,
-                           dm_active_channel_account_dim cad,
-                           dm_seed_product_dim spd,
-                           s_prod s,
-                           ds_unit_of_measure_dim ud,
-                           ( select distinct
-                                t_prod_dim.PRODUCT_KEY as PRODUCT_KEY,
-                                t_uom_dim.UOM_KEY as PKG_UOM_KEY,
-                             t_gtin_map.UPC_SCC_CODE as GTIN_ID,
-                             t_gtin_map.UOM_CODE as SALES_UOM
-                          from
-                             s_prod_package_struct t_gtin_map,
-                             dm_seed_product_dim t_prod_dim,
-                             dm_unit_of_measure_dim t_uom_dim
-                          where
-                                t_gtin_map.PROD_ID = t_prod_dim.PRODUCT_ID
-                            and t_gtin_map.UOM_CODE = t_uom_dim.UOM_CODE
-                        ) gtin_map,
-                        dm_date_period_map dpm,
-                                 (SELECT   DISTINCT
-                                     dest_alias_id cust_grp_code, source_alias_id cust_grp_name
-                                         FROM   biotech_translation
-                                             WHERE       'CDW749RT' = alias_program
-                                             AND #groupCode# = dest_alias_id
-                                             AND 'CustGrp' = source_alias_type) sc,
-                        dm_data_source_dim ds
-                  WHERE gec.invc_id = orders_by_date.invc_id
-                    AND gec.ship_from_acct_key = orders_by_date.ship_from_acct_key
-                    AND gec.ship_date_key = dpm.date_key
-                    AND gec.product_key = gtin_map.product_key(+)
-                    AND gec.base_uom_key = ud.uom_key
-                    AND CASE
-                         WHEN spd.specie_code = 'L'
-                         AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-                         AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                            THEN 'WINTER CANOLA'
-                         ELSE 'MARKET YEAR'
-                      END = dpm.period_type
-                  AND CASE
-                         WHEN spd.specie_code = 'L'
-                         AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-                         AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                            THEN 0
-                         WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
-                            THEN 1
-                         ELSE 0
-                      END = dpm.curr_period_offset
-                    AND gec.curr_flag = 'Y'
-                    AND gec.func_code = 'I'
-                    AND gec.del_flag = 'N'
-                    AND spd.OWNED_LICENSED_CODE = 'OWNED'
-                    AND spd.product_key = gec.product_key
-                    AND spd.product_id = s.prod_id
-                    AND gec.data_src_key = ds.data_src_key
-                    AND gec.rpt_acct_key = cad.acct_key
-                    AND (   ds.data_src_id IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK')
-                         OR (ds.data_src_id = 'WS-XML' AND cad.acct_id != 168618)
-                        )
-               GROUP BY gec.ship_from_acct_key,
-                        gec.ship_to_grower_key,
-                        gec.invc_date_key,
-                        gec.invc_id,
-                        gec.invc_item_id,
-                        gec.product_key,
-                        spd.upc_code,
-                        spd.legal_descr_1,
-                        gtin_map.gtin_id,
-                        ud.uom_code,
-                        gtin_map.sales_uom,
-                        SUBSTR (dpm.period_descr, 1, 4),
-                        LPAD (NVL (gec.seedco_sales_rep_code, 0), 12, '0'),
-                        sc.cust_grp_code) rpt_sales,
-              s_seedco_salesrep salesrep
+        rpt_sales.invc_id invc_id,
+        rpt_sales.invc_item_id invc_item_id,
+        'NS' sales_order_type_code,
+        dd.day_date invc_date,
+        substr(rpt_sales.market_year,1,4) fiscal_year,
+        cad.name_1 dealer_name,
+        cad.ic_code dealer_ebid,
+        cad.acct_id dealer_acct_id,
+        cad.shipping_addr_line_1 dealer_mailing_address,
+        cad.shipping_city dealer_mailing_city,
+        cad.shipping_state_code dealer_mailing_state,
+        cad.shipping_zip_code dealer_mailing_zip_code,
+        cad.shipping_county dealer_mailing_county,
+        g.name_1 grower_name,
+        gln_map.alias_id grower_gln,
+        g.napd_id grower_napd_id,
+        g.acct_id grower_acct_id,
+        g.primary_contact_full_name grower_contact_name,
+        g.mailing_addr_line_1 grower_mailing_address,
+        g.mailing_city grower_mailing_city,
+        g.mailing_state_code grower_mailing_state,
+        g.mailing_zip_code grower_mailing_zip_code,
+        g.mailing_county grower_mailing_county,
+        rpt_sales.upc_code upc_code,
+        rpt_sales.upc_legal_descr product_name,
+        rpt_sales.gtin_id gtin,
+        sum(delivered_sales_qty) sales_qty,
+        decode(rpt_sales.SALES_UOM, 'BN','BG',rpt_sales.SALES_UOM) sales_uom,
+        sum(delivered_ssu_qty) equivalent_qty,
+        'UN' equivilent_qty_uom,
+        cad.name_1 salesrep_name,
+        salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
+        salesrep.alias_ss_code salesrep_id,
+        cad.mailing_addr_line_1 salesrep_address_1,
+        cad.mailing_city salesrep_city,
+        cad.mailing_state_code salesrep_state,
+        cad.mailing_zip_code salesrep_zip,
+        cad.mailing_county salesrep_county
+        FROM dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,
+        s_acct_sales_area cgp,
+        s_acct_xref gln_map,
+        dm_date_dim dd,
+        (SELECT gec.ship_from_acct_key seller_acct_key,
+        gec.ship_to_grower_key grower_key, gec.invc_date_key,
+        gec.invc_id, gec.invc_item_id, gec.product_key, spd.upc_code,
+        spd.legal_descr_1 upc_legal_descr,
+        gtin_map.gtin_id, ud.uom_code, gtin_map.sales_uom,
+        SUBSTR (dpm.period_descr, 1, 4) || 'M' market_year,
+        LPAD (NVL (gec.seedco_sales_rep_code, 0),
+        12,
+        '0'
+        ) rtl_sales_person_id,
+        sc.cust_grp_code,
+        SUM (
+        CASE
+        WHEN spd.specie_code IN ('L', 'F')
+        THEN ROUND(
+        DECODE(
+        SPD.BASE_UOM_ID,
+        'AC',0,
+        (DATA_CNV.RPT_EQU_QTY(
+        SPD.SPECIE_CODE,
+        ((gec.GPOS_SEED_BASE_QTY/
+        SPD.BASE_QTY)*
+        SPD.BASE_TO_SSU_FACTOR),
+        SPD.BASE_TO_SSU_FACTOR,
+        SPD.GRADE_SIZE_CODE))),2)
+        ELSE CASE
+        WHEN s.use_ssu = 'Y'
+        THEN ROUND(
+        DECODE(
+        SPD.BASE_UOM_ID,
+        'AC',0,
+        (DATA_CNV.RPT_EQU_QTY(
+        SPD.SPECIE_CODE,
+        ((gec.GPOS_SEED_BASE_QTY/
+        SPD.BASE_QTY)*
+        SPD.BASE_TO_SSU_FACTOR),
+        SPD.BASE_TO_SSU_FACTOR,
+        SPD.GRADE_SIZE_CODE))),2)
+        ELSE
+        (ROUND(
+        DECODE(
+        SPD.BASE_UOM_ID,
+        'AC',0,
+        (DATA_CNV.RPT_EQU_QTY(
+        SPD.SPECIE_CODE,
+        ((gec.GPOS_SEED_BASE_QTY/
+        SPD.BASE_QTY)*
+        SPD.BASE_TO_SSU_FACTOR),
+        SPD.BASE_TO_SSU_FACTOR,
+        SPD.GRADE_SIZE_CODE))),2) /
+        spd.base_to_ssu_factor
+        )
+        END
+        END
+        ) delivered_sales_qty,
+        SUM (ROUND(
+        DECODE(
+        SPD.BASE_UOM_ID,
+        'AC',0,
+        (DATA_CNV.RPT_EQU_QTY(
+        SPD.SPECIE_CODE,
+        ((gec.GPOS_SEED_BASE_QTY/
+        SPD.BASE_QTY)*
+        SPD.BASE_TO_SSU_FACTOR),
+        SPD.BASE_TO_SSU_FACTOR,
+        SPD.GRADE_SIZE_CODE))),2)
+        ) delivered_ssu_qty
+        FROM dm_os_gpos_seed_dsi_invc_vw gec,
+        (select distinct invc_id, ship_from_acct_key
+        from dm_os_gpos_seed_dsi_invc_vw
+        where row_eff_date > #startDate#) orders_by_date,
+        dm_active_channel_account_dim cad,
+        dm_seed_product_dim spd,
+        s_prod s,
+        ds_unit_of_measure_dim ud,
+        ( select distinct
+        t_prod_dim.PRODUCT_KEY as PRODUCT_KEY,
+        t_uom_dim.UOM_KEY as PKG_UOM_KEY,
+        t_gtin_map.UPC_SCC_CODE as GTIN_ID,
+        t_gtin_map.UOM_CODE as SALES_UOM
+        from
+        s_prod_package_struct t_gtin_map,
+        dm_seed_product_dim t_prod_dim,
+        dm_unit_of_measure_dim t_uom_dim
+        where
+        t_gtin_map.PROD_ID = t_prod_dim.PRODUCT_ID
+        and t_gtin_map.UOM_CODE = t_uom_dim.UOM_CODE
+        ) gtin_map,
+        dm_date_period_map dpm,
+        (SELECT DISTINCT
+        dest_alias_id cust_grp_code, source_alias_id cust_grp_name
+        FROM biotech_translation
+        WHERE 'CDW749RT' = alias_program
+        AND #groupCode# = dest_alias_id
+        AND 'CustGrp' = source_alias_type) sc,
+        dm_data_source_dim ds
+        WHERE gec.invc_id = orders_by_date.invc_id
+        AND gec.ship_from_acct_key = orders_by_date.ship_from_acct_key
+        AND gec.ship_date_key = dpm.date_key
+        AND gec.product_key = gtin_map.product_key(+)
+        AND gec.base_uom_key = ud.uom_key
+        AND CASE
+        WHEN spd.specie_code = 'L'
+        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+        THEN 'WINTER CANOLA'
+        ELSE 'MARKET YEAR'
+        END = dpm.period_type
+        AND CASE
+        WHEN spd.specie_code = 'L'
+        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+        THEN 0
+        WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
+        THEN 1
+        ELSE 0
+        END = dpm.curr_period_offset
+        AND gec.curr_flag = 'Y'
+        AND gec.func_code = 'I'
+        AND gec.del_flag = 'N'
+        AND spd.OWNED_LICENSED_CODE = 'OWNED'
+        AND spd.product_key = gec.product_key
+        AND spd.product_id = s.prod_id
+        AND gec.data_src_key = ds.data_src_key
+        AND gec.rpt_acct_key = cad.acct_key
+        AND ( ds.data_src_id IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK')
+        OR (ds.data_src_id = 'WS-XML' AND cad.acct_id != 168618)
+        )
+        GROUP BY gec.ship_from_acct_key,
+        gec.ship_to_grower_key,
+        gec.invc_date_key,
+        gec.invc_id,
+        gec.invc_item_id,
+        gec.product_key,
+        spd.upc_code,
+        spd.legal_descr_1,
+        gtin_map.gtin_id,
+        ud.uom_code,
+        gtin_map.sales_uom,
+        SUBSTR (dpm.period_descr, 1, 4),
+        LPAD (NVL (gec.seedco_sales_rep_code, 0), 12, '0'),
+        sc.cust_grp_code) rpt_sales,
+        s_seedco_salesrep salesrep
         WHERE g.grower_key = rpt_sales.grower_key
-          AND cad.acct_key = rpt_sales.seller_acct_key
-          AND cad.acct_id = cgp.acct_id
-          AND cgp.customer_grp_code = rpt_sales.cust_grp_code
-          AND NVL (cgp.mfd_flag, 'N') != 'X'
-          AND cgp.distribution_channel_code = '90'
-          AND cgp.division_code = '17'
-          AND cgp.sales_org_code = 'US20'
-          AND rpt_sales.invc_date_key = dd.date_key
-          AND TO_NUMBER (rpt_sales.rtl_sales_person_id) =
-              TO_NUMBER (salesrep.seedco_salesrep_id(+))
-          AND rpt_sales.cust_grp_code = salesrep.customer_grp_code(+)
-          AND (   RTRIM(g.napd_id) IS NOT NULL
-               OR RTRIM(gln_map.alias_id) IS NOT NULL)
-          AND g.acct_id = gln_map.acct_id(+)
-          AND gln_map.system_type_code(+) = 'GLN'
-          AND gln_map.rank(+) = 1
-          AND gln_map.active_flag(+) = 'Y'
-     GROUP BY substr(rpt_sales.market_year,1,4),
-              cad.acct_id,
-              cad.ic_code,
-              cad.name_1,
-              cad.shipping_addr_line_1,
-              cad.shipping_city,
-              cad.shipping_state_code,
-              cad.shipping_zip_code,
-              cad.shipping_county,
-              g.acct_id,
-              g.napd_id,
-              g.primary_contact_full_name,
-              g.name_1,
-              g.mailing_addr_line_1,
-              g.mailing_city,
-              g.mailing_state_code,
-              g.mailing_zip_code,
-              g.mailing_county,
-              gln_map.alias_id,
-              rpt_sales.upc_code,
-              rpt_sales.upc_legal_descr,
-              rpt_sales.gtin_id,
-              rpt_sales.uom_code,
-              rpt_sales.sales_uom,
-              rpt_sales.invc_id,
-              rpt_sales.invc_item_id,
-              dd.day_date,
-              salesrep.alias_ss_code,
-              salesrep.name_1,
-              salesrep.name_3,
-              cad.name_1,
-              cad.mailing_addr_line_1,
-              cad.mailing_city,
-              cad.mailing_state_code,
-              cad.mailing_zip_code,
-              cad.mailing_county
+        AND cad.acct_key = rpt_sales.seller_acct_key
+        AND cad.acct_id = cgp.acct_id
+        AND cgp.customer_grp_code = rpt_sales.cust_grp_code
+        AND NVL (cgp.mfd_flag, 'N') != 'X'
+        AND cgp.distribution_channel_code = '90'
+        AND cgp.division_code = '17'
+        AND cgp.sales_org_code = 'US20'
+        AND rpt_sales.invc_date_key = dd.date_key
+        AND TO_NUMBER (rpt_sales.rtl_sales_person_id) =
+        TO_NUMBER (salesrep.seedco_salesrep_id(+))
+        AND rpt_sales.cust_grp_code = salesrep.customer_grp_code(+)
+        AND ( RTRIM(g.napd_id) IS NOT NULL
+        OR RTRIM(gln_map.alias_id) IS NOT NULL)
+        AND g.acct_id = gln_map.acct_id(+)
+        AND gln_map.system_type_code(+) = 'GLN'
+        AND gln_map.rank(+) = 1
+        AND gln_map.active_flag(+) = 'Y'
+        GROUP BY substr(rpt_sales.market_year,1,4),
+        cad.acct_id,
+        cad.ic_code,
+        cad.name_1,
+        cad.shipping_addr_line_1,
+        cad.shipping_city,
+        cad.shipping_state_code,
+        cad.shipping_zip_code,
+        cad.shipping_county,
+        g.acct_id,
+        g.napd_id,
+        g.primary_contact_full_name,
+        g.name_1,
+        g.mailing_addr_line_1,
+        g.mailing_city,
+        g.mailing_state_code,
+        g.mailing_zip_code,
+        g.mailing_county,
+        gln_map.alias_id,
+        rpt_sales.upc_code,
+        rpt_sales.upc_legal_descr,
+        rpt_sales.gtin_id,
+        rpt_sales.uom_code,
+        rpt_sales.sales_uom,
+        rpt_sales.invc_id,
+        rpt_sales.invc_item_id,
+        dd.day_date,
+        salesrep.alias_ss_code,
+        salesrep.name_1,
+        salesrep.name_3,
+        cad.name_1,
+        cad.mailing_addr_line_1,
+        cad.mailing_city,
+        cad.mailing_state_code,
+        cad.mailing_zip_code,
+        cad.mailing_county
         ORDER BY rpt_sales.invc_id,cad.acct_id
     </select>
 
     <select id="getGPOSDirectOrders" resultMap="gposWinfield" parameterClass="java.util.Map">
         SELECT rptd_doc_nbr,
-       detail_seq_nbr,
-       sales_order_type_code,
-       data_source,
-       invc_date,
-       fiscal_year,
-       dealer_name,
-       dealer_ebid,
-       dealer_acct_id,
-       dealer_mailing_address,
-       dealer_mailing_city,
-       dealer_mailing_state,
-       dealer_mailing_zip_code,
-       dealer_mailing_county,
-       grower_name,
-       grower_gln,
-       grower_napd_id,
-       grower_acct_id,
-       grower_contact_name,
-       grower_mailing_address,
-       grower_mailing_city,
-       grower_mailing_state,
-       grower_mailing_zip_code,
-       grower_mailing_county,
-       upc_code,
-       product_name,
-       gtin,
-       SUM (sales_qty) sales_qty,
-       sales_uom,
-       SUM (equivalent_qty) equivalent_qty,
-       equivilent_qty_uom,
-       salesrep_name,
-       contact_name,
-       salesrep_id,
-       salesrep_address_1,
-       salesrep_city,
-       salesrep_state,
-       salesrep_zip,
-       salesrep_county,
-       Touched_Untouched
-       FROM (
-   SELECT distinct h.rptd_doc_nbr,
-            h.tran_id,
-            d.detail_seq_nbr,
-            'NS' sales_order_type_code,
-            ts.source data_source,
-            dd.day_date invc_date,
-            substr(dd.mkt_yr, 1,4) fiscal_year,
-            cad.name_1 dealer_name,
-            cad.ic_code dealer_ebid,
-            cad.acct_id  dealer_acct_id,
-            cad.shipping_addr_line_1 dealer_mailing_address,
-            cad.shipping_city dealer_mailing_city,
-            cad.shipping_state_code dealer_mailing_state,
-            cad.shipping_zip_code dealer_mailing_zip_code,
-            cad.shipping_county dealer_mailing_county,
-            g.name_1 grower_name,
-            gln_map.alias_id grower_gln,
-            g.napd_id grower_napd_id,
-            g.acct_id grower_acct_id,
-            g.primary_contact_full_name grower_contact_name,
-            g.mailing_addr_line_1 grower_mailing_address,
-            g.mailing_city grower_mailing_city,
-            g.mailing_state_code grower_mailing_state,
-            g.mailing_zip_code grower_mailing_zip_code,
-            g.mailing_county grower_mailing_county,
-            spd.upc_code upc_code,
-            spd.legal_descr_1 product_name,
-            pps.upc_scc_code  gtin,
-            d.ssu_qty sales_qty,
-            decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
-            d.ssu_qty equivalent_qty,
-            'UN' equivilent_qty_uom,
-            cad.name_1 salesrep_name,
-            salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
-            salesrep.alias_ss_code salesrep_id,
-            cad.mailing_addr_line_1 salesrep_address_1,
-            cad.mailing_city salesrep_city,
-            cad.mailing_state_code salesrep_state,
-            cad.mailing_zip_code salesrep_zip,
-            cad.mailing_county salesrep_county,
-            decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched
-         FROM ecg_tran_header h,
-         ecg_tran_detail d,
-         ecg_tran_party p_sf,
-         ecg_tran_party p_st,
-         ecg_tran_party p_ds,
-         ecg_tracking_source ts,
-         ecg_tran_header_status hs,
-         dm_active_grower_dim g,
-         dm_active_channel_account_dim cad,
-         s_acct_sales_area cgp,
-         s_acct_xref gln_map,
-         dm_date_dim dd,
-         s_seedco_salesrep salesrep,
-         dm_seed_product_dim spd,
-         s_prod_package_struct pps,
-         dm_date_period_map dpm,
-         biotech_translation bt
-  WHERE h.tran_id = d.tran_id
-        AND h.tran_id = p_sf.tran_id
-        AND p_sf.party_code = 'SF'
-        AND h.tran_id = p_st.tran_id
-        AND p_st.party_code = 'ST'
-        AND h.tran_id = p_ds.tran_id
-        AND p_ds.party_code = 'DS'
-        AND h.tracking_id = ts.tracking_id
-        AND h.tran_id = hs.tran_id
-        AND to_date(h.ship_date, 'yyyymmdd') =  dd.day_date
-        AND exists (select 1 from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
-                        where h1.tran_id = hs1.tran_id
-                        and h1.tran_id = tp1.tran_id
-                        and tp1.party_code = 'SF'
-                        and hs1.status_code = 'SI'
-                        and hs1.status_id = 3
-                        and hs1.row_modify_date > #startDate#
-                        and h1.rptd_doc_nbr = h.rptd_doc_nbr
-                        and tp1.acct_id = p_sf.acct_id)
-        AND p_sf.acct_id = cad.acct_id
-        AND cad.acct_id = cgp.acct_id
-        AND d.prod_id = pps.prod_id
-        AND d.prod_id = spd.product_id
-        AND cgp.customer_grp_code = bt.dest_alias_id
-        AND bt.alias_program = 'CDW749RT'
-        AND bt.dest_alias_id = #groupCode#
-        AND bt.source_alias_type = 'CustGrp'
-        AND hs.status_id = 3                        
-        AND spd.OWNED_LICENSED_CODE = 'OWNED'
-        AND hs.status_code = 'SI'
-        AND dd.date_key = dpm.date_key
-        AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
-        AND NVL (cgp.mfd_flag, 'N') != 'X'
-        AND cgp.distribution_channel_code = '90'
-        AND cgp.division_code = '17'
-        AND cgp.sales_org_code = 'US20'
-        AND p_st.acct_id = g.acct_id
-        AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK') OR ts.source  = 'WS-XML' AND p_ds.acct_id != 168618)
-        AND (RTRIM(g.napd_id) IS NOT NULL OR RTRIM(gln_map.alias_id) IS NOT NULL)
-        AND g.acct_id = gln_map.acct_id(+)
-        AND gln_map.system_type_code(+) = 'GLN'
-        AND gln_map.rank(+) = 1
-        AND gln_map.active_flag(+) = 'Y'
-        AND CASE
-              WHEN spd.specie_code = 'L'
-              AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-              AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                THEN 'WINTER CANOLA'
-                ELSE 'MARKET YEAR'
-        END = dpm.period_type
-        AND CASE
-              WHEN spd.specie_code = 'L'
-              AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-              AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                THEN 0
-                WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
-                   THEN 1
-                   ELSE 0
-       END = dpm.curr_period_offset
-       )
-       group by rptd_doc_nbr,
-                detail_seq_nbr,
-                sales_order_type_code,
-                data_source,
-                invc_date,
-                fiscal_year,
-                dealer_name,
-                dealer_ebid,
-                dealer_acct_id,
-                dealer_mailing_address,
-                dealer_mailing_city,
-                dealer_mailing_state,
-                dealer_mailing_zip_code,
-                dealer_mailing_county,
-                grower_name,
-                grower_gln,
-                grower_napd_id,
-                grower_acct_id,
-                grower_contact_name,
-                grower_mailing_address,
-                grower_mailing_city,
-                grower_mailing_state,
-                grower_mailing_zip_code,
-                grower_mailing_county,
-                upc_code,
-                product_name,
-                gtin,
-                sales_uom,
-                equivilent_qty_uom,
-                salesrep_name,
-                contact_name,
-                salesrep_id,
-                salesrep_address_1,
-                salesrep_city,
-                salesrep_state,
-                salesrep_zip,
-                salesrep_county,
-                Touched_Untouched
-       order by rptd_doc_nbr, dealer_acct_id, grower_acct_id
-    </select>
-
-    <select id="getGPOSXMLOrders" resultMap="gposWinfield" parameterClass="java.util.Map">
-        (select rptd_doc_nbr,
         detail_seq_nbr,
         sales_order_type_code,
         data_source,
@@ -759,9 +558,9 @@
         upc_code,
         product_name,
         gtin,
-        SUM ( sales_qty) ,
+        SUM (sales_qty) sales_qty,
         sales_uom,
-        SUM (equivalent_qty),
+        SUM (equivalent_qty) equivalent_qty,
         equivilent_qty_uom,
         salesrep_name,
         contact_name,
@@ -772,66 +571,66 @@
         salesrep_zip,
         salesrep_county,
         Touched_Untouched
-     from (
-        SELECT  distinct h.rptd_doc_nbr,
-            h.tran_id,
-            d.detail_seq_nbr,
-            'NS' sales_order_type_code,
-            ts.source data_source,
-            dd.day_date invc_date,
-            substr(dd.mkt_yr, 1,4)   fiscal_year,
-            cad.name_1 dealer_name,
-            cad.ic_code dealer_ebid,
-            cad.acct_id  dealer_acct_id,
-            cad.shipping_addr_line_1 dealer_mailing_address,
-            cad.shipping_city dealer_mailing_city,
-            cad.shipping_state_code dealer_mailing_state,
-            cad.shipping_zip_code dealer_mailing_zip_code,
-            cad.shipping_county dealer_mailing_county,
-            g.name_1 grower_name,
-            gln_map.alias_id grower_gln,
-            g.napd_id grower_napd_id,
-            g.acct_id grower_acct_id,
-            g.primary_contact_full_name grower_contact_name,
-            g.mailing_addr_line_1 grower_mailing_address,
-            g.mailing_city grower_mailing_city,
-            g.mailing_state_code grower_mailing_state,
-            g.mailing_zip_code grower_mailing_zip_code,
-            g.mailing_county grower_mailing_county,
-            spd.upc_code upc_code,
-            spd.legal_descr_1 product_name,
-            pps.upc_scc_code  gtin,
-            d.ssu_qty     sales_qty,
-            decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
-            d.ssu_qty equivalent_qty,
-            'UN' equivilent_qty_uom,
-            cad.name_1 salesrep_name,
-            salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
-            salesrep.alias_ss_code salesrep_id,
-            cad.mailing_addr_line_1 salesrep_address_1,
-            cad.mailing_city salesrep_city,
-            cad.mailing_state_code salesrep_state,
-            cad.mailing_zip_code salesrep_zip,
-            cad.mailing_county salesrep_county,
-            decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched
-         FROM ecg_tran_header h,
-         ecg_tran_detail d,
-         ecg_tran_party p_sf,
-         ecg_tran_party p_st,
-         ecg_tran_party p_ds,
-         ecg_tracking_source ts,
-         ecg_tran_header_status hs,
-         dm_active_grower_dim g,
-         dm_active_channel_account_dim cad,
-         s_acct_sales_area cgp,
-         s_acct_xref gln_map,
-         dm_date_dim dd,
-         s_seedco_salesrep salesrep,
-         dm_seed_product_dim spd,
-         s_prod_package_struct pps,
-         dm_date_period_map dpm,
-         biotech_translation bt
-  WHERE h.tran_id = d.tran_id
+        FROM (
+        SELECT distinct h.rptd_doc_nbr,
+        h.tran_id,
+        d.detail_seq_nbr,
+        'NS' sales_order_type_code,
+        ts.source data_source,
+        dd.day_date invc_date,
+        substr(dd.mkt_yr, 1,4) fiscal_year,
+        cad.name_1 dealer_name,
+        cad.ic_code dealer_ebid,
+        cad.acct_id dealer_acct_id,
+        cad.shipping_addr_line_1 dealer_mailing_address,
+        cad.shipping_city dealer_mailing_city,
+        cad.shipping_state_code dealer_mailing_state,
+        cad.shipping_zip_code dealer_mailing_zip_code,
+        cad.shipping_county dealer_mailing_county,
+        g.name_1 grower_name,
+        gln_map.alias_id grower_gln,
+        g.napd_id grower_napd_id,
+        g.acct_id grower_acct_id,
+        g.primary_contact_full_name grower_contact_name,
+        g.mailing_addr_line_1 grower_mailing_address,
+        g.mailing_city grower_mailing_city,
+        g.mailing_state_code grower_mailing_state,
+        g.mailing_zip_code grower_mailing_zip_code,
+        g.mailing_county grower_mailing_county,
+        spd.upc_code upc_code,
+        spd.legal_descr_1 product_name,
+        pps.upc_scc_code gtin,
+        d.ssu_qty sales_qty,
+        decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
+        d.ssu_qty equivalent_qty,
+        'UN' equivilent_qty_uom,
+        cad.name_1 salesrep_name,
+        salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
+        salesrep.alias_ss_code salesrep_id,
+        cad.mailing_addr_line_1 salesrep_address_1,
+        cad.mailing_city salesrep_city,
+        cad.mailing_state_code salesrep_state,
+        cad.mailing_zip_code salesrep_zip,
+        cad.mailing_county salesrep_county,
+        decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched
+        FROM ecg_tran_header h,
+        ecg_tran_detail d,
+        ecg_tran_party p_sf,
+        ecg_tran_party p_st,
+        ecg_tran_party p_ds,
+        ecg_tracking_source ts,
+        ecg_tran_header_status hs,
+        dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,
+        s_acct_sales_area cgp,
+        s_acct_xref gln_map,
+        dm_date_dim dd,
+        s_seedco_salesrep salesrep,
+        dm_seed_product_dim spd,
+        s_prod_package_struct pps,
+        dm_date_period_map dpm,
+        biotech_translation bt
+        WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
         AND h.tran_id = p_st.tran_id
@@ -840,17 +639,16 @@
         AND p_ds.party_code = 'DS'
         AND h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
-        AND to_date(h.ship_date, 'yyyymmdd') =  dd.day_date
-        AND exists (select 1
-                         from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
-                         where h1.tran_id = hs1.tran_id
-                         and h1.tran_id = tp1.tran_id
-                         and tp1.party_code = 'SF'
-                         and hs1.status_code = 'SI'
-                         and hs1.status_id = 3
-                         and  trunc(hs1.row_modify_date) >#startDate#
-                         and h1.rptd_doc_nbr = h.rptd_doc_nbr
-                         and tp1.acct_id = p_sf.acct_id)
+        AND to_date(h.ship_date, 'yyyymmdd') = dd.day_date
+        AND exists (select 1 from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
+        where h1.tran_id = hs1.tran_id
+        and h1.tran_id = tp1.tran_id
+        and tp1.party_code = 'SF'
+        and hs1.status_code = 'SI'
+        and hs1.status_id = 3
+        and hs1.row_modify_date > #startDate#
+        and h1.rptd_doc_nbr = h.rptd_doc_nbr
+        and tp1.acct_id = p_sf.acct_id)
         AND p_sf.acct_id = cad.acct_id
         AND cad.acct_id = cgp.acct_id
         AND d.prod_id = pps.prod_id
@@ -863,175 +661,113 @@
         AND spd.OWNED_LICENSED_CODE = 'OWNED'
         AND hs.status_code = 'SI'
         AND dd.date_key = dpm.date_key
-        AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=
-      TO_NUMBER (salesrep.seedco_salesrep_id(+))
+        AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND NVL (cgp.mfd_flag, 'N') != 'X'
         AND cgp.distribution_channel_code = '90'
         AND cgp.division_code = '17'
         AND cgp.sales_org_code = 'US20'
         AND p_st.acct_id = g.acct_id
-        AND (ts.source = 'XML' and p_ds.acct_id != 168618)
-        AND (RTRIM(g.napd_id) IS NOT NULL
-             OR RTRIM(gln_map.alias_id) IS NOT NULL)
+        AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK') OR ts.source = 'WS-XML' AND p_ds.acct_id != 168618)
+        AND (RTRIM(g.napd_id) IS NOT NULL OR RTRIM(gln_map.alias_id) IS NOT NULL)
         AND g.acct_id = gln_map.acct_id(+)
         AND gln_map.system_type_code(+) = 'GLN'
         AND gln_map.rank(+) = 1
         AND gln_map.active_flag(+) = 'Y'
         AND CASE
-              WHEN spd.specie_code = 'L'
-              AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-              AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                THEN 'WINTER CANOLA'
-                ELSE 'MARKET YEAR'
+        WHEN spd.specie_code = 'L'
+        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+        THEN 'WINTER CANOLA'
+        ELSE 'MARKET YEAR'
         END = dpm.period_type
         AND CASE
-              WHEN spd.specie_code = 'L'
-              AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-              AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                THEN 0
-                WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
-                   THEN 1
-                   ELSE 0
-       END = dpm.curr_period_offset
-       )
-       group by rptd_doc_nbr,
-            detail_seq_nbr,
-            sales_order_type_code,
-            data_source,
-            invc_date,
-            fiscal_year,
-            dealer_name,
-            dealer_ebid,
-            dealer_acct_id,
-            dealer_mailing_address,
-            dealer_mailing_city,
-            dealer_mailing_state,
-            dealer_mailing_zip_code,
-            dealer_mailing_county,
-            grower_name,
-            grower_gln,
-            grower_napd_id,
-            grower_acct_id,
-            grower_contact_name,
-            grower_mailing_address,
-            grower_mailing_city,
-            grower_mailing_state,
-            grower_mailing_zip_code,
-            grower_mailing_county,
-            upc_code,
-            product_name,
-            gtin,
-            sales_uom,
-            equivilent_qty_uom,
-            salesrep_name,
-            contact_name,
-            salesrep_id,
-            salesrep_address_1,
-            salesrep_city,
-            salesrep_state,
-            salesrep_zip,
-            salesrep_county,
-            Touched_Untouched
-UNION ALL
-select rptd_doc_nbr,
-       detail_seq_nbr,
-       sales_order_type_code,
-       data_source,
-       invc_date,
-       fiscal_year,
-       dealer_name,
-       dealer_ebid,
-       dealer_acct_id,
-       dealer_mailing_address,
-       dealer_mailing_city,
-       dealer_mailing_state,
-       dealer_mailing_zip_code,
-       dealer_mailing_county,
-       grower_name,
-       grower_gln,
-       grower_napd_id,
-       grower_acct_id,
-       grower_contact_name,
-       grower_mailing_address,
-       grower_mailing_city,
-       grower_mailing_state,
-       grower_mailing_zip_code,
-       grower_mailing_county,
-       upc_code,
-       product_name,
-       gtin,
-       SUM ( sales_qty) ,
-       sales_uom,
-       SUM (equivalent_qty),
-       equivilent_qty_uom,
-       salesrep_name,
-       contact_name,
-       salesrep_id,
-       salesrep_address_1,
-       salesrep_city,
-       salesrep_state,
-       salesrep_zip,
-       salesrep_county,
-       Touched_Untouched
-  from (
-SELECT  distinct h.rptd_doc_nbr,
-            h.tran_id,
-            d.detail_seq_nbr,
-            'NS' sales_order_type_code,
-            ts.source data_source,
-            dd.day_date invc_date,
-            substr(dd.mkt_yr, 1,4)   fiscal_year,
-            cad.name_1 dealer_name,
-            cad.ic_code dealer_ebid,
-            cad.acct_id  dealer_acct_id,
-            cad.shipping_addr_line_1 dealer_mailing_address,
-            cad.shipping_city dealer_mailing_city,
-            cad.shipping_state_code dealer_mailing_state,
-            cad.shipping_zip_code dealer_mailing_zip_code,
-            cad.shipping_county dealer_mailing_county,
-            g.name_1 grower_name,
-            gln_map.alias_id grower_gln,
-            g.napd_id grower_napd_id,
-            g.acct_id grower_acct_id,
-            g.primary_contact_full_name grower_contact_name,
-            g.mailing_addr_line_1 grower_mailing_address,
-            g.mailing_city grower_mailing_city,
-            g.mailing_state_code grower_mailing_state,
-            g.mailing_zip_code grower_mailing_zip_code,
-            g.mailing_county grower_mailing_county,
-            spd.upc_code upc_code,
-            spd.legal_descr_1 product_name,
-            pps.upc_scc_code  gtin,
-            d.ssu_qty sales_qty,
-            decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
-            d.ssu_qty equivalent_qty,
-            'UN' equivilent_qty_uom,
-            cad.name_1 salesrep_name,
-            salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
-            salesrep.alias_ss_code salesrep_id,
-            cad.mailing_addr_line_1 salesrep_address_1,
-            cad.mailing_city salesrep_city,
-            cad.mailing_state_code salesrep_state,
-            cad.mailing_zip_code salesrep_zip,
-            cad.mailing_county salesrep_county,
-            decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched
-         FROM ecg_tran_header h,
-         ecg_tran_detail d,
-         ecg_tran_party p_sf,
-         ecg_tran_party p_st,
-         ecg_tran_party p_ds,
-         ecg_tracking_source ts,
-         ecg_tran_header_status hs,
-         dm_active_grower_dim g,
-         dm_active_channel_account_dim cad,
-         s_acct_sales_area cgp,
-         s_acct_xref gln_map,
-         dm_date_dim dd,
-         s_seedco_salesrep salesrep,
-         dm_seed_product_dim spd,
-         s_prod_package_struct pps,
-         dm_date_period_map dpm
-  WHERE h.tran_id = d.tran_id
+        WHEN spd.specie_code = 'L'
+        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+        THEN 0
+        WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
+        THEN 1
+        ELSE 0
+        END = dpm.curr_period_offset
+        )
+        group by rptd_doc_nbr,
+        detail_seq_nbr,
+        sales_order_type_code,
+        data_source,
+        invc_date,
+        fiscal_year,
+        dealer_name,
+        dealer_ebid,
+        dealer_acct_id,
+        dealer_mailing_address,
+        dealer_mailing_city,
+        dealer_mailing_state,
+        dealer_mailing_zip_code,
+        dealer_mailing_county,
+        grower_name,
+        grower_gln,
+        grower_napd_id,
+        grower_acct_id,
+        grower_contact_name,
+        grower_mailing_address,
+        grower_mailing_city,
+        grower_mailing_state,
+        grower_mailing_zip_code,
+        grower_mailing_county,
+        upc_code,
+        product_name,
+        gtin,
+        sales_uom,
+        equivilent_qty_uom,
+        salesrep_name,
+        contact_name,
+        salesrep_id,
+        salesrep_address_1,
+        salesrep_city,
+        salesrep_state,
+        salesrep_zip,
+        salesrep_county,
+        Touched_Untouched
+        order by rptd_doc_nbr, dealer_acct_id, grower_acct_id
+    </select>
+
+    <select id="getGPOSXMLOrders" resultMap="gposWinfield" parameterClass="java.util.Map">
+        (select rptd_doc_nbr,detail_seq_nbr,sales_order_type_code,data_source,invc_date,fiscal_year,dealer_name,
+        dealer_ebid,dealer_acct_id,dealer_mailing_address,dealer_mailing_city,dealer_mailing_state,dealer_mailing_zip_code,
+        dealer_mailing_county,grower_name,grower_gln,grower_napd_id,grower_acct_id,grower_contact_name,grower_mailing_address,
+        grower_mailing_city,grower_mailing_state,grower_mailing_zip_code,grower_mailing_county,upc_code,product_name,
+        gtin,SUM(sales_qty)sales_qty,sales_uom,SUM(equivalent_qty)equivalent_qty,equivilent_qty_uom,salesrep_name,contact_name,salesrep_id,
+        salesrep_address_1,salesrep_city,salesrep_state,salesrep_zip,salesrep_county,Touched_Untouched
+        from (
+        SELECT distinct h.rptd_doc_nbr,h.tran_id,d.detail_seq_nbr,'NS' sales_order_type_code,ts.source data_source,
+        dd.day_date invc_date,substr(dd.mkt_yr, 1,4) fiscal_year,cad.name_1 dealer_name,cad.ic_code dealer_ebid,
+        cad.acct_id dealer_acct_id,cad.shipping_addr_line_1 dealer_mailing_address,cad.shipping_city dealer_mailing_city,
+        cad.shipping_state_code dealer_mailing_state,cad.shipping_zip_code dealer_mailing_zip_code,cad.shipping_county dealer_mailing_county,
+        g.name_1 grower_name,gln_map.alias_id grower_gln,g.napd_id grower_napd_id,g.acct_id grower_acct_id,g.primary_contact_full_name grower_contact_name,
+        g.mailing_addr_line_1 grower_mailing_address,g.mailing_city grower_mailing_city,g.mailing_state_code grower_mailing_state,
+        g.mailing_zip_code grower_mailing_zip_code,g.mailing_county grower_mailing_county,spd.upc_code upc_code,spd.legal_descr_1 product_name,
+        pps.upc_scc_code gtin,d.ssu_qty sales_qty, decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,d.ssu_qty equivalent_qty,
+        'UN' equivilent_qty_uom,cad.name_1 salesrep_name,salesrep.name_1 || ' ' || salesrep.name_3 contact_name,salesrep.alias_ss_code salesrep_id,
+        cad.mailing_addr_line_1 salesrep_address_1,cad.mailing_city salesrep_city,cad.mailing_state_code salesrep_state,cad.mailing_zip_code salesrep_zip,
+        cad.mailing_county salesrep_county,decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched
+        FROM ecg_tran_header h,
+        ecg_tran_detail d,
+        ecg_tran_party p_sf,
+        ecg_tran_party p_st,
+        ecg_tran_party p_ds,
+        ecg_tracking_source ts,
+        ecg_tran_header_status hs,
+        dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,
+        s_acct_sales_area cgp,
+        s_acct_xref gln_map,
+        dm_date_dim dd,
+        s_seedco_salesrep salesrep,
+        dm_seed_product_dim spd,
+        s_prod_package_struct pps,
+        dm_date_period_map dpm,
+        biotech_translation bt
+        WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
         AND h.tran_id = p_st.tran_id
@@ -1040,17 +776,186 @@ SELECT  distinct h.rptd_doc_nbr,
         AND p_ds.party_code = 'DS'
         AND h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
-        AND to_date(h.ship_date, 'yyyymmdd') =  dd.day_date
+        AND to_date(h.ship_date, 'yyyymmdd') = dd.day_date
         AND exists (select 1
-                        from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
-                        where h1.tran_id = hs1.tran_id
-                        and h1.tran_id = tp1.tran_id
-                        and tp1.party_code = 'SF'
-                        and hs1.status_code = 'SI'
-                        and hs1.status_id = 3
-                        and  trunc(hs1.row_modify_date) >#startDate1#
-                        and h1.rptd_doc_nbr = h.rptd_doc_nbr
-                        and tp1.acct_id = p_sf.acct_id)
+        from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
+        where h1.tran_id = hs1.tran_id
+        and h1.tran_id = tp1.tran_id
+        and tp1.party_code = 'SF'
+        and hs1.status_code = 'SI'
+        and hs1.status_id = 3
+        and trunc(hs1.row_modify_date) >#startDate#
+        and h1.rptd_doc_nbr = h.rptd_doc_nbr
+        and tp1.acct_id = p_sf.acct_id)
+        AND p_sf.acct_id = cad.acct_id
+        AND cad.acct_id = cgp.acct_id
+        AND d.prod_id = pps.prod_id
+        AND d.prod_id = spd.product_id
+        AND cgp.customer_grp_code = bt.dest_alias_id
+        AND bt.alias_program ='CDW749RT'
+        AND bt.dest_alias_id =#groupCode#
+        AND bt.source_alias_type ='CustGrp'
+        AND hs.status_id = 3
+        AND spd.OWNED_LICENSED_CODE = 'OWNED'
+        AND hs.status_code ='SI'
+        AND dd.date_key = dpm.date_key
+        AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
+        AND NVL (cgp.mfd_flag, 'N') !='X'
+        AND cgp.distribution_channel_code = '90'
+        AND cgp.division_code ='17'
+        AND cgp.sales_org_code ='US20'
+        AND p_st.acct_id = g.acct_id
+        AND (ts.source = 'XML' and p_ds.acct_id != 168618)
+        AND (RTRIM(g.napd_id) IS NOT NULL
+        OR RTRIM(gln_map.alias_id) IS NOT NULL)
+        AND g.acct_id = gln_map.acct_id(+)
+        AND gln_map.system_type_code(+) = 'GLN'
+        AND gln_map.rank(+) = 1
+        AND gln_map.active_flag(+) = 'Y'
+        AND CASE
+        WHEN spd.specie_code = 'L'
+        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+        THEN 'WINTER CANOLA'
+        ELSE 'MARKET YEAR'
+        END = dpm.period_type
+        AND CASE
+        WHEN spd.specie_code = 'L'
+        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+        THEN 0
+        WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
+        THEN 1
+        ELSE 0
+        END = dpm.curr_period_offset
+        )
+        group by rptd_doc_nbr,
+        detail_seq_nbr,
+        sales_order_type_code,
+        data_source,
+        invc_date,
+        fiscal_year,
+        dealer_name,
+        dealer_ebid,
+        dealer_acct_id,
+        dealer_mailing_address,
+        dealer_mailing_city,
+        dealer_mailing_state,
+        dealer_mailing_zip_code,
+        dealer_mailing_county,
+        grower_name,
+        grower_gln,
+        grower_napd_id,
+        grower_acct_id,
+        grower_contact_name,
+        grower_mailing_address,
+        grower_mailing_city,
+        grower_mailing_state,
+        grower_mailing_zip_code,
+        grower_mailing_county,
+        upc_code,
+        product_name,
+        gtin,
+        sales_uom,
+        equivilent_qty_uom,
+        salesrep_name,
+        contact_name,
+        salesrep_id,
+        salesrep_address_1,
+        salesrep_city,
+        salesrep_state,
+        salesrep_zip,
+        salesrep_county,
+        Touched_Untouched
+        UNION ALL
+        select rptd_doc_nbr,
+        detail_seq_nbr,
+        sales_order_type_code,
+        data_source,
+        invc_date,
+        fiscal_year,
+        dealer_name,
+        dealer_ebid,
+        dealer_acct_id,
+        dealer_mailing_address,
+        dealer_mailing_city,
+        dealer_mailing_state,
+        dealer_mailing_zip_code,
+        dealer_mailing_county,
+        grower_name,
+        grower_gln,
+        grower_napd_id,
+        grower_acct_id,
+        grower_contact_name,
+        grower_mailing_address,
+        grower_mailing_city,
+        grower_mailing_state,
+        grower_mailing_zip_code,
+        grower_mailing_county,
+        upc_code,
+        product_name,
+        gtin,
+        SUM (sales_qty),
+        sales_uom,
+        SUM (equivalent_qty),
+        equivilent_qty_uom,
+        salesrep_name,
+        contact_name,
+        salesrep_id,
+        salesrep_address_1,
+        salesrep_city,
+        salesrep_state,
+        salesrep_zip,
+        salesrep_county,
+        Touched_Untouched
+        from (
+        SELECT distinct h.rptd_doc_nbr,h.tran_id,d.detail_seq_nbr,'NS' sales_order_type_code,ts.source data_source,
+        dd.day_date invc_date,substr(dd.mkt_yr, 1,4) fiscal_year,cad.name_1 dealer_name,cad.ic_code dealer_ebid,
+        cad.acct_id dealer_acct_id,cad.shipping_addr_line_1 dealer_mailing_address,cad.shipping_city dealer_mailing_city,
+        cad.shipping_state_code dealer_mailing_state,cad.shipping_zip_code dealer_mailing_zip_code,cad.shipping_county dealer_mailing_county,
+        g.name_1 grower_name,gln_map.alias_id grower_gln,g.napd_id grower_napd_id,g.acct_id grower_acct_id,g.primary_contact_full_name grower_contact_name,
+        g.mailing_addr_line_1 grower_mailing_address,g.mailing_city grower_mailing_city,g.mailing_state_code grower_mailing_state,
+        g.mailing_zip_code grower_mailing_zip_code,g.mailing_county grower_mailing_county,spd.upc_code upc_code,
+        spd.legal_descr_1 product_name,pps.upc_scc_code gtin,d.ssu_qty sales_qty,decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
+        d.ssu_qty equivalent_qty,'UN' equivilent_qty_uom,cad.name_1 salesrep_name,salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
+        salesrep.alias_ss_code salesrep_id,cad.mailing_addr_line_1 salesrep_address_1,cad.mailing_city salesrep_city,cad.mailing_state_code salesrep_state,
+        cad.mailing_zip_code salesrep_zip,cad.mailing_county salesrep_county,decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched
+        FROM ecg_tran_header h,
+        ecg_tran_detail d,
+        ecg_tran_party p_sf,
+        ecg_tran_party p_st,
+        ecg_tran_party p_ds,
+        ecg_tracking_source ts,
+        ecg_tran_header_status hs,
+        dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,
+        s_acct_sales_area cgp,
+        s_acct_xref gln_map,
+        dm_date_dim dd,
+        s_seedco_salesrep salesrep,
+        dm_seed_product_dim spd,
+        s_prod_package_struct pps,
+        dm_date_period_map dpm
+        WHERE h.tran_id = d.tran_id
+        AND h.tran_id = p_sf.tran_id
+        AND p_sf.party_code = 'SF'
+        AND h.tran_id = p_st.tran_id
+        AND p_st.party_code = 'ST'
+        AND h.tran_id = p_ds.tran_id
+        AND p_ds.party_code = 'DS'
+        AND h.tracking_id = ts.tracking_id
+        AND h.tran_id = hs.tran_id
+        AND to_date(h.ship_date, 'yyyymmdd') = dd.day_date
+        AND exists (select 1
+        from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
+        where h1.tran_id = hs1.tran_id
+        and h1.tran_id = tp1.tran_id
+        and tp1.party_code = 'SF'
+        and hs1.status_code = 'SI'
+        and hs1.status_id = 3
+        and trunc(hs1.row_modify_date)>#startDate#
+        and h1.rptd_doc_nbr = h.rptd_doc_nbr
+        and tp1.acct_id = p_sf.acct_id)
         AND p_sf.acct_id = cad.acct_id
         AND cad.acct_id = cgp.acct_id
         AND d.prod_id = pps.prod_id
@@ -1058,174 +963,173 @@ SELECT  distinct h.rptd_doc_nbr,
         AND hs.status_id = 3
         AND hs.status_code = 'SI'
         AND dd.date_key = dpm.date_key
-        AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=
-      TO_NUMBER (salesrep.seedco_salesrep_id(+))
+        AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND p_st.acct_id = g.acct_id
         AND ( ts.source = 'XML' AND p_ds.acct_id = 168618 )
         AND (RTRIM(g.napd_id) IS NOT NULL
-             OR RTRIM(gln_map.alias_id) IS NOT NULL)
+        OR RTRIM(gln_map.alias_id) IS NOT NULL)
         AND g.acct_id = gln_map.acct_id(+)
         AND gln_map.system_type_code(+) = 'GLN'
         AND gln_map.rank(+) = 1
         AND gln_map.active_flag(+) = 'Y'
         AND CASE
-              WHEN spd.specie_code = 'L'
-              AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-              AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                THEN 'WINTER CANOLA'
-                ELSE 'MARKET YEAR'
+        WHEN spd.specie_code = 'L'
+        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+        THEN 'WINTER CANOLA'
+        ELSE 'MARKET YEAR'
         END = dpm.period_type
         AND CASE
-              WHEN spd.specie_code = 'L'
-              AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-              AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                THEN 0
-                WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
-                   THEN 1
-                   ELSE 0
-       END = dpm.curr_period_offset
-       )
-       group by rptd_doc_nbr,
-            detail_seq_nbr,
-            sales_order_type_code,
-            data_source,
-            invc_date,
-            fiscal_year,
-            dealer_name,
-            dealer_ebid,
-            dealer_acct_id,
-            dealer_mailing_address,
-            dealer_mailing_city,
-            dealer_mailing_state,
-            dealer_mailing_zip_code,
-            dealer_mailing_county,
-            grower_name,
-            grower_gln,
-            grower_napd_id,
-            grower_acct_id,
-            grower_contact_name,
-            grower_mailing_address,
-            grower_mailing_city,
-            grower_mailing_state,
-            grower_mailing_zip_code,
-            grower_mailing_county,
-            upc_code,
-            product_name,
-            gtin,
-            sales_uom,
-            equivilent_qty_uom,
-            salesrep_name,
-            contact_name,
-            salesrep_id,
-            salesrep_address_1,
-            salesrep_city,
-            salesrep_state,
-            salesrep_zip,
-            salesrep_county,
-            Touched_Untouched)
+        WHEN spd.specie_code = 'L'
+        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+        THEN 0
+        WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
+        THEN 1
+        ELSE 0
+        END = dpm.curr_period_offset
+        )
+        group by rptd_doc_nbr,
+        detail_seq_nbr,
+        sales_order_type_code,
+        data_source,
+        invc_date,
+        fiscal_year,
+        dealer_name,
+        dealer_ebid,
+        dealer_acct_id,
+        dealer_mailing_address,
+        dealer_mailing_city,
+        dealer_mailing_state,
+        dealer_mailing_zip_code,
+        dealer_mailing_county,
+        grower_name,
+        grower_gln,
+        grower_napd_id,
+        grower_acct_id,
+        grower_contact_name,
+        grower_mailing_address,
+        grower_mailing_city,
+        grower_mailing_state,
+        grower_mailing_zip_code,
+        grower_mailing_county,
+        upc_code,
+        product_name,
+        gtin,
+        sales_uom,
+        equivilent_qty_uom,
+        salesrep_name,
+        contact_name,
+        salesrep_id,
+        salesrep_address_1,
+        salesrep_city,
+        salesrep_state,
+        salesrep_zip,
+        salesrep_county,
+        Touched_Untouched)
         order by rptd_doc_nbr, dealer_acct_id, grower_acct_id
     </select>
 
     <select id="getGPOSAgrimineOrders" resultMap="gposWinfield" parameterClass="java.util.Map">
         SELECT rptd_doc_nbr,
-       detail_seq_nbr,
-       sales_order_type_code,
-       data_source,
-       invc_date,
-       fiscal_year,
-       dealer_name,
-       dealer_ebid,
-       dealer_acct_id,
-       dealer_mailing_address,
-       dealer_mailing_city,
-       dealer_mailing_state,
-       dealer_mailing_zip_code,
-       dealer_mailing_county,
-       grower_name,
-       grower_gln,
-       grower_napd_id,
-       grower_acct_id,
-       grower_contact_name,
-       grower_mailing_address,
-       grower_mailing_city,
-       grower_mailing_state,
-       grower_mailing_zip_code,
-       grower_mailing_county,
-       upc_code,
-       product_name,
-       gtin,
-       SUM (sales_qty) sales_qty,
-       sales_uom,
-       SUM (equivalent_qty) equivalent_qty,
-       equivilent_qty_uom,
-       salesrep_name,
-       contact_name,
-       salesrep_id,
-       salesrep_address_1,
-       salesrep_city,
-       salesrep_state,
-       salesrep_zip,
-       salesrep_county,
-       Touched_Untouched
-       FROM (
-   SELECT distinct h.rptd_doc_nbr,
-            h.tran_id,
-            d.detail_seq_nbr,
-            'NS' sales_order_type_code,
-            ts.source data_source,
-            dd.day_date invc_date,
-            substr(dd.mkt_yr, 1,4)   fiscal_year,
-            cad.name_1 dealer_name,
-            cad.ic_code dealer_ebid,
-            cad.acct_id  dealer_acct_id,
-            cad.shipping_addr_line_1 dealer_mailing_address,
-            cad.shipping_city dealer_mailing_city,
-            cad.shipping_state_code dealer_mailing_state,
-            cad.shipping_zip_code dealer_mailing_zip_code,
-            cad.shipping_county dealer_mailing_county,
-            g.name_1 grower_name,
-            gln_map.alias_id grower_gln,
-            g.napd_id grower_napd_id,
-            g.acct_id grower_acct_id,
-            g.primary_contact_full_name grower_contact_name,
-            g.mailing_addr_line_1 grower_mailing_address,
-            g.mailing_city grower_mailing_city,
-            g.mailing_state_code grower_mailing_state,
-            g.mailing_zip_code grower_mailing_zip_code,
-            g.mailing_county grower_mailing_county,
-            spd.upc_code upc_code,
-            spd.legal_descr_1 product_name,
-            pps.upc_scc_code  gtin,
-            d.ssu_qty     sales_qty,
-            decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
-            d.ssu_qty equivalent_qty,
-            'UN' equivilent_qty_uom,
-            cad.name_1 salesrep_name,
-            salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
-            salesrep.alias_ss_code salesrep_id,
-            cad.mailing_addr_line_1 salesrep_address_1,
-            cad.mailing_city salesrep_city,
-            cad.mailing_state_code salesrep_state,
-            cad.mailing_zip_code salesrep_zip,
-            cad.mailing_county salesrep_county,
-            decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched
-         FROM ecg_tran_header h,
-         ecg_tran_detail d,
-         ecg_tran_party p_sf,
-         ecg_tran_party p_st,
-         ecg_tran_party p_ds,
-         ecg_tracking_source ts,
-         ecg_tran_header_status hs,
-         dm_active_grower_dim g,
-         dm_active_channel_account_dim cad,
-         s_acct_sales_area cgp,
-         s_acct_xref gln_map,
-         dm_date_dim dd,
-         s_seedco_salesrep salesrep,
-         dm_seed_product_dim spd,
-         s_prod_package_struct pps,
-         dm_date_period_map dpm
-  WHERE h.tran_id = d.tran_id
+        detail_seq_nbr,
+        sales_order_type_code,
+        data_source,
+        invc_date,
+        fiscal_year,
+        dealer_name,
+        dealer_ebid,
+        dealer_acct_id,
+        dealer_mailing_address,
+        dealer_mailing_city,
+        dealer_mailing_state,
+        dealer_mailing_zip_code,
+        dealer_mailing_county,
+        grower_name,
+        grower_gln,
+        grower_napd_id,
+        grower_acct_id,
+        grower_contact_name,
+        grower_mailing_address,
+        grower_mailing_city,
+        grower_mailing_state,
+        grower_mailing_zip_code,
+        grower_mailing_county,
+        upc_code,
+        product_name,
+        gtin,
+        SUM (sales_qty) sales_qty,
+        sales_uom,
+        SUM (equivalent_qty) equivalent_qty,
+        equivilent_qty_uom,
+        salesrep_name,
+        contact_name,
+        salesrep_id,
+        salesrep_address_1,
+        salesrep_city,
+        salesrep_state,
+        salesrep_zip,
+        salesrep_county,
+        Touched_Untouched
+        FROM (
+        SELECT distinct h.rptd_doc_nbr,
+        h.tran_id,
+        d.detail_seq_nbr,
+        'NS' sales_order_type_code,
+        ts.source data_source,
+        dd.day_date invc_date,
+        substr(dd.mkt_yr, 1,4) fiscal_year,
+        cad.name_1 dealer_name,
+        cad.ic_code dealer_ebid,
+        cad.acct_id dealer_acct_id,
+        cad.shipping_addr_line_1 dealer_mailing_address,
+        cad.shipping_city dealer_mailing_city,
+        cad.shipping_state_code dealer_mailing_state,
+        cad.shipping_zip_code dealer_mailing_zip_code,
+        cad.shipping_county dealer_mailing_county,
+        g.name_1 grower_name,
+        gln_map.alias_id grower_gln,
+        g.napd_id grower_napd_id,
+        g.acct_id grower_acct_id,
+        g.primary_contact_full_name grower_contact_name,
+        g.mailing_addr_line_1 grower_mailing_address,
+        g.mailing_city grower_mailing_city,
+        g.mailing_state_code grower_mailing_state,
+        g.mailing_zip_code grower_mailing_zip_code,
+        g.mailing_county grower_mailing_county,
+        spd.upc_code upc_code,
+        spd.legal_descr_1 product_name,
+        pps.upc_scc_code gtin,
+        d.ssu_qty sales_qty,
+        decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
+        d.ssu_qty equivalent_qty,
+        'UN' equivilent_qty_uom,
+        cad.name_1 salesrep_name,
+        salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
+        salesrep.alias_ss_code salesrep_id,
+        cad.mailing_addr_line_1 salesrep_address_1,
+        cad.mailing_city salesrep_city,
+        cad.mailing_state_code salesrep_state,
+        cad.mailing_zip_code salesrep_zip,
+        cad.mailing_county salesrep_county,
+        decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched
+        FROM ecg_tran_header h,
+        ecg_tran_detail d,
+        ecg_tran_party p_sf,
+        ecg_tran_party p_st,
+        ecg_tran_party p_ds,
+        ecg_tracking_source ts,
+        ecg_tran_header_status hs,
+        dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,
+        s_acct_sales_area cgp,
+        s_acct_xref gln_map,
+        dm_date_dim dd,
+        s_seedco_salesrep salesrep,
+        dm_seed_product_dim spd,
+        s_prod_package_struct pps,
+        dm_date_period_map dpm
+        WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
         AND h.tran_id = p_st.tran_id
@@ -1234,17 +1138,17 @@ SELECT  distinct h.rptd_doc_nbr,
         AND p_ds.party_code = 'DS'
         AND h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
-        AND to_date(h.ship_date, 'yyyymmdd') =  dd.day_date
+        AND to_date(h.ship_date, 'yyyymmdd') = dd.day_date
         AND exists (select 1
-                        from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
-                        where h1.tran_id = hs1.tran_id
-                        and h1.tran_id = tp1.tran_id
-                        and tp1.party_code = 'SF'
-                        and hs1.status_code = 'SI'
-                        and hs1.status_id = 3
-                        and trunc(hs1.row_modify_date) > #startDate#
-                        and h1.rptd_doc_nbr = h.rptd_doc_nbr
-                        and tp1.acct_id = p_sf.acct_id)
+        from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
+        where h1.tran_id = hs1.tran_id
+        and h1.tran_id = tp1.tran_id
+        and tp1.party_code = 'SF'
+        and hs1.status_code = 'SI'
+        and hs1.status_id = 3
+        and trunc(hs1.row_modify_date) > #startDate#
+        and h1.rptd_doc_nbr = h.rptd_doc_nbr
+        and tp1.acct_id = p_sf.acct_id)
         AND p_sf.acct_id = cad.acct_id
         AND cad.acct_id = cgp.acct_id
         AND d.prod_id = pps.prod_id
@@ -1253,71 +1157,71 @@ SELECT  distinct h.rptd_doc_nbr,
         AND hs.status_code = 'SI'
         AND dd.date_key = dpm.date_key
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=
-      TO_NUMBER (salesrep.seedco_salesrep_id(+))
+        TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND p_st.acct_id = g.acct_id
         AND ts.source = 'AGRIMINE'
         AND (RTRIM(g.napd_id) IS NOT NULL
-             OR RTRIM(gln_map.alias_id) IS NOT NULL)
+        OR RTRIM(gln_map.alias_id) IS NOT NULL)
         AND g.acct_id = gln_map.acct_id(+)
         AND gln_map.system_type_code(+) = 'GLN'
         AND gln_map.rank(+) = 1
         AND gln_map.active_flag(+) = 'Y'
         AND CASE
-              WHEN spd.specie_code = 'L'
-              AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-              AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                THEN 'WINTER CANOLA'
-                ELSE 'MARKET YEAR'
+        WHEN spd.specie_code = 'L'
+        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+        THEN 'WINTER CANOLA'
+        ELSE 'MARKET YEAR'
         END = dpm.period_type
         AND CASE
-              WHEN spd.specie_code = 'L'
-              AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-              AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-                THEN 0
-                WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
-                   THEN 1
-                   ELSE 0
-       END = dpm.curr_period_offset
-       )
-       group by rptd_doc_nbr,
-                detail_seq_nbr,
-                sales_order_type_code,
-                data_source,
-                invc_date,
-                fiscal_year,
-                dealer_name,
-                dealer_ebid,
-                dealer_acct_id,
-                dealer_mailing_address,
-                dealer_mailing_city,
-                dealer_mailing_state,
-                dealer_mailing_zip_code,
-                dealer_mailing_county,
-                grower_name,
-                grower_gln,
-                grower_napd_id,
-                grower_acct_id,
-                grower_contact_name,
-                grower_mailing_address,
-                grower_mailing_city,
-                grower_mailing_state,
-                grower_mailing_zip_code,
-                grower_mailing_county,
-                upc_code,
-                product_name,
-                gtin,
-                sales_uom,
-                equivilent_qty_uom,
-                salesrep_name,
-                contact_name,
-                salesrep_id,
-                salesrep_address_1,
-                salesrep_city,
-                salesrep_state,
-                salesrep_zip,
-                salesrep_county,
-                Touched_Untouched
-       order by rptd_doc_nbr, dealer_acct_id, grower_acct_id
+        WHEN spd.specie_code = 'L'
+        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
+        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
+        THEN 0
+        WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
+        THEN 1
+        ELSE 0
+        END = dpm.curr_period_offset
+        )
+        group by rptd_doc_nbr,
+        detail_seq_nbr,
+        sales_order_type_code,
+        data_source,
+        invc_date,
+        fiscal_year,
+        dealer_name,
+        dealer_ebid,
+        dealer_acct_id,
+        dealer_mailing_address,
+        dealer_mailing_city,
+        dealer_mailing_state,
+        dealer_mailing_zip_code,
+        dealer_mailing_county,
+        grower_name,
+        grower_gln,
+        grower_napd_id,
+        grower_acct_id,
+        grower_contact_name,
+        grower_mailing_address,
+        grower_mailing_city,
+        grower_mailing_state,
+        grower_mailing_zip_code,
+        grower_mailing_county,
+        upc_code,
+        product_name,
+        gtin,
+        sales_uom,
+        equivilent_qty_uom,
+        salesrep_name,
+        contact_name,
+        salesrep_id,
+        salesrep_address_1,
+        salesrep_city,
+        salesrep_state,
+        salesrep_zip,
+        salesrep_county,
+        Touched_Untouched
+        order by rptd_doc_nbr, dealer_acct_id, grower_acct_id
     </select>
 </sqlMap>
 
