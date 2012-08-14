@@ -162,6 +162,46 @@
             </build>
         </profile>
 
+        <profile>
+            <id>creditlist-generate-service-stubs-wsimport</id>
+            <build>
+                <plugins>
+                    <!--WSImport-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>service-stubs-wsimport</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+                                            <classpath refid="maven.compile.classpath"/>
+                                        </taskdef>
+
+                                        <echo>Calling wsimport for GrowerCredit Service</echo>
+                                        <wsimport
+                                                wsdl="http://services-dint.monsanto.com/USST_SouthernStates/GrowerCreditList?wsdl"
+                                                keep="true"
+                                                verbose="true"
+                                                sourcedestdir="src/main/java"
+                                                >                                            
+                                            <binding dir="src/main/resources/binding" includes="creditlist-schema-custom.xml"/>
+                                            <binding dir="src/main/resources/binding" includes="creditlist-interface-custom.xml"/>
+                                        </wsimport>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 
 

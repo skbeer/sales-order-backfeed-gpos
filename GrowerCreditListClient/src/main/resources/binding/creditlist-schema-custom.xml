@@ -4,10 +4,10 @@
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
         xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
         xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-    <jaxb:bindings schemaLocation="http://services-dint.monsanto.com/USST_SouthernStates/GetCreditInfo?wsdl#types?schema2"
-                   node="/xs:schema[@targetNamespace='Monsanto:Service:GrowerCredit']">
+    <jaxb:bindings schemaLocation="http://services-dint.monsanto.com/USST_SouthernStates/GrowerCreditList?wsdl#types?schema1"
+                   node="/xs:schema[@targetNamespace='Monsanto:Service:GrowerCreditList']">
         <jaxb:schemaBindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
-            <jaxb:package name="com.monsanto.commercial.growercreditlist.gen.creditinfo.schema"/>
+            <jaxb:package name="com.monsanto.commercial.growercreditlist.gen.creditlist.schema"/>
         </jaxb:schemaBindings>
     </jaxb:bindings>
 </jaxb:bindings>
