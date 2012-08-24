@@ -20,6 +20,7 @@ public class DBConstants {
     public static final String PPOS_TRAN_TYPE = "PPOS";
     public static final String COS_TRAN_TYPE = "DOS";
     public static final String GPOS_TRAN_TYPE = "GPOS";
+    public static final String FPOS_CREDITLIST_TYPE = "FPOS;CREDITLIST";
 
     public static final String GPOS_AGRIMINE_TRAN_TYPE = "GPOS;AGRIMINE";
     public static final String GPOS_CLASSIC_TRAN_TYPE = "GPOS;CLASSIC";

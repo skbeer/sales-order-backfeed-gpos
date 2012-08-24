@@ -62,5 +62,9 @@
 			pointcut-ref="serviceOperation" />
 	</aop:config>
 
+    <bean id="creditListDAO" class="com.monsanto.irdsoapservices.creditlist.CreditListDAO">
+        <property name="sqlMapClient" ref="fsSqlMap"/>
+    </bean>
+
 
 </beans>

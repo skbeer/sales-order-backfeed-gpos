@@ -88,6 +88,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>CreditListServlet</servlet-name>
+        <servlet-class>com.monsanto.irdsoapservices.creditlist.CreditListServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreditListServlet</servlet-name>
+        <url-pattern>/CreditListServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <display-name>RetailSellerInformationService</display-name>
         <servlet-name>RetailSellerInformationService</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>

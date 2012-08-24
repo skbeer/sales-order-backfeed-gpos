@@ -3,10 +3,12 @@ package com.monsanto.salesorder.dao.test;
 import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
 import com.monsanto.irdsoapservices.salesorder.dao.TransactionDaoImpl;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
+import com.monsanto.irdsoapservices.constants.DBConstants;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,7 +32,30 @@ public class TransactionDaoImpl_UT extends AbstractTransactionalDataSourceSpring
     }
 
     public void testGetPartnersWithTransactions() throws Exception {
-        assertTrue(transactionDao.getTransactionsToBeProcessed().size()>0);
+        List<TransactionInfo> infoList = transactionDao.getTransactionsToBeProcessed();
+        System.out.println("infoList.size() = " + infoList.size());
+        for(TransactionInfo tranInfo : infoList) {
+            System.out.println(tranInfo);
+        }
+        assertTrue(infoList.size()>0);
+    }
+
+    public void testGetTransactionsByType() throws Exception {
+        List<TransactionInfo> infoList = transactionDao.getTransactionsByType(DBConstants.FPOS_CREDITLIST_TYPE);
+        System.out.println("infoList.size() = " + infoList.size());
+        for(TransactionInfo tranInfo : infoList) {
+            System.out.println(tranInfo);
+        }
+        assertTrue(infoList.size()>0);
+    }
+
+    public void testGetTransactionsByType_noData() throws Exception {
+        List<TransactionInfo> infoList = transactionDao.getTransactionsByType("some_random");
+        System.out.println("infoList.size() = " + infoList.size());
+        for(TransactionInfo tranInfo : infoList) {
+            System.out.println(tranInfo);
+        }
+        assertTrue(infoList.size()==0);
     }
 
     public void testUpdateTransactionStats() throws Exception {

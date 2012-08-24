@@ -29,8 +29,7 @@ public class IRDServiceHandlerResolver implements HandlerResolver {
         this.handlerList = new ArrayList<Handler>();
         this.handlerList.add(getIRDLogHandler());
     }
-
-    @Override
+    
     public List<Handler> getHandlerChain(PortInfo portInfo) {
         return this.handlerList;
     }

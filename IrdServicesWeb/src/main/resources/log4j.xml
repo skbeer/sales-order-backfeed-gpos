@@ -37,7 +37,7 @@
   	repeated among the various categories and root. -->
 
   <category name="com.monsanto" additivity="false">
-    <priority value="debug" />
+    <priority value="info" />
     <appender-ref ref="ApplicationjRollingFileAppender"/>
     <appender-ref ref="stdout" /> 
   </category>

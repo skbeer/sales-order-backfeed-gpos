@@ -11,6 +11,5 @@
     <sqlMap resource="VistiveProcessor.xml"/>
     <sqlMap resource="SalesOrder.xml"/>
     <sqlMap resource="RetailSeller.xml"/>
-    <sqlMap resource="DataSummary.xml"/>
-
+    <sqlMap resource="DataSummary.xml"/>    
 </sqlMapConfig>

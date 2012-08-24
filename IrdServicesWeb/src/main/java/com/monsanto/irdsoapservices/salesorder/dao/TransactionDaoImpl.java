@@ -15,7 +15,13 @@ import java.util.List;
 public class TransactionDaoImpl extends SqlMapClientDaoSupport implements TransactionDao {
 
     public List<TransactionInfo> getTransactionsToBeProcessed() throws Exception {
-        return (List<TransactionInfo>)getSqlMapClientTemplate().queryForList("BackfeedData.getTransactionsToBeProcessed");
+        return (List<TransactionInfo>)getSqlMapClientTemplate().queryForList("BackfeedData.getTransactionsToBeProcessed", null);
+    }
+
+    public List<TransactionInfo> getTransactionsByType(String tranType) throws Exception {
+        TransactionInfo transactionInfo = new TransactionInfo();
+        transactionInfo.setTransactionType(tranType);
+        return (List<TransactionInfo>)getSqlMapClientTemplate().queryForList("BackfeedData.getTransactionsToBeProcessed", transactionInfo);
     }
 
     public int updateLastTransactionStats(TransactionInfo transaction) throws Exception {

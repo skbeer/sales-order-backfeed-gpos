@@ -16,7 +16,7 @@
         <result property="maxFileSize" column="MAX_FILE_SIZE"/>
 	</resultMap>
     
-	<select id="getTransactionsToBeProcessed" resultMap="transaction">
+	<select id="getTransactionsToBeProcessed" resultMap="transaction" parameterClass="transactionInfo">
 	    SELECT  PARTNER_NAME,
 	            GROUP_CODE,
 	            COMPANY_CODE,
@@ -29,6 +29,9 @@
                 MAX_FILE_SIZE
         FROM    ECOM.PARTNER_BACKFEED_CONTROL
         WHERE   (START_DATE &lt;= SYSDATE) AND (EXPIRATION_DATE &gt; SYSDATE)
+                <isNotNull prepend="AND" property="transactionType">
+                    UPPER(TRANSACTION_TYPE) = #transactionType#
+                </isNotNull>
    		ORDER BY PARTNER_NAME
 	</select>
 

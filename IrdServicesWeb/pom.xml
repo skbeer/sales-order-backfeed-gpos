@@ -29,6 +29,16 @@
         </dependency>
 
         <dependency>
+            <groupId>com.monsanto.commercial.growercreditlist</groupId>
+            <artifactId>growercreditlist-clientjar</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.monsanto.util</groupId>
+            <artifactId>util</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.13</version>
@@ -309,35 +319,9 @@
                     <warName>${war.file.name}</warName>
                     <archive>
                         <manifestEntries>
-                            <Implementation-Version>${maven.build.timestamp}</Implementation-Version>
+                            <Implementation-Version>${current.timestamp}</Implementation-Version>
                         </manifestEntries>
                     </archive>
-                </configuration>
-            </plugin>
-
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.0.2</version>
-                <configuration>
-                    <warName>${war.file.name}</warName>
-                </configuration>
-            </plugin>
-            <!-- Remove generated JAXB code from clover coverage -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clover-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>com/monsanto/irdsoapservices/agreements/schema/*.java</exclude>
-                        <exclude>com/monsanto/irdsoapservices/brands/schema/*.java</exclude>
-                        <exclude>com/monsanto/irdsoapservices/contacts/schema/*.java</exclude>
-                        <exclude>com/monsanto/irdsoapservices/schema/*.java</exclude>
-                        <exclude>com/monsanto/irdsoapservices/service/*.java</exclude>
-                        <exclude>com/monsanto/irdsoapservices/service/impl/*.java</exclude>
-                        <exclude>com/monsanto/irdsoapservices/test/*.java</exclude>                        
-                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
