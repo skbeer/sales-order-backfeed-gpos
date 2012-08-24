@@ -49,7 +49,11 @@ public class GrowerCreditListListType {
     protected String version;
 
     /**
-     * Generic  Message header to identify this unique message and other message attributes.
+     * 
+     * 								Generic Message header to identify this
+     * 								unique message and other message
+     * 								attributes.
+     * 							
      * 
      * @return
      *     possible object is

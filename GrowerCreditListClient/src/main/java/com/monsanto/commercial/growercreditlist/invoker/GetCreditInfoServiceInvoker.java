@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
  * Time: 10:55:03 AM
  * To change this template use File | Settings | File Templates.
  */
-public class GrowerCreditServiceInvoker {
+public class GetCreditInfoServiceInvoker {
     Logger logger = Logger.getLogger(this.getClass());
 
     public List<GrowerCreditInfo> getGrowerCreditInfo(List<String> growerAccountIds, ClientInfo clientInfo) throws ServiceException {

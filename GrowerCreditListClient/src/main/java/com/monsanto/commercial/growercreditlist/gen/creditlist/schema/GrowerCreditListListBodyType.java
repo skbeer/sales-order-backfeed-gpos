@@ -111,7 +111,10 @@ public class GrowerCreditListListBodyType {
         protected GrowerCreditListPropertiesType growerCreditListProperties;
 
         /**
-         * Contains all relevant partner/grower information.
+         * 
+         * 											Contains all relevant
+         * 											partner/grower information.
+         * 										
          * 
          * @return
          *     possible object is
@@ -135,7 +138,11 @@ public class GrowerCreditListListBodyType {
         }
 
         /**
-         * Contains credit and additional grower properties.
+         * 
+         * 											Contains credit and
+         * 											additional grower
+         * 											properties.
+         * 										
          * 
          * @return
          *     possible object is

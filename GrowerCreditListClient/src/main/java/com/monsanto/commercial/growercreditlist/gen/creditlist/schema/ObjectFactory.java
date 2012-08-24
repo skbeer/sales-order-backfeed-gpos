@@ -36,13 +36,6 @@ public class ObjectFactory {
     private final static QName _PartnerIdentifier_QNAME = new QName("Monsanto:Service:GrowerCreditList", "PartnerIdentifier");
     private final static QName _PartnerInformation_QNAME = new QName("Monsanto:Service:GrowerCreditList", "PartnerInformation");
     private final static QName _GrowerCreditListProperties_QNAME = new QName("Monsanto:Service:GrowerCreditList", "GrowerCreditListProperties");
-    private final static QName _GrowerCreditListPropertiesTypeCreditType_QNAME = new QName("Monsanto:Service:GrowerCreditList", "CreditType");
-    private final static QName _GrowerCreditListPropertiesTypeAmountAvailable_QNAME = new QName("Monsanto:Service:GrowerCreditList", "AmountAvailable");
-    private final static QName _GrowerCreditListPropertiesTypeCreditIdentifier_QNAME = new QName("Monsanto:Service:GrowerCreditList", "CreditIdentifier");
-    private final static QName _GrowerCreditListPropertiesTypeZone_QNAME = new QName("Monsanto:Service:GrowerCreditList", "Zone");
-    private final static QName _GrowerCreditListPropertiesTypeDateApproved_QNAME = new QName("Monsanto:Service:GrowerCreditList", "DateApproved");
-    private final static QName _GrowerCreditListPropertiesTypeCreditStatus_QNAME = new QName("Monsanto:Service:GrowerCreditList", "CreditStatus");
-    private final static QName _GrowerCreditListPropertiesTypeLicenseStatus_QNAME = new QName("Monsanto:Service:GrowerCreditList", "LicenseStatus");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.monsanto.commercial.growercreditlist.gen.creditlist.schema
@@ -52,11 +45,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link MonetaryAmountType }
+     * Create an instance of {@link ZoneType }
      * 
      */
-    public MonetaryAmountType createMonetaryAmountType() {
-        return new MonetaryAmountType();
+    public ZoneType createZoneType() {
+        return new ZoneType();
     }
 
     /**
@@ -65,6 +58,110 @@ public class ObjectFactory {
      */
     public ThisDocumentDateTimeType createThisDocumentDateTimeType() {
         return new ThisDocumentDateTimeType();
+    }
+
+    /**
+     * Create an instance of {@link GrowerCreditListListBodyType }
+     * 
+     */
+    public GrowerCreditListListBodyType createGrowerCreditListListBodyType() {
+        return new GrowerCreditListListBodyType();
+    }
+
+    /**
+     * Create an instance of {@link ThisDocumentIdentifierType }
+     * 
+     */
+    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
+        return new ThisDocumentIdentifierType();
+    }
+
+    /**
+     * Create an instance of {@link GrowerCreditListPropertiesType.AmountAvailable }
+     * 
+     */
+    public GrowerCreditListPropertiesType.AmountAvailable createGrowerCreditListPropertiesTypeAmountAvailable() {
+        return new GrowerCreditListPropertiesType.AmountAvailable();
+    }
+
+    /**
+     * Create an instance of {@link AmountApprovedType }
+     * 
+     */
+    public AmountApprovedType createAmountApprovedType() {
+        return new AmountApprovedType();
+    }
+
+    /**
+     * Create an instance of {@link PartnerIdentifierType }
+     * 
+     */
+    public PartnerIdentifierType createPartnerIdentifierType() {
+        return new PartnerIdentifierType();
+    }
+
+    /**
+     * Create an instance of {@link GrowerCreditListPropertiesType }
+     * 
+     */
+    public GrowerCreditListPropertiesType createGrowerCreditListPropertiesType() {
+        return new GrowerCreditListPropertiesType();
+    }
+
+    /**
+     * Create an instance of {@link PartnerInformationType }
+     * 
+     */
+    public PartnerInformationType createPartnerInformationType() {
+        return new PartnerInformationType();
+    }
+
+    /**
+     * Create an instance of {@link ToType }
+     * 
+     */
+    public ToType createToType() {
+        return new ToType();
+    }
+
+    /**
+     * Create an instance of {@link FromType }
+     * 
+     */
+    public FromType createFromType() {
+        return new FromType();
+    }
+
+    /**
+     * Create an instance of {@link ContactInformationType }
+     * 
+     */
+    public ContactInformationType createContactInformationType() {
+        return new ContactInformationType();
+    }
+
+    /**
+     * Create an instance of {@link GrowerCreditListPropertiesType.AmountApproved }
+     * 
+     */
+    public GrowerCreditListPropertiesType.AmountApproved createGrowerCreditListPropertiesTypeAmountApproved() {
+        return new GrowerCreditListPropertiesType.AmountApproved();
+    }
+
+    /**
+     * Create an instance of {@link GrowerCreditListListType }
+     * 
+     */
+    public GrowerCreditListListType createGrowerCreditListListType() {
+        return new GrowerCreditListListType();
+    }
+
+    /**
+     * Create an instance of {@link MonetaryAmountType }
+     * 
+     */
+    public MonetaryAmountType createMonetaryAmountType() {
+        return new MonetaryAmountType();
     }
 
     /**
@@ -84,11 +181,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link HeaderType }
+     * Create an instance of {@link GrowerCreditListListBodyType.GrowerCreditListDetails }
      * 
      */
-    public HeaderType createHeaderType() {
-        return new HeaderType();
+    public GrowerCreditListListBodyType.GrowerCreditListDetails createGrowerCreditListListBodyTypeGrowerCreditListDetails() {
+        return new GrowerCreditListListBodyType.GrowerCreditListDetails();
     }
 
     /**
@@ -100,54 +197,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link FromType }
-     * 
-     */
-    public FromType createFromType() {
-        return new FromType();
-    }
-
-    /**
-     * Create an instance of {@link GrowerCreditListListType }
-     * 
-     */
-    public GrowerCreditListListType createGrowerCreditListListType() {
-        return new GrowerCreditListListType();
-    }
-
-    /**
-     * Create an instance of {@link GrowerCreditListListBodyType }
-     * 
-     */
-    public GrowerCreditListListBodyType createGrowerCreditListListBodyType() {
-        return new GrowerCreditListListBodyType();
-    }
-
-    /**
-     * Create an instance of {@link GrowerCreditListPropertiesType.DateApproved }
-     * 
-     */
-    public GrowerCreditListPropertiesType.DateApproved createGrowerCreditListPropertiesTypeDateApproved() {
-        return new GrowerCreditListPropertiesType.DateApproved();
-    }
-
-    /**
-     * Create an instance of {@link ThisDocumentIdentifierType }
-     * 
-     */
-    public ThisDocumentIdentifierType createThisDocumentIdentifierType() {
-        return new ThisDocumentIdentifierType();
-    }
-
-    /**
-     * Create an instance of {@link GrowerCreditListPropertiesType }
-     * 
-     */
-    public GrowerCreditListPropertiesType createGrowerCreditListPropertiesType() {
-        return new GrowerCreditListPropertiesType();
-    }
-
-    /**
      * Create an instance of {@link AlternateCommunicationMethodType }
      * 
      */
@@ -156,83 +205,27 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GrowerCreditListPropertiesType.AmountApproved }
-     * 
-     */
-    public GrowerCreditListPropertiesType.AmountApproved createGrowerCreditListPropertiesTypeAmountApproved() {
-        return new GrowerCreditListPropertiesType.AmountApproved();
-    }
-
-    /**
-     * Create an instance of {@link GrowerCreditListPropertiesType.AmountAvailable }
-     * 
-     */
-    public GrowerCreditListPropertiesType.AmountAvailable createGrowerCreditListPropertiesTypeAmountAvailable() {
-        return new GrowerCreditListPropertiesType.AmountAvailable();
-    }
-
-    /**
-     * Create an instance of {@link ZoneType }
-     * 
-     */
-    public ZoneType createZoneType() {
-        return new ZoneType();
-    }
-
-    /**
-     * Create an instance of {@link PartnerIdentifierType }
-     * 
-     */
-    public PartnerIdentifierType createPartnerIdentifierType() {
-        return new PartnerIdentifierType();
-    }
-
-    /**
-     * Create an instance of {@link ContactInformationType }
-     * 
-     */
-    public ContactInformationType createContactInformationType() {
-        return new ContactInformationType();
-    }
-
-    /**
-     * Create an instance of {@link PartnerInformationType }
-     * 
-     */
-    public PartnerInformationType createPartnerInformationType() {
-        return new PartnerInformationType();
-    }
-
-    /**
-     * Create an instance of {@link AmountApprovedType }
-     * 
-     */
-    public AmountApprovedType createAmountApprovedType() {
-        return new AmountApprovedType();
-    }
-
-    /**
-     * Create an instance of {@link GrowerCreditListListBodyType.GrowerCreditListDetails }
-     * 
-     */
-    public GrowerCreditListListBodyType.GrowerCreditListDetails createGrowerCreditListListBodyTypeGrowerCreditListDetails() {
-        return new GrowerCreditListListBodyType.GrowerCreditListDetails();
-    }
-
-    /**
-     * Create an instance of {@link ToType }
-     * 
-     */
-    public ToType createToType() {
-        return new ToType();
-    }
-
-    /**
      * Create an instance of {@link AddressInformationType }
      * 
      */
     public AddressInformationType createAddressInformationType() {
         return new AddressInformationType();
+    }
+
+    /**
+     * Create an instance of {@link HeaderType }
+     * 
+     */
+    public HeaderType createHeaderType() {
+        return new HeaderType();
+    }
+
+    /**
+     * Create an instance of {@link GrowerCreditListPropertiesType.DateApproved }
+     * 
+     */
+    public GrowerCreditListPropertiesType.DateApproved createGrowerCreditListPropertiesTypeDateApproved() {
+        return new GrowerCreditListPropertiesType.DateApproved();
     }
 
     /**
@@ -324,78 +317,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "Monsanto:Service:GrowerCreditList", name = "GrowerCreditListProperties")
     public JAXBElement<GrowerCreditListPropertiesType> createGrowerCreditListProperties(GrowerCreditListPropertiesType value) {
         return new JAXBElement<GrowerCreditListPropertiesType>(_GrowerCreditListProperties_QNAME, GrowerCreditListPropertiesType.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GrowerCreditListPropertiesType.AmountApproved }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "Monsanto:Service:GrowerCreditList", name = "AmountApproved", scope = GrowerCreditListPropertiesType.class)
-    public JAXBElement<GrowerCreditListPropertiesType.AmountApproved> createGrowerCreditListPropertiesTypeAmountApproved(GrowerCreditListPropertiesType.AmountApproved value) {
-        return new JAXBElement<GrowerCreditListPropertiesType.AmountApproved>(_AmountApproved_QNAME, GrowerCreditListPropertiesType.AmountApproved.class, GrowerCreditListPropertiesType.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "Monsanto:Service:GrowerCreditList", name = "CreditType", scope = GrowerCreditListPropertiesType.class)
-    public JAXBElement<String> createGrowerCreditListPropertiesTypeCreditType(String value) {
-        return new JAXBElement<String>(_GrowerCreditListPropertiesTypeCreditType_QNAME, String.class, GrowerCreditListPropertiesType.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GrowerCreditListPropertiesType.AmountAvailable }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "Monsanto:Service:GrowerCreditList", name = "AmountAvailable", scope = GrowerCreditListPropertiesType.class)
-    public JAXBElement<GrowerCreditListPropertiesType.AmountAvailable> createGrowerCreditListPropertiesTypeAmountAvailable(GrowerCreditListPropertiesType.AmountAvailable value) {
-        return new JAXBElement<GrowerCreditListPropertiesType.AmountAvailable>(_GrowerCreditListPropertiesTypeAmountAvailable_QNAME, GrowerCreditListPropertiesType.AmountAvailable.class, GrowerCreditListPropertiesType.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "Monsanto:Service:GrowerCreditList", name = "CreditIdentifier", scope = GrowerCreditListPropertiesType.class)
-    public JAXBElement<String> createGrowerCreditListPropertiesTypeCreditIdentifier(String value) {
-        return new JAXBElement<String>(_GrowerCreditListPropertiesTypeCreditIdentifier_QNAME, String.class, GrowerCreditListPropertiesType.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ZoneType }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "Monsanto:Service:GrowerCreditList", name = "Zone", scope = GrowerCreditListPropertiesType.class)
-    public JAXBElement<ZoneType> createGrowerCreditListPropertiesTypeZone(ZoneType value) {
-        return new JAXBElement<ZoneType>(_GrowerCreditListPropertiesTypeZone_QNAME, ZoneType.class, GrowerCreditListPropertiesType.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GrowerCreditListPropertiesType.DateApproved }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "Monsanto:Service:GrowerCreditList", name = "DateApproved", scope = GrowerCreditListPropertiesType.class)
-    public JAXBElement<GrowerCreditListPropertiesType.DateApproved> createGrowerCreditListPropertiesTypeDateApproved(GrowerCreditListPropertiesType.DateApproved value) {
-        return new JAXBElement<GrowerCreditListPropertiesType.DateApproved>(_GrowerCreditListPropertiesTypeDateApproved_QNAME, GrowerCreditListPropertiesType.DateApproved.class, GrowerCreditListPropertiesType.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "Monsanto:Service:GrowerCreditList", name = "CreditStatus", scope = GrowerCreditListPropertiesType.class)
-    public JAXBElement<String> createGrowerCreditListPropertiesTypeCreditStatus(String value) {
-        return new JAXBElement<String>(_GrowerCreditListPropertiesTypeCreditStatus_QNAME, String.class, GrowerCreditListPropertiesType.class, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "Monsanto:Service:GrowerCreditList", name = "LicenseStatus", scope = GrowerCreditListPropertiesType.class)
-    public JAXBElement<String> createGrowerCreditListPropertiesTypeLicenseStatus(String value) {
-        return new JAXBElement<String>(_GrowerCreditListPropertiesTypeLicenseStatus_QNAME, String.class, GrowerCreditListPropertiesType.class, value);
     }
 
 }

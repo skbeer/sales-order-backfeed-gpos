@@ -88,7 +88,9 @@ public class PartnerInformationType {
     }
 
     /**
-     * Provide Licence Number and GLN as needed Gets the value of the partnerIdentifier property.
+     * 
+     * 								Provide Licence Number and GLN as needed
+     * 							Gets the value of the partnerIdentifier property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
@@ -117,7 +119,9 @@ public class PartnerInformationType {
     }
 
     /**
-     * Contact information for the grower Gets the value of the contactInformation property.
+     * 
+     * 								Contact information for the grower
+     * 							Gets the value of the contactInformation property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,

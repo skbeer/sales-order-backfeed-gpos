@@ -11,6 +11,7 @@ public class GrowerCreditInfo {
     private String growerAccountId;
     private double creditApproved;
     private double creditAvailable;
+    
 
     public String getGrowerAccountId() {
         return growerAccountId;
@@ -34,5 +35,14 @@ public class GrowerCreditInfo {
 
     public void setCreditAvailable(double creditAvailable) {
         this.creditAvailable = creditAvailable;
+    }
+
+    @Override
+    public String toString() {
+        return "GrowerCreditInfo{" +
+                "growerAccountId='" + growerAccountId + '\'' +
+                ", creditApproved=" + creditApproved +
+                ", creditAvailable=" + creditAvailable +
+                '}';
     }
 }
