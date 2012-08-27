@@ -64,14 +64,15 @@ public class CreditListHelper_UT extends TestCase {
     private GrowerInfo getGrowerInfo(String accountId) {
         GrowerInfo growerInfo = new GrowerInfo();
         growerInfo.setAccountId(accountId);
+        growerInfo.setSapId(accountId);        
         return growerInfo;
     }
 
     private GrowerCreditInfo getGrowerCreditInfo(String accountId) {
         GrowerCreditInfo growerInfo = new GrowerCreditInfo();
         growerInfo.setGrowerAccountId(accountId);
-        growerInfo.setCreditApproved(100);
-        growerInfo.setCreditAvailable(75);
+        growerInfo.setCreditApproved(100.15);
+        growerInfo.setCreditAvailable(75.75);
         return growerInfo;
     }
 

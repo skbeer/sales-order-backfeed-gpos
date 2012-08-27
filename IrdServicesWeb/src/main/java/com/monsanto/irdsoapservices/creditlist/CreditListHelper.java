@@ -8,12 +8,15 @@ import com.monsanto.commercial.growercreditlist.domain.GrowerCreditInfo;
 import com.monsanto.commercial.growercreditlist.util.EnvironmentEnum;
 import com.monsanto.commercial.growercreditlist.exception.ServiceException;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
+import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.monsanto.Util.EnvironmentHelper;
 import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by IntelliJ IDEA.
@@ -51,7 +54,9 @@ public class CreditListHelper {
                 growerInfo.setCreditApproved(creditInfo.getCreditApproved());
                 growerInfo.setCreditAvailable(creditInfo.getCreditAvailable());
                 growerCreditList.add(growerInfo);
+                System.out.println(growerInfo.getCreditApproved()+" "+growerInfo.getCreditAvailable());
             }
+
         }
         return growerCreditList;
     }
@@ -66,11 +71,23 @@ public class CreditListHelper {
 
     private ClientInfo getClientInfo(TransactionInfo transactionInfo) {
         ClientInfo clientInfo = new ClientInfo();
-        clientInfo.setDocIdentifier("FPOS-CREDITLIST-"+transactionInfo.getGroupCode());
+        clientInfo.setDocIdentifier(getDocumentIdentifier(transactionInfo));
         clientInfo.setPartnerId(transactionInfo.getCompanyCode());
         clientInfo.setPartnerName(transactionInfo.getName());
         clientInfo.setEnvironment(EnvironmentEnum.valueOf("win".equalsIgnoreCase(EnvironmentHelper.getFunction()) ? "DEV": EnvironmentHelper.getFunction().toUpperCase()));
         return clientInfo;
+    }
+
+    protected String getDocumentIdentifier(TransactionInfo transactionInfo) {
+        StringBuffer sBuffer = new StringBuffer();
+        sBuffer.append(transactionInfo.getTransactionType());
+        sBuffer.append("_");
+        sBuffer.append((transactionInfo.getLastTransactionNumber()+1)+"");
+        sBuffer.append("_");
+        sBuffer.append(transactionInfo.getCompanyCode());
+        sBuffer.append("_");
+        sBuffer.append(new SimpleDateFormat(XmlConstants.DATE_FORMAT_FOR_DOCUMENT_IDENTIFIER).format(new Date()));
+        return sBuffer.toString();
     }
 
     public void setCreditListDAO(CreditListDAO creditListDAO) {
