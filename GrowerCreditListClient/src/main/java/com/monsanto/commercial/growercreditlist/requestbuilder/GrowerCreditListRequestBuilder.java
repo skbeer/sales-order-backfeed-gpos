@@ -75,14 +75,14 @@ public class GrowerCreditListRequestBuilder extends BaseRequestBuilder {
 
     private GrowerCreditListPropertiesType.AmountAvailable getAmountAvailable(double creditAvailable) {
         GrowerCreditListPropertiesType.AmountAvailable amountAvailableType = new GrowerCreditListPropertiesType.AmountAvailable();
-        amountAvailableType.setMonetaryValue(new BigDecimal(creditAvailable));
+        amountAvailableType.setMonetaryValue(new BigDecimal(creditAvailable).setScale(2, BigDecimal.ROUND_HALF_UP));
         amountAvailableType.setCurrencyCode("USD");
         return amountAvailableType;
     }
 
     private GrowerCreditListPropertiesType.AmountApproved getAmountApproved(double creditApproved) {
         GrowerCreditListPropertiesType.AmountApproved amountApproved = new GrowerCreditListPropertiesType.AmountApproved();
-        amountApproved.setMonetaryValue(new BigDecimal(creditApproved));
+        amountApproved.setMonetaryValue(new BigDecimal(creditApproved).setScale(2, BigDecimal.ROUND_HALF_UP));
         amountApproved.setCurrencyCode("USD");
         return amountApproved;
     }

@@ -40,8 +40,8 @@ public class GrowerCreditListServiceInvoker_UT extends TestCase {
         growerInfo.setState("MO "+ i);
         growerInfo.setZip("6330 "+ i);
         growerInfo.setCreditType("FPOS");
-        growerInfo.setCreditApproved(i +1500.00);
-        growerInfo.setCreditAvailable(i +1200.05);
+        growerInfo.setCreditApproved(i +1500.50);
+        growerInfo.setCreditAvailable(i +1200.75);
         growerInfo.setDateApproved(new Date());
         growerInfo.setGln(i +"00234567");
         growerInfo.setName("Grower "+ i);
