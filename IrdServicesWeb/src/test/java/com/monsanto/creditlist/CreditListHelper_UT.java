@@ -3,6 +3,7 @@ package com.monsanto.creditlist;
 import junit.framework.TestCase;
 import com.monsanto.irdsoapservices.creditlist.CreditListHelper;
 import com.monsanto.irdsoapservices.creditlist.CreditListDAO;
+import com.monsanto.irdsoapservices.creditlist.CreditListErrorEmailer;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.commercial.growercreditlist.invoker.GrowerCreditListServiceInvoker;
 import com.monsanto.commercial.growercreditlist.invoker.GetCreditInfoServiceInvoker;
@@ -30,7 +31,7 @@ public class CreditListHelper_UT extends TestCase {
     CreditListDAO creditListDAO;
     List<GrowerInfo> growerList = new ArrayList<GrowerInfo>();
     List<GrowerCreditInfo> growerCreditList = new ArrayList<GrowerCreditInfo>();
-
+    CreditListErrorEmailer creditListErrorEmailer;
     TransactionInfo transactionInfo;
 
     @Override
@@ -46,25 +47,45 @@ public class CreditListHelper_UT extends TestCase {
         transactionInfo.setName("SSC Compamy");
         transactionInfo.setCompanyCode("101");
         transactionInfo.setTransactionType("FPOS");
-        growerList.add(getGrowerInfo("101"));
-        growerList.add(getGrowerInfo("102"));
         growerCreditList.add(getGrowerCreditInfo("101"));
         helper.setCreditListDAO(creditListDAO);
         helper.setCreditListServiceInvoker(growerCreditListServiceInvoker);
         helper.setGetCreditInfoServiceInvoker(getCreditInfoServiceInvoker);
+        creditListErrorEmailer = mock(CreditListErrorEmailer.class);
+        helper.setCreditListErrorEmailer(creditListErrorEmailer);
     }
 
-    public void testProcessTransactions() throws Exception {
+    public void testProcessTransactions_validData() throws Exception {
+        growerList.add(getGrowerInfo("101", true));
+        growerList.add(getGrowerInfo("102", true));
         when(creditListDAO.getGrowerList("V9")).thenReturn(growerList);
         when(getCreditInfoServiceInvoker.getGrowerCreditInfo((List<String>)anyObject(), (ClientInfo)anyObject())).thenReturn(growerCreditList);
         assertEquals(1, helper.processCreditListTransaction(transactionInfo));
         verify(growerCreditListServiceInvoker).invokeService((List<GrowerInfo>)anyObject(), (ClientInfo)anyObject());
+        verifyNoMoreInteractions(creditListErrorEmailer);
     }
 
-    private GrowerInfo getGrowerInfo(String accountId) {
+    public void testProcessTransactions_invalidData_sendEmail_abortProcess() throws Exception {
+        growerList.add(getGrowerInfo("101", false));
+        growerList.add(getGrowerInfo("102", true));
+        when(creditListDAO.getGrowerList("V9")).thenReturn(growerList);
+        try {
+            helper.processCreditListTransaction(transactionInfo);
+            fail("Exception should have occurred");
+        } catch (Exception e) {
+            assertEquals("One or more Grower records found without a GLN#. Aborting process.", e.getMessage());
+        }
+        verifyNoMoreInteractions(growerCreditListServiceInvoker);
+        verify(creditListErrorEmailer).sendEmail((List<GrowerInfo>) anyObject(), anyString());
+    }
+
+    private GrowerInfo getGrowerInfo(String accountId, boolean includeGln) {
         GrowerInfo growerInfo = new GrowerInfo();
         growerInfo.setAccountId(accountId);
-        growerInfo.setSapId(accountId);        
+        growerInfo.setSapId(accountId);
+        if(includeGln) {
+            growerInfo.setGln(accountId);
+        }
         return growerInfo;
     }
 

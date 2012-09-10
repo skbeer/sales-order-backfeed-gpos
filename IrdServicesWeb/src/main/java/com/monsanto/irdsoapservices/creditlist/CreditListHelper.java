@@ -9,6 +9,7 @@ import com.monsanto.commercial.growercreditlist.util.EnvironmentEnum;
 import com.monsanto.commercial.growercreditlist.exception.ServiceException;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
+import com.monsanto.irdsoapservices.utils.StringUtils;
 import com.monsanto.Util.EnvironmentHelper;
 import org.apache.log4j.Logger;
 
@@ -29,11 +30,13 @@ public class CreditListHelper {
     CreditListDAO creditListDAO;
     GetCreditInfoServiceInvoker getCreditInfoServiceInvoker;
     GrowerCreditListServiceInvoker creditListServiceInvoker;
+    CreditListErrorEmailer creditListErrorEmailer;
     Logger logger = Logger.getLogger(this.getClass());
 
     public int processCreditListTransaction(TransactionInfo transactionInfo) throws Exception {
         logger.info("Processing Credit List Transaction for Group Code:"+transactionInfo.getGroupCode()+" Company:"+transactionInfo.getName());
         List<GrowerInfo> growerList = creditListDAO.getGrowerList(transactionInfo.getGroupCode());
+        validateGrowerInfo(growerList, transactionInfo.getName());
         logger.info("Found "+growerList.size()+" Growers. Checking credit info for these Growers");
         ClientInfo clientInfo = getClientInfo(transactionInfo);
         List<GrowerInfo> growerCreditList = getCreditInfo(growerList, clientInfo);
@@ -41,6 +44,20 @@ public class CreditListHelper {
         creditListServiceInvoker.invokeService(growerCreditList, clientInfo);
         logger.info("End of Processing Credit List.");
         return growerCreditList.size();
+    }
+
+    private void validateGrowerInfo(List<GrowerInfo> growerList, String partnerName) throws Exception {
+        List<GrowerInfo> invalidGrowerRecords = new ArrayList<GrowerInfo>();
+        for(GrowerInfo growerInfo : growerList) {
+            if(StringUtils.isNullOrEmpty(growerInfo.getGln())) {
+                invalidGrowerRecords.add(growerInfo);
+            }
+        }
+        if(invalidGrowerRecords.size() > 0) {
+            logger.warn("One or more Grower records found without a GLN#. Sending email and aborting process.");
+            creditListErrorEmailer.sendEmail(invalidGrowerRecords, partnerName);
+            throw new Exception("One or more Grower records found without a GLN#. Aborting process.");
+        }
     }
 
     protected List<GrowerInfo> getCreditInfo(List<GrowerInfo> growerList, ClientInfo clientInfo) throws ServiceException {
@@ -100,5 +117,9 @@ public class CreditListHelper {
 
     public void setCreditListServiceInvoker(GrowerCreditListServiceInvoker creditListServiceInvoker) {
         this.creditListServiceInvoker = creditListServiceInvoker;
+    }
+
+    public void setCreditListErrorEmailer(CreditListErrorEmailer creditListErrorEmailer) {
+        this.creditListErrorEmailer = creditListErrorEmailer;
     }
 }

@@ -18,6 +18,8 @@ public class Configuration {
   // Used to load the name-value pairs.
   public static final String ERROR_FROM_EMAIL_ADDRESS = "error.email.from.address";
   public static final String ERROR_TO_EMAIL_ADDRESS = "error.email.to.address";
+  public static final String CREDITLIST_TO_EMAIL_ADDRESS = "creditlist.email.to.address";
+  public static final String CREDITLIST_FROM_EMAIL_ADDRESS = "creditlist.email.from.address";
   public static final String PARTNER_NAME = "partner.name";
   public static final String PARTNER_EMAIL = "partner.email";    
 
