@@ -31,8 +31,8 @@ public class CreditListServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         try {
             ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-            CreditListBatchJob salesOrderService = (CreditListBatchJob) context.getBean("creditListBatchJob");
-            salesOrderService.startProcessing();
+            CreditListBatchJob creditListJob = (CreditListBatchJob) context.getBean("creditListBatchJob");
+            creditListJob.startProcessing();
             writer.print("CreditList job executed Successfully.");
         } catch (BeansException e) {
             e.printStackTrace();

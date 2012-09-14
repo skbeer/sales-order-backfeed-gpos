@@ -22,7 +22,6 @@ import java.util.List;
 public class CreditListErrorEmailer extends AbstractEmailer {
     Logger logger = Logger.getLogger(this.getClass());
 	private static final String SUBJECT = "File Transfer Failure Notification";
-	private String toAddress = null;
 
     public void sendEmail(List<GrowerInfo> growerList, String partnerName) {
 		try {
@@ -40,22 +39,30 @@ public class CreditListErrorEmailer extends AbstractEmailer {
 
 	@Override
 	protected Address[] getToAddress() throws Exception {
-		return new Address[]{new InternetAddress(StringUtils.isNullOrEmpty(toAddress)? Configuration.getInstance().getProperty(Configuration.CREDITLIST_TO_EMAIL_ADDRESS)
-				:toAddress.trim())};
-	}
-
-	public void setToAddress(String emailaddress) {
-		toAddress = emailaddress;
+        String delimitedToAddress = Configuration.getInstance().getProperty(Configuration.CREDITLIST_TO_EMAIL_ADDRESS);
+        String[] splittedToAddresses = delimitedToAddress.split(";");
+        Address[] toEmails = new InternetAddress[splittedToAddresses.length];
+        for (int index = 0; index < toEmails.length; index++) {
+            toEmails[index] = new InternetAddress(splittedToAddresses[index]);
+        }
+        return toEmails;
 	}
 
 	private String createHtmlErrorMessage(List<GrowerInfo> growerList, String partnerName) {
 		StringBuffer sBuffer = new StringBuffer();
+        sBuffer.append("<head>");
+        sBuffer.append("<STYLE TYPE=\"text/css\">");
+        sBuffer.append("body{font-family: Arial; font-size:15}");
+        sBuffer.append("TD{font-family: Arial; font-size:15}");
+        sBuffer.append("TH{font-family: Arial; font-size:15}");
+        sBuffer.append("</STYLE>");
+        sBuffer.append("</head><body>");
         sBuffer.append(NEW_LINE);
-        sBuffer.append("This message is being generated due to a failure of transmitting of FarmFlex data for "+partnerName+".\n" +
+        sBuffer.append("This message is being generated due to a failure of transmitting of FarmFlex data for "+partnerName+".\n\n" +
                 "The following Account(s) do not have an associated GLN#, please update master data.\n");
 		sBuffer.append(NEW_LINE);
-        sBuffer.append("<table border=\"1\" cellspacing=\"0\" cellpadding=\"0\">");
-        sBuffer.append("<tr style=\"background-color:#aaaaaa\">");
+        sBuffer.append("<table border=\"1\" cellspacing=\"0\" cellpadding=\"3\">");
+        sBuffer.append("<tr style=\"background-color:#dddddd\">");
         sBuffer.append("<th>IRD#</th><th>Grower Name</th></tr>");
         for(GrowerInfo growerInfo: growerList) {
 			sBuffer.append("<tr><td>"+growerInfo.getAccountId()+"</td><td>"+growerInfo.getName()+"</td></tr>");
@@ -63,7 +70,7 @@ public class CreditListErrorEmailer extends AbstractEmailer {
         sBuffer.append("</table>");
         sBuffer.append(NEW_LINE);
         sBuffer.append(NEW_LINE);
-        sBuffer.append("<small>Environment: "+System.getProperty("lsi.function").toUpperCase()+"</small>");
+        sBuffer.append("<small>Environment: "+System.getProperty("lsi.function").toUpperCase()+"</small></body>");
 		return sBuffer.toString();
 	}
 

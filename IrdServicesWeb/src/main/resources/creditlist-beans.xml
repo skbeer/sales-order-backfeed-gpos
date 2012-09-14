@@ -10,6 +10,7 @@
 
     <bean id="getCreditInfoServiceInvoker" class="com.monsanto.commercial.growercreditlist.invoker.GetCreditInfoServiceInvoker"/>
     <bean id="creditListServiceInvoker" class="com.monsanto.commercial.growercreditlist.invoker.GrowerCreditListServiceInvoker"/>
+    <bean id="creditListErrorEmailer" class="com.monsanto.irdsoapservices.creditlist.CreditListErrorEmailer"/>    
 
     <bean id="creditListDAO" class="com.monsanto.irdsoapservices.creditlist.CreditListDAO">
         <property name="sqlMapClient" ref="fsSqlMap"/>
@@ -19,6 +20,7 @@
         <property name="creditListDAO" ref="creditListDAO"/>
         <property name="creditListServiceInvoker" ref="creditListServiceInvoker"/>
         <property name="getCreditInfoServiceInvoker" ref="getCreditInfoServiceInvoker"/>
+        <property name="creditListErrorEmailer" ref="creditListErrorEmailer"/>
     </bean>
 
     <bean id="creditListBatchJob" class="com.monsanto.irdsoapservices.creditlist.CreditListBatchJob">
