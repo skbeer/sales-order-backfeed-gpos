@@ -69,7 +69,7 @@ public class CreditListHelper {
             GrowerInfo growerInfo = growerMap.get(creditInfo.getGrowerAccountId());
             if(growerInfo!= null) {
                 growerInfo.setCreditApproved(creditInfo.getCreditApproved());
-                growerInfo.setCreditAvailable(creditInfo.getCreditAvailable() > 0 ? (creditInfo.getCreditApproved()-creditInfo.getCreditAvailable()) : creditInfo.getCreditApproved());
+                growerInfo.setCreditAvailable(creditInfo.getCreditAvailable() > 0 ? (creditInfo.getCreditAvailable() > creditInfo.getCreditApproved() ? 0 : (creditInfo.getCreditApproved()-creditInfo.getCreditAvailable())) : creditInfo.getCreditApproved());
                 growerCreditList.add(growerInfo);
                 System.out.println(growerInfo.getCreditApproved()+" "+growerInfo.getCreditAvailable());
             }

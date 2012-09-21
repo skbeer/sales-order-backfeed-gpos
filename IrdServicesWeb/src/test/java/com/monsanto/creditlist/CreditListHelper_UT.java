@@ -93,7 +93,7 @@ public class CreditListHelper_UT extends TestCase {
         GrowerCreditInfo growerInfo = new GrowerCreditInfo();
         growerInfo.setGrowerAccountId(accountId);
         growerInfo.setCreditApproved(100.15);
-        growerInfo.setCreditAvailable(75.75);
+        growerInfo.setCreditAvailable(105.75);
         return growerInfo;
     }
 
