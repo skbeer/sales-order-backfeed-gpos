@@ -16,7 +16,8 @@
     <inceptionYear>2009</inceptionYear>
 
     <properties>
-        <default.weblogic.domain>${env.WEBLOGIC_DOMAIN}</default.weblogic.domain>
+        <!--default.weblogic.domain>${env.WEBLOGIC_DOMAIN}</default.weblogic.domain-->
+        <autodeploy.dir>${weblogic.domain}/autodeploy</autodeploy.dir>
         <default.ear.name>IrdSoapServices</default.ear.name>
     </properties>
 
@@ -72,7 +73,9 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <copy file="${project.build.directory}/${project.build.finalName}.ear" tofile="${default.weblogic.domain}/autodeploy/${default.ear.name}.ear" overwrite="true" />
+                                        <!--copy file="${project.build.directory}/${project.build.finalName}.ear" tofile="${default.weblogic.domain}/autodeploy/${default.ear.name}.ear" overwrite="true" /-->
+                                        <echo>Copying ${project.build.directory}\${project.build.finalName}.ear to AutoDeploy...</echo>
+                                        <copy file="${project.build.directory}/${project.build.finalName}.ear" todir="${autodeploy.dir}/" overwrite="true" />
                                     </tasks>
                                 </configuration>
                             </execution>
