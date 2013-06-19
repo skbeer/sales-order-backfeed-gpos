@@ -16,7 +16,7 @@
 		<property name="url"
 			value="jdbc:oracle:thin:@//fsd-scan.monsanto.com:1521/fsd.monsanto.com" />
 		<property name="username" value="ECOM_APP" />
-		<property name="password" value="r5GcZsgQ_I" />
+		<property name="password" value="Y4u_QKw2_K" />
 	</bean>
 
     <bean id="fsSqlMap" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
