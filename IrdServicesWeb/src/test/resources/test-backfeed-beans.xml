@@ -14,9 +14,9 @@
 		<property name="driverClassName"
 			value="oracle.jdbc.OracleDriver" />
 		<property name="url"
-			value="jdbc:oracle:thin:@fsdevl01:1521:fsdevl01" />
+			value="jdbc:oracle:thin:@//fsd-scan.monsanto.com:1521/fsd.monsanto.com" />
 		<property name="username" value="ECOM_APP" />
-		<property name="password" value="USF00D_2019" />
+		<property name="password" value="r5GcZsgQ_I" />
 	</bean>
 
     <bean id="fsSqlMap" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">

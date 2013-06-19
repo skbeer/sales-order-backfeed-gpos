@@ -78,7 +78,7 @@ public abstract class AbstractSalesOrderHelper<T extends OrderInfo> {
                 SalesOrderReportResponseType response = clientFactory.getSalesOrderClient().getSalesOrderReport(salesOrderRequest);
             } catch (Exception se) {
                 logger.error("Error occurred while trying to send Batch # "+count);
-                logger.error(se);
+                logger.error(se,se);
                 throw se;
             }
             logger.info("Batch sent Successfully. Updating Last_Transaction_Number to: "+(transactionInfo.getLastTransactionNumber()+1));

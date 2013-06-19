@@ -6,6 +6,7 @@ import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDaoImpl;
 import com.monsanto.irdsoapservices.salesorder.domain.COSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
+
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
 import java.util.Calendar;
@@ -35,7 +36,7 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 
     public void testGetPPOSOrders() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2010, 11, 02);
+        calendar.set(2013, 04, 02);
         List<PPOSOrderInfo> pposOrders = salesOrderDao.getPPOSOrders(calendar.getTime(), "XA");
         System.out.println("No of Rows = "+pposOrders.size());
         assertTrue(pposOrders.size() >= 0);
@@ -60,7 +61,7 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 
     public void testGetCOSOrders() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2010, 11, 31);
+        calendar.set(2013, 04, 02);
         List<COSOrderInfo> cosOrders = salesOrderDao.getCOSOrders(calendar.getTime(), "XA");
         System.out.println("No of Rows = "+cosOrders.size());
         assertTrue(cosOrders.size() >= 0);

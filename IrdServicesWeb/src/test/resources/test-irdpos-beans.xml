@@ -14,7 +14,7 @@
 		<property name="driverClassName"
 			value="oracle.jdbc.OracleDriver" />
 		<property name="url"
-			value="jdbc:oracle:thin:@usmgend.monsanto.com:1521:usmgend" />
+			value="jdbc:oracle:thin:@USMGEND.MONSANTO.COM:1521/USMGEND.MONSANTO.COM" />
 		<property name="username" value="IRDPOS_USER" />
         <property name="password" value="Nov#2013_D" />
 		<!-- changed 11-27-12 TJCROC - property name="password" value="eagle_b3rt" /-->

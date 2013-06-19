@@ -639,7 +639,7 @@
         AND p_ds.party_code = 'DS'
         AND h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
-        AND to_date(h.ship_date, 'yyyymmdd') = dd.day_date
+        AND h.ship_date = to_char(dd.day_date, 'yyyymmdd')
         AND exists (select 1 from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
         where h1.tran_id = hs1.tran_id
         and h1.tran_id = tp1.tran_id
@@ -776,7 +776,7 @@
         AND p_ds.party_code = 'DS'
         AND h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
-        AND to_date(h.ship_date, 'yyyymmdd') = dd.day_date
+        AND h.ship_date = to_char(dd.day_date, 'yyyymmdd')
         AND exists (select 1
         from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
         where h1.tran_id = hs1.tran_id
@@ -945,7 +945,7 @@
         AND p_ds.party_code = 'DS'
         AND h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
-        AND to_date(h.ship_date, 'yyyymmdd') = dd.day_date
+        AND h.ship_date = to_char(dd.day_date, 'yyyymmdd')
         AND exists (select 1
         from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
         where h1.tran_id = hs1.tran_id
@@ -1138,7 +1138,7 @@
         AND p_ds.party_code = 'DS'
         AND h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
-        AND to_date(h.ship_date, 'yyyymmdd') = dd.day_date
+        AND h.ship_date = to_char(dd.day_date, 'yyyymmdd')
         AND exists (select 1
         from ecg_tran_header h1, ecg_tran_header_status hs1, ecg_tran_party tp1
         where h1.tran_id = hs1.tran_id

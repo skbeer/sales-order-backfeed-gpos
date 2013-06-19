@@ -53,7 +53,7 @@
     <modules>
         <module>IrdServicesEar</module>
         <module>IrdServicesWeb</module>
-        <module>IrdServicesAcceptanceTests</module>
+        <!--<module>IrdServicesAcceptanceTests</module>-->
     </modules>
 
     <build>

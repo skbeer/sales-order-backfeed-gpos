@@ -34,8 +34,7 @@ public abstract class AbstractHelper {
         if(requestHeader == null || StringUtils.isNullOrEmpty(requestHeader.getDocumentIdentifier())) {
             throw new Exception("Invalid Header element in the in-coming Request.");
         }
-        logger.info("Request DocumentIdentifier: "+requestHeader.getDocumentIdentifier());
-        logger.info("Request Partner Name: "+requestHeader.getFrom().getPartnerName().toString());
+        logger.info("Request DocumentIdentifier: "+requestHeader.getDocumentIdentifier() + " Request Partner Name: "+requestHeader.getFrom().getPartnerName().toString());
         responseHeader.setDocumentIdentifier(requestHeader.getDocumentIdentifier());
         responseHeader.setDocumentDateTime(XmlDateTimeUtil.transformToXmlGregorianCalendar(Calendar.getInstance()));
         responseHeader.setTo(requestHeader.getFrom());

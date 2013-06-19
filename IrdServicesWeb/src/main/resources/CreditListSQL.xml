@@ -47,6 +47,7 @@
             AGCC.ACCT_XREF_MV AX ON (    AX.ACCT_ID          = ATA.ACCT_ID
                                      AND AX.SYSTEM_TYPE_CODE = 'GLN'
                                      AND AX.ACTIVE_FLAG      = 'Y'
+                                     AND AX.RANK             = 1
                                     )
         LEFT OUTER JOIN
                     AGCC.ACCT_XREF_MV ASP ON (    ASP.ACCT_ID          = ATA.ACCT_ID

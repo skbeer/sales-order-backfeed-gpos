@@ -12,6 +12,7 @@ import com.monsanto.irdsoapservices.utils.StringUtils;
 import com.monsanto.irdsoapservices.utils.XmlDateTimeUtil;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -27,14 +28,15 @@ public class ContactsHelper extends AbstractHelper {
 
     public GetContactsResponseType getContacts(GetContactsRequestType request) throws ContactsFault {
         GetContactsResponseType contactsResponse = null;
+        long accountId=0;
+        long contactId=0;
+        List<ContactInfo> contacts= new ArrayList<ContactInfo>();
         try {
             validateGetContactsRequest(request);
-            long accountId = extractAccountId(request);
-            long contactId = extractContactId(request);
-            logger.info("Retrieving contacts for AccountId: "+accountId+" and ContactId: "+contactId);
+            accountId = extractAccountId(request);
+            contactId = extractContactId(request);
             List<String> contactFunctions = request.getGetContactsRequestBody().getContactFunctionList()==null?null:request.getGetContactsRequestBody().getContactFunctionList().getContactFunction();
-            List<ContactInfo> contacts = dao.getContacts(accountId, contactId, contactFunctions);
-            logger.info("Returning "+contacts.size()+" contacts for AccountId: "+accountId+" and ContactId: "+contactId);
+            contacts = dao.getContacts(accountId, contactId, contactFunctions);
             contactsResponse = new GetContactsResponseType();
             contactsResponse.setGetContactsResponseBody(new GetContactsResponseBodyType());
             ContactListType contactsListType = new ContactListType();
@@ -46,6 +48,8 @@ public class ContactsHelper extends AbstractHelper {
             contactsResponse.getGetContactsResponseBody().setContactList(contactsListType);
             contactsResponse.setHeader(getResponseHeader(request.getHeader()));
         } catch (Throwable e) {
+            logger.info("Retrieving contacts for AccountId: "+accountId+" and ContactId: "+contactId);
+            logger.info("Returning "+contacts.size()+" contacts for AccountId: "+accountId+" and ContactId: "+contactId);
             throwContactsFault(e, logger, "getContacts");
         }
         logger.debug("End: getContacts()");
@@ -203,7 +207,7 @@ public class ContactsHelper extends AbstractHelper {
     }
 
     protected void throwContactsFault(Throwable error, Logger logger, String operationName) throws ContactsFault {
-        logger.error(error);
+        logger.error(error,error);
         new ErrorEmailer().sendErrorEmail(error, "Error occurred during operation: " + operationName);
         ExceptionType exception = new ExceptionType();
         exception.setFaultCode(error.getMessage());
@@ -273,7 +277,7 @@ public class ContactsHelper extends AbstractHelper {
     }
 
     private long extractContactId(GetContactsRequestType request) throws Exception {
-        long contactId = 0;
+            long contactId = 0;
         if(request.getGetContactsRequestBody().getContactId()!= null) {
             contactId = request.getGetContactsRequestBody().getContactId().longValue();
         }

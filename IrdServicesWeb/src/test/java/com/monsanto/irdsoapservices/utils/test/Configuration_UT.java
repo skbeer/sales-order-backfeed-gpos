@@ -14,7 +14,7 @@ public class Configuration_UT extends TestCase {
 
     public void testConfiguration_readProperty_forWin() throws Exception {
 		System.setProperty("lsi.function", "win");
-		assertEquals("caggarw@monsanto.com", Configuration.getInstance().getProperty(Configuration.ERROR_TO_EMAIL_ADDRESS));
+		assertEquals("mkuchip@monsanto.com", Configuration.getInstance().getProperty(Configuration.ERROR_TO_EMAIL_ADDRESS));
 	}
 
 	public void testConfiguration_readProperty_forDifferentEnv() throws Exception {
