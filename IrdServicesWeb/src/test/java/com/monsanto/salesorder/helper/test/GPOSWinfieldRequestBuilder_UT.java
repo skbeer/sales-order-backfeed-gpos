@@ -83,6 +83,27 @@ public class GPOSWinfieldRequestBuilder_UT extends TestCase {
             assertEquals(deliveryQuantityEquivalentType2.getMeasurement().getMeasurementValue(),200.0);
             assertEquals(deliveryQuantityEquivalentType2.getMeasurement().getUnitOfMeasureCode().getValue(),"BG");
             assertNull(salesOrderLineItemType2.getOrderTransactionType());
+
+
+            SalesOrderLineItemType salesOrderLineItemType3=salesOrderLinetItemList.get(2);
+            assertEquals(3, salesOrderLineItemType3.getLineNumber());
+            DeliveryQuantityType deliveryQuantityType3=salesOrderLineItemType3.getDeliveredQuantity();
+            assertEquals(deliveryQuantityType3.getMeasurement().getMeasurementValue(),0.0);
+            assertEquals(deliveryQuantityType3.getMeasurement().getUnitOfMeasureCode().getValue(),"UN");
+            DeliveryQuantityEquivalentType deliveryQuantityEquivalentType3=salesOrderLineItemType3.getDeliveredQuantityEquivalent();
+            assertEquals(deliveryQuantityEquivalentType3.getMeasurement().getMeasurementValue(),0.0);
+            assertEquals(deliveryQuantityEquivalentType3.getMeasurement().getUnitOfMeasureCode().getValue(),"BG");
+            assertNull(salesOrderLineItemType3.getOrderTransactionType());
+
+            SalesOrderLineItemType salesOrderLineItemType4=salesOrderLinetItemList.get(3);
+            assertEquals(4, salesOrderLineItemType4.getLineNumber());
+            DeliveryQuantityType deliveryQuantityType4=salesOrderLineItemType4.getDeliveredQuantity();
+            assertEquals(deliveryQuantityType4.getMeasurement().getMeasurementValue(),0.0);
+            assertEquals(deliveryQuantityType4.getMeasurement().getUnitOfMeasureCode().getValue(),"UN");
+            DeliveryQuantityEquivalentType deliveryQuantityEquivalentType4=salesOrderLineItemType4.getDeliveredQuantityEquivalent();
+            assertEquals(deliveryQuantityEquivalentType4.getMeasurement().getMeasurementValue(),0.0);
+            assertEquals(deliveryQuantityEquivalentType4.getMeasurement().getUnitOfMeasureCode().getValue(),"BG");
+            assertNull(salesOrderLineItemType4.getOrderTransactionType());
         }
     }
 
@@ -99,6 +120,8 @@ public class GPOSWinfieldRequestBuilder_UT extends TestCase {
         gposOrderInfo.setSalesRepWinfield(winfieldSalesRep);
         gposOrderInfo.getLineItems().add(getLineItemInfo("1", "Product 1", "GTIN 1", "UPC 1", "100", "BG", "101", "UN", getPartnerInfo("SalesRep1 "), "Y"));
         gposOrderInfo.getLineItems().add(getLineItemInfo("2", "Product 2", "GTIN 2", "UPC 2", "200", "BG", "201", "UN", getPartnerInfo("SalesRep2 "), "N"));
+        gposOrderInfo.getLineItems().add(getLineItemInfo("3", "Product 3", "GTIN 3", "UPC 3", null, "BG", null, "UN", getPartnerInfo("SalesRep3 "), "N"));
+        gposOrderInfo.getLineItems().add(getLineItemInfo("4", "Product 4", "GTIN 4", "UPC 4", "w", "BG", "w", "UN", getPartnerInfo("SalesRep4 "), "N"));
         List<GPOSOrderInfo> list = new ArrayList<GPOSOrderInfo>();
         list.add(gposOrderInfo);
         return list;

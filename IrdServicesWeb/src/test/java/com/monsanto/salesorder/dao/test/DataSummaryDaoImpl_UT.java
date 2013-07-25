@@ -36,42 +36,42 @@ public class DataSummaryDaoImpl_UT extends AbstractTransactionalDataSourceSpring
 
     public void testGetGPOSDirectOrdersSalesOrderCount() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013, 04, 02);
+        calendar.set(2013, 4, 2);
         DataSummaryInfo dataSummaryInfo = dataSummaryDao.getDataSummaryInfoDirect(calendar.getTime(), "XML");
         assertTrue(dataSummaryInfo.getTotalLineItems() >= 0);
     }
 
     public void testGetGPOSXMLOrdersSalesOrderCount() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013, 04, 02);
+        calendar.set(2013, 4, 2);
         DataSummaryInfo dataSummaryInfo = dataSummaryDao.getDataSummaryInfoXML(calendar.getTime(), "XML");
         assertTrue(dataSummaryInfo.getTotalLineItems() >= 0);
     }
 
     public void testGetGPOSAgrimineOrdersSalesOrderCount() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013, 04, 02);
+        calendar.set(2013, 4, 2);
         DataSummaryInfo dataSummaryInfo = dataSummaryDao.getDataSummaryInfoAgrmine(calendar.getTime(), DBConstants.AGRIMINE_DATA_SOURCE_TYPE);
         assertTrue(dataSummaryInfo.getTotalLineItems() >= 0);
     }
 
     public void testGetGPOSDirectOrdersTotals() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013, 04, 02);
+        calendar.set(2013, 4, 2);
         DataSummaryTotals dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsDirect(calendar.getTime(), "XML");
         assertNotNull(dataSummaryTotals);
     }
 
     public void testGetGPOSXMLOrdersTotals() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013, 04, 02);
+        calendar.set(2013, 4, 2);
         DataSummaryTotals dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsXML(calendar.getTime(), "XML");
         assertNotNull(dataSummaryTotals);
     }
 
     public void testGetGPOSAgrimineOrdersTotals() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013, 04, 02);
+        calendar.set(2013, 4, 2);
         DataSummaryTotals dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsAgrimine(calendar.getTime(), DBConstants.AGRIMINE_DATA_SOURCE_TYPE);
         assertNotNull(dataSummaryTotals);
     }

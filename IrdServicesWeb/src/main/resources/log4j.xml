@@ -11,7 +11,7 @@
   <appender name="ApplicationjRollingFileAppender" class="org.apache.log4j.RollingFileAppender">
     <param name="File" value="${server.logs}/IRDSoapServicesApp.log"/>
     <param name="Append" value="true"/>
-    <param name="MaxFileSize" value="2000KB"/>
+    <param name="MaxFileSize" value="2200KB"/>
     <param name="MaxBackupIndex" value="9"/>
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="%5p [%d{yyyy-MM-dd HH:mm:ss}] (%F:%M:%L) - %m%n"/>

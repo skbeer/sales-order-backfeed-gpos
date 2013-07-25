@@ -36,7 +36,7 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 
     public void testGetPPOSOrders() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013, 05, 02);
+        calendar.set(2013, 5, 2);
         List<PPOSOrderInfo> pposOrders = salesOrderDao.getPPOSOrders(calendar.getTime(), "XA");
         System.out.println("No of Rows = "+pposOrders.size());
         assertTrue(pposOrders.size() >= 0);
@@ -61,14 +61,14 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 
     public void testGetCOSOrders() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013, 05, 02);
+        calendar.set(2013, 5, 2);
         List<COSOrderInfo> cosOrders = salesOrderDao.getCOSOrders(calendar.getTime(), "XA");
         System.out.println("No of Rows = "+cosOrders.size());
         assertTrue(cosOrders.size() >= 0);
     }
     public void testGetGPOSOrders() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2010, 9, 2);
+        calendar.set(2013, 5, 2);
         List<GPOSOrderInfo> gposOrders = salesOrderDao.getGPOSOrders(calendar.getTime(), "XA");
         System.out.println("No of Rows = "+gposOrders.size());
         assertTrue(gposOrders.size() >= 0);
@@ -76,7 +76,7 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 
     public void testGetGPOSDirectOrders() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013, 05, 02);
+        calendar.set(2013, 5, 2);
         List<GPOSOrderInfo> gposDirectOrders= salesOrderDao.getGPOSDirectOrders(calendar.getTime(), DBConstants.DIRECT_DATA_SOURCE_TYPE);
         System.out.println("No of Rows = "+gposDirectOrders.size());
         assertTrue(gposDirectOrders.size() >= 0);
@@ -84,7 +84,7 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 
     public void testGetGPOSXMLOrders() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013, 05, 02);
+        calendar.set(2013, 5, 2);
         List<GPOSOrderInfo> gposDirectOrders= salesOrderDao.getGPOSXMLOrders(calendar.getTime(), "XA");
         System.out.println("No of Rows = "+gposDirectOrders.size());
         assertTrue(gposDirectOrders.size() >= 0);
@@ -92,7 +92,7 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 
     public void testGetGPOSAgrimineOrders() throws Exception {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2013, 04, 02);
+        calendar.set(2013, 4, 2);
         List<GPOSOrderInfo> gposDirectOrders= salesOrderDao.getGPOSAgrimineOrders(calendar.getTime(), "XA");
         System.out.println("No of Rows = "+gposDirectOrders.size());
         assertTrue(gposDirectOrders.size() >= 0);

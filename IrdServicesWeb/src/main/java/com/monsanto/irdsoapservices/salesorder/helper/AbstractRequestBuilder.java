@@ -84,7 +84,16 @@ public abstract class AbstractRequestBuilder {
         UnitOfMeasureCodeType unitOfMeasureCodeType = new UnitOfMeasureCodeType();
         unitOfMeasureCodeType.setDomain(XmlConstants.UN_REC_20);
         unitOfMeasureCodeType.setValue(uomValue);
-        measurementType.setMeasurementValue(new Double(quantity).doubleValue());
+        if(org.apache.commons.lang.StringUtils.isNotBlank(quantity)){
+            try{
+                measurementType.setMeasurementValue(new Double(quantity).doubleValue());
+            }catch (Exception e){//number format exception
+                measurementType.setMeasurementValue(0);
+            }
+        }
+        else{//empty or null quantity
+            measurementType.setMeasurementValue(0);
+        }
         measurementType.setUnitOfMeasureCode(unitOfMeasureCodeType);
         return measurementType;
     }
