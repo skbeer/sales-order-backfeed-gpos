@@ -807,7 +807,12 @@
         AND cgp.division_code ='17'
         AND cgp.sales_org_code ='US20'
         AND p_st.acct_id = g.acct_id
-        AND (ts.source = 'XML' and p_ds.acct_id != 168618)
+        <isNull property="companyCode">
+            AND (ts.source = 'XML' and p_ds.acct_id != 168618)
+        </isNull>
+        <isNotNull property="companyCode">
+            AND (ts.source = 'XML' and p_ds.acct_id !=  (select acct_id from ird.acct_xref where system_type_code = 'IC' and active_flag = 'Y' and alias_id =#companyCode#) )
+        </isNotNull>
         AND (RTRIM(g.napd_id) IS NOT NULL
         OR RTRIM(gln_map.alias_id) IS NOT NULL)
         AND g.acct_id = gln_map.acct_id(+)
@@ -967,7 +972,12 @@
         AND dd.date_key = dpm.date_key
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND p_st.acct_id = g.acct_id
-        AND ( ts.source = 'XML' AND p_ds.acct_id = 168618 )
+        <isNull property="companyCode">
+            AND ( ts.source = 'XML' AND p_ds.acct_id = 168618 )
+        </isNull>
+        <isNotNull property="companyCode">
+            AND ( ts.source = 'XML' AND p_ds.acct_id = (select acct_id from ird.acct_xref where system_type_code = 'IC' and active_flag = 'Y' and alias_id =#companyCode#) )
+        </isNotNull>
         AND (RTRIM(g.napd_id) IS NOT NULL
         OR RTRIM(gln_map.alias_id) IS NOT NULL)
         AND g.acct_id = gln_map.acct_id(+)

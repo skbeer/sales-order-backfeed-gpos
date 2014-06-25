@@ -205,8 +205,10 @@ public void testStartProcessing_AllTypesTransactions_NoOrders_processOrders() th
                     transactionInfo.setTransactionType("GPOS");
             else if(index == 3)
                     transactionInfo.setTransactionType("GPOS;DIRECT");
-            else if(index == 4)
+            else if(index == 4) {
                     transactionInfo.setTransactionType("GPOS;CLASSIC");
+                    transactionInfo.setCompanyCode("0527346750000");
+            }
             else if(index == 5)
                     transactionInfo.setTransactionType("GPOS;AGRIMINE");
             list.add(transactionInfo);

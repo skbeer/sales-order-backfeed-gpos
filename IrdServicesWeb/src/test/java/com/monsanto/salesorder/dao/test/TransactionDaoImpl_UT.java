@@ -46,7 +46,7 @@ public class TransactionDaoImpl_UT extends AbstractTransactionalDataSourceSpring
         for(TransactionInfo tranInfo : infoList) {
             System.out.println(tranInfo);
         }
-        assertTrue(infoList.size()>0);
+        assertTrue(infoList.size()>=0);
     }
 
     public void testGetTransactionsByType_noData() throws Exception {

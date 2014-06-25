@@ -122,6 +122,7 @@ public class GPOSWinfieldHelper_UT extends TestCase {
         orders.add(getGPOSOrder("1001", "1", "1234", "456"));
         TransactionInfo transactionInfo = getTransactionInfo(aDate, "XML");
         transactionInfo.setDataSourceType("XML");
+        transactionInfo.setCompanyCode("0527346750000");
         org.easymock.EasyMock.expect(salesOrderDao.getGPOSXMLOrders(aDate, "XML")).andReturn(orders);
         EasyMock.expect(requestBuilder.buildGPOSRequest((List<GPOSOrderInfo>)EasyMock.anyObject(), (TransactionInfo)EasyMock.anyObject())).andReturn(getSalesOrderReport());
         EasyMock.expect(clientFactory.getSalesOrderClient()).andReturn(salesOrderServiceClient);
@@ -148,6 +149,7 @@ public class GPOSWinfieldHelper_UT extends TestCase {
         orders.add(getGPOSOrder("1001", "1", "1234", "567"));
         TransactionInfo transactionInfo = getTransactionInfo(aDate, "XML");
         transactionInfo.setDataSourceType("XML");
+        transactionInfo.setCompanyCode("0527346750000");
         org.easymock.EasyMock.expect(salesOrderDao.getGPOSXMLOrders(aDate, "XML")).andReturn(orders);
         EasyMock.expect(requestBuilder.buildGPOSRequest((List<GPOSOrderInfo>)EasyMock.anyObject(), (TransactionInfo)EasyMock.anyObject())).andReturn(getSalesOrderReport());
         EasyMock.expect(clientFactory.getSalesOrderClient()).andReturn(salesOrderServiceClient);

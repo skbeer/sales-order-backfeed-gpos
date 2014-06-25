@@ -55,14 +55,14 @@ public class SalesOrderReportService {
                         transaction.setFileType(XmlConstants.FILE_TYPE_MANUAL);
                         ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
                         if(ordersSent > 0) {
-                        dataSummaryHelper.processDataSummaryReport(transaction);
+                            dataSummaryHelper.processDataSummaryReport(transaction);
                         }
                     }
                     else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_CLASSIC_TRAN_TYPE)) {
                         transaction.setDataSourceType(DBConstants.XML_DATA_SOURCE_TYPE);
                         transaction.setFileType(XmlConstants.FILE_TYPE_AGRIMINE);
                         ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
-                        if(ordersSent > 0) {
+                        if(ordersSent > 0 && GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())) {
                             dataSummaryHelper.processDataSummaryReport(transaction);
                         }
                     }

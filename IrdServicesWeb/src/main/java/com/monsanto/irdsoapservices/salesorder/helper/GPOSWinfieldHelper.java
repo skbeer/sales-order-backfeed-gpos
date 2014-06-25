@@ -24,6 +24,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> {
+    private static final String WINFIELD_COMPANY_CODE = "0527346750000";
     SalesOrderDao salesOrderDao;
     Logger logger = Logger.getLogger(this.getClass());
     GPOSWinfieldRequestBuilder gposWinfieldRequestBuilder;
@@ -37,7 +38,12 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
                 deNormalizedOrders = salesOrderDao.getGPOSDirectOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
             }
             else if (DBConstants.XML_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
-               deNormalizedOrders = salesOrderDao.getGPOSXMLOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
+               if(GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())){
+                   deNormalizedOrders = salesOrderDao.getGPOSXMLOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
+               }
+               else{
+                   deNormalizedOrders = salesOrderDao.getGPOSXMLOrders(transaction.getLastTransactionDate(), transaction.getGroupCode(),transaction.getCompanyCode());
+               }
             }
             else if (DBConstants.AGRIMINE_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
                deNormalizedOrders = salesOrderDao.getGPOSAgrimineOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
@@ -131,6 +137,10 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
 
     public void setTransactionDao(TransactionDao transactionDao) {
         this.transactionDao = transactionDao;
+    }
+
+    public static boolean isWinfield(String companyCode){
+        return WINFIELD_COMPANY_CODE.equals(companyCode);
     }
 }
 
