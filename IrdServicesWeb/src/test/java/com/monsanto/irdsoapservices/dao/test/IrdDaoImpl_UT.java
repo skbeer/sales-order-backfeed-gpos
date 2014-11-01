@@ -136,7 +136,7 @@ public class IrdDaoImpl_UT extends AbstractTransactionalDataSourceSpringContextT
     public void testGetAssocEmployees_withData_returnEmployeeList() throws Exception {
         List<EmployeeInfo> employees = irdDao.getAssociatedEmployees(5180);
         assertNotNull(employees);
-        assertEquals(2, employees.size());
+        assertEquals(3, employees.size());
         EmployeeInfo empInfo = employees.get(0);
         assertEquals(5180 ,empInfo.getAccountId());
         assertEquals("HDRAMIR", empInfo.getUserId());
