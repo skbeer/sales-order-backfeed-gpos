@@ -28,7 +28,7 @@ public class CreditListBatchJob {
     public void startProcessing() throws SalesOrderException {
         TransactionInfo transaction = null;
         try {
-            logger.info("Starting Credit List Job @ "+new Date());
+            logger.info("Starting Credit List Job v20150112 @ "+new Date());
             List<TransactionInfo> transactionsToBeProcessed = transactionDao.getTransactionsByType(DBConstants.FPOS_CREDITLIST_TYPE);
             logger.info("Found "+transactionsToBeProcessed.size()+" Transactions to be Processed.");
             int ordersSent;
@@ -42,7 +42,7 @@ public class CreditListBatchJob {
                     }
                     updateTransaction(transaction, ordersSent);
                 } catch(Exception e) {
-                    logger.error(e);
+                    logger.error(e,e);
                     new ErrorEmailer().sendErrorEmail(e, "Exception occurred while processing CreditList Transaction. Transaction: "+transaction);
                 }
             }

@@ -11,8 +11,8 @@
   <appender name="ApplicationjRollingFileAppender" class="org.apache.log4j.RollingFileAppender">
     <param name="File" value="${server.logs}/IRDSoapServicesApp.log"/>
     <param name="Append" value="true"/>
-    <param name="MaxFileSize" value="2200KB"/>
-    <param name="MaxBackupIndex" value="9"/>
+    <param name="MaxFileSize" value="2900KB"/>
+    <param name="MaxBackupIndex" value="10"/>
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="%5p [%d{yyyy-MM-dd HH:mm:ss}] (%F:%M:%L) - %m%n"/>
     </layout>
@@ -37,7 +37,7 @@
   	repeated among the various categories and root. -->
 
   <category name="com.monsanto" additivity="false">
-    <priority value="info" />
+    <priority value="debug" />
     <appender-ref ref="ApplicationjRollingFileAppender"/>
     <appender-ref ref="stdout" /> 
   </category>
