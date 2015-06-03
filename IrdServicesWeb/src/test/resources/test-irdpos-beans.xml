@@ -16,7 +16,7 @@
 		<property name="url"
 			value="jdbc:oracle:thin:@USMGEND.MONSANTO.COM:1521/USMGEND.MONSANTO.COM" />
 		<property name="username" value="IRDPOS_USER" />
-        <property name="password" value="u_ael8QE0B" />
+        <property name="password" value="kWH_zoZ1kK" />
 		<!-- changed 11-27-12 TJCROC - property name="password" value="eagle_b3rt" /-->
 	</bean>
 
