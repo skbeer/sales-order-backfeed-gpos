@@ -33,7 +33,7 @@ public class SalesOrderReportService {
     public void startProcessing() throws SalesOrderException {
         TransactionInfo transaction = null;
         try {
-            logger.info("Starting Sales Order Report Job @ "+new Date());
+            logger.info("Starting Sales Order Report Job v20150528 @ "+new Date());
             List<TransactionInfo> transactionsToBeProcessed = transactionDao.getTransactionsToBeProcessed();
             logger.info("Found "+transactionsToBeProcessed.size()+" Transactions to be Processed.");
             int ordersSent;

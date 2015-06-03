@@ -785,7 +785,7 @@
         and h1.tran_id = tp1.tran_id
         and tp1.party_code = 'SF'
         and hs1.status_code = 'SI'
-        and hs1.status_id = 3
+        and hs1.status_id in (3,5)
         and trunc(hs1.row_modify_date) >#startDate#
         and h1.rptd_doc_nbr = h.rptd_doc_nbr
         and tp1.acct_id = p_sf.acct_id)
@@ -797,7 +797,7 @@
         AND bt.alias_program ='CDW749RT'
         AND bt.dest_alias_id =#groupCode#
         AND bt.source_alias_type ='CustGrp'
-        AND hs.status_id = 3
+        AND hs.status_id  in (3,5)
         AND spd.OWNED_LICENSED_CODE = 'OWNED'
         AND hs.status_code ='SI'
         AND dd.date_key = dpm.date_key
@@ -813,8 +813,6 @@
         <isNotNull property="companyCode">
             AND (ts.source = 'XML' and p_ds.acct_id !=  (select acct_id from ird.acct_xref where system_type_code = 'IC' and active_flag = 'Y' and alias_id =#companyCode#) )
         </isNotNull>
-        AND (RTRIM(g.napd_id) IS NOT NULL
-        OR RTRIM(gln_map.alias_id) IS NOT NULL)
         AND g.acct_id = gln_map.acct_id(+)
         AND gln_map.system_type_code(+) = 'GLN'
         AND gln_map.rank(+) = 1
@@ -959,7 +957,7 @@
         and h1.tran_id = tp1.tran_id
         and tp1.party_code = 'SF'
         and hs1.status_code = 'SI'
-        and hs1.status_id = 3
+        and hs1.status_id  in (3,5)
         and trunc(hs1.row_modify_date)>#startDate#
         and h1.rptd_doc_nbr = h.rptd_doc_nbr
         and tp1.acct_id = p_sf.acct_id)
@@ -967,7 +965,7 @@
         AND cad.acct_id = cgp.acct_id
         AND d.prod_id = pps.prod_id
         AND d.prod_id = spd.product_id
-        AND hs.status_id = 3
+        AND hs.status_id  in (3,5)
         AND hs.status_code = 'SI'
         AND dd.date_key = dpm.date_key
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
@@ -978,8 +976,6 @@
         <isNotNull property="companyCode">
             AND ( ts.source = 'XML' AND p_ds.acct_id = (select acct_id from ird.acct_xref where system_type_code = 'IC' and active_flag = 'Y' and alias_id =#companyCode#) )
         </isNotNull>
-        AND (RTRIM(g.napd_id) IS NOT NULL
-        OR RTRIM(gln_map.alias_id) IS NOT NULL)
         AND g.acct_id = gln_map.acct_id(+)
         AND gln_map.system_type_code(+) = 'GLN'
         AND gln_map.rank(+) = 1
