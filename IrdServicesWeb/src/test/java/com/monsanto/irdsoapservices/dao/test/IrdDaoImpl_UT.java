@@ -139,11 +139,7 @@ public class IrdDaoImpl_UT extends AbstractTransactionalDataSourceSpringContextT
         assertEquals(3, employees.size());
         EmployeeInfo empInfo = employees.get(0);
         assertEquals(5180 ,empInfo.getAccountId());
-        assertEquals("HDRAMIR", empInfo.getUserId());
-        assertEquals("SAM", empInfo.getRoleCode());
-        assertEquals("Hector", empInfo.getFirstName());
-        assertEquals("De Leon", empInfo.getLastName());
-        assertEquals("hector.ramirez.de.leon@monsanto.com", empInfo.getEmailAddress());
+        assertEquals("JASCHUT", empInfo.getUserId());
     }
 
     public void testGetAssocEmployees_withData_returnEmployeeList_WithSTO() throws Exception {
