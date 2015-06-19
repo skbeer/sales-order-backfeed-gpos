@@ -69,12 +69,10 @@ public class CreditListHelper_UT extends TestCase {
         growerList.add(getGrowerInfo("101", false));
         growerList.add(getGrowerInfo("102", true));
         when(creditListDAO.getGrowerList("V9")).thenReturn(growerList);
-        try {
-            helper.processCreditListTransaction(transactionInfo);
-            fail("Exception should have occurred");
-        } catch (Exception e) {
-            assertEquals("One or more Grower records found without a GLN#. Aborting process.", e.getMessage());
-        }
+
+        helper.processCreditListTransaction(transactionInfo);
+
+        verify(growerCreditListServiceInvoker).invokeService((List<GrowerInfo>)anyObject(), (ClientInfo)anyObject());
         verifyNoMoreInteractions(growerCreditListServiceInvoker);
         verify(creditListErrorEmailer).sendEmail((List<GrowerInfo>) anyObject(), anyString());
     }

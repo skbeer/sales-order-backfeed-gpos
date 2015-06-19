@@ -36,8 +36,9 @@ public class CreditListHelper {
     public int processCreditListTransaction(TransactionInfo transactionInfo) throws Exception {
         logger.info("Processing Credit List Transaction for Group Code:"+transactionInfo.getGroupCode()+" Company:"+transactionInfo.getName());
         List<GrowerInfo> growerList = creditListDAO.getGrowerList(transactionInfo.getGroupCode());
-        validateGrowerInfo(growerList, transactionInfo.getName());
         logger.info("Found "+growerList.size()+" Growers. Checking credit info for these Growers");
+        growerList =validateGrowerInfo(growerList, transactionInfo.getName());
+        logger.info("Found "+growerList.size()+" Growers with GLN. Checking credit info for these Growers");
         ClientInfo clientInfo = getClientInfo(transactionInfo);
         List<GrowerInfo> growerCreditList = getCreditInfo(growerList, clientInfo);
         logger.info("Starting FPOS Backfeed for "+transactionInfo.getName());
@@ -46,18 +47,23 @@ public class CreditListHelper {
         return growerCreditList.size();
     }
 
-    private void validateGrowerInfo(List<GrowerInfo> growerList, String partnerName) throws Exception {
+    private  List<GrowerInfo> validateGrowerInfo(List<GrowerInfo> growerList, String partnerName) throws Exception {
+        List<GrowerInfo> growerListCleaned = new ArrayList<GrowerInfo>();
         List<GrowerInfo> invalidGrowerRecords = new ArrayList<GrowerInfo>();
         for(GrowerInfo growerInfo : growerList) {
             if(StringUtils.isNullOrEmpty(growerInfo.getGln())) {
                 invalidGrowerRecords.add(growerInfo);
             }
+            else{
+                growerListCleaned.add(growerInfo);
+            }
         }
         if(invalidGrowerRecords.size() > 0) {
-            logger.warn("One or more Grower records found without a GLN#. Sending email and aborting process.");
+            logger.warn("One or more Grower records found without a GLN#. Sending email:"+invalidGrowerRecords.size());
             creditListErrorEmailer.sendEmail(invalidGrowerRecords, partnerName);
-            throw new Exception("One or more Grower records found without a GLN#. Aborting process.");
+            //throw new Exception("One or more Grower records found without a GLN#. Aborting process.");
         }
+        return growerListCleaned;
     }
 
     protected List<GrowerInfo> getCreditInfo(List<GrowerInfo> growerList, ClientInfo clientInfo) throws ServiceException {
