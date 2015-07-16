@@ -56,7 +56,7 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
         agreementInfo = createUpdateAgreement(agreements, "12/31/4712");
         updateCount = agreementDao.updateAgreement(agreementInfo);
         assertEquals(0, updateCount);
-        agreements = getSALEAgreement("12/31/4712", false);
+        agreements = getSALEAgreement("01/01/2015", true);
     }
 
     public void testGetAgreementHierarchy_noAgreements_returnBlankList() throws Exception {
@@ -68,6 +68,7 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
     public void testGetAgreementHierarchy_withAgreements_returnValidData() throws Exception {
         List<AgreementHierarchyInfo> agrHierarchy = agreementDao.getAgreementHierarchy(208, "CS");
         assertNotNull(agrHierarchy);
+        assertEquals(11, agrHierarchy.size());
         assertAgrementHierarchyInfo(agrHierarchy, 6, "RR2Y", "RR 2 YIELD", null, "C10", "N", "Y");
 //        assertAgrementHierarchyInfo(agrHierarchy, 0, "RRSN", "RRSN-Soybean", null, "C08", "N", "Y");
 //        assertAgrementHierarchyInfo(agrHierarchy, 1, "Z051", "Bean Commercial", "Z05", null, "N", "Y");
@@ -89,34 +90,34 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
 
     public void testGetSignersByAgreementsNoAgreementCodeExpiredIncludedthrowsException() throws Exception {
         try {
-        List<SignerInformation> signers = agreementDao.getSignersByAgreementCode(null, false);
-        assertTrue(signers.size() > 0);
-        fail("Exception should have occurred");
+            List<SignerInformation> signers = agreementDao.getSignersByAgreementCode(null, false);
+            assertTrue(signers.size() > 0);
+            fail("Exception should have occurred");
         } catch(Exception e) {
             assertNotNull(e);
         }
     }
 
     public void testGetSignersByAgreementCodeForExpiredAgreements() throws Exception {
-     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("STA", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/2003"), new Date());
-     assertTrue(signers.size() > 0);
+        List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("STA", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/2003"), new Date());
+        assertTrue(signers.size() > 0);
     }
 
     public void testGetSignersByAgreementCodeForExpiredAgreementsDateInFarFuture() throws Exception {
-     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("STA", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"), new Date());
-     assertTrue(signers.size() == 0);
+        List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("STA", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"), new Date());
+        assertTrue(signers.size() == 0);
     }
 
     public void testGetSignersByAgreementCodeForExpiredAgreementsEmptyAgreementCode() throws Exception {
-     List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"), new Date());
-     assertTrue(signers.size() == 0);
+        List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements("", new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"), new Date());
+        assertTrue(signers.size() == 0);
     }
 
     public void testGetSignersByAgreementCodeForExpiredAgreementsNoAgreementCodeThrowsException() throws Exception {
-     try {
-        List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements(null, new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"), new Date());
-        assertTrue(signers.size() == 0);
-        fail("Exception should have occurred");
+        try {
+            List<SignerInformation> signers = agreementDao.getSignersByAgreementCodeForExpiredAgreements(null, new SimpleDateFormat("MM/dd/yyyy").parse("06/11/9999"), new Date());
+            assertTrue(signers.size() == 0);
+            fail("Exception should have occurred");
         } catch(Exception e) {
             assertNotNull(e);
         }
@@ -163,7 +164,7 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
         assertEquals(rowUserId, agrInfo.getRowUserId());
         assertTrue(new SimpleDateFormat(dateFormat).parse(lastModifyDate).compareTo(agrInfo.getRowModifyDate())<=0);
         assertEquals(acctAliasId, agrInfo.getAccountAliasId());
-        assertEquals(signerAliasId, agrInfo.getSignerAliasId());        
+        assertEquals(signerAliasId, agrInfo.getSignerAliasId());
     }
 
     @Override
@@ -176,5 +177,5 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
     protected String[] getConfigLocations() {
         return new String[] { "test-irdpos-beans.xml" };
     }
-    
+
 }

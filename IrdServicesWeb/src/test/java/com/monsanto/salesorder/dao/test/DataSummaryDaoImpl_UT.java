@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class DataSummaryDaoImpl_UT extends AbstractTransactionalDataSourceSpringContextTests {
 
-    public static final int YEAR = 2014;
-    public static final int MONTH = 9;
+    public static final int YEAR = 2015;
+    public static final int MONTH = 6;
     private DataSummaryDao dataSummaryDao;
 
     @Override
@@ -77,5 +77,5 @@ public class DataSummaryDaoImpl_UT extends AbstractTransactionalDataSourceSpring
         DataSummaryTotals dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsAgrimine(calendar.getTime(), DBConstants.AGRIMINE_DATA_SOURCE_TYPE);
         assertNotNull(dataSummaryTotals);
     }
-    
+
 }

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
        			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
        			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
        			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
 
-	<bean id="fsDataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		destroy-method="close">
-		<property name="driverClassName"
-			value="oracle.jdbc.OracleDriver" />
-		<property name="url"
-			value="jdbc:oracle:thin:@//fsd-scan.monsanto.com:1521/fsd.monsanto.com" />
-		<property name="username" value="ECOM_APP" />
-		<property name="password" value="yxb4_ejFwC" />
-	</bean>
+    <bean id="fsDataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          destroy-method="close">
+        <property name="driverClassName"
+                  value="oracle.jdbc.OracleDriver" />
+        <property name="url"
+                  value="jdbc:oracle:thin:@//fsd-scan.monsanto.com:1521/fsd.monsanto.com" />
+        <property name="username" value="ECOM_APP" />
+        <property name="password" value="yxb4_ejFwC" />
+    </bean>
 
     <bean id="fsSqlMap" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
-            <property name="configLocation">
-                <value>classpath:FsSqlMapConfig.xml</value>
-            </property>
-            <property name="dataSource" ref="fsDataSource" />
+        <property name="configLocation">
+            <value>classpath:FsSqlMapConfig.xml</value>
+        </property>
+        <property name="dataSource" ref="fsDataSource" />
     </bean>
 
     <bean id="transactionDao" class="com.monsanto.irdsoapservices.salesorder.dao.TransactionDaoImpl">
@@ -43,24 +43,24 @@
         <property name="responseBuilder" ref="agreementStatusRequestBuilder"/>
     </bean>
 
-	<bean id="txManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="fsDataSource" />
-	</bean>
+    <bean id="txManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="fsDataSource" />
+    </bean>
 
-	<tx:advice id="txAdvice" transaction-manager="txManager">
-		<tx:attributes>
-			<tx:method name="find*" read-only="true" />
-			<tx:method name="*" />
-		</tx:attributes>
-	</tx:advice>
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="find*" read-only="true" />
+            <tx:method name="*" />
+        </tx:attributes>
+    </tx:advice>
 
-	<aop:config>
-		<aop:pointcut id="serviceOperation"
-			expression="execution(* com.monsanto.irdsoapservices.helper.*.*(..))" />
-		<aop:advisor advice-ref="txAdvice"
-			pointcut-ref="serviceOperation" />
-	</aop:config>
+    <aop:config>
+        <aop:pointcut id="serviceOperation"
+                      expression="execution(* com.monsanto.irdsoapservices.helper.*.*(..))" />
+        <aop:advisor advice-ref="txAdvice"
+                     pointcut-ref="serviceOperation" />
+    </aop:config>
 
     <bean id="creditListDAO" class="com.monsanto.irdsoapservices.creditlist.CreditListDAO">
         <property name="sqlMapClient" ref="fsSqlMap"/>
