@@ -1,13 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <dependencies>
-        <dependency>
-            <groupId>com.monsanto.commercial.isdclientutils</groupId>
-            <artifactId>isdclient-utils-jar</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-    </dependencies>
+
     <parent>
         <groupId>com.monsanto.commercial</groupId>
         <artifactId>commercial-pom</artifactId>
@@ -28,8 +22,8 @@
     </organization>
 
     <scm>
-        <connection>scm:git:git@gitlab.monsanto.com:enterprise/IRDSoapServices.git</connection>
-        <developerConnection>scm:git:git@gitlab.monsanto.com:enterprise/IRDSoapServices.git</developerConnection>
+        <connection>scm:git:git@gitlab.monsanto.com:enterprise/IRDServices.git</connection>
+        <developerConnection>scm:git:git@gitlab.monsanto.com:enterprise/IRDServices.git</developerConnection>
     </scm>
 
 
