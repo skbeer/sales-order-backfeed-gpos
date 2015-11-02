@@ -20,20 +20,25 @@ public class AgreementStatusDaoImpl extends SqlMapClientDaoSupport implements Ag
     Logger logger = Logger.getLogger(AgreementStatusDaoImpl.class);
     private static final int BATCH_UNIT = 1000;
     private static final int MAP_MAX_COUNT = 10;
-    private static final String MAP_KEY_PREFIX_GLN = "Set";
+    private static final String MAP_KEY_PREFIX_ALIAS = "Set";
     private static final String MAP_KEY_PREFIX_ABS = "SetABS";
+    private static final String MAP_KEY_SYSTEM_TYPE_CODES ="SystemTypeCodes";
 
-    public List<AgreementStatusInfo> getAgreementStatusInfo(List<String> glns, List<String> assignedBySellers) {
-        logger.info("Executing AgreementStatus SQL for "+glns.size()+" GLNs and " +assignedBySellers.size()+" AssignedBySellers");
-        Map<String, List<String>> glnParameterMap = getGLNParameterMap(glns);
-        logMapData(glnParameterMap,MAP_KEY_PREFIX_GLN);
+    public List<AgreementStatusInfo> getAgreementStatusInfo(List<String> aliasIds, List<String> assignedBySellers,List<String> systemCodes ) {
+        logger.info("Executing AgreementStatus SQL for "+aliasIds.size()+" aliasIds and " +assignedBySellers.size()+" AssignedBySellers");
+        Map<String, List<String>> aliasParameterMap = getAliasParameterMap(aliasIds);
+        logMapData(aliasParameterMap, MAP_KEY_PREFIX_ALIAS);
         Map<String, List<String>> assignedBySellerParameterMap = getAssignedBySellerParameterMap(assignedBySellers);
         logMapData(assignedBySellerParameterMap,MAP_KEY_PREFIX_ABS);
+        Map<String, List<String>> systemCodesMap = new HashMap<String, List<String>>();
+        systemCodesMap.put(MAP_KEY_SYSTEM_TYPE_CODES,systemCodes);
         Map<String, List<String>> parameterMap =new HashMap<String, List<String>>();
-        parameterMap.putAll(glnParameterMap);
+        parameterMap.putAll(aliasParameterMap);
         parameterMap.putAll(assignedBySellerParameterMap);
+        parameterMap.putAll(systemCodesMap);
         return getSqlMapClientTemplate().queryForList("AgreementStatus.getAgreementStatus", parameterMap);
     }
+
 
     private void logMapData(Map<String, List<String>> paramMap,String mapKeyPrefix) {
         for(int index = 1; index <= paramMap.keySet().size(); index++) {
@@ -56,17 +61,17 @@ public class AgreementStatusDaoImpl extends SqlMapClientDaoSupport implements Ag
         }
         return map;
     }
-    private Map<String, List<String>> getGLNParameterMap(List<String> glns) {
-        int setCount = glns.size()/ BATCH_UNIT;
-        Map<String, List<String>> map = getStaticListMap(MAP_MAX_COUNT, MAP_KEY_PREFIX_GLN);
+    private Map<String, List<String>> getAliasParameterMap(List<String> aliasIds) {
+        int setCount = aliasIds.size()/ BATCH_UNIT;
+        Map<String, List<String>> map = getStaticListMap(MAP_MAX_COUNT, MAP_KEY_PREFIX_ALIAS);
         int startIndex = 0;
         int endIndex = 0;
         for (int index = 1; index <= (setCount+1); index++) {
-            endIndex = (glns.size() < startIndex+ BATCH_UNIT)? glns.size() : startIndex+ BATCH_UNIT;
-            List<String> subList = glns.subList(startIndex, endIndex);
+            endIndex = (aliasIds.size() < startIndex+ BATCH_UNIT)? aliasIds.size() : startIndex+ BATCH_UNIT;
+            List<String> subList = aliasIds.subList(startIndex, endIndex);
             if(subList.size()>0){
-                map.remove(MAP_KEY_PREFIX_GLN +index);
-                map.put(MAP_KEY_PREFIX_GLN +index, subList);
+                map.remove(MAP_KEY_PREFIX_ALIAS +index);
+                map.put(MAP_KEY_PREFIX_ALIAS +index, subList);
             }
             startIndex = endIndex;
         }

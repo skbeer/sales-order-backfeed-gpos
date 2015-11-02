@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:req="urn:cidx:names:specification:ces:schema:all:5:3" xmlns:res="urn:cidx:names:specification:ces:schema:all:5:3" xmlns:agmtWsdl="urn:monsanto:services:wsdl:agreementstatus:1:1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="AgreementStatusServiceDefinitions" targetNamespace="urn:monsanto:services:wsdl:agreementstatus:1:1">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:import schemaLocation="AgreementStatus_5-3.xsd" namespace="urn:cidx:names:specification:ces:schema:all:5:3"/>
+		</xs:schema>
+		<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:cidx:names:specification:ces:schema:all:5:3"/>
+	</wsdl:types>
+	<wsdl:message name="AgreementStatus">
+		<wsdl:part name="request" element="req:AgreementStatusRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AgreementStatusResponse">
+		<wsdl:part name="agreementStatusResponse" element="res:AgreementStatusResponse"/>
+	</wsdl:message>
+	<wsdl:message name="AgreementStatusFault">
+		<wsdl:part name="agreementStatusFault" element="res:AgreementStatusFault"/>
+	</wsdl:message>
+	<wsdl:portType name="AgreementStatusService">
+		<wsdl:operation name="getAgreementStatus" parameterOrder="request">
+			<wsdl:input message="agmtWsdl:AgreementStatus"/>
+			<wsdl:output message="agmtWsdl:AgreementStatusResponse"/>
+			<wsdl:fault name="agreementStatusFault" message="agmtWsdl:AgreementStatusFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="AgreementStatusServiceSoapBinding" type="agmtWsdl:AgreementStatusService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getAgreementStatus">
+			<soap:operation soapAction="" style="document"/>
+			<wsdl:input>
+				<soap:body parts="request" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="agreementStatusResponse" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="agreementStatusFault">
+				<soap:fault name="agreementStatusFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="AgreementStatusService">
+		<wsdl:port name="AgreementStatusServicePort" binding="agmtWsdl:AgreementStatusServiceSoapBinding">
+			<soap:address location="http://localhost:7001/IrdSoapServices/AgreementStatusService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

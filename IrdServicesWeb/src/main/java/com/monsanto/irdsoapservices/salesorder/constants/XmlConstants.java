@@ -10,6 +10,8 @@ package com.monsanto.irdsoapservices.salesorder.constants;
 public class XmlConstants {
     public static final String MONSANTO_PARTNER_NAME = "MONSANTO AGRICULTURAL CO";
     public static final String MONSANTO_EBID = "0062668030000";
+    public static final String MONSANTO_GLN = "1100027565809";
+    public static final String MONSANTO_ASSIGNED_BY_SELLER = "482544";
     public static final String PPOS_TRAN_TYPE = "RT";
     public static final String COS_TRAN_TYPE = "WH";    
     public static final String GPOS_TRAN_TYPE = "NS";    

@@ -34,4 +34,8 @@
               implementation="com.monsanto.irdsoapservices.agreementstatus.service.AgreementStatusServiceImpl"
               url-pattern="/AgreementStatusService"/>
 
+    <endpoint name="AgreementStatusPartnersService"
+              implementation="com.monsanto.irdsoapservices.agreementstatuspartners.service.AgreementStatusServiceImpl"
+              url-pattern="/AgreementStatusService53"/>
+
 </endpoints>

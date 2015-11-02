@@ -21,102 +21,111 @@
         <result property="tempAgreement.tempZone.cropName" column="SPECIES_DESCR" />
     </resultMap>
 
-    <select id="getAgreementStatus" resultMap="agreementStatusResult" parameterClass="java.util.Map">
+    <sql id="baseSelectFrom">
         SELECT  ALIAS_ID,
-                SYSTEM_TYPE_CODE,
-                PURCHASER_ACCT_ID AS ACCT_ID,
-                TECH_LICENSE_NUMBER,
-                ACCT_NAME,
-                MAILING_STATE_CODE,
-                SPECIES_CODE,
-                SPECIES_DESCR,        
-                ZONE_DESCR,
-                ZONE_CODE,
-                ZONE_STRUCT_DESCR ZONE_TYPE,
-                DECODE(SPECIES_CODE, 'T', 'MTA1', 'MTA2')  AGREEMENT_NAME,
-                LICENSE_STATUS,
-                CONTACT_FIRST_NAME ||' ' ||CONTACT_LAST_NAME AS CONTACT_NAME
+        SYSTEM_TYPE_CODE,
+        PURCHASER_ACCT_ID AS ACCT_ID,
+        TECH_LICENSE_NUMBER,
+        ACCT_NAME,
+        MAILING_STATE_CODE,
+        SPECIES_CODE,
+        SPECIES_DESCR,
+        ZONE_DESCR,
+        ZONE_CODE,
+        ZONE_STRUCT_DESCR ZONE_TYPE,
+        DECODE(SPECIES_CODE, 'T', 'MTA1', 'MTA2')  AGREEMENT_NAME,
+        LICENSE_STATUS,
+        CONTACT_FIRST_NAME ||' ' ||CONTACT_LAST_NAME AS CONTACT_NAME
         FROM    ECOM.GROWER_LICENSE_ZONE_V2_VW
-        WHERE   ALIAS_ID IN
-                <iterate property="Set1" open="(" close=")" conjunction=",">
-                    #Set1[]#
-                </iterate>
-                OR ALIAS_ID IN
-                <iterate property="Set2" open="(" close=")" conjunction=",">
-                    #Set2[]#
-                </iterate>
-                OR ALIAS_ID IN
-                <iterate property="Set3" open="(" close=")" conjunction=",">
-                    #Set3[]#
-                </iterate>
-                OR ALIAS_ID IN
-                <iterate property="Set4" open="(" close=")" conjunction=",">
-                    #Set4[]#
-                </iterate>
-                OR ALIAS_ID IN
-                <iterate property="Set5" open="(" close=")" conjunction=",">
-                    #Set5[]#
-                </iterate>
-                OR ALIAS_ID IN
-                <iterate property="Set6" open="(" close=")" conjunction=",">
-                    #Set6[]#
-                </iterate>
-                OR ALIAS_ID IN
-                <iterate property="Set7" open="(" close=")" conjunction=",">
-                    #Set7[]#
-                </iterate>
-                OR ALIAS_ID IN
-                <iterate property="Set8" open="(" close=")" conjunction=",">
-                    #Set8[]#
-                </iterate>
-                OR ALIAS_ID IN
-                <iterate property="Set9" open="(" close=")" conjunction=",">
-                    #Set9[]#
-                </iterate>
-                OR ALIAS_ID IN
-                <iterate property="Set10" open="(" close=")" conjunction=",">
-                    #Set10[]#
-                </iterate>
-                OR PURCHASER_ACCT_ID IN
-                <iterate property="SetABS1" open="(" close=")" conjunction=",">
-                    #SetABS1[]#
-                </iterate>
-                OR PURCHASER_ACCT_ID IN
-                <iterate property="SetABS2" open="(" close=")" conjunction=",">
-                    #SetABS2[]#
-                </iterate>
-                OR PURCHASER_ACCT_ID IN
-                <iterate property="SetABS3" open="(" close=")" conjunction=",">
-                    #SetABS3[]#
-                </iterate>
-                OR PURCHASER_ACCT_ID IN
-                <iterate property="SetABS4" open="(" close=")" conjunction=",">
-                    #SetABS4[]#
-                </iterate>
-                OR PURCHASER_ACCT_ID IN
-                <iterate property="SetABS5" open="(" close=")" conjunction=",">
-                    #SetABS5[]#
-                </iterate>
-                OR PURCHASER_ACCT_ID IN
-                <iterate property="SetABS6" open="(" close=")" conjunction=",">
-                    #SetABS6[]#
-                </iterate>
-                OR PURCHASER_ACCT_ID IN
-                <iterate property="SetABS7" open="(" close=")" conjunction=",">
-                    #SetABS7[]#
-                </iterate>
-                OR PURCHASER_ACCT_ID IN
-                <iterate property="SetABS8" open="(" close=")" conjunction=",">
-                    #SetABS8[]#
-                </iterate>
-                OR PURCHASER_ACCT_ID IN
-                <iterate property="SetABS9" open="(" close=")" conjunction=",">
-                    #SetABS9[]#
-                </iterate>
-                OR PURCHASER_ACCT_ID IN
-                <iterate property="SetABS10" open="(" close=")" conjunction=",">
-                    #SetABS10[]#
-                </iterate>
+    </sql>
+
+    <select id="getAgreementStatus" resultMap="agreementStatusResult" parameterClass="java.util.Map">
+        <include refid="baseSelectFrom"/>
+        WHERE   SYSTEM_TYPE_CODE IN
+        <iterate property="SystemTypeCodes" open="(" close=")" conjunction=",">
+            #SystemTypeCodes[]#
+        </iterate>
+        AND ( ALIAS_ID IN
+        <iterate property="Set1" open="(" close=")" conjunction=",">
+            #Set1[]#
+        </iterate>
+        OR ALIAS_ID IN
+        <iterate property="Set2" open="(" close=")" conjunction=",">
+            #Set2[]#
+        </iterate>
+        OR ALIAS_ID IN
+        <iterate property="Set3" open="(" close=")" conjunction=",">
+            #Set3[]#
+        </iterate>
+        OR ALIAS_ID IN
+        <iterate property="Set4" open="(" close=")" conjunction=",">
+            #Set4[]#
+        </iterate>
+        OR ALIAS_ID IN
+        <iterate property="Set5" open="(" close=")" conjunction=",">
+            #Set5[]#
+        </iterate>
+        OR ALIAS_ID IN
+        <iterate property="Set6" open="(" close=")" conjunction=",">
+            #Set6[]#
+        </iterate>
+        OR ALIAS_ID IN
+        <iterate property="Set7" open="(" close=")" conjunction=",">
+            #Set7[]#
+        </iterate>
+        OR ALIAS_ID IN
+        <iterate property="Set8" open="(" close=")" conjunction=",">
+            #Set8[]#
+        </iterate>
+        OR ALIAS_ID IN
+        <iterate property="Set9" open="(" close=")" conjunction=",">
+            #Set9[]#
+        </iterate>
+        OR ALIAS_ID IN
+        <iterate property="Set10" open="(" close=")" conjunction=",">
+            #Set10[]#
+        </iterate>
+        OR PURCHASER_ACCT_ID IN
+        <iterate property="SetABS1" open="(" close=")" conjunction=",">
+            #SetABS1[]#
+        </iterate>
+        OR PURCHASER_ACCT_ID IN
+        <iterate property="SetABS2" open="(" close=")" conjunction=",">
+            #SetABS2[]#
+        </iterate>
+        OR PURCHASER_ACCT_ID IN
+        <iterate property="SetABS3" open="(" close=")" conjunction=",">
+            #SetABS3[]#
+        </iterate>
+        OR PURCHASER_ACCT_ID IN
+        <iterate property="SetABS4" open="(" close=")" conjunction=",">
+            #SetABS4[]#
+        </iterate>
+        OR PURCHASER_ACCT_ID IN
+        <iterate property="SetABS5" open="(" close=")" conjunction=",">
+            #SetABS5[]#
+        </iterate>
+        OR PURCHASER_ACCT_ID IN
+        <iterate property="SetABS6" open="(" close=")" conjunction=",">
+            #SetABS6[]#
+        </iterate>
+        OR PURCHASER_ACCT_ID IN
+        <iterate property="SetABS7" open="(" close=")" conjunction=",">
+            #SetABS7[]#
+        </iterate>
+        OR PURCHASER_ACCT_ID IN
+        <iterate property="SetABS8" open="(" close=")" conjunction=",">
+            #SetABS8[]#
+        </iterate>
+        OR PURCHASER_ACCT_ID IN
+        <iterate property="SetABS9" open="(" close=")" conjunction=",">
+            #SetABS9[]#
+        </iterate>
+        OR PURCHASER_ACCT_ID IN
+        <iterate property="SetABS10" open="(" close=")" conjunction=",">
+            #SetABS10[]#
+        </iterate>
+        )
         ORDER BY AGREEMENT_NAME,PURCHASER_ACCT_ID,SPECIES_CODE,SYSTEM_TYPE_CODE
     </select>
 

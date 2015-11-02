@@ -53,4 +53,30 @@ public class ZoneInfo {
     public void setZoneName(String zoneName) {
         this.zoneName = zoneName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ZoneInfo zoneInfo = (ZoneInfo) o;
+
+        if (!cropCode.equals(zoneInfo.cropCode)) return false;
+        if (!cropName.equals(zoneInfo.cropName)) return false;
+        if (!zoneId.equals(zoneInfo.zoneId)) return false;
+        if (!zoneName.equals(zoneInfo.zoneName)) return false;
+        if (!zoneType.equals(zoneInfo.zoneType)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = zoneId.hashCode();
+        result = 31 * result + zoneType.hashCode();
+        result = 31 * result + zoneName.hashCode();
+        result = 31 * result + cropCode.hashCode();
+        result = 31 * result + cropName.hashCode();
+        return result;
+    }
 }

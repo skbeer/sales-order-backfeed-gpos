@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxws:bindings wsdlLocation="AgreementStatus_5-3.wsdl"
+xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+<jaxws:bindings node="wsdl:definitions" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<jaxws:package name="com.monsanto.irdsoapservices.agreementstatuspartners.schema"/>
+</jaxws:bindings>
+
+    <jaxws:bindings node="wsdl:definitions/wsdl:types" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <jaxws:package name="com.monsanto.irdsoapservices.agreementstatuspartners.schema"/>
+    </jaxws:bindings>
+</jaxws:bindings>

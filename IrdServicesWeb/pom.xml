@@ -609,5 +609,39 @@
            </build>
        </profile>
 
+        <profile>
+            <id>agreementstatuspartners-generate-service-stubs-wsimport</id>
+            <build>
+                <plugins>
+                    <!--WSImport-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>service-stubs-wsimport</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+                                            <classpath refid="maven.compile.classpath" />
+                                        </taskdef>
+                                        <echo>Calling wsimport for AgreementStatus_5-3 Service</echo>
+                                        <wsimport wsdl="IrdServicesWeb/src/main/resources/AgreementStatus_5-3.wsdl" keep="true" verbose="true" sourcedestdir="src/main/java">
+                                            <binding dir="src/main/resources" includes="agreementstatuspartners-jaxws-custom.xml" />
+                                            <binding dir="src/main/resources" includes="agreementstatuspartners-jaxb-custom.xml" />
+                                        </wsimport>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 </project>

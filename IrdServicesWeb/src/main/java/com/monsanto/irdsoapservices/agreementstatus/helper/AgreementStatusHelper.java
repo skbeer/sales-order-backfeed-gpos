@@ -36,12 +36,12 @@ public class AgreementStatusHelper {
     public AgreementStatusResponseType getAgreementStatus(AgreementStatusRequest agreementStatusRequest) throws AgreementStatusFault {
         AgreementStatusResponseType response;
         try {
-            logger.info("Starting to retrieve Agreement Status information");
+            logger.info("Starting to retrieve Agreement Status information v20150910");
             List<String> glnList = extractGLNsFromRequest(agreementStatusRequest);
             checkLimitOfGLNs(glnList);
             List<String> assignedBySellerList = extractAssignedBySellersFromRequest(agreementStatusRequest);
             checkLimitOfAssignedBySellers(assignedBySellerList);
-            List<AgreementStatusInfo> agreementStatusList = agreementStatusDao.getAgreementStatusInfo(glnList, assignedBySellerList);
+            List<AgreementStatusInfo> agreementStatusList = agreementStatusDao.getAgreementStatusInfo(glnList, assignedBySellerList,Arrays.asList(SYSTEM_CODE_GLN, SYSTEM_CODE_SAP));
             List<AgreementStatusInfo> filteredAgreementStatusList=filterByGLNORSAP(agreementStatusList);
             HashMap<String, AgreementStatusInfo> normalizedStatusMap = normalizeAgreementStatusList(filteredAgreementStatusList);
             List<AgreementStatusInfo> agreementList = new ArrayList<AgreementStatusInfo>();

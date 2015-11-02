@@ -56,4 +56,22 @@ public class AgreementInfo {
     public void setZones(List<ZoneInfo> zones) {
         this.zones = zones;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AgreementInfo that = (AgreementInfo) o;
+
+        if (!agreementName.equals(that.agreementName)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return agreementName.hashCode();
+    }
 }
