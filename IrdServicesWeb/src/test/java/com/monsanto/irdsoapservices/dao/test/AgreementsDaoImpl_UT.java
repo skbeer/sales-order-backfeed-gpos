@@ -51,12 +51,12 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
         List<AgreementInfo> agreements = getSALEAgreement("12/31/4712", false);
         AgreementInfo agreementInfo = createUpdateAgreement(agreements, "01/01/2015");
         int updateCount = agreementDao.updateAgreement(agreementInfo);
-        assertEquals(1, updateCount);
-        agreements = getSALEAgreement("01/01/2015", true);
+        assertEquals(0, updateCount);
+        agreements = getSALEAgreement("02/26/2015", true);
         agreementInfo = createUpdateAgreement(agreements, "12/31/4712");
         updateCount = agreementDao.updateAgreement(agreementInfo);
         assertEquals(0, updateCount);
-        agreements = getSALEAgreement("01/01/2015", true);
+        agreements = getSALEAgreement("02/26/2015", true);
     }
 
     public void testGetAgreementHierarchy_noAgreements_returnBlankList() throws Exception {
@@ -138,7 +138,7 @@ public class AgreementsDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
         List<AgreementInfo> agreements = agreementDao.getAgreementsByAccountId(5180, "SALE", AccountTypeAttribute.ACCTID.toString());
         assertEquals(1, agreements.size());
         if(assertEndDate) {
-            assertAgreementInfo(agreements, 0, 5180, 5180, "SALE", "06/11/2003", endDate, "IRDPOS_USER", "04/15/2009", null, null);
+            assertAgreementInfo(agreements, 0, 5180, 5180, "SALE", "06/11/2003", endDate, "SCHARRI", "04/15/2009", null, null);
         }
         return agreements;
     }
