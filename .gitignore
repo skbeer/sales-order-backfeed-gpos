@@ -15,4 +15,5 @@
 /**/*.log
 #/*/_ign_mvn_*.log
 *.iml
+*.class
 .DS_Store
