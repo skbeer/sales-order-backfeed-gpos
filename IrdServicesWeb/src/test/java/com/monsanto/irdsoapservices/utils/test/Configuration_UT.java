@@ -14,12 +14,12 @@ public class Configuration_UT extends TestCase {
 
     public void testConfiguration_readProperty_forWin() throws Exception {
 		System.setProperty("lsi.function", "win");
-		assertEquals("mkuchip@monsanto.com", Configuration.getInstance().getProperty(Configuration.ERROR_TO_EMAIL_ADDRESS));
+		assertEquals("cesar.cardenas@monsanto.com", Configuration.getInstance().getProperty(Configuration.ERROR_TO_EMAIL_ADDRESS));
 	}
 
 	public void testConfiguration_readProperty_forDifferentEnv() throws Exception {
 		System.setProperty("lsi.function", "prod");
-		assertEquals("NA1000MB-GCSTEAM@monsanto.com", Configuration.getInstance().getProperty(Configuration.ERROR_TO_EMAIL_ADDRESS));
+		assertEquals("NA1000MB-GCSTEAM@monsanto.com;DL-AG-ITEcommerceB2B@monsanto.com;NA1000MB-B2BTEAMBUS@monsanto.com", Configuration.getInstance().getProperty(Configuration.ERROR_TO_EMAIL_ADDRESS));
 		System.setProperty("lsi.function", "win");
 	}
 
