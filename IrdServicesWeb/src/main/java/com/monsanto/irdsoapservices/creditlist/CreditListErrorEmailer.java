@@ -40,6 +40,7 @@ public class CreditListErrorEmailer extends AbstractEmailer {
 	@Override
 	protected Address[] getToAddress() throws Exception {
         String delimitedToAddress = Configuration.getInstance().getProperty(Configuration.CREDITLIST_TO_EMAIL_ADDRESS);
+        logger.info("delimitedToAddress:"+delimitedToAddress);
         String[] splittedToAddresses = delimitedToAddress.split(";");
         Address[] toEmails = new InternetAddress[splittedToAddresses.length];
         for (int index = 0; index < toEmails.length; index++) {

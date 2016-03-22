@@ -1,5 +1,6 @@
 package com.monsanto.irdsoapservices.creditlist;
 
+import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -36,16 +37,19 @@ public class CreditListServlet extends HttpServlet {
             writer.print("CreditList job executed Successfully.");
         } catch (BeansException e) {
             e.printStackTrace();
-            logger.error(e);
+            logger.error(e,e);
             writer.print(e.getMessage());
+            new ErrorEmailer().sendErrorEmail(e, "Exception occurred while processing Credit List.");
         } catch (SalesOrderException e) {
             e.printStackTrace();
-            logger.error(e);
+            logger.error(e,e);
             writer.print(e.getMessage());
+            new ErrorEmailer().sendErrorEmail(e, "Exception occurred while processing Credit List.");
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error(e);
+            logger.error(e,e);
             writer.print(e.getMessage());
+            new ErrorEmailer().sendErrorEmail(e, "Exception occurred while processing Credit List.");
         } finally {
             writer.close();
         }

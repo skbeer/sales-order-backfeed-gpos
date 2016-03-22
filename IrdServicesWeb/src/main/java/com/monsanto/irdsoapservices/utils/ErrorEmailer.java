@@ -32,8 +32,17 @@ public class ErrorEmailer extends AbstractEmailer {
 
 	@Override
 	protected Address[] getToAddress() throws Exception {
-		return new Address[]{new InternetAddress(StringUtils.isNullOrEmpty(toAddress)? Configuration.getInstance().getProperty(Configuration.ERROR_TO_EMAIL_ADDRESS)
-				:toAddress.trim())};
+        if(! StringUtils.isNullOrEmpty(toAddress)){
+            return new Address[]{new InternetAddress(toAddress.trim())};
+        }
+        String delimitedToAddress = Configuration.getInstance().getProperty(Configuration.ERROR_TO_EMAIL_ADDRESS);
+        logger.info("delimitedToAddress:"+delimitedToAddress);
+        String[] splittedToAddresses = delimitedToAddress.split(";");
+        Address[] toEmails = new InternetAddress[splittedToAddresses.length];
+        for (int index = 0; index < toEmails.length; index++) {
+            toEmails[index] = new InternetAddress(splittedToAddresses[index]);
+        }
+        return toEmails;
 	}
 	
 	public void setToAddress(String emailaddress) {
