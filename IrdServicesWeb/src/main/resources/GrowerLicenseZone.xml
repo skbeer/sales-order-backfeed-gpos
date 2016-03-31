@@ -22,111 +22,149 @@
     </resultMap>
 
     <sql id="baseSelectFrom">
-        SELECT  ALIAS_ID,
-        SYSTEM_TYPE_CODE,
-        PURCHASER_ACCT_ID AS ACCT_ID,
-        TECH_LICENSE_NUMBER,
-        ACCT_NAME,
-        MAILING_STATE_CODE,
-        SPECIES_CODE,
-        SPECIES_DESCR,
-        ZONE_DESCR,
-        ZONE_CODE,
-        ZONE_STRUCT_DESCR ZONE_TYPE,
-        DECODE(SPECIES_CODE, 'T', 'MTA1', 'MTA2')  AGREEMENT_NAME,
+        WITH ZONE AS
+        (SELECT  DISTINCT
+        atz.acct_id,
+        atz.zone_descr,
+        atz.mkt_year_code,
+        atz.zone_code,
+        atz.zone_struct_code,
+        tzs.species_code,
+        zs.descr zone_struct_descr,
+        ss.descr species_descr
+        FROM agcc.acct_to_zone_mv atz,
+        agcc.trait_to_zone_struct_mv tzs,
+        agcc.zone_struct_mv zs,
+        agcc.seed_species_mv ss
+        WHERE     atz.zone_struct_code = tzs.zone_struct_code
+        AND tzs.usage_code = 'PR'
+        AND atz.mkt_year_code = tzs.mkt_year_code
+        AND atz.zone_struct_code = zs.zone_struct_code
+        AND tzs.species_code = ss.species_code
+        AND SUBSTR(TZS.MKT_YEAR_CODE,1,4) = substr( nvl(#years[0]#,(SELECT character_value FROM ecom.ecom_parameter WHERE ecom_parameter_code = 'AZR_MKT_YR')),1,4))
+        SELECT        DISTINCT
+        xf.alias_id,
+        xf.system_type_code,
+        G.acct_id AS ACCT_ID,
+        G.tech_license_number,
+        G.acct_name,
+        acm.mailing_state_code,
+        ZONE.species_code,
+        ZONE.species_descr,
+        ZONE.zone_descr,
+        ZONE.zone_code,
+        ZONE.zone_struct_descr ZONE_TYPE,
+        DECODE(ZONE.species_code, 'T', 'MTA1', 'MTA2')  AGREEMENT_NAME,
+        CASE license_status
+        WHEN 'PERM INJ' THEN 'Unauthorized'
+        WHEN 'NOT AUTH' THEN 'Unauthorized'
+        WHEN 'UNLICENSED' THEN 'Unlicensed'
+        WHEN 'LICENSED' THEN 'Licensed'
+        WHEN 'LICENSED EXCEPT COTTON' THEN 'Licensed EXCEPT Cotton'
+        END
         LICENSE_STATUS,
-        CONTACT_FIRST_NAME ||' ' ||CONTACT_LAST_NAME AS CONTACT_NAME
-        FROM    ECOM.GROWER_LICENSE_ZONE_V2_VW
+        ACM.CONTACT_FIRST_NAME ||' ' ||ACM.CONTACT_LAST_NAME AS CONTACT_NAME
+        FROM AGCC.RR_GROWERS G,
+        agcc.acct_contact_mailing_dnml acm,
+        agcc.acct_xref_mv xf,
+        ZONE
+        WHERE     G.acct_id = ZONE.acct_id(+)
+        AND G.acct_id = acm.acct_id(+)
+        AND acm.primary_contact_flag(+) = 'Y'
+        AND G.acct_id = xf.acct_id
+        AND xf.system_type_code IN ('GLN', 'SAP', 'IC')
+        AND xf.active_flag = 'Y'
+        AND ZONE.mkt_year_code IS NOT NULL
     </sql>
 
     <select id="getAgreementStatus" resultMap="agreementStatusResult" parameterClass="java.util.Map">
         <include refid="baseSelectFrom"/>
-        WHERE   SYSTEM_TYPE_CODE IN
+        AND   xf.system_type_code IN
         <iterate property="SystemTypeCodes" open="(" close=")" conjunction=",">
             #SystemTypeCodes[]#
         </iterate>
-        AND ( ALIAS_ID IN
+        AND ( xf.alias_id IN
         <iterate property="Set1" open="(" close=")" conjunction=",">
             #Set1[]#
         </iterate>
-        OR ALIAS_ID IN
+        OR xf.alias_id IN
         <iterate property="Set2" open="(" close=")" conjunction=",">
             #Set2[]#
         </iterate>
-        OR ALIAS_ID IN
+        OR xf.alias_id IN
         <iterate property="Set3" open="(" close=")" conjunction=",">
             #Set3[]#
         </iterate>
-        OR ALIAS_ID IN
+        OR xf.alias_id IN
         <iterate property="Set4" open="(" close=")" conjunction=",">
             #Set4[]#
         </iterate>
-        OR ALIAS_ID IN
+        OR xf.alias_id IN
         <iterate property="Set5" open="(" close=")" conjunction=",">
             #Set5[]#
         </iterate>
-        OR ALIAS_ID IN
+        OR xf.alias_id IN
         <iterate property="Set6" open="(" close=")" conjunction=",">
             #Set6[]#
         </iterate>
-        OR ALIAS_ID IN
+        OR xf.alias_id IN
         <iterate property="Set7" open="(" close=")" conjunction=",">
             #Set7[]#
         </iterate>
-        OR ALIAS_ID IN
+        OR xf.alias_id IN
         <iterate property="Set8" open="(" close=")" conjunction=",">
             #Set8[]#
         </iterate>
-        OR ALIAS_ID IN
+        OR xf.alias_id IN
         <iterate property="Set9" open="(" close=")" conjunction=",">
             #Set9[]#
         </iterate>
-        OR ALIAS_ID IN
+        OR xf.alias_id IN
         <iterate property="Set10" open="(" close=")" conjunction=",">
             #Set10[]#
         </iterate>
-        OR PURCHASER_ACCT_ID IN
+        OR G.acct_id IN
         <iterate property="SetABS1" open="(" close=")" conjunction=",">
             #SetABS1[]#
         </iterate>
-        OR PURCHASER_ACCT_ID IN
+        OR G.acct_id IN
         <iterate property="SetABS2" open="(" close=")" conjunction=",">
             #SetABS2[]#
         </iterate>
-        OR PURCHASER_ACCT_ID IN
+        OR G.acct_id IN
         <iterate property="SetABS3" open="(" close=")" conjunction=",">
             #SetABS3[]#
         </iterate>
-        OR PURCHASER_ACCT_ID IN
+        OR G.acct_id IN
         <iterate property="SetABS4" open="(" close=")" conjunction=",">
             #SetABS4[]#
         </iterate>
-        OR PURCHASER_ACCT_ID IN
+        OR G.acct_id IN
         <iterate property="SetABS5" open="(" close=")" conjunction=",">
             #SetABS5[]#
         </iterate>
-        OR PURCHASER_ACCT_ID IN
+        OR G.acct_id IN
         <iterate property="SetABS6" open="(" close=")" conjunction=",">
             #SetABS6[]#
         </iterate>
-        OR PURCHASER_ACCT_ID IN
+        OR G.acct_id IN
         <iterate property="SetABS7" open="(" close=")" conjunction=",">
             #SetABS7[]#
         </iterate>
-        OR PURCHASER_ACCT_ID IN
+        OR G.acct_id IN
         <iterate property="SetABS8" open="(" close=")" conjunction=",">
             #SetABS8[]#
         </iterate>
-        OR PURCHASER_ACCT_ID IN
+        OR G.acct_id IN
         <iterate property="SetABS9" open="(" close=")" conjunction=",">
             #SetABS9[]#
         </iterate>
-        OR PURCHASER_ACCT_ID IN
+        OR G.acct_id IN
         <iterate property="SetABS10" open="(" close=")" conjunction=",">
             #SetABS10[]#
         </iterate>
         )
-        ORDER BY AGREEMENT_NAME,PURCHASER_ACCT_ID,SPECIES_CODE,SYSTEM_TYPE_CODE
+        ORDER BY AGREEMENT_NAME,G.acct_id,SPECIES_CODE,SYSTEM_TYPE_CODE
     </select>
 
 </sqlMap>

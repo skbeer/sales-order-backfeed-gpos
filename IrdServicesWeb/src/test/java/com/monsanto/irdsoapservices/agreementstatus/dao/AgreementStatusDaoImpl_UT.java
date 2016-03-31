@@ -23,11 +23,11 @@ public class AgreementStatusDaoImpl_UT extends AbstractTransactionalDataSourceSp
         dao = (AgreementStatusDao) getApplicationContext().getBean("agreementStatusDao");
     }
     public void testGetAgreementStatus_emptyData_returnEmptyList() throws Exception {
-        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(Arrays.asList(new String[]{}), Arrays.asList(new String[]{}),Arrays.asList(new String[]{"GLN"}));
+        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(Arrays.asList(new String[]{}), Arrays.asList(new String[]{}),Arrays.asList(new String[]{"GLN"}),null);
         assertEquals(0, agrStatusList.size());
     }
     public void testGetAgreementStatus_noData_returnEmptyList() throws Exception {
-        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(Arrays.asList(new String[]{"101010"}), Arrays.asList(new String[]{"101010"}),Arrays.asList(new String[]{"G"}));
+        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(Arrays.asList(new String[]{"101010"}), Arrays.asList(new String[]{"101010"}),Arrays.asList(new String[]{"G"}),null);
         assertEquals(0, agrStatusList.size());
     }
 
@@ -37,31 +37,31 @@ public class AgreementStatusDaoImpl_UT extends AbstractTransactionalDataSourceSp
             glnList.add(index+"");
         }
         List<String> absList = new ArrayList<String>();
-        for (int index = 0; index < 5032; index++) {
+        for (int index = 0; index < 1032; index++) {
             absList.add("00000");
         }
-        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(glnList, absList,  Arrays.asList(new String[]{"GLN"}));
+        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(glnList, absList,  Arrays.asList(new String[]{"GLN"}),null);
         assertEquals(0, agrStatusList.size());
     }
 
     public void testGetAgreementStatus_withData_returnList() throws Exception {
-        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(Arrays.asList(new String[]{"101010", "0629245000011"}), new ArrayList<String>(), Arrays.asList(new String[]{"GLN"}));
+        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(Arrays.asList(new String[]{"101010", "0629245000011"}), new ArrayList<String>(), Arrays.asList(new String[]{"GLN"}),null);
         assertTrue(agrStatusList.size()>0);
     }
     public void testGetAgreementStatus_withData_returnListByABS() throws Exception {
-        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(Arrays.asList(new String[]{"101010"}), Arrays.asList(new String[]{"196873"}), Arrays.asList(new String[]{"GLN"}));
+        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(Arrays.asList(new String[]{"101010"}), Arrays.asList(new String[]{"196873"}), Arrays.asList(new String[]{"GLN"}),null);
         assertTrue(agrStatusList.size()>0);
     }
     public void testGetAgreementStatus_withData_returnListMAXLOAD() throws Exception {
         List<String> glnList = new ArrayList<String>();
-        for (int index = 0; index < 10000; index++) {
+        for (int index = 0; index < 1000; index++) {
             glnList.add("0629245000011");
         }
         List<String> absList = new ArrayList<String>();
-        for (int index = 0; index < 10000; index++) {
+        for (int index = 0; index < 1000; index++) {
             absList.add("196873");
         }
-        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(glnList, absList, Arrays.asList(new String[]{"GLN"}));
+        List<AgreementStatusInfo> agrStatusList = dao.getAgreementStatusInfo(glnList, absList, Arrays.asList(new String[]{"GLN"}),null);
         assertTrue(agrStatusList.size()>0);
     }
     @Override

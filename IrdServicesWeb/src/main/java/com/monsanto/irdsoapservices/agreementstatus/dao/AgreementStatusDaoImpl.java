@@ -4,10 +4,7 @@ import com.monsanto.irdsoapservices.agreementstatus.domain.AgreementStatusInfo;
 import org.apache.log4j.Logger;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,8 +20,9 @@ public class AgreementStatusDaoImpl extends SqlMapClientDaoSupport implements Ag
     private static final String MAP_KEY_PREFIX_ALIAS = "Set";
     private static final String MAP_KEY_PREFIX_ABS = "SetABS";
     private static final String MAP_KEY_SYSTEM_TYPE_CODES ="SystemTypeCodes";
+    private static final String MAP_KEY_YEARS ="years";
 
-    public List<AgreementStatusInfo> getAgreementStatusInfo(List<String> aliasIds, List<String> assignedBySellers,List<String> systemCodes ) {
+    public List<AgreementStatusInfo> getAgreementStatusInfo(List<String> aliasIds, List<String> assignedBySellers,List<String> systemCodes , String year) {
         logger.info("Executing AgreementStatus SQL for "+aliasIds.size()+" aliasIds and " +assignedBySellers.size()+" AssignedBySellers");
         Map<String, List<String>> aliasParameterMap = getAliasParameterMap(aliasIds);
         logMapData(aliasParameterMap, MAP_KEY_PREFIX_ALIAS);
@@ -32,10 +30,13 @@ public class AgreementStatusDaoImpl extends SqlMapClientDaoSupport implements Ag
         logMapData(assignedBySellerParameterMap,MAP_KEY_PREFIX_ABS);
         Map<String, List<String>> systemCodesMap = new HashMap<String, List<String>>();
         systemCodesMap.put(MAP_KEY_SYSTEM_TYPE_CODES,systemCodes);
+        Map<String, List<String>> yearsMap = new HashMap<String, List<String>>();
+        yearsMap.put(MAP_KEY_YEARS, Arrays.asList(new String[]{year}));
         Map<String, List<String>> parameterMap =new HashMap<String, List<String>>();
         parameterMap.putAll(aliasParameterMap);
         parameterMap.putAll(assignedBySellerParameterMap);
         parameterMap.putAll(systemCodesMap);
+        parameterMap.putAll(yearsMap);
         return getSqlMapClientTemplate().queryForList("AgreementStatus.getAgreementStatus", parameterMap);
     }
 

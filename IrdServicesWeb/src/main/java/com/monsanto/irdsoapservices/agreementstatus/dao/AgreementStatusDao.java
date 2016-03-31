@@ -12,5 +12,5 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface AgreementStatusDao {
-    List<AgreementStatusInfo> getAgreementStatusInfo(List<String> glns, List<String> assignedBySellers,List<String> systemCodes );
+    List<AgreementStatusInfo> getAgreementStatusInfo(List<String> glns, List<String> assignedBySellers,List<String> systemCodes, String year );
 }

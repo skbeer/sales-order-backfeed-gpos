@@ -22,6 +22,7 @@ public class AgreementStatusHelper {
 
     public static final String SYSTEM_CODE_GLN = "GLN";
     public static final String SYSTEM_CODE_IC = "IC";
+    public static final String YEAR = "SeedYear";
 
     private Logger logger = Logger.getLogger(this.getClass());
 
@@ -40,8 +41,10 @@ public class AgreementStatusHelper {
         AgreementStatusResponseType response;
         try {
 
+            logger.info("Starting to retrieve Agreement Status partners information v20160310");
             PartnerInformationRequest from = extractFrom(agreementStatusRequest);
             Map<String, String> fromMapID = extractFromId(from);
+            String year =extractYear(agreementStatusRequest.getHeader().getFrom());
             List<AgreementStatusRequestDetail> agreementStatusRequestDetailList=extractAgreementStatusRequestDetails(agreementStatusRequest);
 
             List<String> assignedBySellerList = extractAliasIdsFromRequest(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER.value(), agreementStatusRequestDetailList);
@@ -55,18 +58,18 @@ public class AgreementStatusHelper {
             if(fromMapID.containsKey(ListPartnerAgencyAttribute.AGIIS_EBID.value())){
                 icList.add(fromMapID.get(ListPartnerAgencyAttribute.AGIIS_EBID.value()));
             }
-            List<AgreementStatusInfo> agreementStatusList = agreementStatusDao.getAgreementStatusInfo(icList, Collections.EMPTY_LIST, Arrays.asList(SYSTEM_CODE_IC));
+            List<AgreementStatusInfo> agreementStatusList = agreementStatusDao.getAgreementStatusInfo(icList, Collections.EMPTY_LIST, Arrays.asList(SYSTEM_CODE_IC),year);
             for(AgreementStatusInfo currentStatusInfo : agreementStatusList) {
                 assignedBySellerList.add(currentStatusInfo.getAcctId());
             }
             if(fromMapID.containsKey(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER.value())){
                 assignedBySellerList.add(fromMapID.get(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER.value()));
             }
-            agreementStatusList = agreementStatusDao.getAgreementStatusInfo(glnList , assignedBySellerList, Arrays.asList(SYSTEM_CODE_GLN ,SYSTEM_CODE_IC));
+            agreementStatusList = agreementStatusDao.getAgreementStatusInfo(glnList , assignedBySellerList, Arrays.asList(SYSTEM_CODE_GLN ,SYSTEM_CODE_IC),year);
             HashMap<String, AgreementStatusInfo> normalizedStatusMap = normalizeAgreementStatusList(agreementStatusList);
             List<AgreementStatusInfo> agreementListNormalized = new ArrayList<AgreementStatusInfo>();
             agreementListNormalized.addAll(normalizedStatusMap.values());
-            Map<String, String> icCodeMap = filterIcCodes(agreementStatusList);
+            Map<String, String> icCodeMap = filterIcCodes(agreementStatusList,year);
             response = responseBuilder.getAgreementStatusResponse(agreementStatusRequest.getHeader().getThisDocumentIdentifier().getDocumentIdentifier(),
                     from,agreementStatusRequestDetailList,
                     agreementListNormalized,icCodeMap);
@@ -81,13 +84,14 @@ public class AgreementStatusHelper {
         return response;
     }
 
-    private Map<String,String> filterIcCodes(List<AgreementStatusInfo> agreementStatusList) {
+    private Map<String,String> filterIcCodes(List<AgreementStatusInfo> agreementStatusList, String year) {
         Map<String,String> iCCodes = new HashMap<String,String>();
         List<String> assignedBySellerList = new ArrayList<String>();
         for(AgreementStatusInfo currentStatusInfo : agreementStatusList) {
             assignedBySellerList.add(currentStatusInfo.getAcctId());
         }
-        List<AgreementStatusInfo> agreementStatusListIC = agreementStatusDao.getAgreementStatusInfo(new ArrayList<String>(), assignedBySellerList, Arrays.asList(SYSTEM_CODE_IC));
+        List<AgreementStatusInfo> agreementStatusListIC = agreementStatusDao.getAgreementStatusInfo(new ArrayList<String>(), assignedBySellerList, Arrays.asList(SYSTEM_CODE_IC),year
+        );
         for(AgreementStatusInfo currentStatusInfo : agreementStatusListIC) {
             iCCodes.put(currentStatusInfo.getAcctId(), currentStatusInfo.getAliasId());
         }
@@ -132,6 +136,29 @@ public class AgreementStatusHelper {
     private PartnerInformationRequest extractPartnerInformation(String element, com.monsanto.irdsoapservices.agreementstatuspartners.schema.PartnerInformationType partnerInformationType){
        return new PartnerInformationRequest(element, partnerInformationType.getPartnerName() ,partnerInformationType.getPartnerIdentifier().get(0).getAgency().value(),
                partnerInformationType.getPartnerIdentifier().get(0).getValue());
+    }
+
+    private String  extractYear(com.monsanto.irdsoapservices.agreementstatuspartners.schema.FromType fromType){
+        String year = null;
+        try{
+            for(ContactInformationType contactInformationType:fromType.getPartnerInformation().getContactInformation()){
+                for (int j =0;j<contactInformationType.getContactDescription().size();j++){
+                    if(YEAR.equalsIgnoreCase(contactInformationType.getContactDescription().get(j))){
+                        year = contactInformationType.getContactName().get(j);
+                        logger.debug("Year is " +year );
+                        return year;
+
+                    }
+                }
+
+            }
+        }
+        catch(Exception e){
+           logger.info("Error getting year from request"+ e.getMessage());
+        }
+        logger.debug("Year is " +year );
+        return year;
+
     }
 
     private List<String> extractAliasIdsFromRequest(String agency, List<AgreementStatusRequestDetail> agreementStatusRequestDetailList){
