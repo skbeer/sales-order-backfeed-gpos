@@ -22,7 +22,7 @@ import java.util.List;
 public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringContextTests {
 
     public static final int YEAR = 2016;
-    public static final int MONTH = 7;
+    public static final int MONTH = 07;
     private SalesOrderDao salesOrderDao;
 
     @Override
@@ -80,6 +80,14 @@ public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringC
         Calendar calendar = Calendar.getInstance();
         calendar.set(YEAR, MONTH, 2);
         List<GPOSOrderInfo> gposDirectOrders= salesOrderDao.getGPOSDirectOrders(calendar.getTime(), DBConstants.DIRECT_DATA_SOURCE_TYPE);
+        System.out.println("No of Rows = "+gposDirectOrders.size());
+        assertTrue(gposDirectOrders.size() >= 0);
+    }
+
+    public void testGetGPOSDirectOrdersWithCompanyCode() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(YEAR, MONTH, 2);
+        List<GPOSOrderInfo> gposDirectOrders= salesOrderDao.getGPOSDirectOrders(calendar.getTime(), DBConstants.DIRECT_DATA_SOURCE_TYPE,"5180");
         System.out.println("No of Rows = "+gposDirectOrders.size());
         assertTrue(gposDirectOrders.size() >= 0);
     }

@@ -40,12 +40,18 @@ public class SalesOrderDaoImpl extends SqlMapClientDaoSupport implements SalesOr
         return (List<GPOSOrderInfo>)getSqlMapClientTemplate().queryForList("SalesOrder.getGPOSOrders", map);
     }
 
-
+    @Override
     public List<GPOSOrderInfo> getGPOSDirectOrders(Date startDate, String groupCode) throws Exception {
+        return getGPOSDirectOrders(startDate,groupCode,null);
+    }
+
+    @Override
+    public List<GPOSOrderInfo> getGPOSDirectOrders(Date startDate, String groupCode, String companyCode) throws Exception {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("groupCode", groupCode);
         java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
         map.put("startDate", sqlDate);
+        map.put("companyCode", companyCode);
         return (List<GPOSOrderInfo>)getSqlMapClientTemplate().queryForList("SalesOrder.getGPOSDirectOrders", map);
     }
 

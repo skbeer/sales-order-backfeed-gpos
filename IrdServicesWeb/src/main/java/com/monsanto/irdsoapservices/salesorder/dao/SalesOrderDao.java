@@ -23,6 +23,8 @@ public interface SalesOrderDao {
 
     List<GPOSOrderInfo> getGPOSDirectOrders(Date startDate, String groupCode) throws Exception;
 
+    List<GPOSOrderInfo> getGPOSDirectOrders(Date startDate, String groupCode,String companyCode) throws Exception;
+
     List<GPOSOrderInfo> getGPOSXMLOrders(Date startDate, String groupCode) throws Exception;
 
     List<GPOSOrderInfo> getGPOSXMLOrders(Date startDate, String groupCode,String companyCode) throws Exception;

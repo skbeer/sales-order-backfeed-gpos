@@ -33,7 +33,7 @@ public class SalesOrderReportService {
     public void startProcessing() throws SalesOrderException {
         TransactionInfo transaction = null;
         try {
-            logger.info("Starting Sales Order Report Job v20150528 @ "+new Date());
+            logger.info("Starting Sales Order Report Job v20160330 @ "+new Date());
             List<TransactionInfo> transactionsToBeProcessed = transactionDao.getTransactionsToBeProcessed();
             logger.info("Found "+transactionsToBeProcessed.size()+" Transactions to be Processed.");
             int ordersSent;
@@ -70,7 +70,7 @@ public class SalesOrderReportService {
                         transaction.setDataSourceType(DBConstants.DIRECT_DATA_SOURCE_TYPE);
                         transaction.setFileType(XmlConstants.FILE_TYPE_EXTERNAL);
                         ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
-                        if(ordersSent > 0) {
+                        if(ordersSent > 0 && GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())) {
                             dataSummaryHelper.processDataSummaryReport(transaction);
                         }
                     }

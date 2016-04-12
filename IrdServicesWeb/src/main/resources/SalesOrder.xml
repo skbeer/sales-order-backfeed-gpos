@@ -630,8 +630,10 @@
         s_seedco_salesrep salesrep,
         dm_seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm,
-        biotech_translation bt
+        dm_date_period_map dpm
+        <isNull property="companyCode">
+            ,biotech_translation bt
+        </isNull>
         WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
@@ -647,7 +649,7 @@
         and h1.tran_id = tp1.tran_id
         and tp1.party_code = 'SF'
         and hs1.status_code = 'SI'
-        and hs1.status_id = 3
+        and hs1.status_id in ( 3, 5)
         and hs1.row_modify_date > #startDate#
         and h1.rptd_doc_nbr = h.rptd_doc_nbr
         and tp1.acct_id = p_sf.acct_id)
@@ -655,22 +657,33 @@
         AND cad.acct_id = cgp.acct_id
         AND d.prod_id = pps.prod_id
         AND d.prod_id = spd.product_id
-        AND cgp.customer_grp_code = bt.dest_alias_id
-        AND bt.alias_program = 'CDW749RT'
-        AND bt.dest_alias_id = #groupCode#
-        AND bt.source_alias_type = 'CustGrp'
-        AND hs.status_id = 3
-        AND spd.OWNED_LICENSED_CODE = 'OWNED'
+        <isNull property="companyCode">
+            AND cgp.customer_grp_code = bt.dest_alias_id
+            AND bt.alias_program = 'CDW749RT'
+            AND bt.dest_alias_id = #groupCode#
+            AND bt.source_alias_type = 'CustGrp'
+        </isNull>
+        AND hs.status_id in ( 3, 5)
+        <isNull property="companyCode">
+            AND spd.OWNED_LICENSED_CODE = 'OWNED'
+        </isNull>
         AND hs.status_code = 'SI'
         AND dd.date_key = dpm.date_key
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND NVL (cgp.mfd_flag, 'N') != 'X'
-        AND cgp.distribution_channel_code = '90'
-        AND cgp.division_code = '17'
-        AND cgp.sales_org_code = 'US20'
+        <isNull property="companyCode">
+            AND cgp.distribution_channel_code = '90'
+            AND cgp.division_code = '17'
+            AND cgp.sales_org_code = 'US20'
+        </isNull>
         AND p_st.acct_id = g.acct_id
-        AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK') OR ts.source = 'WS-XML' AND p_ds.acct_id != 168618)
-        AND (RTRIM(g.napd_id) IS NOT NULL OR RTRIM(gln_map.alias_id) IS NOT NULL)
+        <isNull property="companyCode">
+            AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK') OR ts.source = 'WS-XML' AND p_ds.acct_id != 168618)
+        </isNull>
+        <isNotNull property="companyCode">
+            AND ts.SOURCE IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK','WS-XML')
+            AND P_DS.ACCT_ID = 5180
+        </isNotNull>
         AND g.acct_id = gln_map.acct_id(+)
         AND gln_map.system_type_code(+) = 'GLN'
         AND gln_map.rank(+) = 1
@@ -1153,7 +1166,7 @@
         and h1.tran_id = tp1.tran_id
         and tp1.party_code = 'SF'
         and hs1.status_code = 'SI'
-        and hs1.status_id = 3
+        and hs1.status_id in ( 3, 5)
         and trunc(hs1.row_modify_date) > #startDate#
         and h1.rptd_doc_nbr = h.rptd_doc_nbr
         and tp1.acct_id = p_sf.acct_id)
@@ -1161,16 +1174,14 @@
         AND cad.acct_id = cgp.acct_id
         AND d.prod_id = pps.prod_id
         AND d.prod_id = spd.product_id
-        AND hs.status_id = 3
+        AND hs.status_id in ( 3, 5)
         AND hs.status_code = 'SI'
         AND dd.date_key = dpm.date_key
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=
         TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND p_st.acct_id = g.acct_id
         AND ts.source = 'AGRIMINE'
-        AND (RTRIM(g.napd_id) IS NOT NULL
-        OR RTRIM(gln_map.alias_id) IS NOT NULL)
-        AND g.acct_id = gln_map.acct_id(+)
+		AND g.acct_id = gln_map.acct_id(+)
         AND gln_map.system_type_code(+) = 'GLN'
         AND gln_map.rank(+) = 1
         AND gln_map.active_flag(+) = 'Y'

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLException;
 
+import static org.easymock.EasyMock.expectLastCall;
+
 /**
  * Created by IntelliJ IDEA.
  * User: MKUCHIP
@@ -120,19 +122,27 @@ public class SalesOrderReportService_UT extends TestCase {
         org.easymock.classextension.EasyMock.verify(dataSummaryHelper);
     }
 
-public void testStartProcessing_AllTypesTransactions_NoOrders_processOrders() throws Exception {
-        EasyMock.expect(transactionDao.getTransactionsToBeProcessed()).andReturn(getTranList(6));
-        org.easymock.classextension.EasyMock.expect(pposHelper.processPPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+    public void testStartProcessing_AllTypesTransactions_foundOrders_processOrdersNoDataSummary() throws Exception {
+        List<TransactionInfo> list =getTranList(6);
+        for (TransactionInfo t : list){
+            t.setCompanyCode(null);
+        }
+        EasyMock.expect(transactionDao.getTransactionsToBeProcessed()).andReturn(list);
+        org.easymock.classextension.EasyMock.expect(pposHelper.processPPOSOrderReport((TransactionInfo) EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo) EasyMock.anyObject())).andReturn(1);
+        org.easymock.classextension.EasyMock.expect(cosHelper.processCOSOrderReport((TransactionInfo) EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo) EasyMock.anyObject())).andReturn(1);
+        org.easymock.classextension.EasyMock.expect(gposHelper.processGPOSOrderReport((TransactionInfo) EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo) EasyMock.anyObject())).andReturn(1);
+        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo) EasyMock.anyObject())).andReturn(1);
         EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
-        org.easymock.classextension.EasyMock.expect(cosHelper.processCOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        dataSummaryHelper.processDataSummaryReport((TransactionInfo) EasyMock.anyObject());
+        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo) EasyMock.anyObject())).andReturn(1);
         EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
-        org.easymock.classextension.EasyMock.expect(gposHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+
+        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo) EasyMock.anyObject())).andReturn(1);
         EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
-        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(0);
-        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(0);
-        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
-        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
-        dataSummaryHelper.processDataSummaryReport((TransactionInfo)EasyMock.anyObject());
+
         EasyMock.replay(transactionDao);
         org.easymock.classextension.EasyMock.replay(pposHelper);
         org.easymock.classextension.EasyMock.replay(cosHelper);
@@ -146,6 +156,36 @@ public void testStartProcessing_AllTypesTransactions_NoOrders_processOrders() th
         org.easymock.classextension.EasyMock.verify(gposHelper);
         org.easymock.classextension.EasyMock.verify(gposWinfieldHelper);
         org.easymock.classextension.EasyMock.verify(dataSummaryHelper);
+
+
+    }
+
+public void testStartProcessing_AllTypesTransactions_NoOrders_processOrders() throws Exception {
+        EasyMock.expect(transactionDao.getTransactionsToBeProcessed()).andReturn(getTranList(6));
+        org.easymock.classextension.EasyMock.expect(pposHelper.processPPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        org.easymock.classextension.EasyMock.expect(cosHelper.processCOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        org.easymock.classextension.EasyMock.expect(gposHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(0);
+        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(0);
+        org.easymock.classextension.EasyMock.expect(gposWinfieldHelper.processGPOSOrderReport((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+        EasyMock.expect(transactionDao.updateLastTransactionStats((TransactionInfo)EasyMock.anyObject())).andReturn(1);
+
+        EasyMock.replay(transactionDao);
+        org.easymock.classextension.EasyMock.replay(pposHelper);
+        org.easymock.classextension.EasyMock.replay(cosHelper);
+        org.easymock.classextension.EasyMock.replay(gposHelper);
+        org.easymock.classextension.EasyMock.replay(gposWinfieldHelper);
+
+        salesOrderReportService.startProcessing();
+        EasyMock.verify(transactionDao);
+        org.easymock.classextension.EasyMock.verify(pposHelper);
+        org.easymock.classextension.EasyMock.verify(cosHelper);
+        org.easymock.classextension.EasyMock.verify(gposHelper);
+        org.easymock.classextension.EasyMock.verify(gposWinfieldHelper);
+
     }
 
 
@@ -203,8 +243,10 @@ public void testStartProcessing_AllTypesTransactions_NoOrders_processOrders() th
                     transactionInfo.setTransactionType("DOS");
             else if(index == 2)
                     transactionInfo.setTransactionType("GPOS");
-            else if(index == 3)
-                    transactionInfo.setTransactionType("GPOS;DIRECT");
+            else if(index == 3) {
+                transactionInfo.setTransactionType("GPOS;DIRECT");
+                transactionInfo.setCompanyCode("0527346750000");
+            }
             else if(index == 4) {
                     transactionInfo.setTransactionType("GPOS;CLASSIC");
                     transactionInfo.setCompanyCode("0527346750000");
