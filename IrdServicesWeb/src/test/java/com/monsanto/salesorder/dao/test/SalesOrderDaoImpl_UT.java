@@ -22,7 +22,7 @@ import java.util.List;
 public class SalesOrderDaoImpl_UT extends AbstractTransactionalDataSourceSpringContextTests {
 
     public static final int YEAR = 2016;
-    public static final int MONTH = 07;
+    public static final int MONTH = 10;
     private SalesOrderDao salesOrderDao;
 
     @Override

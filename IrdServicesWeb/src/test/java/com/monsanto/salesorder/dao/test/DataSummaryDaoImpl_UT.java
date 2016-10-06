@@ -22,7 +22,7 @@ import java.util.List;
 public class DataSummaryDaoImpl_UT extends AbstractTransactionalDataSourceSpringContextTests {
 
     public static final int YEAR = 2016;
-    public static final int MONTH = 3;
+    public static final int MONTH = 10;
     private DataSummaryDao dataSummaryDao;
 
     @Override
