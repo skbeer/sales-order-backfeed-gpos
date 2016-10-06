@@ -1,6 +1,5 @@
 package com.monsanto.irdsoapservices.salesorder.client;
 
-import com.monsanto.isdclient.soaphandler.WsSecuritySoapHandler;
 
 import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.HandlerResolver;
