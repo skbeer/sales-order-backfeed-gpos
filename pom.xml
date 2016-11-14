@@ -22,8 +22,8 @@
     </organization>
 
     <scm>
-        <connection>scm:git:git@gitlab.monsanto.com:enterprise/IRDServices.git</connection>
-        <developerConnection>scm:git:git@gitlab.monsanto.com:enterprise/IRDServices.git</developerConnection>
+        <connection>scm:git:git@github.platforms.engineering:IrdApplications/IRDSoapServices.git</connection>
+        <developerConnection>scm:git:git@github.platforms.engineering:IrdApplications/IRDSoapServices.git</developerConnection>
     </scm>
 
 
