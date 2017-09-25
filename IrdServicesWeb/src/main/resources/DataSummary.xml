@@ -118,7 +118,15 @@
                  dm_active_grower_dim g,
                  dm_active_channel_account_dim cad,
                  s_acct_sales_area cgp,
-                 s_acct_xref gln_map,
+                 (select *
+				  from (select acct_id, system_type_code,
+					alias_id, active_flag, rank, begin_date, 
+					max(begin_date) over (partition by acct_id, rank) max_date
+					from s_acct_xref
+					where system_type_code='GLN' and active_flag='Y' and rank=1 
+				  )
+				  where begin_date = max_date
+				 )gln_map,
                  dm_date_dim dd,
                  s_seedco_salesrep salesrep,
                  dm_seed_product_dim spd,
@@ -327,7 +335,15 @@
          dm_active_grower_dim g,
          dm_active_channel_account_dim cad,
          s_acct_sales_area cgp,
-         s_acct_xref gln_map,
+         (select *
+				  from (select acct_id, system_type_code,
+					alias_id, active_flag, rank, begin_date, 
+					max(begin_date) over (partition by acct_id, rank) max_date
+					from s_acct_xref
+					where system_type_code='GLN' and active_flag='Y' and rank=1 
+				  )
+				  where begin_date = max_date
+				 )gln_map,
          dm_date_dim dd,
          s_seedco_salesrep salesrep,
          dm_seed_product_dim spd,
@@ -527,7 +543,15 @@ SELECT  distinct h.rptd_doc_nbr,
          dm_active_grower_dim g,
          dm_active_channel_account_dim cad,
          s_acct_sales_area cgp,
-         s_acct_xref gln_map,
+         (select *
+				  from (select acct_id, system_type_code,
+					alias_id, active_flag, rank, begin_date, 
+					max(begin_date) over (partition by acct_id, rank) max_date
+					from s_acct_xref
+					where system_type_code='GLN' and active_flag='Y' and rank=1 
+				  )
+				  where begin_date = max_date
+				 )gln_map,
          dm_date_dim dd,
          s_seedco_salesrep salesrep,
          dm_seed_product_dim spd,
@@ -727,7 +751,15 @@ SELECT rptd_doc_nbr,
          dm_active_grower_dim g,
          dm_active_channel_account_dim cad,
          s_acct_sales_area cgp,
-         s_acct_xref gln_map,
+         (select *
+				  from (select acct_id, system_type_code,
+					alias_id, active_flag, rank, begin_date, 
+					max(begin_date) over (partition by acct_id, rank) max_date
+					from s_acct_xref
+					where system_type_code='GLN' and active_flag='Y' and rank=1 
+				  )
+				  where begin_date = max_date
+		) gln_map,
          dm_date_dim dd,
          s_seedco_salesrep salesrep,
          dm_seed_product_dim spd,
