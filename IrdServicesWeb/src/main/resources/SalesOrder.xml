@@ -468,7 +468,7 @@
         AND spd.product_id = s.prod_id
         AND gec.data_src_key = ds.data_src_key
         AND gec.rpt_acct_key = cad.acct_key
-        AND ( ds.data_src_id IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK')
+        AND ( ds.data_src_id IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK', 'KEYED')
         OR (ds.data_src_id = 'WS-XML' AND cad.acct_id != 168618)
         )
         GROUP BY gec.ship_from_acct_key,
@@ -697,10 +697,10 @@
         </isNull>
         AND p_st.acct_id = g.acct_id
         <isNull property="companyCode">
-            AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK') OR ts.source = 'WS-XML' AND p_ds.acct_id != 168618)
+            AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK', 'KEYED') OR ts.source = 'WS-XML' AND p_ds.acct_id != 168618)
         </isNull>
         <isNotNull property="companyCode">
-            AND ts.SOURCE IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK','WS-XML')
+            AND ts.SOURCE IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK','WS-XML', 'KEYED')
             AND P_DS.ACCT_ID = 5180
         </isNotNull>
         AND g.acct_id = gln_map.acct_id(+)
