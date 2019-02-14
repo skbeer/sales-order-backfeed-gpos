@@ -53,11 +53,16 @@
                     AGCC.ACCT_XREF_MV ASP ON (    ASP.ACCT_ID          = ATA.ACCT_ID
                                              AND ASP.SYSTEM_TYPE_CODE = 'SAP'
                                              AND ASP.ACTIVE_FLAG      = 'Y'
+
+        <!--Added newly as part of WO0000001651892 -->                                    )
+        INNER JOIN AGCC.ACCT_TO_ATTR_MV AMV ON ( ATA.SIGNER_ACCT_ID=AMV.acct_id
+                                             AND AMV.ACCT_ATTR_CODE ='SSC FPOS'
                                             )
         WHERE
             ATA.AGREEMENT_CODE           = 'FFLX'
         AND ATA.END_DATE                 > SYSDATE
-        AND ASA_DEALER.CUSTOMER_GRP_CODE = #dealerGroupCode#
+        <!-- Removed as part of WO0000001651892
+        AND ASA_DEALER.CUSTOMER_GRP_CODE = #dealerGroupCode# -->
         AND ASA_GROWER.CUSTOMER_GRP_CODE = #growerGroupCode#
         
     </select>
