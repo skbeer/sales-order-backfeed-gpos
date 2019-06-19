@@ -5,6 +5,7 @@
     <resultMap id="growerCreditMap" class="com.monsanto.commercial.growercreditlist.domain.GrowerInfo">
         <result property="accountId" column="GROWER_ACCT_ID"/>
         <result property="gln" column="GLN"/>
+        <result property="dealer_gln" column="DEALER_GLN"/>
         <result property="sapId" column="SAP_ID"/>
         <result property="name" column="GROWER_NAME"/>
         <result property="address" column="ADDRESS"/>
@@ -23,6 +24,9 @@
         SELECT DISTINCT
              ATA.ACCT_ID                GROWER_ACCT_ID
             ,AX.ALIAS_ID                GLN
+        <!--  DDP-1877 Changes made by VVVL as part of this JIRA - Start-->
+            ,AXD.ALIAS_ID               DEALER_GLN
+        <!--  DDP-1877 Changes made by VVVL as part of this JIRA - End-->
             ,ASP.ALIAS_ID               SAP_ID
             ,AED.NAME_1                 GROWER_NAME
             ,AED.MAILING_ADDR_LINE_1    ADDRESS
@@ -43,6 +47,14 @@
             AGCC.ACCT_SALES_AREA_MV ASA_GROWER ON (ASA_GROWER.ACCT_ID = ATA.ACCT_ID)
         INNER JOIN
             AGCC.ACCT_EXT_DNML AED ON (AED.ACCT_ID = ATA.ACCT_ID)
+        <!--  DDP-1877 Changes made by VVVL as part of this JIRA - Start-->
+        LEFT OUTER JOIN
+           AGCC.ACCT_XREF_MV AXD
+                                ON ( AXD.ACCT_ID         = ATA.SIGNER_ACCT_ID
+                                AND AXD.SYSTEM_TYPE_CODE = 'GLN'
+                                AND AXD.ACTIVE_FLAG      = 'Y'
+                                AND AXD.RANK             = 1 )
+        <!--  DDP-1877 Changes made by VVVL as part of this JIRA - End-->
         LEFT OUTER JOIN
             AGCC.ACCT_XREF_MV AX ON (    AX.ACCT_ID          = ATA.ACCT_ID
                                      AND AX.SYSTEM_TYPE_CODE = 'GLN'
