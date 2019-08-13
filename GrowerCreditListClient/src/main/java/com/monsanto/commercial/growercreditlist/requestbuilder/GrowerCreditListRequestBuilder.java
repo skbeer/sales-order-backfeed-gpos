@@ -47,9 +47,9 @@ public class GrowerCreditListRequestBuilder extends BaseRequestBuilder {
         propertiesType.setAmountAvailable(getAmountAvailable(growerInfo.getCreditAvailable()));
         propertiesType.setAmountApproved(getAmountApproved(growerInfo.getCreditApproved()));
         propertiesType.setDateApproved(getDateApprovedType(growerInfo.getDateApproved()));
-        //DDP-1877 Changes made by VVVL as part of this JIRA - Start
+        //CUSTPLT-616 Changes made by VVVL as part of this JIRA - Start
         propertiesType.setCreditIdentifier(growerInfo.getDealer_gln());
-        //DDP-1877 Changes made by VVVL as part of this JIRA - End
+        //CUSTPLT-616 Changes made by VVVL as part of this JIRA - End
         propertiesType.setCreditStatus("Approved");
         detailsType.setGrowerCreditListProperties(propertiesType);
         return detailsType;

@@ -12,7 +12,7 @@ import java.util.Date;
 public class GrowerInfo {
     private String accountId;
     private String gln;
-    //DDP-1877 Changes made by VVVL as part of this JIRA
+    //CUSTPLT-616 Changes made by VVVL as part of this JIRA
     private  String dealer_gln;
     private String sapId;
     private String name;
@@ -42,7 +42,7 @@ public class GrowerInfo {
         this.accountId = accountId;
     }
 
-    //DDP-1877 Changes made by VVVL as part of this JIRA
+    //CUSTPLT-616 Changes made by VVVL as part of this JIRA
     public String getDealer_gln() {
         return dealer_gln;
     }
