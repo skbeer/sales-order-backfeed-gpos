@@ -37,6 +37,11 @@ public class DataSummaryHelper {
                 dataSummaryInfo = dataSummaryDao.getDataSummaryInfoDirect(transaction.getLastTransactionDate(), transaction.getGroupCode());
                 dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsDirect(transaction.getLastTransactionDate(), transaction.getGroupCode());
             }
+            //New
+            else if(DBConstants.GPOS_AGDATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
+                dataSummaryInfo = dataSummaryDao.getDataSummaryInfoAgdata(transaction.getLastTransactionDate(), transaction.getGroupCode());
+                dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsAgdata(transaction.getLastTransactionDate(), transaction.getGroupCode());
+            }
             else  if (DBConstants.XML_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
                 dataSummaryInfo = dataSummaryDao.getDataSummaryInfoXML(transaction.getLastTransactionDate(), transaction.getGroupCode());
                 dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsXML(transaction.getLastTransactionDate(), transaction.getGroupCode());

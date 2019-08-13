@@ -42,6 +42,7 @@ public class SalesOrderReportService {
                     ordersSent = 0;
                     transaction = transactionsToBeProcessed.get(index);
                     logger.info("Processing '"+transaction.getTransactionType()+"' Transaction For Customer:"+transaction.getName());
+                    logger.info("GPOSType "+transaction.getTransactionType());
                     if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.PPOS_TRAN_TYPE)) {
                         ordersSent = pposHelper.processPPOSOrderReport(transaction);
                     } else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.COS_TRAN_TYPE)) {
@@ -49,7 +50,7 @@ public class SalesOrderReportService {
                     } else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_TRAN_TYPE)) {
                         ordersSent = gposHelper.processGPOSOrderReport(transaction);
                     }
-                    else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGRIMINE_TRAN_TYPE)) {
+                      else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGRIMINE_TRAN_TYPE)) {
                         transaction.setDataSourceType(DBConstants.AGRIMINE_DATA_SOURCE_TYPE);
                         //TODO add tests for file  type
                         transaction.setFileType(XmlConstants.FILE_TYPE_MANUAL);
@@ -68,6 +69,16 @@ public class SalesOrderReportService {
                     }
                     else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_DIRECT_TRAN_TYPE)) {
                         transaction.setDataSourceType(DBConstants.DIRECT_DATA_SOURCE_TYPE);
+                        transaction.setFileType(XmlConstants.FILE_TYPE_EXTERNAL);
+                        ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
+                        if(ordersSent > 0 && GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())) {
+                            dataSummaryHelper.processDataSummaryReport(transaction);
+                        }
+                    }
+                    //New
+                    else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)) {
+                        logger.info("Inside GPOS AGData");
+                        transaction.setDataSourceType(DBConstants.GPOS_AGDATA_SOURCE_TYPE);
                         transaction.setFileType(XmlConstants.FILE_TYPE_EXTERNAL);
                         ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
                         if(ordersSent > 0 && GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())) {

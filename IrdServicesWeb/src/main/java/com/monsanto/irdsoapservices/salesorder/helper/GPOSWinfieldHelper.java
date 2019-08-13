@@ -33,6 +33,7 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
         int ordersSent = 0;
         try {
             logger.info("Initiating GPOS SalesOrderReport for Partner:"+transaction.getName());
+            logger.info("DataSourceType:"+transaction.getDataSourceType());
             List<GPOSOrderInfo> deNormalizedOrders = new ArrayList<GPOSOrderInfo>();
             if (DBConstants.DIRECT_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
                 if(GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())) {
@@ -42,6 +43,18 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
                     deNormalizedOrders = salesOrderDao.getGPOSDirectOrders(transaction.getLastTransactionDate(), transaction.getGroupCode(),transaction.getCompanyCode());
                 }
             }
+
+            //New
+            else if (DBConstants.GPOS_AGDATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType()))
+            {
+                if(GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())){
+                    deNormalizedOrders = salesOrderDao.getGPOSAgDataOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
+                }
+                else{
+                    deNormalizedOrders = salesOrderDao.getGPOSAgDataOrders(transaction.getLastTransactionDate(), transaction.getGroupCode(),transaction.getCompanyCode());
+                }
+            }
+
             else if (DBConstants.XML_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
                if(GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())){
                    deNormalizedOrders = salesOrderDao.getGPOSXMLOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());

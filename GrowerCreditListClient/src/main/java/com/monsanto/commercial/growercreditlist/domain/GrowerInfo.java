@@ -13,7 +13,7 @@ public class GrowerInfo {
     private String accountId;
     private String gln;
     //CUSTPLT-616 Changes made by VVVL as part of this JIRA
-    private  String dealer_gln;
+    private  String dealerGln;
     private String sapId;
     private String name;
     private String address;
@@ -43,12 +43,12 @@ public class GrowerInfo {
     }
 
     //CUSTPLT-616 Changes made by VVVL as part of this JIRA
-    public String getDealer_gln() {
-        return dealer_gln;
+    public String getDealerGln() {
+        return dealerGln;
     }
 
-    public void setDealer_gln(String dealer_gln) {
-        this.dealer_gln = dealer_gln;
+    public void setDealerGln(String dealerGln) {
+        this.dealerGln = dealerGln;
     }
 
     public String getGln() {

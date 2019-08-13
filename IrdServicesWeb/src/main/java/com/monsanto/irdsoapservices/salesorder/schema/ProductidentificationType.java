@@ -33,7 +33,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ProductidentificationType", propOrder = {
     "productIdentifier",
-    "productName"
+    "productName",
+    "BrandFamily",
+    "BrandName"
 })
 public class ProductidentificationType {
 
@@ -43,6 +45,28 @@ public class ProductidentificationType {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String productName;
+    //New
+    @XmlElement(name = "BrandFamily")
+    protected String BrandFamily;
+    @XmlElement(name = "BrandName")
+    protected String BrandName;
+
+
+    public String getBrandFamily() {
+        return BrandFamily;
+    }
+
+    public void setBrandFamily(String brandFamily) {
+        this.BrandFamily = BrandFamily;
+    }
+
+    public String getBrandName() {
+        return BrandName;
+    }
+
+    public void setBrandName(String brandName) {
+        BrandName = brandName;
+    }
 
     /**
      * Gets the value of the productIdentifier property.

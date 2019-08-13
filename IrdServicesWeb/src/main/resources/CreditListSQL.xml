@@ -5,7 +5,7 @@
     <resultMap id="growerCreditMap" class="com.monsanto.commercial.growercreditlist.domain.GrowerInfo">
         <result property="accountId" column="GROWER_ACCT_ID"/>
         <result property="gln" column="GLN"/>
-        <result property="dealer_gln" column="DEALER_GLN"/>
+        <result property="dealerGln" column="DEALER_GLN"/>
         <result property="sapId" column="SAP_ID"/>
         <result property="name" column="GROWER_NAME"/>
         <result property="address" column="ADDRESS"/>
