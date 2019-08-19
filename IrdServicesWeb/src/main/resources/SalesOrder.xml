@@ -332,20 +332,20 @@
         dm_active_channel_account_dim cad,
         s_acct_sales_area cgp,
         (select *
-				  from (select acct_id, system_type_code,
-					alias_id, active_flag, rank, begin_date, 
-					max(begin_date) over (partition by acct_id, rank) max_date
-					from s_acct_xref
-					where system_type_code='GLN' and active_flag='Y' and rank=1 
-				  )
-				  where begin_date = max_date
-				 )gln_map,
+        from (select acct_id, system_type_code,
+        alias_id, active_flag, rank, begin_date,
+        max(begin_date) over (partition by acct_id, rank) max_date
+        from s_acct_xref
+        where system_type_code='GLN' and active_flag='Y' and rank=1
+        )
+        where begin_date = max_date
+        )gln_map,
         dm_date_dim dd,
         (SELECT gec.ship_from_acct_key seller_acct_key,
         gec.ship_to_grower_key grower_key, gec.invc_date_key,
         gec.invc_id,
-		NVL(gec.customer_line_item_nbr, gec.invc_item_id) invc_item_id,
-		gec.product_key, spd.upc_code,
+        NVL(gec.customer_line_item_nbr, gec.invc_item_id) invc_item_id,
+        gec.product_key, spd.upc_code,
         spd.legal_descr_1 upc_legal_descr,
         gtin_map.gtin_id, ud.uom_code, gtin_map.sales_uom,
         SUBSTR (dpm.period_descr, 1, 4) || 'M' market_year,
@@ -468,7 +468,7 @@
         AND spd.product_id = s.prod_id
         AND gec.data_src_key = ds.data_src_key
         AND gec.rpt_acct_key = cad.acct_key
-        AND ( ds.data_src_id IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK', 'KEYED')
+        AND ( ds.data_src_id IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK','KEYED')
         OR (ds.data_src_id = 'WS-XML' AND cad.acct_id != 168618)
         )
         GROUP BY gec.ship_from_acct_key,
@@ -613,9 +613,12 @@
         spd.upc_code upc_code,
         spd.legal_descr_1 product_name,
         pps.upc_scc_code gtin,
-        d.ssu_qty sales_qty,
+        <!--WO0000002039189 - Cancelled Transactions-->
+        <!--d.ssu_qty sales_qty,-->
+        decode(hs.status_id,'5','0',d.ssu_qty) sales_qty,
         decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
-        d.ssu_qty equivalent_qty,
+        <!--WO0000002039189 - Cancelled Transactions-->
+        decode(hs.status_id,'5','0',d.ssu_qty) equivalent_qty,
         'UN' equivilent_qty_uom,
         cad.name_1 salesrep_name,
         salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
@@ -637,14 +640,14 @@
         dm_active_channel_account_dim cad,
         s_acct_sales_area cgp,
         (select *
-				  from (select acct_id, system_type_code,
-					alias_id, active_flag, rank, begin_date, 
-					max(begin_date) over (partition by acct_id, rank) max_date
-					from s_acct_xref
-					where system_type_code='GLN' and active_flag='Y' and rank=1 
-				  )
-				  where begin_date = max_date
-				 )gln_map,
+        from (select acct_id, system_type_code,
+        alias_id, active_flag, rank, begin_date,
+        max(begin_date) over (partition by acct_id, rank) max_date
+        from s_acct_xref
+        where system_type_code='GLN' and active_flag='Y' and rank=1
+        )
+        where begin_date = max_date
+        )gln_map,
         dm_date_dim dd,
         s_seedco_salesrep salesrep,
         dm_seed_product_dim spd,
@@ -697,7 +700,7 @@
         </isNull>
         AND p_st.acct_id = g.acct_id
         <isNull property="companyCode">
-            AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK', 'KEYED') OR ts.source = 'WS-XML' AND p_ds.acct_id != 168618)
+            AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK','KEYED') OR ts.source = 'WS-XML' AND p_ds.acct_id != 168618)
         </isNull>
         <isNotNull property="companyCode">
             AND ts.SOURCE IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK','WS-XML', 'KEYED')
@@ -770,7 +773,7 @@
         dealer_ebid,dealer_acct_id,dealer_mailing_address,dealer_mailing_city,dealer_mailing_state,dealer_mailing_zip_code,
         dealer_mailing_county,grower_name,grower_gln,grower_napd_id,grower_acct_id,grower_contact_name,grower_mailing_address,
         grower_mailing_city,grower_mailing_state,grower_mailing_zip_code,grower_mailing_county,upc_code,product_name,
-        gtin,SUM(sales_qty)sales_qty,sales_uom,SUM(equivalent_qty)equivalent_qty,equivilent_qty_uom,salesrep_name,contact_name,salesrep_id,
+        gtin,SUM(sales_qty) sales_qty,sales_uom,SUM(equivalent_qty) equivalent_qty,equivilent_qty_uom,salesrep_name,contact_name,salesrep_id,
         salesrep_address_1,salesrep_city,salesrep_state,salesrep_zip,salesrep_county,Touched_Untouched
         from (
         SELECT distinct h.rptd_doc_nbr,h.tran_id,d.detail_seq_nbr,'NS' sales_order_type_code,ts.source data_source,
@@ -780,7 +783,13 @@
         g.name_1 grower_name,gln_map.alias_id grower_gln,g.napd_id grower_napd_id,g.acct_id grower_acct_id,g.primary_contact_full_name grower_contact_name,
         g.mailing_addr_line_1 grower_mailing_address,g.mailing_city grower_mailing_city,g.mailing_state_code grower_mailing_state,
         g.mailing_zip_code grower_mailing_zip_code,g.mailing_county grower_mailing_county,spd.upc_code upc_code,spd.legal_descr_1 product_name,
-        pps.upc_scc_code gtin,d.ssu_qty sales_qty, decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,d.ssu_qty equivalent_qty,
+        pps.upc_scc_code gtin,
+        <!--WO0000002039189 - Cancelled Transactions-->
+        <!--d.ssu_qty sales_qty,-->
+        decode(hs.status_id,'5','0',d.ssu_qty) sales_qty,
+        decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
+        <!--WO0000002039189 - Cancelled Transactions-->
+        decode(hs.status_id,'5','0',d.ssu_qty) equivalent_qty,
         'UN' equivilent_qty_uom,cad.name_1 salesrep_name,salesrep.name_1 || ' ' || salesrep.name_3 contact_name,salesrep.alias_ss_code salesrep_id,
         cad.mailing_addr_line_1 salesrep_address_1,cad.mailing_city salesrep_city,cad.mailing_state_code salesrep_state,cad.mailing_zip_code salesrep_zip,
         cad.mailing_county salesrep_county,decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched
@@ -795,14 +804,14 @@
         dm_active_channel_account_dim cad,
         s_acct_sales_area cgp,
         (select *
-				  from (select acct_id, system_type_code,
-					alias_id, active_flag, rank, begin_date, 
-					max(begin_date) over (partition by acct_id, rank) max_date
-					from s_acct_xref
-					where system_type_code='GLN' and active_flag='Y' and rank=1 
-				  )
-				  where begin_date = max_date
-				 )gln_map,
+        from (select acct_id, system_type_code,
+        alias_id, active_flag, rank, begin_date,
+        max(begin_date) over (partition by acct_id, rank) max_date
+        from s_acct_xref
+        where system_type_code='GLN' and active_flag='Y' and rank=1
+        )
+        where begin_date = max_date
+        )gln_map,
         dm_date_dim dd,
         s_seedco_salesrep salesrep,
         dm_seed_product_dim spd,
@@ -961,8 +970,12 @@
         g.name_1 grower_name,gln_map.alias_id grower_gln,g.napd_id grower_napd_id,g.acct_id grower_acct_id,g.primary_contact_full_name grower_contact_name,
         g.mailing_addr_line_1 grower_mailing_address,g.mailing_city grower_mailing_city,g.mailing_state_code grower_mailing_state,
         g.mailing_zip_code grower_mailing_zip_code,g.mailing_county grower_mailing_county,spd.upc_code upc_code,
-        spd.legal_descr_1 product_name,pps.upc_scc_code gtin,d.ssu_qty sales_qty,decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
-        d.ssu_qty equivalent_qty,'UN' equivilent_qty_uom,cad.name_1 salesrep_name,salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
+        spd.legal_descr_1 product_name,pps.upc_scc_code gtin,
+        <!--WO0000002039189 - Cancelled Transactions-->
+        <!--d.ssu_qty sales_qty,-->
+        decode(hs.status_id,'5','0',d.ssu_qty) sales_qty,decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
+        decode(hs.status_id,'5','0',d.ssu_qty) equivalent_qty,
+        'UN' equivilent_qty_uom,cad.name_1 salesrep_name,salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
         salesrep.alias_ss_code salesrep_id,cad.mailing_addr_line_1 salesrep_address_1,cad.mailing_city salesrep_city,cad.mailing_state_code salesrep_state,
         cad.mailing_zip_code salesrep_zip,cad.mailing_county salesrep_county,decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched
         FROM ecg_tran_header h,
@@ -976,14 +989,14 @@
         dm_active_channel_account_dim cad,
         s_acct_sales_area cgp,
         (select *
-				  from (select acct_id, system_type_code,
-					alias_id, active_flag, rank, begin_date, 
-					max(begin_date) over (partition by acct_id, rank) max_date
-					from s_acct_xref
-					where system_type_code='GLN' and active_flag='Y' and rank=1 
-				  )
-				  where begin_date = max_date
-				 )gln_map,
+        from (select acct_id, system_type_code,
+        alias_id, active_flag, rank, begin_date,
+        max(begin_date) over (partition by acct_id, rank) max_date
+        from s_acct_xref
+        where system_type_code='GLN' and active_flag='Y' and rank=1
+        )
+        where begin_date = max_date
+        )gln_map,
         dm_date_dim dd,
         s_seedco_salesrep salesrep,
         dm_seed_product_dim spd,
@@ -1156,9 +1169,12 @@
         spd.upc_code upc_code,
         spd.legal_descr_1 product_name,
         pps.upc_scc_code gtin,
-        d.ssu_qty sales_qty,
+        <!--WO0000002039189 - Cancelled Transactions-->
+        <!--d.ssu_qty sales_qty,-->
+        decode(hs.status_id,'5','0',d.ssu_qty) sales_qty,
         decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
-        d.ssu_qty equivalent_qty,
+        <!--WO0000002039189 - Cancelled Transactions-->
+        decode(hs.status_id,'5','0',d.ssu_qty) equivalent_qty,
         'UN' equivilent_qty_uom,
         cad.name_1 salesrep_name,
         salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
@@ -1180,14 +1196,14 @@
         dm_active_channel_account_dim cad,
         s_acct_sales_area cgp,
         (select *
-				  from (select acct_id, system_type_code,
-					alias_id, active_flag, rank, begin_date, 
-					max(begin_date) over (partition by acct_id, rank) max_date
-					from s_acct_xref
-					where system_type_code='GLN' and active_flag='Y' and rank=1 
-				  )
-				  where begin_date = max_date
-				 )gln_map,
+        from (select acct_id, system_type_code,
+        alias_id, active_flag, rank, begin_date,
+        max(begin_date) over (partition by acct_id, rank) max_date
+        from s_acct_xref
+        where system_type_code='GLN' and active_flag='Y' and rank=1
+        )
+        where begin_date = max_date
+        )gln_map,
         dm_date_dim dd,
         s_seedco_salesrep salesrep,
         dm_seed_product_dim spd,
@@ -1224,7 +1240,7 @@
         TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND p_st.acct_id = g.acct_id
         AND ts.source = 'AGRIMINE'
-		AND g.acct_id = gln_map.acct_id(+)
+        AND g.acct_id = gln_map.acct_id(+)
         AND gln_map.system_type_code(+) = 'GLN'
         AND gln_map.rank(+) = 1
         AND gln_map.active_flag(+) = 'Y'
