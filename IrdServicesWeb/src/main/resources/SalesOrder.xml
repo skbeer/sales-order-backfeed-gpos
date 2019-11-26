@@ -149,6 +149,7 @@
         <result property="salesRepWinfield.zip" column="SALESREP_ZIP"/>
         <result property="salesRepWinfield.county" column="SALESREP_COUNTY"/>
         <result property="tempLineItem.orderTransactionType" column="Touched_Untouched"/>
+        <result property="growerInfo.techId" column="MDM_TECH_ID"/>
     </resultMap>
 
     <select id="getPPOSOrders" resultMap="ppos" parameterClass="java.util.Map">
@@ -1344,7 +1345,8 @@
         salesrep_state,
         salesrep_zip,
         salesrep_county,
-        Touched_Untouched
+        Touched_Untouched,
+        mdm_tech_id
         FROM (
         SELECT distinct h.rptd_doc_nbr,
         h.tran_id,
@@ -1374,11 +1376,8 @@
         spd.upc_code upc_code,
         spd.legal_descr_1 product_name,
         pps.upc_scc_code gtin,
-        <!--WO0000002039189 - Cancelled Transactions-->
-        <!--d.ssu_qty sales_qty,-->
         decode(hs.status_id,'5','0',d.ssu_qty) sales_qty,
         decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
-        <!--WO0000002039189 - Cancelled Transactions-->
         decode(hs.status_id,'5','0',d.ssu_qty) equivalent_qty,
         'UN' equivilent_qty_uom,
         cad.name_1 salesrep_name,
@@ -1389,7 +1388,8 @@
         cad.mailing_state_code salesrep_state,
         cad.mailing_zip_code salesrep_zip,
         cad.mailing_county salesrep_county,
-        decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched
+        decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched,
+        mdm.MDM_TECH_ID
         FROM ecg_tran_header h,
         ecg_tran_detail d,
         ecg_tran_party p_sf,
@@ -1413,7 +1413,8 @@
         s_seedco_salesrep salesrep,
         dm_seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm
+        dm_date_period_map dpm,
+        cdw_dm.CBR_GROWER_DIM mdm
         <isNull property="companyCode">
             ,biotech_translation bt
         </isNull>
@@ -1443,7 +1444,6 @@
         <isNull property="companyCode">
             AND cgp.customer_grp_code = bt.dest_alias_id
             AND bt.alias_program = 'CDW749RT'
-          <!--  AND bt.dest_alias_id = #groupCode# -->
             AND bt.source_alias_type = 'CustGrp'
         </isNull>
         AND hs.status_id in ( 3, 5)
@@ -1461,13 +1461,14 @@
         </isNull>
         AND p_st.acct_id = g.acct_id
         <isNull property="companyCode">
-            AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK','KEYED') OR ts.source = 'WS-XML' <!--AND p_ds.acct_id != 168618-->)
+            AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK','KEYED') OR ts.source = 'WS-XML')
         </isNull>
         <isNotNull property="companyCode">
             AND ts.SOURCE IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK','WS-XML', 'KEYED')
-            <!--AND P_DS.ACCT_ID = 5180-->
         </isNotNull>
         AND g.acct_id = gln_map.acct_id(+)
+        AND g.grower_key  = mdm.grower_key
+        AND spd.BRAND_DESCR not like '%ALFALF%'
         AND gln_map.system_type_code(+) = 'GLN'
         AND gln_map.rank(+) = 1
         AND gln_map.active_flag(+) = 'Y'
@@ -1525,7 +1526,8 @@
         salesrep_state,
         salesrep_zip,
         salesrep_county,
-        Touched_Untouched
+        Touched_Untouched,
+        mdm_tech_id
         order by rptd_doc_nbr, dealer_acct_id, grower_acct_id
     </select>
 

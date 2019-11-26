@@ -57,7 +57,7 @@ public class ProductidentificationType {
     }
 
     public void setBrandFamily(String brandFamily) {
-        this.BrandFamily = BrandFamily;
+        this.BrandFamily = brandFamily;
     }
 
     public String getBrandName() {

@@ -1,8 +1,10 @@
 package com.monsanto.irdsoapservices.salesorder.helper;
 
+import com.monsanto.irdsoapservices.constants.DBConstants;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.LineItemInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.PartnerInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.helper.GPOSRequestBuilder;
 import com.monsanto.irdsoapservices.salesorder.schema.*;
@@ -40,26 +42,51 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
     @Override
     protected SalesOrderPartnersType getSalesOrderPartnersType(TransactionInfo transactionInfo, GPOSOrderInfo gposOrderInfo) {
         SalesOrderPartnersType salesOrderPartnersType = super.getSalesOrderPartnersType(transactionInfo, gposOrderInfo);
+        PartnerInformationType partnerInformationType=null;
         if (!StringUtils.isNullOrEmpty(gposOrderInfo.getSalesRepWinfield().getBuyerId())) {
             OtherPartnerType otherPartner = new OtherPartnerType();
-            otherPartner.setPartnerInformation(getPartnerInformationTypeForBody(gposOrderInfo.getSalesRepWinfield(), false));
+            partnerInformationType=getPartnerInformationTypeForBody(gposOrderInfo.getSalesRepWinfield(), false);
+            if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)){
+                getMdmTechId(gposOrderInfo.getSalesRepWinfield(),partnerInformationType);
+            }
+            otherPartner.setPartnerInformation(partnerInformationType);
             otherPartner.setPartnerRole(ListPartnerRoles.SELLING_PARTNER);
             salesOrderPartnersType.getOtherPartner().add(otherPartner);
         }
         return salesOrderPartnersType;
     }
 
+    private PartnerInformationType getMdmTechId(PartnerInfo partnerInfo, PartnerInformationType partnerInformationType) {
+        PartnerIdentifierType partnerIdentifierType;
+                if (!StringUtils.isNullOrEmpty(partnerInfo.getTechId())) {
+                partnerIdentifierType = new PartnerIdentifierType();
+                partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
+                partnerIdentifierType.setValue(partnerInfo.getTechId());
+                partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
+            }
+            partnerInformationType.getPartnerName().add(partnerInfo.getPartnerName());
+            return partnerInformationType;
+        }
+
     @Override
-    protected SalesOrderTransactionDetailsType getSalesOrderTransactionDetailsType(GPOSOrderInfo gposOrderInfo) {
+    protected SalesOrderTransactionDetailsType getSalesOrderTransactionDetailsType(GPOSOrderInfo gposOrderInfo, TransactionInfo transactionInfo) {
         SalesOrderTransactionDetailsType salesOrderTransactionDetailsType = new SalesOrderTransactionDetailsType();
         SalesOrderLineItemType salesOrderLineItemType = null;
+        //AgInfo code changes
+        ProductidentificationType productidentificationType=null;
         int lineNumber = 1;
         for (LineItemInfo lineItem : gposOrderInfo.getLineItems()) {
             salesOrderLineItemType = new SalesOrderLineItemType();
             salesOrderLineItemType.setLineNumber(lineNumber++);
-//            salesOrderLineItemType.setLineNumber(new Long(lineItem.getItemNumber()).longValue());
-            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName()));
-            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.UPC, lineItem.getProductUpc(), lineItem.getProductName()));
+           /* salesOrderLineItemType.setLineNumber(new Long(lineItem.getItemNumber()).longValue());
+              salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName()));*/
+            //AgInfo code changes
+            productidentificationType = getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName());
+            productidentificationType = (getProductionIdentificationType(ListProductIDAgency.UPC, lineItem.getProductUpc(), lineItem.getProductName()));
+            if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)){
+                getAgDataInfo(lineItem,productidentificationType);
+            }
+            salesOrderLineItemType.getProductIdentification().add(productidentificationType);
             DeliveryQuantityType deliveryQuantityType = new DeliveryQuantityType();
             deliveryQuantityType.setMeasurement(getMeasurementType(lineItem.getSalesQuantity().getQtyUom(), lineItem.getSalesQuantity().getQtyValue()));
             salesOrderLineItemType.setDeliveredQuantity(deliveryQuantityType);
@@ -72,5 +99,31 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
             salesOrderTransactionDetailsType.getSalesOrderLineItem().add(salesOrderLineItemType);
         }
         return salesOrderTransactionDetailsType;
+    }
+    //new
+    private ProductidentificationType getAgDataInfo(LineItemInfo lineItem,ProductidentificationType productidentificationType)
+    {
+         if(lineItem!=null && !StringUtils.isNullOrEmpty(lineItem.getProductName()) ){
+            if(lineItem.getProductName().substring(0, 2).equals("DP")) {
+                productidentificationType.setBrandFamily("National");
+                productidentificationType.setBrandName("DeltaPine Cotton");
+            }
+            else if(lineItem.getProductName().substring(0, 2).equals("AS")) {
+                productidentificationType.setBrandFamily("National");
+                productidentificationType.setBrandName("Asgrow Soybeans");
+            }
+            else if(lineItem.getProductName().substring(0,1).equals("S")) {
+                productidentificationType.setBrandFamily("National");
+                productidentificationType.setBrandName("DEKALB Sorghum");
+            }
+            else if(lineItem.getProductName().substring(0, 3).equals("DKC"))
+            {
+                productidentificationType.setBrandFamily("National");
+                productidentificationType.setBrandName("DEKALB Corn");
+            }
+        }
+
+
+        return productidentificationType;
     }
 }

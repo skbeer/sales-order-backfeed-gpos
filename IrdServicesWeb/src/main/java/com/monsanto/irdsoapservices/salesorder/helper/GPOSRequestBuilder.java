@@ -33,7 +33,7 @@ public class GPOSRequestBuilder extends AbstractRequestBuilder {
 
             SalesOrderReportPropertiesType salesOrderReportPropertiesType = getSalesOrderPropertiesType(gposOrderInfo);
             SalesOrderPartnersType salesOrderPartnersType = getSalesOrderPartnersType(transactionInfo, gposOrderInfo);
-            SalesOrderTransactionDetailsType salesOrderTransactionDetailsType = getSalesOrderTransactionDetailsType(gposOrderInfo);
+            SalesOrderTransactionDetailsType salesOrderTransactionDetailsType = getSalesOrderTransactionDetailsType(gposOrderInfo, transactionInfo);
 
             salesOrderReportDetailsType.setSalesOrderReportProperties(salesOrderReportPropertiesType);
             salesOrderReportDetailsType.setSalesOrderPartners(salesOrderPartnersType);
@@ -44,7 +44,7 @@ public class GPOSRequestBuilder extends AbstractRequestBuilder {
         return salesOrderReportBodyType;
     }
 
-    protected SalesOrderTransactionDetailsType getSalesOrderTransactionDetailsType(GPOSOrderInfo gposOrderInfo) {
+    protected SalesOrderTransactionDetailsType getSalesOrderTransactionDetailsType(GPOSOrderInfo gposOrderInfo, TransactionInfo transactionInfo) {
         SalesOrderTransactionDetailsType salesOrderTransactionDetailsType = new SalesOrderTransactionDetailsType();
         SalesOrderLineItemType salesOrderLineItemType = null;
 

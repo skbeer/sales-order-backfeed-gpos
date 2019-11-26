@@ -1,20 +1,15 @@
 package com.monsanto.irdsoapservices.salesorder.helper;
 
-import com.monsanto.irdsoapservices.constants.DBConstants;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
-import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.domain.PartnerInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.schema.*;
 import com.monsanto.irdsoapservices.utils.StringUtils;
 import com.sun.org.apache.xerces.internal.jaxp.datatype.XMLGregorianCalendarImpl;
-import org.apache.log4j.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import static sun.font.FontManager.logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,7 +19,6 @@ import static sun.font.FontManager.logger;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class AbstractRequestBuilder {
-    Logger logger = Logger.getLogger(this.getClass());
 
     protected HeaderType getHeaderType(TransactionInfo transactionInfo, String tranType) {
         HeaderType headerType = new HeaderType();
@@ -108,27 +102,6 @@ public abstract class AbstractRequestBuilder {
         ProductidentificationType productidentificationType = new ProductidentificationType();
         productidentificationType.setProductIdentifier(getProductIdentifierType(agency, value));
         productidentificationType.setProductName(productName);
-        //New
-//if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)){
-   // logger.info(String.format("GPOSAGDATA%s", transactionInfo.getTransactionType()));
-  if(productName.substring(0, 2).equals("DP")) {
-            productidentificationType.setBrandName("National");
-            productidentificationType.setBrandFamily("DeltaPine Cotton");
-        }
-        else if(productName.substring(0, 2).equals("AS")) {
-            productidentificationType.setBrandName("National");
-            productidentificationType.setBrandFamily("Asgrow Soybeans");
-        }
-        else if(productName.substring(0,1).equals("S")) {
-            productidentificationType.setBrandName("National");
-            productidentificationType.setBrandFamily("DEKALB Sorghum");
-        }
-        else if(productName.substring(0, 3).equals("DKC"))
-        {
-            productidentificationType.setBrandName("National");
-            productidentificationType.setBrandFamily("DEKALB Corn");
-        }
-    //}
         return productidentificationType;
     }
 
@@ -176,7 +149,7 @@ public abstract class AbstractRequestBuilder {
             partnerIdentifierType.setValue(partnerInfo.getGln());
             partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
         }
-        
+
         partnerInformationType.getPartnerName().add(partnerInfo.getPartnerName());
 
         AddressInformationType addressInformationType = new AddressInformationType();
