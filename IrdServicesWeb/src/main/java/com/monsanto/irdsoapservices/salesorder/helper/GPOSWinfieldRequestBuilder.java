@@ -43,21 +43,25 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
     protected SalesOrderPartnersType getSalesOrderPartnersType(TransactionInfo transactionInfo, GPOSOrderInfo gposOrderInfo) {
         SalesOrderPartnersType salesOrderPartnersType = super.getSalesOrderPartnersType(transactionInfo, gposOrderInfo);
         PartnerInformationType partnerInformationType=null;
-        if (!StringUtils.isNullOrEmpty(gposOrderInfo.getSalesRepWinfield().getBuyerId())) {
-            OtherPartnerType otherPartner = new OtherPartnerType();
-            partnerInformationType=getPartnerInformationTypeForBody(gposOrderInfo.getSalesRepWinfield(), false);
-            if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)){
-                getMdmTechId(gposOrderInfo.getSalesRepWinfield(),partnerInformationType);
-            }
-            otherPartner.setPartnerInformation(partnerInformationType);
-            otherPartner.setPartnerRole(ListPartnerRoles.SELLING_PARTNER);
-            salesOrderPartnersType.getOtherPartner().add(otherPartner);
-        }
+                if ((!StringUtils.isNullOrEmpty(gposOrderInfo.getSalesRepWinfield().getBuyerId())) || (!StringUtils.isNullOrEmpty(gposOrderInfo.getGrowerInfo().getTechId()))) {
+                OtherPartnerType otherPartner = new OtherPartnerType();
+                System.out.println("BuyerID*======"+gposOrderInfo.getSalesRepWinfield().getBuyerId());
+                partnerInformationType=getPartnerInformationTypeForBody(gposOrderInfo.getSalesRepWinfield(), false);
+                if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)){
+                    System.out.println("Condition*Id=======");
+                    System.out.println("TechID*======"+gposOrderInfo.getGrowerInfo().getTechId());
+                    getMdmTechId(gposOrderInfo.getSalesRepWinfield(),partnerInformationType);
+                }
+                otherPartner.setPartnerInformation(partnerInformationType);
+                otherPartner.setPartnerRole(ListPartnerRoles.SELLING_PARTNER);
+                salesOrderPartnersType.getOtherPartner().add(otherPartner);
+                }
         return salesOrderPartnersType;
     }
 
     private PartnerInformationType getMdmTechId(PartnerInfo partnerInfo, PartnerInformationType partnerInformationType) {
         PartnerIdentifierType partnerIdentifierType;
+        System.out.println("Inside MdmTechId=======");
                 if (!StringUtils.isNullOrEmpty(partnerInfo.getTechId())) {
                 partnerIdentifierType = new PartnerIdentifierType();
                 partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
@@ -106,24 +110,27 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
          if(lineItem!=null && !StringUtils.isNullOrEmpty(lineItem.getProductName()) ){
             if(lineItem.getProductName().substring(0, 2).equals("DP")) {
                 productidentificationType.setBrandFamily("National");
-                productidentificationType.setBrandName("DeltaPine Cotton");
+                productidentificationType.setBrandName("DELTAPINE COTTON");
             }
-            else if(lineItem.getProductName().substring(0, 2).equals("AS")) {
+            else if(lineItem.getProductName().substring(0, 1).equals("A")) {
                 productidentificationType.setBrandFamily("National");
-                productidentificationType.setBrandName("Asgrow Soybeans");
+                productidentificationType.setBrandName("ASGROW SOYBEANS");
             }
-            else if(lineItem.getProductName().substring(0,1).equals("S")) {
+            else if((lineItem.getProductName().substring(0, 3).equals("DKS")) || (lineItem.getProductName().substring(0, 3).equals("DK2")) || (lineItem.getProductName().substring(0, 3).equals("PUL")))  {
                 productidentificationType.setBrandFamily("National");
-                productidentificationType.setBrandName("DEKALB Sorghum");
+                productidentificationType.setBrandName("DEKALB SORGHUM");
             }
-            else if(lineItem.getProductName().substring(0, 3).equals("DKC"))
+            else if((lineItem.getProductName().substring(0, 3).equals("DKC")) || (lineItem.getProductName().substring(0, 2).equals("EB")))
             {
                 productidentificationType.setBrandFamily("National");
-                productidentificationType.setBrandName("DEKALB Corn");
+                productidentificationType.setBrandName("DEKALB CORN");
+            }
+            else if((lineItem.getProductName().substring(0, 3).equals("DKL")) || (lineItem.getProductName().substring(0, 3).equals("DKT")))
+            {
+                productidentificationType.setBrandFamily("National");
+                productidentificationType.setBrandName("DEKALB CANOLA");
             }
         }
-
-
-        return productidentificationType;
+         return productidentificationType;
     }
 }

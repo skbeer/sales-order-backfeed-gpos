@@ -42,7 +42,7 @@ public class SalesOrderReportService {
                     ordersSent = 0;
                     transaction = transactionsToBeProcessed.get(index);
                     logger.info("Processing '"+transaction.getTransactionType()+"' Transaction For Customer:"+transaction.getName());
-                    logger.info("GPOSType "+transaction.getTransactionType());
+                    //logger.info("GPOSType "+transaction.getTransactionType());
                     if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.PPOS_TRAN_TYPE)) {
                         ordersSent = pposHelper.processPPOSOrderReport(transaction);
                     } else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.COS_TRAN_TYPE)) {

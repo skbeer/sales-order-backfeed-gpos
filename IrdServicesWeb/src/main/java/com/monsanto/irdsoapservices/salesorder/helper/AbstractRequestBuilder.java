@@ -122,6 +122,7 @@ public abstract class AbstractRequestBuilder {
             partnerIdentifierType.setValue(partnerInfo.getEbid());
             partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
         }
+
         if(!StringUtils.isNullOrEmpty(partnerInfo.getAcctId())) {
             partnerIdentifierType = new PartnerIdentifierType();
             partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
