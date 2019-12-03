@@ -71,7 +71,7 @@ public class COSRequestBuilder extends AbstractRequestBuilder {
     private SalesOrderPartnersType getSalesOrderPartnersType(TransactionInfo transactionInfo, COSOrderInfo cosOrder) {
         SalesOrderPartnersType salesOrderPartnersType = new SalesOrderPartnersType();
         ShipToType shipToType = new ShipToType();
-        shipToType.setPartnerInformation(getPartnerInformationTypeForBody(cosOrder.getDealerInfo(), false));
+        shipToType.setPartnerInformation(getPartnerInformationTypeForBody(cosOrder.getDealerInfo(), false, transactionInfo));
 
         BuyerType buyerType = new BuyerType();
         buyerType.setPartnerInformation(getPartnerInformationForHeader(transactionInfo.getName(), transactionInfo.getCompanyCode(), ListPartnerAgencyAttribute.AGIIS_EBID));

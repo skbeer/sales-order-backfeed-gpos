@@ -42,35 +42,14 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
     @Override
     protected SalesOrderPartnersType getSalesOrderPartnersType(TransactionInfo transactionInfo, GPOSOrderInfo gposOrderInfo) {
         SalesOrderPartnersType salesOrderPartnersType = super.getSalesOrderPartnersType(transactionInfo, gposOrderInfo);
-        PartnerInformationType partnerInformationType=null;
-                if ((!StringUtils.isNullOrEmpty(gposOrderInfo.getSalesRepWinfield().getBuyerId())) || (!StringUtils.isNullOrEmpty(gposOrderInfo.getGrowerInfo().getTechId()))) {
-                OtherPartnerType otherPartner = new OtherPartnerType();
-                System.out.println("BuyerID*======"+gposOrderInfo.getSalesRepWinfield().getBuyerId());
-                partnerInformationType=getPartnerInformationTypeForBody(gposOrderInfo.getSalesRepWinfield(), false);
-                if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)){
-                    System.out.println("Condition*Id=======");
-                    System.out.println("TechID*======"+gposOrderInfo.getGrowerInfo().getTechId());
-                    getMdmTechId(gposOrderInfo.getSalesRepWinfield(),partnerInformationType);
+                 if (!StringUtils.isNullOrEmpty(gposOrderInfo.getSalesRepWinfield().getBuyerId())) {
+                    OtherPartnerType otherPartner = new OtherPartnerType();
+                    otherPartner.setPartnerInformation(getPartnerInformationTypeForBody(gposOrderInfo.getSalesRepWinfield(), false, transactionInfo));
+                    otherPartner.setPartnerRole(ListPartnerRoles.SELLING_PARTNER);
+                    salesOrderPartnersType.getOtherPartner().add(otherPartner);
                 }
-                otherPartner.setPartnerInformation(partnerInformationType);
-                otherPartner.setPartnerRole(ListPartnerRoles.SELLING_PARTNER);
-                salesOrderPartnersType.getOtherPartner().add(otherPartner);
+               return salesOrderPartnersType;
                 }
-        return salesOrderPartnersType;
-    }
-
-    private PartnerInformationType getMdmTechId(PartnerInfo partnerInfo, PartnerInformationType partnerInformationType) {
-        PartnerIdentifierType partnerIdentifierType;
-        System.out.println("Inside MdmTechId=======");
-                if (!StringUtils.isNullOrEmpty(partnerInfo.getTechId())) {
-                partnerIdentifierType = new PartnerIdentifierType();
-                partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
-                partnerIdentifierType.setValue(partnerInfo.getTechId());
-                partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
-            }
-            partnerInformationType.getPartnerName().add(partnerInfo.getPartnerName());
-            return partnerInformationType;
-        }
 
     @Override
     protected SalesOrderTransactionDetailsType getSalesOrderTransactionDetailsType(GPOSOrderInfo gposOrderInfo, TransactionInfo transactionInfo) {

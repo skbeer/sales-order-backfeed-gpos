@@ -1,8 +1,10 @@
 package com.monsanto.irdsoapservices.salesorder.helper;
 
+import com.monsanto.irdsoapservices.constants.DBConstants;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.monsanto.irdsoapservices.salesorder.domain.LineItemInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
+import com.monsanto.irdsoapservices.salesorder.domain.PartnerInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.schema.*;
 import com.monsanto.irdsoapservices.utils.StringUtils;
@@ -61,7 +63,7 @@ public class GPOSRequestBuilder extends AbstractRequestBuilder {
             salesOrderLineItemType.setDeliveredQuantityEquivalent(deliveryQuantityEquivalentType);
             if(!StringUtils.isNullOrEmpty(lineItem.getSalesRep().getBuyerId())) {
                 SalesPersonType salesPersonType = new SalesPersonType();
-                salesPersonType.setPartnerInformation(getPartnerInformationTypeForBody(lineItem.getSalesRep(), false));
+                salesPersonType.setPartnerInformation(getPartnerInformationTypeForBody(lineItem.getSalesRep(), false,transactionInfo));
                 salesOrderLineItemType.setSalesPerson(salesPersonType);
             }
             salesOrderTransactionDetailsType.getSalesOrderLineItem().add(salesOrderLineItemType);
@@ -72,7 +74,7 @@ public class GPOSRequestBuilder extends AbstractRequestBuilder {
     protected SalesOrderPartnersType getSalesOrderPartnersType(TransactionInfo transactionInfo, GPOSOrderInfo gposOrderInfo) {
         SalesOrderPartnersType salesOrderPartnersType = new SalesOrderPartnersType();
         ShipToType shipToType = new ShipToType();
-        shipToType.setPartnerInformation(getPartnerInformationTypeForBody(gposOrderInfo.getDealerInfo(), false));
+        shipToType.setPartnerInformation(getPartnerInformationTypeForBody(gposOrderInfo.getDealerInfo(), false, transactionInfo));
 
         BuyerType buyerType = new BuyerType();
         buyerType.setPartnerInformation(getPartnerInformationForHeader(transactionInfo.getName(), transactionInfo.getCompanyCode(), ListPartnerAgencyAttribute.AGIIS_EBID));
@@ -82,7 +84,7 @@ public class GPOSRequestBuilder extends AbstractRequestBuilder {
 
         OtherPartnerType otherPartnerType = new OtherPartnerType();
         otherPartnerType.setPartnerRole(ListPartnerRoles.BILL_TO_PARTY);
-        otherPartnerType.setPartnerInformation(getPartnerInformationTypeForBody(gposOrderInfo.getDealerInfo(), false));
+        otherPartnerType.setPartnerInformation(getPartnerInformationTypeForBody(gposOrderInfo.getDealerInfo(), false, transactionInfo));
 
         salesOrderPartnersType.setBuyer(buyerType);
         salesOrderPartnersType.setSeller(sellerType);
@@ -91,8 +93,9 @@ public class GPOSRequestBuilder extends AbstractRequestBuilder {
 
         otherPartnerType = new OtherPartnerType();
         otherPartnerType.setPartnerRole(ListPartnerRoles.END_USE_CUSTOMER);
-        otherPartnerType.setPartnerInformation(getPartnerInformationTypeForBody(gposOrderInfo.getGrowerInfo(), true));
+        otherPartnerType.setPartnerInformation(getPartnerInformationTypeForBody(gposOrderInfo.getGrowerInfo(), true, transactionInfo));
         salesOrderPartnersType.getOtherPartner().add(otherPartnerType);
+
         return salesOrderPartnersType;
     }
 
@@ -114,5 +117,4 @@ public class GPOSRequestBuilder extends AbstractRequestBuilder {
         salesOrderReportPropertiesType.setSalesOrderYear(gposOrderInfo.getOrderFiscalYear());
         return salesOrderReportPropertiesType;
     }
-
 }

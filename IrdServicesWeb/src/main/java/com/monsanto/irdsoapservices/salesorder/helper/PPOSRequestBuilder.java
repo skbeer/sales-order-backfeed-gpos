@@ -33,7 +33,7 @@ public class PPOSRequestBuilder extends AbstractRequestBuilder {
 
             SalesOrderReportPropertiesType salesOrderReportPropertiesType = getSalesOrderPropertiesType(pposOrder);
             SalesOrderPartnersType salesOrderPartnersType = getSalesOrderPartnersType(transactionInfo, pposOrder);
-            SalesOrderTransactionDetailsType salesOrderTransactionDetailsType = getSalesOrderTransactionDetailsType(pposOrder);
+            SalesOrderTransactionDetailsType salesOrderTransactionDetailsType = getSalesOrderTransactionDetailsType(pposOrder, transactionInfo);
 
             salesOrderReportDetailsType.setSalesOrderReportProperties(salesOrderReportPropertiesType);
             salesOrderReportDetailsType.setSalesOrderPartners(salesOrderPartnersType);
@@ -44,7 +44,7 @@ public class PPOSRequestBuilder extends AbstractRequestBuilder {
         return salesOrderReportBodyType;
     }
 
-    private SalesOrderTransactionDetailsType getSalesOrderTransactionDetailsType(PPOSOrderInfo pposOrder) {
+    private SalesOrderTransactionDetailsType getSalesOrderTransactionDetailsType(PPOSOrderInfo pposOrder, TransactionInfo transactionInfo) {
         SalesOrderTransactionDetailsType salesOrderTransactionDetailsType = new SalesOrderTransactionDetailsType();
         SalesOrderLineItemType salesOrderLineItemType = null;
 
@@ -61,7 +61,7 @@ public class PPOSRequestBuilder extends AbstractRequestBuilder {
             salesOrderLineItemType.setProductQuantityEquivalent(productQuantityEquivalentType);
             if(!StringUtils.isNullOrEmpty(lineItem.getSalesRep().getBuyerId())) {
                 SalesPersonType salesPersonType = new SalesPersonType();
-                salesPersonType.setPartnerInformation(getPartnerInformationTypeForBody(lineItem.getSalesRep(), false));
+                salesPersonType.setPartnerInformation(getPartnerInformationTypeForBody(lineItem.getSalesRep(), false, transactionInfo));
                 salesOrderLineItemType.setSalesPerson(salesPersonType);
             }
             salesOrderTransactionDetailsType.getSalesOrderLineItem().add(salesOrderLineItemType);
@@ -72,7 +72,7 @@ public class PPOSRequestBuilder extends AbstractRequestBuilder {
     private SalesOrderPartnersType getSalesOrderPartnersType(TransactionInfo transactionInfo, PPOSOrderInfo pposOrder) {
         SalesOrderPartnersType salesOrderPartnersType = new SalesOrderPartnersType();
         ShipToType shipToType = new ShipToType();
-        shipToType.setPartnerInformation(getPartnerInformationTypeForBody(pposOrder.getDealerInfo(), false));
+        shipToType.setPartnerInformation(getPartnerInformationTypeForBody(pposOrder.getDealerInfo(), false,transactionInfo));
 
         BuyerType buyerType = new BuyerType();
         buyerType.setPartnerInformation(getPartnerInformationForHeader(transactionInfo.getName(), transactionInfo.getCompanyCode(), ListPartnerAgencyAttribute.AGIIS_EBID));
@@ -82,7 +82,7 @@ public class PPOSRequestBuilder extends AbstractRequestBuilder {
 
         OtherPartnerType otherPartnerType = new OtherPartnerType();
         otherPartnerType.setPartnerRole(ListPartnerRoles.BILL_TO_PARTY);
-        otherPartnerType.setPartnerInformation(getPartnerInformationTypeForBody(pposOrder.getDealerInfo(), false));
+        otherPartnerType.setPartnerInformation(getPartnerInformationTypeForBody(pposOrder.getDealerInfo(), false, transactionInfo));
 
         salesOrderPartnersType.setBuyer(buyerType);
         salesOrderPartnersType.setSeller(sellerType);
@@ -91,7 +91,7 @@ public class PPOSRequestBuilder extends AbstractRequestBuilder {
 
         otherPartnerType = new OtherPartnerType();
         otherPartnerType.setPartnerRole(ListPartnerRoles.END_USE_CUSTOMER);
-        otherPartnerType.setPartnerInformation(getPartnerInformationTypeForBody(pposOrder.getGrowerInfo(), true));
+        otherPartnerType.setPartnerInformation(getPartnerInformationTypeForBody(pposOrder.getGrowerInfo(), true, transactionInfo));
         salesOrderPartnersType.getOtherPartner().add(otherPartnerType);
         return salesOrderPartnersType;
     }

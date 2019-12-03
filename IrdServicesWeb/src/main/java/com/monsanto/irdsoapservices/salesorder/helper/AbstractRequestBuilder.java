@@ -1,5 +1,6 @@
 package com.monsanto.irdsoapservices.salesorder.helper;
 
+import com.monsanto.irdsoapservices.constants.DBConstants;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.monsanto.irdsoapservices.salesorder.domain.PartnerInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
@@ -112,7 +113,7 @@ public abstract class AbstractRequestBuilder {
         return productIdentifierType;
     }
 
-    protected PartnerInformationType getPartnerInformationTypeForBody(PartnerInfo partnerInfo, boolean isGrower) {
+    protected PartnerInformationType getPartnerInformationTypeForBody(PartnerInfo partnerInfo, boolean isGrower, TransactionInfo transactionInfo) {
         PartnerInformationType partnerInformationType = new PartnerInformationType();
         PartnerIdentifierType partnerIdentifierType;
 
@@ -123,12 +124,18 @@ public abstract class AbstractRequestBuilder {
             partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
         }
 
-        if(!StringUtils.isNullOrEmpty(partnerInfo.getAcctId())) {
-            partnerIdentifierType = new PartnerIdentifierType();
-            partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
-            partnerIdentifierType.setValue(partnerInfo.getAcctId());
-            partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
-        }
+        if (!StringUtils.isNullOrEmpty(partnerInfo.getAcctId())) {
+                partnerIdentifierType = new PartnerIdentifierType();
+                partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
+                if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)) {
+                    System.out.println("Inside Abstract Agdata method==="+partnerInfo.getTechId());
+                    partnerIdentifierType.setValue(partnerInfo.getTechId());
+                }
+                else {
+                    partnerIdentifierType.setValue(partnerInfo.getAcctId());
+                }
+                partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
+            }
 
         if(!StringUtils.isNullOrEmpty(partnerInfo.getNapd())) {
             partnerIdentifierType = new PartnerIdentifierType();
