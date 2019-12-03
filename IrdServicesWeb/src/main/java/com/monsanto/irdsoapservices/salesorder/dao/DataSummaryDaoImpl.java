@@ -25,7 +25,7 @@ public class DataSummaryDaoImpl extends SqlMapClientDaoSupport implements DataSu
         map.put("startDate", sqlDate);
         return (DataSummaryInfo)getSqlMapClientTemplate().queryForObject("DataSummary.getDataSummaryDirect", map);
     }
-//New
+//CUSTPLT-632 - Introducing new Partner Agdata
 @Override
 public DataSummaryInfo getDataSummaryInfoAgdata(Date startDate, String groupCode) throws Exception {
     HashMap<String, Object> map = new HashMap<String, Object>();
@@ -61,7 +61,7 @@ public DataSummaryInfo getDataSummaryInfoAgdata(Date startDate, String groupCode
         return (DataSummaryTotals)getSqlMapClientTemplate().queryForObject("DataSummary.getTotalsDirect", map);
     }
 
-    //New
+    //CUSTPLT-632 - Introducing new Partner Agdata
     @Override
     public DataSummaryTotals getDataSummaryTotalsAgdata(Date startDate, String groupCode) throws Exception {
         HashMap<String, Object> map = new HashMap<String, Object>();

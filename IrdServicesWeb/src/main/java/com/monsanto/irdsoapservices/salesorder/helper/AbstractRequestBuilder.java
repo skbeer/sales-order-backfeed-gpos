@@ -112,7 +112,7 @@ public abstract class AbstractRequestBuilder {
         productIdentifierType.setValue(value);
         return productIdentifierType;
     }
-
+    //CUSTPLT-632 - Introducing new Partner Agdata
     protected PartnerInformationType getPartnerInformationTypeForBody(PartnerInfo partnerInfo, boolean isGrower, TransactionInfo transactionInfo) {
         PartnerInformationType partnerInformationType = new PartnerInformationType();
         PartnerIdentifierType partnerIdentifierType;
@@ -123,7 +123,7 @@ public abstract class AbstractRequestBuilder {
             partnerIdentifierType.setValue(partnerInfo.getEbid());
             partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
         }
-
+        //CUSTPLT-632 - Introducing new Partner Agdata
         if (!StringUtils.isNullOrEmpty(partnerInfo.getAcctId())) {
                 partnerIdentifierType = new PartnerIdentifierType();
                 partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);

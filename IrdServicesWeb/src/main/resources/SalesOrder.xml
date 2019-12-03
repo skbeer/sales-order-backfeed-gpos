@@ -149,6 +149,7 @@
         <result property="salesRepWinfield.zip" column="SALESREP_ZIP"/>
         <result property="salesRepWinfield.county" column="SALESREP_COUNTY"/>
         <result property="tempLineItem.orderTransactionType" column="Touched_Untouched"/>
+        <!--CUSTPLT-632 - Introducing new Partner Agdata-->
         <result property="dealerInfo.techId" column="MDM_TECH_ID"/>
         <result property="growerInfo.techId" column="MDM_TECH_ID"/>
     </resultMap>
@@ -1305,7 +1306,7 @@
         order by rptd_doc_nbr, dealer_acct_id, grower_acct_id
     </select>
 
-    <!--New-->
+    <!--CUSTPLT-632 - Introducing new Partner Agdata-->
     <select id="getGPOSAgDataOrders" resultMap="gposWinfield" parameterClass="java.util.Map">
         SELECT rptd_doc_nbr,
         detail_seq_nbr,

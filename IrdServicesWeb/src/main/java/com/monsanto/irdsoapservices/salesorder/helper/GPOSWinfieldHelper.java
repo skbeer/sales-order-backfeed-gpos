@@ -44,7 +44,7 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
                 }
             }
 
-            //New
+            //CUSTPLT-632 - Introducing new Partner Agdata
             else if (DBConstants.GPOS_AGDATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType()))
             {
                 if(GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())){

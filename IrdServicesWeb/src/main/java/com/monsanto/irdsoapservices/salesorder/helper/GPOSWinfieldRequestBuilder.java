@@ -55,7 +55,7 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
     protected SalesOrderTransactionDetailsType getSalesOrderTransactionDetailsType(GPOSOrderInfo gposOrderInfo, TransactionInfo transactionInfo) {
         SalesOrderTransactionDetailsType salesOrderTransactionDetailsType = new SalesOrderTransactionDetailsType();
         SalesOrderLineItemType salesOrderLineItemType = null;
-        //AgInfo code changes
+        //CUSTPLT-632 - Introducing new Partner Agdata
         ProductidentificationType productidentificationType=null;
         int lineNumber = 1;
         for (LineItemInfo lineItem : gposOrderInfo.getLineItems()) {
@@ -63,7 +63,7 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
             salesOrderLineItemType.setLineNumber(lineNumber++);
            /* salesOrderLineItemType.setLineNumber(new Long(lineItem.getItemNumber()).longValue());
               salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName()));*/
-            //AgInfo code changes
+            //CUSTPLT-632 - Introducing new Partner Agdata
             productidentificationType = getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName());
             productidentificationType = (getProductionIdentificationType(ListProductIDAgency.UPC, lineItem.getProductUpc(), lineItem.getProductName()));
             if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)){
@@ -83,7 +83,7 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
         }
         return salesOrderTransactionDetailsType;
     }
-    //new
+    //CUSTPLT-632 - Introducing new Partner Agdata
     private ProductidentificationType getAgDataInfo(LineItemInfo lineItem,ProductidentificationType productidentificationType)
     {
          if(lineItem!=null && !StringUtils.isNullOrEmpty(lineItem.getProductName()) ){

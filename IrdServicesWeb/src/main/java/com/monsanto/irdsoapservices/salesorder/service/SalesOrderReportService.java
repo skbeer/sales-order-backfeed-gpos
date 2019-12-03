@@ -42,7 +42,6 @@ public class SalesOrderReportService {
                     ordersSent = 0;
                     transaction = transactionsToBeProcessed.get(index);
                     logger.info("Processing '"+transaction.getTransactionType()+"' Transaction For Customer:"+transaction.getName());
-                    //logger.info("GPOSType "+transaction.getTransactionType());
                     if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.PPOS_TRAN_TYPE)) {
                         ordersSent = pposHelper.processPPOSOrderReport(transaction);
                     } else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.COS_TRAN_TYPE)) {
@@ -75,7 +74,7 @@ public class SalesOrderReportService {
                             dataSummaryHelper.processDataSummaryReport(transaction);
                         }
                     }
-                    //New
+                    //CUSTPLT-632 - Introducing new Partner Agdata
                     else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)) {
                         logger.info("Inside GPOS AGData");
                         transaction.setDataSourceType(DBConstants.GPOS_AGDATA_SOURCE_TYPE);
