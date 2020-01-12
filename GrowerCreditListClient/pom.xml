@@ -21,14 +21,12 @@
     <dependencies>
         <!-- main dependencies -->
         <dependency>
-          <!--  <groupId>oracle</groupId>
+            <groupId>oracle</groupId>
             <artifactId>oracle-jdbc</artifactId>
-            <version>10.2.0.1.0</version>
+            <version>10.x</version>
             <scope>system</scope>
-            <systemPath>${env.ORACLE_HOME}/jdbc/lib/ojdbc14.jar</systemPath> -->
-            <groupId>oracle.group</groupId>
-            <artifactId>ojdbc14</artifactId>
-            <version>1.0.2</version>
+            <!--suppress MavenModelInspection -->
+            <systemPath>${env.ORACLE_HOME}/jdbc/lib/ojdbc14.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
@@ -208,7 +206,6 @@
 
 
     <properties>
-        <!--suppress UnresolvedMavenProperty -->
         <weblogic.domain>${env.WEBLOGIC_DOMAIN}</weblogic.domain>
     </properties>
 </project>
