@@ -18,7 +18,7 @@ public interface DataSummaryDao {
 
     DataSummaryInfo getDataSummaryInfoDirect(Date startDate, String groupCode) throws Exception;
 
-    //CUSTPLT-632 - Introducing new Partner Agdata
+    //New
     DataSummaryInfo getDataSummaryInfoAgdata(Date startDate, String groupCode) throws Exception;
 
     DataSummaryInfo getDataSummaryInfoXML(Date startDate, String groupCode) throws Exception;
@@ -27,7 +27,7 @@ public interface DataSummaryDao {
 
     DataSummaryTotals getDataSummaryTotalsDirect(Date startDate, String groupCode) throws Exception;
 
-    //CUSTPLT-632 - Introducing new Partner Agdata
+    //New
     DataSummaryTotals getDataSummaryTotalsAgdata(Date startDate, String groupCode) throws Exception;
 
     DataSummaryTotals getDataSummaryTotalsXML(Date startDate, String groupCode) throws Exception;

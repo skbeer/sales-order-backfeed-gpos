@@ -31,7 +31,7 @@ public interface SalesOrderDao {
 
     List<GPOSOrderInfo> getGPOSAgrimineOrders(Date startDate, String groupCode) throws Exception;
 
-    //CUSTPLT-632 - Introducing new Partner Agdata
+    //New
     List<GPOSOrderInfo> getGPOSAgDataOrders(Date startDate, String groupCode) throws Exception;
 
     List<GPOSOrderInfo> getGPOSAgDataOrders(Date startDate, String groupCode,String companyCode) throws Exception;

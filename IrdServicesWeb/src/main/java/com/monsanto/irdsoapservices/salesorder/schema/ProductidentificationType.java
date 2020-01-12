@@ -45,7 +45,7 @@ public class ProductidentificationType {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String productName;
-    //CUSTPLT-632 - Introducing new Partner Agdata
+    //New
     @XmlElement(name = "BrandFamily")
     protected String BrandFamily;
     @XmlElement(name = "BrandName")

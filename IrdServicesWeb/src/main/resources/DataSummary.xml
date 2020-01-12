@@ -1032,7 +1032,7 @@
         AND dd.day_date = trunc(sysdate)
         AND ts.source = 'AGRIMINE')
     </select>
-    <!--CUSTPLT-632 - Introducing new Partner Agdata-->
+
     <select id="getDataSummaryAgData" resultMap="dataSummaryResult" parameterClass="java.util.Map">
         SELECT count( distinct rptd_doc_nbr) "Total_Invoices",
         count (detail_seq_nbr) "Total_Line_Items",
@@ -1251,8 +1251,6 @@
         salesrep_county,
         Touched_Untouched)
     </select>
-
-    <!--CUSTPLT-632 - Introducing new Partner Agdata-->
     <select id="getTotalsAgdata" resultMap="dataSummaryTotalsResult" parameterClass="java.util.Map">
         Select Sum (open_last_run) "Total_Daily_Open_Invoices", Sum(open_seed_year) "Total_Open_Invoices"
         from (
