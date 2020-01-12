@@ -149,7 +149,47 @@
         <result property="salesRepWinfield.zip" column="SALESREP_ZIP"/>
         <result property="salesRepWinfield.county" column="SALESREP_COUNTY"/>
         <result property="tempLineItem.orderTransactionType" column="Touched_Untouched"/>
-        <!--CUSTPLT-632 - Introducing new Partner Agdata-->
+    </resultMap>
+
+    <resultMap id="gposWinfieldAgdata" class="gposOrder">
+        <result property="orderNumber" column="RPTD_DOC_NBR"/>
+        <result property="orderType" column="SALES_ORDER_TYPE_CODE"/>
+        <result property="orderFiscalYear" column="FISCAL_YEAR"/>
+        <result property="orderDate" column="INVC_DATE"/>
+        <result property="dealerInfo.acctId" column="DEALER_ACCT_ID"/>
+        <result property="dealerInfo.ebid" column="DEALER_EBID"/>
+        <result property="dealerInfo.partnerName" column="DEALER_NAME"/>
+        <result property="dealerInfo.address" column="DEALER_MAILING_ADDRESS"/>
+        <result property="dealerInfo.city" column="DEALER_MAILING_CITY"/>
+        <result property="dealerInfo.state" column="DEALER_MAILING_STATE"/>
+        <result property="dealerInfo.zip" column="DEALER_MAILING_ZIP_CODE"/>
+        <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY"/>
+        <result property="growerInfo.acctId" column="GROWER_ACCT_ID"/>
+        <result property="growerInfo.gln" column="GROWER_GLN"/>
+        <result property="growerInfo.napd" column="GROWER_NAPD_ID"/>
+        <result property="growerInfo.partnerName" column="GROWER_NAME"/>
+        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME"/>
+        <result property="growerInfo.address" column="GROWER_MAILING_ADDRESS"/>
+        <result property="growerInfo.city" column="GROWER_MAILING_CITY"/>
+        <result property="growerInfo.state" column="GROWER_MAILING_STATE"/>
+        <result property="growerInfo.zip" column="GROWER_MAILING_ZIP_CODE"/>
+        <result property="growerInfo.county" column="GROWER_MAILING_COUNTY"/>
+        <result property="tempLineItem.productUpc" column="UPC_CODE"/>
+        <result property="tempLineItem.productGtin" column="GTIN"/>
+        <result property="tempLineItem.productName" column="PRODUCT_NAME"/>
+        <result property="tempLineItem.salesQuantity.qtyValue" column="SALES_QTY"/>
+        <result property="tempLineItem.salesQuantity.qtyUom" column="SALES_UOM"/>
+        <result property="tempLineItem.equivalentQuantity.qtyValue" column="EQUIVALENT_QTY"/>
+        <result property="tempLineItem.equivalentQuantity.qtyUom" column="EQUIVILENT_QTY_UOM"/>
+        <result property="salesRepWinfield.partnerName" column="SALESREP_NAME"/>
+        <result property="salesRepWinfield.contactName" column="CONTACT_NAME"/>
+        <result property="salesRepWinfield.buyerId" column="SALESREP_ID"/>
+        <result property="salesRepWinfield.address" column="SALESREP_ADDRESS_1"/>
+        <result property="salesRepWinfield.city" column="SALESREP_CITY"/>
+        <result property="salesRepWinfield.state" column="SALESREP_STATE"/>
+        <result property="salesRepWinfield.zip" column="SALESREP_ZIP"/>
+        <result property="salesRepWinfield.county" column="SALESREP_COUNTY"/>
+        <result property="tempLineItem.orderTransactionType" column="Touched_Untouched"/>
         <result property="dealerInfo.techId" column="MDM_TECH_ID"/>
         <result property="growerInfo.techId" column="MDM_TECH_ID"/>
     </resultMap>
@@ -1307,7 +1347,7 @@
     </select>
 
     <!--CUSTPLT-632 - Introducing new Partner Agdata-->
-    <select id="getGPOSAgDataOrders" resultMap="gposWinfield" parameterClass="java.util.Map">
+    <select id="getGPOSAgDataOrders" resultMap="gposWinfieldAgdata" parameterClass="java.util.Map">
         SELECT rptd_doc_nbr,
         detail_seq_nbr,
         sales_order_type_code,

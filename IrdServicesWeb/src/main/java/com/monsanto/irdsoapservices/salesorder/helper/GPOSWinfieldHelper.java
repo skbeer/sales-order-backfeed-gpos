@@ -52,6 +52,7 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
                 }
                 else{
                     deNormalizedOrders = salesOrderDao.getGPOSAgDataOrders(transaction.getLastTransactionDate(), transaction.getGroupCode(),transaction.getCompanyCode());
+                    System.out.println("AGdata Company Code"+transaction.getCompanyCode());
                 }
             }
 

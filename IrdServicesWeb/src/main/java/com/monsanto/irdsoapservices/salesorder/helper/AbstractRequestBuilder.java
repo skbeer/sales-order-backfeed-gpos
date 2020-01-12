@@ -29,7 +29,14 @@ public abstract class AbstractRequestBuilder {
         fromType.setPartnerInformation(partnerInformationType);
 
         ToType toType = new ToType();
-        partnerInformationType = getPartnerInformationForHeader(transactionInfo.getName(), transactionInfo.getCompanyCode(), ListPartnerAgencyAttribute.AGIIS_EBID);
+        //CUSTPLT-632 - Introducing new Partner Agdata
+        if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE))
+        {
+            partnerInformationType = getPartnerInformationForHeader(transactionInfo.getName(), transactionInfo.getCompanyCode(), ListPartnerAgencyAttribute.D_U_N_S);
+        }
+        else {
+            partnerInformationType = getPartnerInformationForHeader(transactionInfo.getName(), transactionInfo.getCompanyCode(), ListPartnerAgencyAttribute.AGIIS_EBID);
+        }
         toType.setPartnerInformation(partnerInformationType);
 
         ThisDocumentIdentifierType thisDocumentIdentifierType = new ThisDocumentIdentifierType();
@@ -128,8 +135,7 @@ public abstract class AbstractRequestBuilder {
                 partnerIdentifierType = new PartnerIdentifierType();
                 partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
                 if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)) {
-                    System.out.println("Inside Abstract Agdata method==="+partnerInfo.getTechId());
-                    partnerIdentifierType.setValue(partnerInfo.getTechId());
+                   partnerIdentifierType.setValue(partnerInfo.getTechId());
                 }
                 else {
                     partnerIdentifierType.setValue(partnerInfo.getAcctId());
