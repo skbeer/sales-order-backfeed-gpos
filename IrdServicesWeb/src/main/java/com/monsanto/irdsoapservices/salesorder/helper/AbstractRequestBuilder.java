@@ -1,5 +1,6 @@
 package com.monsanto.irdsoapservices.salesorder.helper;
 
+import com.monsanto.irdsoapservices.constants.DBConstants;
 import com.monsanto.irdsoapservices.salesorder.constants.XmlConstants;
 import com.monsanto.irdsoapservices.salesorder.domain.PartnerInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
@@ -28,7 +29,14 @@ public abstract class AbstractRequestBuilder {
         fromType.setPartnerInformation(partnerInformationType);
 
         ToType toType = new ToType();
-        partnerInformationType = getPartnerInformationForHeader(transactionInfo.getName(), transactionInfo.getCompanyCode(), ListPartnerAgencyAttribute.AGIIS_EBID);
+        //CUSTPLT-632 - Introducing new Partner Agdata
+        if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE))
+        {
+            partnerInformationType = getPartnerInformationForHeader(transactionInfo.getName(), transactionInfo.getCompanyCode(), ListPartnerAgencyAttribute.D_U_N_S);
+        }
+        else {
+            partnerInformationType = getPartnerInformationForHeader(transactionInfo.getName(), transactionInfo.getCompanyCode(), ListPartnerAgencyAttribute.AGIIS_EBID);
+        }
         toType.setPartnerInformation(partnerInformationType);
 
         ThisDocumentIdentifierType thisDocumentIdentifierType = new ThisDocumentIdentifierType();
@@ -111,8 +119,8 @@ public abstract class AbstractRequestBuilder {
         productIdentifierType.setValue(value);
         return productIdentifierType;
     }
-
-    protected PartnerInformationType getPartnerInformationTypeForBody(PartnerInfo partnerInfo, boolean isGrower) {
+    //CUSTPLT-632 - Introducing new Partner Agdata
+    protected PartnerInformationType getPartnerInformationTypeForBody(PartnerInfo partnerInfo, boolean isGrower, TransactionInfo transactionInfo) {
         PartnerInformationType partnerInformationType = new PartnerInformationType();
         PartnerIdentifierType partnerIdentifierType;
 
@@ -122,12 +130,18 @@ public abstract class AbstractRequestBuilder {
             partnerIdentifierType.setValue(partnerInfo.getEbid());
             partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
         }
-        if(!StringUtils.isNullOrEmpty(partnerInfo.getAcctId())) {
-            partnerIdentifierType = new PartnerIdentifierType();
-            partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
-            partnerIdentifierType.setValue(partnerInfo.getAcctId());
-            partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
-        }
+        //CUSTPLT-632 - Introducing new Partner Agdata
+        if (!StringUtils.isNullOrEmpty(partnerInfo.getAcctId())) {
+                partnerIdentifierType = new PartnerIdentifierType();
+                partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
+                if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)) {
+                   partnerIdentifierType.setValue(partnerInfo.getTechId());
+                }
+                else {
+                    partnerIdentifierType.setValue(partnerInfo.getAcctId());
+                }
+                partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
+            }
 
         if(!StringUtils.isNullOrEmpty(partnerInfo.getNapd())) {
             partnerIdentifierType = new PartnerIdentifierType();
@@ -149,7 +163,7 @@ public abstract class AbstractRequestBuilder {
             partnerIdentifierType.setValue(partnerInfo.getGln());
             partnerInformationType.getPartnerIdentifier().add(partnerIdentifierType);
         }
-        
+
         partnerInformationType.getPartnerName().add(partnerInfo.getPartnerName());
 
         AddressInformationType addressInformationType = new AddressInformationType();

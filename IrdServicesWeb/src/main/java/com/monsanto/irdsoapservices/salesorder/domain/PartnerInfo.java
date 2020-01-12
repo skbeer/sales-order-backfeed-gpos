@@ -22,6 +22,15 @@ public class PartnerInfo {
     String zip;
     String county;
     String postalCountry = "US";
+    String techId;
+
+    public String getTechId() {
+        return techId;
+    }
+
+    public void setTechId(String techId) {
+        this.techId = techId;
+    }
 
     public String getPostalCountry() {
         return postalCountry;

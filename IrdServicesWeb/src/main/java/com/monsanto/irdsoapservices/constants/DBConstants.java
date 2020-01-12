@@ -21,12 +21,15 @@ public class DBConstants {
     public static final String COS_TRAN_TYPE = "DOS";
     public static final String GPOS_TRAN_TYPE = "GPOS";
     public static final String FPOS_CREDITLIST_TYPE = "FPOS;CREDITLIST";
-
     public static final String GPOS_AGRIMINE_TRAN_TYPE = "GPOS;AGRIMINE";
     public static final String GPOS_CLASSIC_TRAN_TYPE = "GPOS;CLASSIC";
     public static final String GPOS_DIRECT_TRAN_TYPE = "GPOS;DIRECT";
+    //CUSTPLT-632 - Introducing new Partner Agdata
+    public static final String GPOS_AGDATA_TRAN_TYPE = "GPOS;AGDATA";
 
     public static final String DIRECT_DATA_SOURCE_TYPE = "DIRECT";
     public static final String AGRIMINE_DATA_SOURCE_TYPE = "AGRIMINE";
     public static final String XML_DATA_SOURCE_TYPE = "XML";
+    //CUSTPLT-632 - Introducing new Partner Agdata
+    public static final String GPOS_AGDATA_SOURCE_TYPE = "AGDATA";
 }
