@@ -1188,7 +1188,6 @@
         AND cgp.division_code = '17'
         AND cgp.sales_org_code = 'US20'
         AND p_st.acct_id = g.acct_id
-        AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK', 'KEYED' ) OR ts.source  = 'WS-XML' <!--AND p_ds.acct_id != 168618-->)
         AND (RTRIM(g.napd_id) IS NOT NULL
         OR RTRIM(gln_map.alias_id) IS NOT NULL)
         AND g.acct_id = gln_map.acct_id(+)
@@ -1270,7 +1269,7 @@
         AND p_sf.party_code = 'SF'
         AND h.tran_id = p_ds.tran_id
         AND p_ds.party_code = 'DS'
-        AND hs.status_id = 2
+        AND hs.status_id = 3
         AND hs.status_code = 'SI'
         AND p_sf.acct_id = cgp.acct_id
         AND cgp.customer_grp_code = bt.dest_alias_id
@@ -1278,7 +1277,6 @@
        <!-- AND bt.dest_alias_id = #groupCode# -->
         AND bt.source_alias_type = 'CustGrp'
         AND trunc(hs.row_modify_date) > #startDate#
-        AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK', 'KEYED' ) OR ts.source  = 'WS-XML' <!--AND p_ds.acct_id != 168618-->)
         union all
         SELECT  0 open_last_run, count (distinct h.tran_id) open_seed_year
         FROM ecg_tran_header h,
@@ -1295,7 +1293,7 @@
         AND p_sf.party_code = 'SF'
         AND h.tran_id = p_ds.tran_id
         AND p_ds.party_code = 'DS'
-        AND hs.status_id = 2
+        AND hs.status_id = 3
         AND hs.status_code = 'SI'
         AND p_sf.acct_id = cgp.acct_id
         AND cgp.customer_grp_code = bt.dest_alias_id
@@ -1303,8 +1301,7 @@
        <!-- AND bt.dest_alias_id = #groupCode# -->
         AND bt.source_alias_type = 'CustGrp'
         AND h.row_entry_date between dd.mkt_yr_begin_date and dd.mkt_yr_end_date
-        AND dd.day_date = trunc(sysdate)
-        AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK', 'KEYED' ) OR ts.source  = 'WS-XML' <!--AND p_ds.acct_id != 168618-->))
+        AND dd.day_date = trunc(sysdate) )
     </select>
 
 </sqlMap>

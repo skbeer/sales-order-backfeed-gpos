@@ -192,6 +192,8 @@
         <result property="tempLineItem.orderTransactionType" column="Touched_Untouched"/>
         <result property="dealerInfo.techId" column="MDM_TECH_ID"/>
         <result property="growerInfo.techId" column="MDM_TECH_ID"/>
+        <result property="tempLineItem.specie_descr" column="SPECIE_DESCR"/>
+        <result property="tempLineItem.seed_co_brand_descr" column="SEED_CO_BRAND_DESCR"/>
     </resultMap>
 
     <select id="getPPOSOrders" resultMap="ppos" parameterClass="java.util.Map">
@@ -1388,7 +1390,9 @@
         salesrep_zip,
         salesrep_county,
         Touched_Untouched,
-        mdm_tech_id
+        mdm_tech_id,
+        specie_descr,
+        seed_co_brand_descr
         FROM (
         SELECT distinct h.rptd_doc_nbr,
         h.tran_id,
@@ -1418,9 +1422,9 @@
         spd.upc_code upc_code,
         spd.legal_descr_1 product_name,
         pps.upc_scc_code gtin,
-        decode(hs.status_id,'5','0',d.ssu_qty) sales_qty,
+        d.ssu_qty sales_qty,
         decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
-        decode(hs.status_id,'5','0',d.ssu_qty) equivalent_qty,
+        d.ssu_qty equivalent_qty,
         'UN' equivilent_qty_uom,
         cad.name_1 salesrep_name,
         salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
@@ -1431,7 +1435,9 @@
         cad.mailing_zip_code salesrep_zip,
         cad.mailing_county salesrep_county,
         decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched,
-        mdm.MDM_TECH_ID
+        mdm.MDM_TECH_ID,
+        spd.specie_descr,
+        spd.seed_co_brand_descr
         FROM ecg_tran_header h,
         ecg_tran_detail d,
         ecg_tran_party p_sf,
@@ -1474,9 +1480,9 @@
         where h1.tran_id = hs1.tran_id
         and h1.tran_id = tp1.tran_id
         and tp1.party_code = 'SF'
-        and hs1.status_code = 'SI'
-        and hs1.status_id in ( 3, 5)
+        and hs1.status_id = 3
         and hs1.row_modify_date > #startDate#
+        AND SUBSTR(dd.mkt_yr, 1,4) >= '2020'
         and h1.rptd_doc_nbr = h.rptd_doc_nbr
         and tp1.acct_id = p_sf.acct_id)
         AND p_sf.acct_id = cad.acct_id
@@ -1488,11 +1494,10 @@
             AND bt.alias_program = 'CDW749RT'
             AND bt.source_alias_type = 'CustGrp'
         </isNull>
-        AND hs.status_id in ( 3, 5)
+        AND hs.status_id = 3
         <isNull property="companyCode">
             AND spd.OWNED_LICENSED_CODE = 'OWNED'
         </isNull>
-        AND hs.status_code = 'SI'
         AND dd.date_key = dpm.date_key
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND NVL (cgp.mfd_flag, 'N') != 'X'
@@ -1502,34 +1507,18 @@
             AND cgp.sales_org_code = 'US20'
         </isNull>
         AND p_st.acct_id = g.acct_id
-        <isNull property="companyCode">
-            AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK','KEYED') OR ts.source = 'WS-XML')
-        </isNull>
-        <isNotNull property="companyCode">
-            AND ts.SOURCE IN ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK','WS-XML', 'KEYED')
-        </isNotNull>
         AND g.acct_id = gln_map.acct_id(+)
         AND g.grower_key  = mdm.grower_key
-        AND spd.BRAND_DESCR not like '%ALFALF%'
+        AND spd.SEED_BRAND_DESCR in ('ASGROW','DEKALB','DELTA PINE')
+        AND spd.SPECIE_DESCR IN ('CANOLA','CORN','COTTON','SORGHUM','SOYBEAN' )
+        AND spd.product_class_descr NOT IN ('NOT APPLICABLE','INVALID','TO BE DETERMINE')
+        AND mdm.SOURCE_SYSTEM_CODE in ('IRD','ECC-CB','ECC-RB')
+        AND mdm.BRAND_FAMILY_DESCR = 'NATIONAL'
+        AND gln_map.alias_id IS NOT NULL
+        AND H.SALE_TYPE='GROWER'
         AND gln_map.system_type_code(+) = 'GLN'
         AND gln_map.rank(+) = 1
         AND gln_map.active_flag(+) = 'Y'
-        AND CASE
-        WHEN spd.specie_code = 'L'
-        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-        THEN 'WINTER CANOLA'
-        ELSE 'MARKET YEAR'
-        END = dpm.period_type
-        AND CASE
-        WHEN spd.specie_code = 'L'
-        AND SUBSTR (dpm.period_descr, 1, 4) >= '2006'
-        AND SUBSTR (spd.trait_code, 1, 1) = 'W'
-        THEN 0
-        WHEN TO_NUMBER(TO_CHAR(SYSDATE, 'MM')) > 8
-        THEN 1
-        ELSE 0
-        END = dpm.curr_period_offset
         )
         group by rptd_doc_nbr,
         detail_seq_nbr,
@@ -1569,7 +1558,9 @@
         salesrep_zip,
         salesrep_county,
         Touched_Untouched,
-        mdm_tech_id
+        mdm_tech_id,
+        specie_descr,
+        seed_co_brand_descr
         order by rptd_doc_nbr, dealer_acct_id, grower_acct_id
     </select>
 

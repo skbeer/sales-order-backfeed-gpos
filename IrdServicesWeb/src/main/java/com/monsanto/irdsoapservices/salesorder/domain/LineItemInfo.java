@@ -20,6 +20,25 @@ public class LineItemInfo {
     String pendingQty;
     String qtyUom = "UN";
     String orderTransactionType;
+    String specie_descr;
+
+    public String getSpecie_descr() {
+        return specie_descr;
+    }
+
+    public void setSpecie_descr(String specie_descr) {
+        this.specie_descr = specie_descr;
+    }
+
+    public String getSeed_co_brand_descr() {
+        return seed_co_brand_descr;
+    }
+
+    public void setSeed_co_brand_descr(String seed_co_brand_descr) {
+        this.seed_co_brand_descr = seed_co_brand_descr;
+    }
+
+    String seed_co_brand_descr;
 
     public String getOrderQty() {
         return orderQty;
