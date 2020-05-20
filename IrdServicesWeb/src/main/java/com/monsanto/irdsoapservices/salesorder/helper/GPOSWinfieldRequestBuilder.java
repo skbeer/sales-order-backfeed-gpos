@@ -65,6 +65,7 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
               salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName()));*/
             //CUSTPLT-632 - Introducing new Partner Agdata
             productidentificationType = getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName());
+            salesOrderLineItemType.getProductIdentification().add(productidentificationType);
             productidentificationType = (getProductionIdentificationType(ListProductIDAgency.UPC, lineItem.getProductUpc(), lineItem.getProductName()));
             if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)){
                 getAgDataInfo(lineItem,productidentificationType);
@@ -86,27 +87,27 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
     //CUSTPLT-632 - Introducing new Partner Agdata
     private ProductidentificationType getAgDataInfo(LineItemInfo lineItem,ProductidentificationType productidentificationType)
     {
-         if(lineItem!=null && !StringUtils.isNullOrEmpty(lineItem.getProductName()) ){
-            if(lineItem.getProductName().substring(0, 2).equals("DP")) {
-                productidentificationType.setBrandFamily("National");
+         if(lineItem!=null && !StringUtils.isNullOrEmpty(lineItem.getSpecie_descr()) && !StringUtils.isNullOrEmpty(lineItem.getSeed_co_brand_descr())){
+            if((lineItem.getSeed_co_brand_descr().equals("DELTA PINE") && (lineItem.getSpecie_descr().equals("COTTON")))) {
+                productidentificationType.setBrandFamily("NATIONAL");
                 productidentificationType.setBrandName("DELTAPINE COTTON");
             }
-            else if(lineItem.getProductName().substring(0, 1).equals("A")) {
-                productidentificationType.setBrandFamily("National");
+            else if((lineItem.getSeed_co_brand_descr().equals("ASGROW") && (lineItem.getSpecie_descr().equals("SOYBEANS")))) {
+                productidentificationType.setBrandFamily("NATIONAL");
                 productidentificationType.setBrandName("ASGROW SOYBEANS");
             }
-            else if((lineItem.getProductName().substring(0, 3).equals("DKS")) || (lineItem.getProductName().substring(0, 3).equals("DK2")) || (lineItem.getProductName().substring(0, 3).equals("PUL")))  {
-                productidentificationType.setBrandFamily("National");
+            else if((lineItem.getSeed_co_brand_descr().equals("DEKALB") && (lineItem.getSpecie_descr().equals("SORGHUM"))))  {
+                productidentificationType.setBrandFamily("NATIONAL");
                 productidentificationType.setBrandName("DEKALB SORGHUM");
             }
-            else if((lineItem.getProductName().substring(0, 3).equals("DKC")) || (lineItem.getProductName().substring(0, 2).equals("EB")))
+            else if((lineItem.getSeed_co_brand_descr().equals("DEKALB") && (lineItem.getSpecie_descr().equals("CORN"))))
             {
-                productidentificationType.setBrandFamily("National");
+                productidentificationType.setBrandFamily("NATIONAL");
                 productidentificationType.setBrandName("DEKALB CORN");
             }
-            else if((lineItem.getProductName().substring(0, 3).equals("DKL")) || (lineItem.getProductName().substring(0, 3).equals("DKT")))
+            else if((lineItem.getSeed_co_brand_descr().equals("DEKALB") && (lineItem.getSpecie_descr().equals("CANOLA"))))
             {
-                productidentificationType.setBrandFamily("National");
+                productidentificationType.setBrandFamily("NATIONAL");
                 productidentificationType.setBrandName("DEKALB CANOLA");
             }
         }
