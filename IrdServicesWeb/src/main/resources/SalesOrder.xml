@@ -287,7 +287,7 @@
         AND cgp.sales_org_code = 'US20'
         AND gd.primary_contact_id = acm.contact_id(+)
         AND dd.curr_fy_offset = 0
-        AND psgo.crm_obj_id = orders_by_date.crm_obj_id
+        <!--AND psgo.crm_obj_id = orders_by_date.crm_obj_id-->
         order by <!--psgo.crm_obj_id,--> order_item_id
     </select>
 
