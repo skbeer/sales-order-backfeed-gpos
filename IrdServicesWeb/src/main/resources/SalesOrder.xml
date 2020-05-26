@@ -195,10 +195,12 @@
         <result property="tempLineItem.specie_descr" column="SPECIE_DESCR"/>
         <result property="tempLineItem.seed_co_brand_descr" column="SEED_CO_BRAND_DESCR"/>
     </resultMap>
-
+	
+	<!-- CUSTPLT - 651 , LEPSI IRD For B2B. In each query, cdw/cdw_dm/cdw_dm_share schemas are replaced with d1_ms schema-->
     <select id="getPPOSOrders" resultMap="ppos" parameterClass="java.util.Map">
         SELECT
-        psgo.crm_obj_id,
+        <!--psgo.crm_obj_id,-->
+        psgo.order_id || ' ' || psgo.order_item_id crm_obj_id,
         psgo.order_id,
         psgo.order_item_id,
         'RT' sales_order_type_code,
@@ -225,9 +227,11 @@
         spd.upc_code,
         spd.legal_descr_1 product_name,
         pps.upc_scc_code gtin,
-        psgo.ppos_seed_base_qty sales_qty,
+        <!--psgo.ppos_seed_base_qty sales_qty, -->
+        psgo.os_order_ssu_qty/psgo.base_to_ssu_uom_conv_fctr sales_qty,
         decode (ud.uom_code,'LB','LBR', ud.uom_code) sales_uom,
-        psgo.ppos_seed_ssu_qty equivilent_qty,
+        <!--psgo.ppos_seed_ssu_qty equivilent_qty, -->
+        psgo.os_order_ssu_qty equivilent_qty,
         'UN' equivilent_qty_uom,
         ss.name_1 || ' ' || ss.name_3 salesrep_name,
         ss.alias_ss_code salesrep_id,
@@ -236,34 +240,47 @@
         ss.city salesrep_city,
         ss.state_code salesrep_state,
         ss.zip_code salesrep_zip
-        FROM dm_ppos_seed_grower_order_c_vw psgo,
-        (select distinct crm_obj_id
+        <!--FROM dm_ppos_seed_grower_order_c_vw psgo,-->
+        FROM d1_ms.OS_SALES_ORDER_ITEM_AS psgo,
+        <!--(select distinct crm_obj_id
         from dm_ppos_seed_grower_order_c_vw
-        where row_eff_date > #startDate#) orders_by_date,
-        ds_seed_product_dim spd,
+        where row_eff_date > #startDate#) orders_by_date,-->
+        <!--ds_seed_product_dim spd,
         ds_channel_account_dim cad,
-        ds_grower_dim gd,
+        ds_grower_dim gd, -->
+        d1_ms.seed_product_dim spd,
+        d1_ms.channel_account_dim cad,
+        d1_ms.grower_dim gd,
         s_acct_sales_area cgp,
-        ds_date_dim dd,
-        ds_unit_of_measure_dim ud,
+        <!--ds_date_dim dd,
+        ds_unit_of_measure_dim ud,-->
+        d1_ms.date_dim dd,
+        d1_ms.unit_of_measure_dim ud,
+        s_seedco_salesrep_to_acct ssa,
         s_seedco_salesrep ss,
         s_prod_package_struct pps,
         s_acct_contact_mailing_dnml acm,
         (SELECT DISTINCT
         dest_alias_id cust_grp_code, source_alias_id cust_grp_name
-        FROM biotech_translation
+        <!--FROM biotech_translation -->
+        FROM d1_ms.biotech_translation
         WHERE 'CDW749RT' = alias_program
         AND #groupCode# = dest_alias_id
         AND 'CustGrp' = source_alias_type) sc
         WHERE psgo.product_key = spd.product_key
-        AND psgo.ship_from_acct_key = cad.acct_key
+        <!--AND psgo.ship_from_acct_key = cad.acct_key
         AND psgo.ship_to_grower_key = gd.grower_key
-        AND psgo.order_date_key = dd.date_key
+        AND psgo.order_date_key = dd.date_key -->
+        AND psgo.ship_to_acct_key = cad.acct_key
+        AND psgo.sold_to_acct_key = gd.grower_key
+        AND psgo.order_entry_date_key = dd.date_key
         AND psgo.base_uom_key = ud.uom_key
         AND pps.prod_id = spd.product_id
         AND cgp.acct_id = cad.acct_id(+)
         AND cgp.customer_grp_code = sc.cust_grp_code
-        AND psgo.seedco_sales_rep_code = ss.seedco_salesrep_id(+)
+        <!--AND psgo.seedco_sales_rep_code = ss.seedco_salesrep_id(+)-->
+        AND cad.acct_id = ssa.acct_id(+)
+        AND ssa.seedco_salesrep_id = ss.seedco_salesrep_id(+)
         AND NVL (cgp.mfd_flag, 'N') != 'X'
         AND cgp.distribution_channel_code = '90'
         AND cgp.division_code = '17'
@@ -271,7 +288,7 @@
         AND gd.primary_contact_id = acm.contact_id(+)
         AND dd.curr_fy_offset = 0
         AND psgo.crm_obj_id = orders_by_date.crm_obj_id
-        order by psgo.crm_obj_id, order_item_id
+        order by <!--psgo.crm_obj_id,--> order_item_id
     </select>
 
     <select id="getCOSOrders" resultMap="cos" parameterClass="java.util.Map">
@@ -292,30 +309,34 @@
         sum(ocf.os_shipped_qty) shipped_qty,
         sum(ocf.os_requested_qty - ocf.os_shipped_qty) pending_qty,
         sum(ocf.os_open_request_qty) remaining_qty
-        FROM ds_os_daily_order_fulfillment ocf,
+        <!--FROM ds_os_daily_order_fulfillment ocf,
         (select distinct ocf.rtlr_acct_key
         from ds_os_daily_order_fulfillment ocf,
         dm_date_dim dd
         where 1=1
         AND dd.date_key = ocf.eff_date_key
         AND dd.curr_fy_offset = 0
-        AND dd.day_date > #startDate#) orders_by_date,
-        ds_channel_account_dim cad,
-        dm_date_dim dd,
+        AND dd.day_date > #startDate#) orders_by_date,-->
+        FROM d1_ms.os_channel_fulfillment_mv ocf,
+        <!--ds_channel_account_dim cad,
+        dm_date_dim dd,-->
+        d1_ms.channel_account_dim_vw cad,
+        d1_ms.date_dim dd,
         s_acct_sales_area cgp,
         s_prod_package_struct pps,
-        ds_seed_product_dim spd
+        d1_ms.seed_product_dim spd
         WHERE cad.acct_key = ocf.rtlr_acct_key
         AND dd.date_key = ocf.eff_date_key
-        AND ocf.rtlr_acct_key = orders_by_date.rtlr_acct_key
+       <!-- AND ocf.rtlr_acct_key = orders_by_date.rtlr_acct_key-->
         AND dd.curr_fy_offset = 0
         AND cgp.customer_grp_code = #groupCode#
+        AND dd.day_date > #startDate#
         AND cgp.acct_id = cad.acct_id
         AND pps.prod_id = spd.product_id
         AND spd.product_key = ocf.product_key
         AND spd.product_class_id != 'N'
         AND cgp.sales_org_code='US20'
-        AND cgp.distribution_channel_code=90
+        AND cgp.distribution_channel_code='90'
         AND cgp.division_code=17
         GROUP BY
         cad.name_1,
@@ -373,8 +394,10 @@
         cad.mailing_state_code salesrep_state,
         cad.mailing_zip_code salesrep_zip,
         cad.mailing_county salesrep_county
-        FROM dm_active_grower_dim g,
-        dm_active_channel_account_dim cad,
+        <!--FROM dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,-->
+        FROM d1_ms.active_grower_dim_mv g,
+        d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
         (select *
         from (select acct_id, system_type_code,
@@ -385,7 +408,8 @@
         )
         where begin_date = max_date
         )gln_map,
-        dm_date_dim dd,
+        <!--dm_date_dim dd, -->
+        d1_ms.date_dim dd,
         (SELECT gec.ship_from_acct_key seller_acct_key,
         gec.ship_to_grower_key grower_key, gec.invc_date_key,
         gec.invc_id,
@@ -455,14 +479,19 @@
         SPD.BASE_TO_SSU_FACTOR,
         SPD.GRADE_SIZE_CODE))),2)
         ) delivered_ssu_qty
-        FROM dm_os_gpos_seed_dsi_invc_vw gec,
+        <!--FROM dm_os_gpos_seed_dsi_invc_vw gec,-->
+        FROM d1_ms.gpos_seed_dsi_invoice gec,
         (select distinct invc_id, ship_from_acct_key
-        from dm_os_gpos_seed_dsi_invc_vw
+        <!--from dm_os_gpos_seed_dsi_invc_vw -->
+        from d1_ms.gpos_seed_dsi_invoice
         where row_eff_date > #startDate#) orders_by_date,
-        dm_active_channel_account_dim cad,
-        dm_seed_product_dim spd,
+        <!--dm_active_channel_account_dim cad,
+        dm_seed_product_dim spd,-->
+        d1_ms.active_channel_account_dim_mv cad,
+        d1_ms.seed_product_dim spd,
         s_prod s,
-        ds_unit_of_measure_dim ud,
+        <!--ds_unit_of_measure_dim ud,-->
+        d1_ms.unit_of_measure_dim ud,
         ( select distinct
         t_prod_dim.PRODUCT_KEY as PRODUCT_KEY,
         t_uom_dim.UOM_KEY as PKG_UOM_KEY,
@@ -470,20 +499,26 @@
         t_gtin_map.UOM_CODE as SALES_UOM
         from
         s_prod_package_struct t_gtin_map,
-        dm_seed_product_dim t_prod_dim,
-        dm_unit_of_measure_dim t_uom_dim
+        <!--dm_seed_product_dim t_prod_dim,
+        dm_unit_of_measure_dim t_uom_dim-->
+        d1_ms.seed_product_dim t_prod_dim,
+        d1_ms.unit_of_measure_dim t_uom_dim
         where
         t_gtin_map.PROD_ID = t_prod_dim.PRODUCT_ID
         and t_gtin_map.UOM_CODE = t_uom_dim.UOM_CODE
         ) gtin_map,
-        dm_date_period_map dpm,
+        <!--dm_date_period_map dpm,-->
+        d1_ms.date_period_map dpm,
         (SELECT DISTINCT
         dest_alias_id cust_grp_code, source_alias_id cust_grp_name
-        FROM biotech_translation
+        <!--FROM biotech_translation-->
+        FROM d1_ms.biotech_translation
         WHERE 'CDW749RT' = alias_program
         AND #groupCode# = dest_alias_id
         AND 'CustGrp' = source_alias_type) sc,
-        dm_data_source_dim ds
+        <!--dm_data_source_dim ds
+        WHERE gec.invc_id = orders_by_date.invc_id-->
+        d1_ms.data_source_dim ds
         WHERE gec.invc_id = orders_by_date.invc_id
         AND gec.ship_from_acct_key = orders_by_date.ship_from_acct_key
         AND gec.ship_date_key = dpm.date_key
@@ -681,8 +716,10 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        dm_active_grower_dim g,
-        dm_active_channel_account_dim cad,
+        <!--dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,-->
+		d1_ms.active_grower_dim_mv g,
+        d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
         (select *
         from (select acct_id, system_type_code,
@@ -693,13 +730,17 @@
         )
         where begin_date = max_date
         )gln_map,
-        dm_date_dim dd,
+		<!--dm_date_dim dd,-->
+		d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        dm_seed_product_dim spd,
+       <!-- dm_seed_product_dim spd, -->
+	   d1_ms.seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm
+      <!-- dm_date_period_map dpm -->
+	   d1_ms.date_period_map dpm
         <isNull property="companyCode">
-            ,biotech_translation bt
+           <!-- ,biotech_translation bt -->
+		   ,d1_ms.biotech_translation bt
         </isNull>
         WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
@@ -846,8 +887,10 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        dm_active_grower_dim g,
-        dm_active_channel_account_dim cad,
+        <!--dm_active_grower_dim g,
+        dm_active_channel_account_dim cad, -->
+		d1_ms.active_grower_dim_mv g,
+        d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
         (select *
         from (select acct_id, system_type_code,
@@ -858,12 +901,16 @@
         )
         where begin_date = max_date
         )gln_map,
-        dm_date_dim dd,
+        <!--dm_date_dim dd,-->
+		d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        dm_seed_product_dim spd,
+       <!-- dm_seed_product_dim spd, -->
+	    d1_ms.seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm,
-        biotech_translation bt
+       <!-- dm_date_period_map dpm,
+        biotech_translation bt -->
+		d1_ms.date_period_map dpm,
+        d1_ms.biotech_translation bt
         WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
@@ -1031,8 +1078,10 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        dm_active_grower_dim g,
-        dm_active_channel_account_dim cad,
+        <!-- dm_active_grower_dim g,
+        dm_active_channel_account_dim cad, -->
+		d1_ms.active_grower_dim_mv g,
+        d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
         (select *
         from (select acct_id, system_type_code,
@@ -1043,11 +1092,14 @@
         )
         where begin_date = max_date
         )gln_map,
-        dm_date_dim dd,
+        <!--dm_date_dim dd, -->
+		d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        dm_seed_product_dim spd,
+        <!-- dm_seed_product_dim spd,-->
+		d1_ms.seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm
+        <!--dm_date_period_map dpm-->
+		d1_ms.date_period_map dpm
         WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
@@ -1238,8 +1290,10 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        dm_active_grower_dim g,
-        dm_active_channel_account_dim cad,
+        <!--dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,-->
+		d1_ms.active_grower_dim_mv g,
+        d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
         (select *
         from (select acct_id, system_type_code,
@@ -1250,11 +1304,14 @@
         )
         where begin_date = max_date
         )gln_map,
-        dm_date_dim dd,
+        <!--dm_date_dim dd,-->
+		d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        dm_seed_product_dim spd,
+        <!--dm_seed_product_dim spd, -->
+		d1_ms.seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm
+        <!-- dm_date_period_map dpm -->
+		d1_ms.date_period_map dpm
         WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
@@ -1445,8 +1502,10 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        dm_active_grower_dim g,
-        dm_active_channel_account_dim cad,
+        <!--dm_active_grower_dim g,
+        dm_active_channel_account_dim cad, -->
+		d1_ms.active_grower_dim_mv g,
+        d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
         (select *
         from (select acct_id, system_type_code,
@@ -1457,14 +1516,19 @@
         )
         where begin_date = max_date
         )gln_map,
-        dm_date_dim dd,
+        <!-- dm_date_dim dd, -->
+		d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        dm_seed_product_dim spd,
+        <!-- dm_seed_product_dim spd, -->
+		d1_ms.seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm,
-        cdw_dm.CBR_GROWER_DIM mdm
+        <!-- dm_date_period_map dpm,
+        cdw_dm.CBR_GROWER_DIM mdm -->
+		d1_ms.date_period_map dpm,
+        d1_ms.CBR_GROWER_DIM mdm
         <isNull property="companyCode">
-            ,biotech_translation bt
+            <!-- ,biotech_translation bt -->
+			,d1_ms.biotech_translation bt
         </isNull>
         WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id

@@ -20,7 +20,7 @@
     </resultMap>
 
     <select id="getGrowerCreditInfo" resultMap="growerCreditMap" parameterClass="java.util.Map">
-
+        <!-- CUSTPLT-651 Changes made by VVVL for LEPSI AGCC schema replaced with AGSHARE-->
         SELECT DISTINCT
              ATA.ACCT_ID                GROWER_ACCT_ID
             ,AX.ALIAS_ID                GLN
@@ -40,34 +40,34 @@
             ,ATA.BEGIN_DATE             DATE_APPROVED
             ,ATA.SIGNER_ACCT_ID         DEALER_ACCT_ID
         FROM
-            AGCC.ACCT_TO_AGREEMENT_MV ATA
+        AGSHARE.ACCT_TO_AGREEMENT_MV ATA
         INNER JOIN
-            AGCC.ACCT_SALES_AREA_MV ASA_DEALER ON (ASA_DEALER.ACCT_ID = ATA.SIGNER_ACCT_ID)
+        AGSHARE.ACCT_SALES_AREA_MV ASA_DEALER ON (ASA_DEALER.ACCT_ID = ATA.SIGNER_ACCT_ID)
         INNER JOIN
-            AGCC.ACCT_SALES_AREA_MV ASA_GROWER ON (ASA_GROWER.ACCT_ID = ATA.ACCT_ID)
+        AGSHARE.ACCT_SALES_AREA_MV ASA_GROWER ON (ASA_GROWER.ACCT_ID = ATA.ACCT_ID)
         INNER JOIN
-            AGCC.ACCT_EXT_DNML AED ON (AED.ACCT_ID = ATA.ACCT_ID)
+        AGSHARE.ACCT_EXT_DNML AED ON (AED.ACCT_ID = ATA.ACCT_ID)
         <!--  CUSTPLT-616 Changes made by VVVL as part of this JIRA - Start-->
         LEFT OUTER JOIN
-           AGCC.ACCT_XREF_MV AXD
+        AGSHARE.ACCT_XREF_MV AXD
                                 ON ( AXD.ACCT_ID         = ATA.SIGNER_ACCT_ID
                                 AND AXD.SYSTEM_TYPE_CODE = 'GLN'
                                 AND AXD.ACTIVE_FLAG      = 'Y'
                                 AND AXD.RANK             = 1 )
         <!--  CUSTPLT-616 Changes made by VVVL as part of this JIRA - End-->
         LEFT OUTER JOIN
-            AGCC.ACCT_XREF_MV AX ON (    AX.ACCT_ID          = ATA.ACCT_ID
+        AGSHARE.ACCT_XREF_MV AX ON (    AX.ACCT_ID          = ATA.ACCT_ID
                                      AND AX.SYSTEM_TYPE_CODE = 'GLN'
                                      AND AX.ACTIVE_FLAG      = 'Y'
                                      AND AX.RANK             = 1
                                     )
         LEFT OUTER JOIN
-                    AGCC.ACCT_XREF_MV ASP ON (    ASP.ACCT_ID          = ATA.ACCT_ID
+        AGSHARE.ACCT_XREF_MV ASP ON (    ASP.ACCT_ID          = ATA.ACCT_ID
                                              AND ASP.SYSTEM_TYPE_CODE = 'SAP'
                                              AND ASP.ACTIVE_FLAG      = 'Y'
 
         <!--Added newly as part of WO0000001651892 -->                                    )
-        INNER JOIN AGCC.ACCT_TO_ATTR_MV AMV ON ( ATA.SIGNER_ACCT_ID=AMV.acct_id
+        INNER JOIN AGSHARE.ACCT_TO_ATTR_MV AMV ON ( ATA.SIGNER_ACCT_ID=AMV.acct_id
                                              AND AMV.ACCT_ATTR_CODE ='SSC FPOS'
                                             )
         WHERE

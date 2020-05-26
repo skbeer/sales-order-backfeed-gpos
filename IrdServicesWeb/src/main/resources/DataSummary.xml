@@ -117,8 +117,10 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        dm_active_grower_dim g,
-        dm_active_channel_account_dim cad,
+        <!--dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,-->
+		d1_ms.active_grower_dim_mv g,
+        d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
         (select *
         from (select acct_id, system_type_code,
@@ -129,12 +131,16 @@
         )
         where begin_date = max_date
         )gln_map,
-        dm_date_dim dd,
+        <!--dm_date_dim dd, -->
+		d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        dm_seed_product_dim spd,
+        <!--dm_seed_product_dim spd, -->
+		d1_ms.seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm,
-        biotech_translation bt
+        <!--dm_date_period_map dpm,
+        biotech_translation bt -->
+		d1_ms.date_period_map dpm,
+        d1_ms.biotech_translation bt
         WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
@@ -336,8 +342,10 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        dm_active_grower_dim g,
-        dm_active_channel_account_dim cad,
+        <!--dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,-->
+		d1_ms.active_grower_dim_mv g,
+        d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
         (select *
         from (select acct_id, system_type_code,
@@ -348,12 +356,16 @@
         )
         where begin_date = max_date
         )gln_map,
-        dm_date_dim dd,
+        <!--dm_date_dim dd, -->
+		d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        dm_seed_product_dim spd,
+        <!--dm_seed_product_dim spd,-->
+		d1_ms.seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm,
-        biotech_translation bt
+        <!--dm_date_period_map dpm,
+        biotech_translation bt -->
+		d1_ms.date_period_map dpm,
+        d1_ms.biotech_translation bt
         WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
@@ -546,8 +558,10 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        dm_active_grower_dim g,
-        dm_active_channel_account_dim cad,
+        <!--dm_active_grower_dim g,
+        dm_active_channel_account_dim cad, -->
+		d1_ms.active_grower_dim_mv g,
+        d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
         (select *
         from (select acct_id, system_type_code,
@@ -558,11 +572,14 @@
         )
         where begin_date = max_date
         )gln_map,
-        dm_date_dim dd,
+        <!--dm_date_dim dd,-->
+		d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        dm_seed_product_dim spd,
+        <!--dm_seed_product_dim spd,-->
+		d1_ms.seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm
+        <!--dm_date_period_map dpm-->
+		d1_ms.date_period_map dpm
         WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
@@ -756,8 +773,10 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        dm_active_grower_dim g,
-        dm_active_channel_account_dim cad,
+        <!--dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,-->
+		d1_ms.active_grower_dim_mv g,
+        d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
         (select *
         from (select acct_id, system_type_code,
@@ -768,11 +787,14 @@
         )
         where begin_date = max_date
         ) gln_map,
-        dm_date_dim dd,
+        <!--dm_date_dim dd, -->
+		d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        dm_seed_product_dim spd,
+        <!--dm_seed_product_dim spd,-->
+		d1_ms.seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm
+        <!--dm_date_period_map dpm-->
+		d1_ms.date_period_map dpm
         WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
@@ -876,7 +898,8 @@
         ecg_tran_party p_sf,
         ecg_tran_party p_ds,
         s_acct_sales_area cgp,
-        biotech_translation bt
+        <!--biotech_translation bt-->
+		d1_ms.biotech_translation bt
         WHERE h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
         AND h.tran_id = p_sf.tran_id
@@ -899,9 +922,11 @@
         ecg_tran_header_status hs,
         ecg_tran_party p_sf,
         ecg_tran_party p_ds,
-        dm_date_dim dd,
+        <!--dm_date_dim dd,-->
+		d1_ms.date_dim dd,
         s_acct_sales_area cgp,
-        biotech_translation bt
+        <!--biotech_translation bt-->
+		d1_ms.biotech_translation bt
         WHERE h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
         AND h.tran_id = p_sf.tran_id
@@ -930,7 +955,8 @@
         ecg_tran_party p_ds,
         ecg_tran_header_status hs,
         s_acct_sales_area cgp,
-        biotech_translation bt
+        <!--biotech_translation bt-->
+		d1_ms.biotech_translation bt
         WHERE h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
         AND h.tran_id = p_sf.tran_id
@@ -968,8 +994,10 @@
         ecg_tran_party p_ds,
         ecg_tran_header_status hs,
         s_acct_sales_area cgp,
-        dm_date_dim dd,
-        biotech_translation bt
+        <!--dm_date_dim dd,
+        biotech_translation bt-->
+		d1_ms.date_dim dd,
+        d1_ms.biotech_translation bt
         WHERE h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
         AND h.tran_id = p_sf.tran_id
@@ -991,7 +1019,8 @@
         FROM ecg_tran_header h,
         ecg_tracking_source ts,
         ecg_tran_party p_ds,
-        dm_date_dim dd,
+        <!--dm_date_dim dd,-->
+		d1_ms.date_dim dd,
         ecg_tran_header_status hs
         WHERE h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
@@ -1022,7 +1051,8 @@
         FROM ecg_tran_header h,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        dm_date_dim dd
+        <!--dm_date_dim dd -->
+		d1_ms.date_dim dd
         WHERE
         h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
@@ -1131,8 +1161,10 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        dm_active_grower_dim g,
-        dm_active_channel_account_dim cad,
+        <!--dm_active_grower_dim g,
+        dm_active_channel_account_dim cad,-->
+		d1_ms.active_grower_dim_mv g,
+        d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
         (select *
         from (select acct_id, system_type_code,
@@ -1143,12 +1175,16 @@
         )
         where begin_date = max_date
         )gln_map,
-        dm_date_dim dd,
+        <!--dm_date_dim dd,-->
+		d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        dm_seed_product_dim spd,
+        <!--dm_seed_product_dim spd,-->
+		d1_ms.seed_product_dim spd,
         s_prod_package_struct pps,
-        dm_date_period_map dpm,
-        biotech_translation bt
+        <!--dm_date_period_map dpm,
+        biotech_translation bt-->
+		d1_ms.date_period_map dpm,
+        d1_ms.biotech_translation bt
         WHERE h.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
@@ -1262,7 +1298,8 @@
         ecg_tran_party p_sf,
         ecg_tran_party p_ds,
         s_acct_sales_area cgp,
-        biotech_translation bt
+        <!--biotech_translation bt-->
+		d1_ms.biotech_translation bt
         WHERE h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
         AND h.tran_id = p_sf.tran_id
@@ -1284,9 +1321,11 @@
         ecg_tran_header_status hs,
         ecg_tran_party p_sf,
         ecg_tran_party p_ds,
-        dm_date_dim dd,
+        <!--dm_date_dim dd,-->
+		d1_ms.date_dim dd,
         s_acct_sales_area cgp,
-        biotech_translation bt
+        <!--biotech_translation bt-->
+		d1_ms.biotech_translation bt
         WHERE h.tracking_id = ts.tracking_id
         AND h.tran_id = hs.tran_id
         AND h.tran_id = p_sf.tran_id

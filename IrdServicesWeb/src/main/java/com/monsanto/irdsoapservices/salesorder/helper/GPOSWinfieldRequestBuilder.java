@@ -92,9 +92,9 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
                 productidentificationType.setBrandFamily("NATIONAL");
                 productidentificationType.setBrandName("DELTAPINE COTTON");
             }
-            else if((lineItem.getSeed_co_brand_descr().equals("ASGROW") && (lineItem.getSpecie_descr().equals("SOYBEANS")))) {
+            else if((lineItem.getSeed_co_brand_descr().equals("ASGROW") && (lineItem.getSpecie_descr().equals("SOYBEAN")))) {
                 productidentificationType.setBrandFamily("NATIONAL");
-                productidentificationType.setBrandName("ASGROW SOYBEANS");
+                productidentificationType.setBrandName("ASGROW SOYBEAN");
             }
             else if((lineItem.getSeed_co_brand_descr().equals("DEKALB") && (lineItem.getSpecie_descr().equals("SORGHUM"))))  {
                 productidentificationType.setBrandFamily("NATIONAL");
