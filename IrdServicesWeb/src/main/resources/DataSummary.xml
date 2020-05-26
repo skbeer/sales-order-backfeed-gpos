@@ -19,6 +19,7 @@
         <result property="totalDailyOpenInvoices" column="Total_Daily_Open_Invoices" />
     </resultMap>
 
+    !-- CUSTPLT - 651 , LEPSI IRD For B2B. In each query, cdw/cdw_dm/cdw_dm_share schemas are replaced with d1_ms schema-->
     <select id="getDataSummaryDirect" resultMap="dataSummaryResult" parameterClass="java.util.Map">
         SELECT count( distinct rptd_doc_nbr) "Total_Invoices",
         count (detail_seq_nbr) "Total_Line_Items",
