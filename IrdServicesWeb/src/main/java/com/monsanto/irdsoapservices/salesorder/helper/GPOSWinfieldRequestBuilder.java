@@ -92,6 +92,7 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
                 productidentificationType.setBrandFamily("NATIONAL");
                 productidentificationType.setBrandName("DELTAPINE COTTON");
             }
+            //WO0000002297728 - Change Soybeans to Soybean.
             else if((lineItem.getSeed_co_brand_descr().equals("ASGROW") && (lineItem.getSpecie_descr().equals("SOYBEAN")))) {
                 productidentificationType.setBrandFamily("NATIONAL");
                 productidentificationType.setBrandName("ASGROW SOYBEAN");
