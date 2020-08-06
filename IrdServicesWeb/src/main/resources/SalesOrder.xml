@@ -282,9 +282,10 @@
         AND cad.acct_id = ssa.acct_id(+)
         AND ssa.seedco_salesrep_id = ss.seedco_salesrep_id(+)
         AND NVL (cgp.mfd_flag, 'N') != 'X'
-        AND cgp.distribution_channel_code = '90'
+        <!-- Changes for JIRA-3745 (US20->CJ20), 90->02 -->
+        AND cgp.distribution_channel_code = '02'
         AND cgp.division_code = '17'
-        AND cgp.sales_org_code = 'US20'
+        AND cgp.sales_org_code = 'CJ20'
         AND gd.primary_contact_id = acm.contact_id(+)
         AND dd.curr_fy_offset = 0
         <!--AND psgo.crm_obj_id = orders_by_date.crm_obj_id-->
@@ -335,8 +336,9 @@
         AND pps.prod_id = spd.product_id
         AND spd.product_key = ocf.product_key
         AND spd.product_class_id != 'N'
-        AND cgp.sales_org_code='US20'
-        AND cgp.distribution_channel_code='90'
+        <!-- Changes for JIRA-3745 (US20->CJ20), 90->02 -->
+        AND cgp.sales_org_code='CJ20'
+        AND cgp.distribution_channel_code='02'
         AND cgp.division_code=17
         GROUP BY
         cad.name_1,
@@ -571,9 +573,10 @@
         AND cad.acct_id = cgp.acct_id
         AND cgp.customer_grp_code = rpt_sales.cust_grp_code
         AND NVL (cgp.mfd_flag, 'N') != 'X'
-        AND cgp.distribution_channel_code = '90'
+        <!-- Changes for JIRA-3745 (US20->CJ20), 90->02 -->
+        AND cgp.distribution_channel_code = '02'
         AND cgp.division_code = '17'
-        AND cgp.sales_org_code = 'US20'
+        AND cgp.sales_org_code = 'CJ20'
         AND rpt_sales.invc_date_key = dd.date_key
         AND TO_NUMBER (rpt_sales.rtl_sales_person_id) =
         TO_NUMBER (salesrep.seedco_salesrep_id(+))
@@ -780,9 +783,10 @@
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND NVL (cgp.mfd_flag, 'N') != 'X'
         <isNull property="companyCode">
-            AND cgp.distribution_channel_code = '90'
+            <!-- Changes for JIRA-3745 (US20->CJ20), 90->02 -->
+            AND cgp.distribution_channel_code = '02'
             AND cgp.division_code = '17'
-            AND cgp.sales_org_code = 'US20'
+            AND cgp.sales_org_code = 'CJ20'
         </isNull>
         AND p_st.acct_id = g.acct_id
         <isNull property="companyCode">
@@ -945,9 +949,10 @@
         AND dd.date_key = dpm.date_key
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND NVL (cgp.mfd_flag, 'N') !='X'
-        AND cgp.distribution_channel_code = '90'
+        <!-- Changes for JIRA-3745 (US20->CJ20), 90->02 -->
+        AND cgp.distribution_channel_code = '02'
         AND cgp.division_code ='17'
-        AND cgp.sales_org_code ='US20'
+        AND cgp.sales_org_code ='CJ20'
         AND p_st.acct_id = g.acct_id
         <isNull property="companyCode">
             AND (ts.source = 'XML' and p_ds.acct_id != 168618)
@@ -1566,9 +1571,10 @@
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND NVL (cgp.mfd_flag, 'N') != 'X'
         <isNull property="companyCode">
-            AND cgp.distribution_channel_code = '90'
+            <!-- Changes for JIRA-3745 (US20->CJ20), 90->02 -->
+            AND cgp.distribution_channel_code = '02'
             AND cgp.division_code = '17'
-            AND cgp.sales_org_code = 'US20'
+            AND cgp.sales_org_code = 'CJ20'
         </isNull>
         AND p_st.acct_id = g.acct_id
         AND g.acct_id = gln_map.acct_id(+)
