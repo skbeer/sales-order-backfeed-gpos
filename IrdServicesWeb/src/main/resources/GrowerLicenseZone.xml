@@ -25,18 +25,21 @@
         WITH ZONE AS
         (SELECT  DISTINCT
         atz.acct_id,
-        atz.zone_descr,
+        z.descr as zone_descr,
         atz.mkt_year_code,
         atz.zone_code,
         atz.zone_struct_code,
         tzs.species_code,
         zs.descr zone_struct_descr,
         ss.descr species_descr
-        FROM agcc.acct_to_zone_mv atz,
-        agcc.trait_to_zone_struct_mv tzs,
-        agcc.zone_struct_mv zs,
-        agcc.seed_species_mv ss
+        FROM agshare.acct_to_zone_dnml atz,
+        agshare.zone_mv z,
+        agshare.trait_to_zone_struct_mv tzs,
+        agshare.zone_struct_mv zs,
+        agshare.seed_species_mv ss
         WHERE     atz.zone_struct_code = tzs.zone_struct_code
+        AND atz.zone_struct_code = z.zone_struct_code
+        AND z.zone_code = atz.zone_code
         AND tzs.usage_code = 'PR'
         AND atz.mkt_year_code = tzs.mkt_year_code
         AND atz.zone_struct_code = zs.zone_struct_code
@@ -64,9 +67,9 @@
         END
         LICENSE_STATUS,
         ACM.CONTACT_FIRST_NAME ||' ' ||ACM.CONTACT_LAST_NAME AS CONTACT_NAME
-        FROM AGCC.RR_GROWERS G,
-        agcc.acct_contact_mailing_dnml acm,
-        agcc.acct_xref_mv xf,
+        FROM AGSHARE.RR_GROWERS_MV  G,
+        AGSHARE.acct_contact_mailing_dnml acm,
+        AGSHARE.acct_xref_mv xf,
         ZONE
         WHERE     G.acct_id = ZONE.acct_id(+)
         AND G.acct_id = acm.acct_id(+)

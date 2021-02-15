@@ -83,6 +83,24 @@
 	        <aop:pointcut id="serviceOperation" expression="execution(* com.monsanto.*.*.helper.*.*(..))"/>
 	        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
     	</aop:config>
-    
-		
-	</beans>
+	<bean id="agreementStatusDao" class="com.monsanto.irdsoapservices.agreementstatus.dao.AgreementStatusDaoImpl">
+		<property name="dataSource" ref="irdDataSource"/>
+		<property name="sqlMapClient" ref="sqlMap"/>
+	</bean>
+
+	<bean id="agreementStatusRequestBuilder" class="com.monsanto.irdsoapservices.agreementstatus.helper.AgreementStatusResponseBuilder"/>
+
+	<bean id="agreementStatusHelper" class="com.monsanto.irdsoapservices.agreementstatus.helper.AgreementStatusHelper">
+		<property name="agreementStatusDao" ref="agreementStatusDao"/>
+		<property name="responseBuilder" ref="agreementStatusRequestBuilder"/>
+	</bean>
+
+	<bean id="agreementStatusPartnersResponseBuilder" class="com.monsanto.irdsoapservices.agreementstatuspartners.helper.AgreementStatusResponseBuilder"/>
+
+	<bean id="agreementStatusPartnersHelper" class="com.monsanto.irdsoapservices.agreementstatuspartners.helper.AgreementStatusHelper">
+		<property name="agreementStatusDao" ref="agreementStatusDao"/>
+		<property name="responseBuilder" ref="agreementStatusPartnersResponseBuilder"/>
+	</bean>
+
+
+</beans>
