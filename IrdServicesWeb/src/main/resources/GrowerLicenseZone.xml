@@ -44,7 +44,7 @@
         AND atz.mkt_year_code = tzs.mkt_year_code
         AND atz.zone_struct_code = zs.zone_struct_code
         AND tzs.species_code = ss.species_code
-        AND SUBSTR(TZS.MKT_YEAR_CODE,1,4) = substr( nvl(#years[0]#,(SELECT character_value FROM ecom.ecom_parameter WHERE ecom_parameter_code = 'AZR_MKT_YR')),1,4))
+        AND SUBSTR(TZS.MKT_YEAR_CODE,1,4) = substr( nvl(#years[0]#,(SELECT character_value FROM AGSHARE.IRD_PARAMETER_MV WHERE ird_parameter_code = 'AZR_MKT_YR')),1,4))
         SELECT        DISTINCT
         xf.alias_id,
         xf.system_type_code,
