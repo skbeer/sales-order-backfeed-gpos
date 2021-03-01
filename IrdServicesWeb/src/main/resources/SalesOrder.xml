@@ -198,96 +198,37 @@
 
     <!-- CUSTPLT - 651 , LEPSI IRD For B2B. In each query, cdw/cdw_dm/cdw_dm_share schemas are replaced with d1_ms schema-->
     <select id="getPPOSOrders" resultMap="ppos" parameterClass="java.util.Map">
-        SELECT
-        psgo.order_id
-        || ' '
-        || psgo.order_item_id crm_obj_id,
-        psgo.order_id,
-        psgo.order_item_id,
-        'RT' sales_order_type_code,
-        dd.day_date order_date,
-        SUBSTR (dd.fy, 1, 4) fiscal_year,
-        cad.name_1 dealer_name,
-        cad.ic_code dealer_ebid,
-        cad.acct_id dealer_acct_id,
-        cad.mailing_addr_line_1 dealer_mailing_address,
-        cad.mailing_city dealer_mailing_city,
-        cad.mailing_state_code dealer_mailing_state,
-        cad.mailing_zip_code dealer_mailing_zip_code,
-        cad.mailing_county dealer_mailing_county,
-        gd.name_1 grower_name,
-        gd.gln grower_gln,
-        gd.napd_id grower_napd_id,
-        gd.acct_id grower_acct_id,
-        ACM.CONTACT_FIRST_NAME
-        ||' '
-        ||ACM.CONTACT_LAST_NAME GROWER_CONTACT_NAME,
-        gd.mailing_addr_line_1 grower_mailing_address,
-        gd.mailing_city grower_mailing_city,
-        gd.mailing_state_code grower_mailing_state,
-        gd.mailing_zip_code grower_mailing_zip_code,
-        gd.mailing_county grower_mailing_county,
-        spd.upc_code,
-        spd.legal_descr_1 product_name,
-        pps.upc_scc_code gtin,
-        psgo.os_order_ssu_qty/psgo.base_to_ssu_uom_conv_fctr sales_qty,
-        DECODE (ud.uom_code,'LB','LBR', ud.uom_code) sales_uom,
-        psgo.os_order_ssu_qty equivilent_qty,
-        'UN' equivilent_qty_uom,
-        ss.name_1
-        || ' '
-        || ss.name_3 salesrep_name,
-        ss.alias_ss_code salesrep_id,
-        ss.addr_line_1 salesrep_address_1,
-        ss.addr_line_2 salesrep_address_2,
-        ss.city salesrep_city,
-        ss.state_code salesrep_state,
-        ss.zip_code salesrep_zip
-        FROM
-        d1_OS_SALES_ORDER_ITEM_AS psgo,
-        d1_seed_product_dim spd,
-        d1_channel_account_dim cad,
-        d1_grower_dim gd,
-        s_acct_sales_area cgp,
-        d1_date_dim dd,
-        d1_unit_of_measure_dim ud,
-        s_seedco_salesrep_to_acct ssa,
-        s_seedco_salesrep ss,
-        s_prod_package_struct pps,
+        SELECT psgo.order_id || ' ' || psgo.order_item_id crm_obj_id, psgo.order_id, psgo.order_item_id, 'RT'
+        sales_order_type_code, dd.day_date order_date, SUBSTR (dd.fy, 1, 4) fiscal_year, cad.name_1 dealer_name,
+        cad.ic_code dealer_ebid, cad.acct_id dealer_acct_id, cad.mailing_addr_line_1 dealer_mailing_address,
+        cad.mailing_city dealer_mailing_city, cad.mailing_state_code dealer_mailing_state, cad.mailing_zip_code
+        dealer_mailing_zip_code, cad.mailing_county dealer_mailing_county, gd.name_1 grower_name, gd.gln grower_gln,
+        gd.napd_id grower_napd_id, gd.acct_id grower_acct_id, ACM.CONTACT_FIRST_NAME||' '||ACM.CONTACT_LAST_NAME
+        GROWER_CONTACT_NAME, gd.mailing_addr_line_1 grower_mailing_address, gd.mailing_city grower_mailing_city,
+        gd.mailing_state_code grower_mailing_state, gd.mailing_zip_code grower_mailing_zip_code, gd.mailing_county
+        grower_mailing_county, spd.upc_code, spd.legal_descr_1 product_name, pps.upc_scc_code gtin,
+        psgo.os_order_ssu_qty/psgo.base_to_ssu_uom_conv_fctr sales_qty, decode (ud.uom_code,'LB','LBR', ud.uom_code)
+        sales_uom, psgo.os_order_ssu_qty equivilent_qty, 'UN' equivilent_qty_uom, ss.name_1 || ' ' || ss.name_3
+        salesrep_name, ss.alias_ss_code salesrep_id, ss.addr_line_1 salesrep_address_1, ss.addr_line_2
+        salesrep_address_2, ss.city salesrep_city, ss.state_code salesrep_state, ss.zip_code salesrep_zip
+        FROM d1_OS_SALES_ORDER_ITEM_AS psgo, d1_seed_product_dim spd, d1_channel_account_dim cad, d1_grower_dim gd,
+        s_acct_sales_area cgp, d1_date_dim dd,
+        d1_unit_of_measure_dim ud, s_seedco_salesrep_to_acct ssa, s_seedco_salesrep ss, s_prod_package_struct pps,
         s_acct_contact_mailing_dnml acm,
-        (
-        SELECT DISTINCT
-        dest_alias_id cust_grp_code,
-        source_alias_id cust_grp_name
-        FROM
-        d1_biotech_translation
-        WHERE
-        'CDW749RT'  = alias_program
-        AND #groupCode#      = dest_alias_id
-        AND 'CustGrp' = source_alias_type
-        )
-        sc
-        WHERE
-        <!--psgo.product_key                = spd.product_key -->
+        (SELECT DISTINCT dest_alias_id cust_grp_code, source_alias_id cust_grp_name FROM d1_biotech_translation WHERE
+        'CDW749RT' = alias_program AND '6L' = dest_alias_id
+        AND 'CustGrp' = source_alias_type) sc
+        WHERE-- psgo.product_key = spd.product_key
         ((psgo.product_key = spd.product_key) or (spd.SAP_MATERIAL_ID = psgo.product_key))
-        AND psgo.ship_to_acct_key         = cad.acct_key
-        AND psgo.sold_to_acct_key         = gd.grower_key
-        AND psgo.order_entry_date_key     = dd.date_key
-        AND psgo.base_uom_key             = ud.uom_key
-        AND pps.prod_id                   = spd.product_id
-        AND cgp.acct_id                   = cad.acct_id(+)
-        AND cgp.customer_grp_code         = sc.cust_grp_code
-        AND cad.acct_id                   = ssa.acct_id(+)
-        AND ssa.seedco_salesrep_id        = ss.seedco_salesrep_id(+)
-        AND NVL (cgp.mfd_flag, 'N')      != 'X'
-        AND cgp.distribution_channel_code = '02'
-        AND cgp.division_code             = '17'
-        AND cgp.sales_org_code            = 'CJ20'
-        <!--AND gd.primary_contact_id         = acm.contact_id(+) -->
-        AND substr(gd.primary_contact_id,7,13) = acm.contact_id(+)
-        AND dd.curr_fy_offset             = 0
-        ORDER BY
-        order_item_id ;
+        AND psgo.ship_to_acct_key = cad.acct_key AND psgo.sold_to_acct_key = gd.grower_key AND psgo.order_entry_date_key
+        = dd.date_key
+        AND psgo.base_uom_key = ud.uom_key AND pps.prod_id = spd.product_id AND cgp.acct_id = cad.acct_id(+) AND
+        cgp.customer_grp_code = sc.cust_grp_code AND cad.acct_id = ssa.acct_id(+)
+        AND ssa.seedco_salesrep_id = ss.seedco_salesrep_id(+) AND NVL (cgp.mfd_flag, 'N') != 'X' AND
+        cgp.distribution_channel_code = '02' AND cgp.division_code = '17'
+        AND cgp.sales_org_code = 'CJ20' AND --gd.primary_contact_id = acm.contact_id(+)
+        cast(substr(gd.primary_contact_id,-7) as int) = acm.contact_id(+)
+        AND dd.curr_fy_offset = 0 order by order_item_id ;
     </select>
 
     <select id="getCOSOrders" resultMap="cos" parameterClass="java.util.Map">
