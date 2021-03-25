@@ -132,7 +132,6 @@
         <result property="growerInfo.state" column="GROWER_MAILING_STATE"/>
         <result property="growerInfo.zip" column="GROWER_MAILING_ZIP_CODE"/>
         <result property="growerInfo.county" column="GROWER_MAILING_COUNTY"/>
-        <!--<result property="tempLineItem.itemNumber" column="INVC_ITEM_ID" />-->
         <result property="tempLineItem.productUpc" column="UPC_CODE"/>
         <result property="tempLineItem.productGtin" column="GTIN"/>
         <result property="tempLineItem.productName" column="PRODUCT_NAME"/>
@@ -327,10 +326,9 @@
         AND dd.date_key                       = ocf.eff_date_key
         AND dd.curr_fy_offset                 = 0
         AND cgp.customer_grp_code             = #groupCode#
-        AND TO_CHAR(dd.day_date,'YYYY-MM-DD') > #startDate#
+        AND TO_CHAR(dd.day_date,'DD-MON-YY')  > #startDate#
         AND cgp.acct_id                       = cad.acct_id
         AND pps.prod_id                       = spd.product_id
-        -- AND spd.product_key = ocf.product_key
         AND
         (
         (
@@ -1051,7 +1049,7 @@
         AND tp1.party_code             = 'SF'
         AND hs1.status_code            = 'SI'
         AND hs1.status_id             IN (3,5)
-        AND TRUNC(hs1.row_modify_date) >'01-JUL-2020'
+        AND TO_CHAR(hs1.row_modify_date,'DD-MON-YY') > #startDate#
         AND h1.rptd_doc_nbr            = h.rptd_doc_nbr
         AND tp1.acct_id                = p_sf.acct_id
         )
@@ -1289,12 +1287,12 @@
         ecg_tran_header_status hs1,
         ecg_tran_party tp1
         WHERE
-        h1.tran_id                                 = hs1.tran_id
+        h1.tran_id                              = hs1.tran_id
         AND h1.tran_id                               = tp1.tran_id
         AND tp1.party_code                           = 'SF'
         AND hs1.status_code                          = 'SI'
         AND hs1.status_id                           IN (3,5)
-        AND TO_CHAR(hs1.row_modify_date,'YYYY-MM-DD')> #startDate#
+        AND TO_CHAR(hs1.row_modify_date,'DD-MON-YY')> #startDate#
         AND h1.rptd_doc_nbr                          = h.rptd_doc_nbr
         AND tp1.acct_id                              = p_sf.acct_id
         )
@@ -1532,7 +1530,7 @@
         AND tp1.party_code                            = 'SF'
         AND hs1.status_code                           = 'SI'
         AND hs1.status_id                            IN ( 3, 5)
-        AND TO_CHAR(hs1.row_modify_date,'YYYY-MM-DD') > #startDate#
+        AND TO_CHAR(hs1.row_modify_date,'DD-MON-YY') > #startDate#
         AND h1.rptd_doc_nbr                           = h.rptd_doc_nbr
         AND tp1.acct_id                               = p_sf.acct_id
         )
