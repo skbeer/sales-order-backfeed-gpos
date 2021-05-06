@@ -177,9 +177,10 @@
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=
         TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND NVL (cgp.mfd_flag, 'N') != 'X'
-        AND cgp.distribution_channel_code = '90'
+        <!-- Changes for JIRA-3745 (US20->CJ20), 90->02 -->
+        AND cgp.distribution_channel_code = '02'
         AND cgp.division_code = '17'
-        AND cgp.sales_org_code = 'US20'
+        AND cgp.sales_org_code = 'CJ20'
         AND p_st.acct_id = g.acct_id
         AND (ts.source in ('SRX', 'SRXH', 'SRXF', 'SEEDTRAK', 'KEYED' ) OR ts.source  = 'WS-XML' AND p_ds.acct_id != 168618)
         AND (RTRIM(g.napd_id) IS NOT NULL
@@ -401,9 +402,10 @@
         AND dd.date_key = dpm.date_key
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))= TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND NVL (cgp.mfd_flag, 'N') != 'X'
-        AND cgp.distribution_channel_code = '90'
+        <!-- Changes for JIRA-3745 (US20->CJ20), 90->02 -->
+        AND cgp.distribution_channel_code = '02'
         AND cgp.division_code = '17'
-        AND cgp.sales_org_code = 'US20'
+        AND cgp.sales_org_code = 'CJ20'
         AND p_st.acct_id = g.acct_id
         AND (ts.source = 'XML' AND p_ds.acct_id != 168618)
         AND (RTRIM(g.napd_id) IS NOT NULL
@@ -1221,9 +1223,10 @@
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=
         TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND NVL (cgp.mfd_flag, 'N') != 'X'
-        AND cgp.distribution_channel_code = '90'
+        <!-- Changes for JIRA-3745 (US20->CJ20), 90->02 -->
+        AND cgp.distribution_channel_code = '02'
         AND cgp.division_code = '17'
-        AND cgp.sales_org_code = 'US20'
+        AND cgp.sales_org_code = 'CJ20'
         AND p_st.acct_id = g.acct_id
         AND (RTRIM(g.napd_id) IS NOT NULL
         OR RTRIM(gln_map.alias_id) IS NOT NULL)
