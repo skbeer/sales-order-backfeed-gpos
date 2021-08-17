@@ -633,7 +633,7 @@
         grower_acct_id,
         grower_contact_name,
         NVL (grower_mailing_address, 'NA') grower_mailing_address,
-        NVL (grower_mailing_city, 'NA') grower_mailing_address,
+        NVL (grower_mailing_city, 'NA') grower_mailing_city,
         NVL (grower_mailing_state, 'NA') grower_mailing_state,
         NVL (grower_mailing_zip_code, 'NA') grower_mailing_zip_code,
         NVL (grower_mailing_county, 'NA') grower_mailing_county,
@@ -751,13 +751,13 @@
         AND tp1.party_code = 'SF'
         AND hs1.status_code = 'SI'
         AND hs1.status_id IN (3, 5)
-        AND hs1.row_modify_date > to_date (to_char(#startDate#),'yyyy-mm-dd')
+        AND hs1.row_modify_date > #startDate#
         AND h1.rptd_doc_nbr = h.rptd_doc_nbr
         AND tp1.acct_id = p_sf.acct_id       )
-        AND to_char(p_sf.acct_id) = cad.acct_id
+        AND p_sf.acct_id = cad.acct_id
         AND cad.acct_id = cgp.acct_id
         AND d.prod_id = pps.prod_id
-        AND d.prod_id = TO_NUMBER (spd.product_id)
+        AND d.prod_id = spd.product_id
         AND cbr.source_system_code = 'IRD'
         AND cbr.BRAND_FAMILY_DESCR = 'NATIONAL'
         AND cad.source_system_code = 'IRD'
