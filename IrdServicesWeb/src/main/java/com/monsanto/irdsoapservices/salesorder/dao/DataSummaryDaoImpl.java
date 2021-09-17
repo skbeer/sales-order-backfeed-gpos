@@ -2,12 +2,10 @@ package com.monsanto.irdsoapservices.salesorder.dao;
 
 import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryTotals;
-import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -34,6 +32,16 @@ public DataSummaryInfo getDataSummaryInfoAgdata(Date startDate, String groupCode
     map.put("startDate", sqlDate);
     return (DataSummaryInfo)getSqlMapClientTemplate().queryForObject("DataSummary.getDataSummaryAgData", map);
 }
+    //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+    @Override
+    public DataSummaryInfo getDataSummaryInfoAgdata2021(Date startDate, String groupCode) throws Exception {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("groupCode", groupCode);
+        java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+        map.put("startDate", sqlDate);
+        return (DataSummaryInfo)getSqlMapClientTemplate().queryForObject("DataSummary.getDataSummaryAgData", map);
+    }
+
     @Override
     public DataSummaryInfo getDataSummaryInfoXML(Date startDate, String groupCode) throws Exception {
         HashMap<String, Object> map = new HashMap<String, Object>();
@@ -64,6 +72,16 @@ public DataSummaryInfo getDataSummaryInfoAgdata(Date startDate, String groupCode
     //CUSTPLT-632 - Introducing new Partner Agdata
     @Override
     public DataSummaryTotals getDataSummaryTotalsAgdata(Date startDate, String groupCode) throws Exception {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("groupCode", groupCode);
+        java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+        map.put("startDate", sqlDate);
+        return (DataSummaryTotals)getSqlMapClientTemplate().queryForObject("DataSummary.getTotalsAgdata", map);
+    }
+
+    //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+    @Override
+    public DataSummaryTotals getDataSummaryTotalsAgdata2021(Date startDate, String groupCode) throws Exception {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("groupCode", groupCode);
         java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());

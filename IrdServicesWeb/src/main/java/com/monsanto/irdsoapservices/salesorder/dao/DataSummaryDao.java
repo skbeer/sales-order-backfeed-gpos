@@ -2,10 +2,8 @@ package com.monsanto.irdsoapservices.salesorder.dao;
 
 import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryTotals;
-import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,6 +19,10 @@ public interface DataSummaryDao {
     //CUSTPLT-632 - Introducing new Partner Agdata
     DataSummaryInfo getDataSummaryInfoAgdata(Date startDate, String groupCode) throws Exception;
 
+    //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+    DataSummaryInfo getDataSummaryInfoAgdata2021(Date startDate, String groupCode) throws Exception;
+
+
     DataSummaryInfo getDataSummaryInfoXML(Date startDate, String groupCode) throws Exception;
 
     DataSummaryInfo getDataSummaryInfoAgrmine(Date startDate, String groupCode) throws Exception;
@@ -29,6 +31,9 @@ public interface DataSummaryDao {
 
     //CUSTPLT-632 - Introducing new Partner Agdata
     DataSummaryTotals getDataSummaryTotalsAgdata(Date startDate, String groupCode) throws Exception;
+
+    //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+    DataSummaryTotals getDataSummaryTotalsAgdata2021(Date startDate, String groupCode) throws Exception;
 
     DataSummaryTotals getDataSummaryTotalsXML(Date startDate, String groupCode) throws Exception;
 

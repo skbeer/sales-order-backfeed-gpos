@@ -41,7 +41,7 @@ public class SalesOrderReportService {
                 try {
                     ordersSent = 0;
                     transaction = transactionsToBeProcessed.get(index);
-                    logger.info("Processing '"+transaction.getTransactionType()+"' Transaction For Customer:"+transaction.getName());
+                    logger.info("Processing2021 '"+transaction.getTransactionType()+"' Transaction For Customer:"+transaction.getName());
                     if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.PPOS_TRAN_TYPE)) {
                         ordersSent = pposHelper.processPPOSOrderReport(transaction);
                     } else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.COS_TRAN_TYPE)) {
@@ -84,6 +84,18 @@ public class SalesOrderReportService {
                             dataSummaryHelper.processDataSummaryReport(transaction);
                         }
                     }
+
+                    //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+                    else if(transaction.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE_2021)) {
+                        logger.info("Inside GPOS AGData 2021");
+                        transaction.setDataSourceType(DBConstants.GPOS_AGDATA_SOURCE_TYPE_2021);
+                        transaction.setFileType(XmlConstants.FILE_TYPE_EXTERNAL);
+                        ordersSent = gposWinfieldHelper.processGPOSOrderReport(transaction);
+                        if (ordersSent > 0 && GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())) {
+                            dataSummaryHelper.processDataSummaryReport(transaction);
+                        }
+                    }
+
                     updateTransaction(transaction, ordersSent);
                 } catch (SalesOrderException e) {
                     logger.error(e);

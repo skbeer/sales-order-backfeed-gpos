@@ -5,7 +5,6 @@ import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.PPOSOrderInfo;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -92,5 +91,21 @@ public class SalesOrderDaoImpl extends SqlMapClientDaoSupport implements SalesOr
         map.put("startDate", sqlDate);
         map.put("companyCode", companyCode);
         return (List<GPOSOrderInfo>)getSqlMapClientTemplate().queryForList("SalesOrder.getGPOSAgDataOrders", map);
+    }
+
+    //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+    @Override
+    public List<GPOSOrderInfo> getGPOSAgDataOrders2021(Date startDate, String groupCode) throws Exception {
+        return getGPOSAgDataOrders2021(startDate,groupCode,null);
+    }
+    //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+    @Override
+    public List<GPOSOrderInfo> getGPOSAgDataOrders2021(Date startDate, String groupCode, String companyCode) throws Exception {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("groupCode", groupCode);
+        java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+        map.put("startDate", sqlDate);
+        map.put("companyCode", companyCode);
+        return (List<GPOSOrderInfo>)getSqlMapClientTemplate().queryForList("SalesOrder.getGPOSAgDataOrders2021", map);
     }
 }

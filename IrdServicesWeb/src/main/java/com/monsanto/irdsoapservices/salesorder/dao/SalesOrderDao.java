@@ -23,16 +23,21 @@ public interface SalesOrderDao {
 
     List<GPOSOrderInfo> getGPOSDirectOrders(Date startDate, String groupCode) throws Exception;
 
-    List<GPOSOrderInfo> getGPOSDirectOrders(Date startDate, String groupCode,String companyCode) throws Exception;
+    List<GPOSOrderInfo> getGPOSDirectOrders(Date startDate, String groupCode, String companyCode) throws Exception;
 
     List<GPOSOrderInfo> getGPOSXMLOrders(Date startDate, String groupCode) throws Exception;
 
-    List<GPOSOrderInfo> getGPOSXMLOrders(Date startDate, String groupCode,String companyCode) throws Exception;
+    List<GPOSOrderInfo> getGPOSXMLOrders(Date startDate, String groupCode, String companyCode) throws Exception;
 
     List<GPOSOrderInfo> getGPOSAgrimineOrders(Date startDate, String groupCode) throws Exception;
 
     //CUSTPLT-632 - Introducing new Partner Agdata
     List<GPOSOrderInfo> getGPOSAgDataOrders(Date startDate, String groupCode) throws Exception;
 
-    List<GPOSOrderInfo> getGPOSAgDataOrders(Date startDate, String groupCode,String companyCode) throws Exception;
+    List<GPOSOrderInfo> getGPOSAgDataOrders(Date startDate, String groupCode, String companyCode) throws Exception;
+
+    //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+    List<GPOSOrderInfo> getGPOSAgDataOrders2021(Date startDate, String groupCode) throws Exception;
+
+    List<GPOSOrderInfo> getGPOSAgDataOrders2021(Date startDate, String groupCode, String companyCode) throws Exception;
 }
