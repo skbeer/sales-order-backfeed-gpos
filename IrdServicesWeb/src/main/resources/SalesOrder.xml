@@ -1830,7 +1830,10 @@
         grower_mailing_zip_code,
         grower_mailing_county,
         upc_code,
+        reopen,
+        TRAN_ID,
         product_name,
+        SAP_MAT_ID,
         gtin,
         SUM (sales_qty) sales_qty,
         sales_uom,
@@ -1850,6 +1853,8 @@
         seed_co_brand_descr
         FROM (
         SELECT distinct h.rptd_doc_nbr,
+        d.SAP_MAT_ID,
+        r.reopen,
         h.tran_id,
         d.detail_seq_nbr,
         'NS' sales_order_type_code,
@@ -1930,6 +1935,7 @@
             ,d1_ms.biotech_translation bt
         </isNull>
         WHERE h.tran_id = d.tran_id
+        AND r.tran_id = d.tran_id
         AND h.tran_id = p_sf.tran_id
         AND p_sf.party_code = 'SF'
         AND h.tran_id = p_st.tran_id
@@ -2009,7 +2015,10 @@
         grower_mailing_zip_code,
         grower_mailing_county,
         upc_code,
+        reopen,
+        TRAN_ID,
         product_name,
+        SAP_MAT_ID,
         gtin,
         sales_uom,
         equivilent_qty_uom,
