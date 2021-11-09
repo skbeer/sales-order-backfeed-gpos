@@ -27,7 +27,7 @@
 	            LAST_TRANSACTION_DATE,
 	            LAST_TRANSACTION_NUMBER,
                 MAX_FILE_SIZE
-        FROM    ECOM.PARTNER_BACKFEED_CONTROL
+        FROM    AGSHARE.PARTNER_BACKFEED_CONTROL
         WHERE   (START_DATE &lt;= SYSDATE) AND (EXPIRATION_DATE &gt; SYSDATE)
                 <isNotNull prepend="AND" property="transactionType">
                     UPPER(TRANSACTION_TYPE) = #transactionType#
@@ -36,13 +36,13 @@
 	</select>
 
     <update id="updateLastTransactionStats" parameterClass="transactionInfo">
-        UPDATE  ECOM.PARTNER_BACKFEED_CONTROL
+        UPDATE  AGSHARE.PARTNER_BACKFEED_CONTROL
         SET     LAST_TRANSACTION_DATE = #lastTransactionDate#
         WHERE   GROUP_CODE = #groupCode# AND TRANSACTION_TYPE = #transactionType#
     </update>
 
     <update id="updateLastTransactionNumber" parameterClass="transactionInfo">
-        UPDATE  ECOM.PARTNER_BACKFEED_CONTROL
+        UPDATE  AGSHARE.PARTNER_BACKFEED_CONTROL
         SET     LAST_TRANSACTION_NUMBER = #lastTransactionNumber#
         WHERE   GROUP_CODE = #groupCode# AND TRANSACTION_TYPE = #transactionType#
     </update>
