@@ -34,6 +34,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "ProductidentificationType", propOrder = {
     "productIdentifier",
     "productName",
+    "productNum",
+    "lineIdentifier",
     "BrandFamily",
     "BrandName"
 })
@@ -45,6 +47,10 @@ public class ProductidentificationType {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String productName;
+    @XmlElement(name = "ProductNum")
+    protected String productNum;
+    @XmlElement(name = "LineIdentifier")
+    protected String lineIdentifier;
     //CUSTPLT-632 - Introducing new Partner Agdata
     @XmlElement(name = "BrandFamily")
     protected String BrandFamily;
@@ -115,5 +121,22 @@ public class ProductidentificationType {
     public void setProductName(String value) {
         this.productName = value;
     }
+
+    public String getProductNum() {
+        return productNum;
+    }
+
+    public void setProductNum(String productNum) {
+        this.productNum = productNum;
+    }
+
+    public String getLineIdentifier() {
+        return lineIdentifier;
+    }
+
+    public void setLineIdentifier(String lineIdentifier) {
+        this.lineIdentifier = lineIdentifier;
+    }
+
 
 }

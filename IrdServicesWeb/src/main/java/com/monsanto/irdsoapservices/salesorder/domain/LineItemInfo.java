@@ -21,6 +21,8 @@ public class LineItemInfo {
     String qtyUom = "UN";
     String orderTransactionType;
     String specie_descr;
+    String productNum;
+    String lineIdentifier;
 
     public String getSpecie_descr() {
         return specie_descr;
@@ -127,6 +129,23 @@ public class LineItemInfo {
     public void setProductName(String productName) {
         this.productName = productName;
     }
+
+    public String getProductNum() {
+        return productNum;
+    }
+
+    public void setProductNum(String productNum) {
+        this.productNum = productNum;
+    }
+
+    public String getLineIdentifier() {
+        return lineIdentifier;
+    }
+
+    public void setLineIdentifier(String lineIdentifier) {
+        this.lineIdentifier = lineIdentifier;
+    }
+
 
     public String getOrderTransactionType() {
         return orderTransactionType;

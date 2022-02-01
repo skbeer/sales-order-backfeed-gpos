@@ -48,7 +48,7 @@ public class COSRequestBuilder extends AbstractRequestBuilder {
         SalesOrderLineItemType salesOrderLineItemType = null;
         for(LineItemInfo lineItem : cosOrder.getLineItems()) {
             salesOrderLineItemType =  new SalesOrderLineItemType();
-            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName()));
+            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName(),lineItem.getProductNum(),lineItem.getLineIdentifier()));
 
             ProductQuantityEquivalentType productQuantityEquivalentType = new ProductQuantityEquivalentType();
             productQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getQtyUom(), lineItem.getOrderQty()));

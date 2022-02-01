@@ -106,10 +106,12 @@ public abstract class AbstractRequestBuilder {
         return measurementType;
     }
 
-    protected ProductidentificationType getProductionIdentificationType(ListProductIDAgency agency, String value, String productName) {
+    protected ProductidentificationType getProductionIdentificationType(ListProductIDAgency agency, String value, String productName, String productNum, String lineIdentifier) {
         ProductidentificationType productidentificationType = new ProductidentificationType();
         productidentificationType.setProductIdentifier(getProductIdentifierType(agency, value));
         productidentificationType.setProductName(productName);
+        productidentificationType.setProductNum(productNum);
+        productidentificationType.setLineIdentifier(lineIdentifier);
         return productidentificationType;
     }
 

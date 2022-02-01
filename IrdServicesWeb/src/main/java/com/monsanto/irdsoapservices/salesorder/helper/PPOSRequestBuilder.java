@@ -51,8 +51,8 @@ public class PPOSRequestBuilder extends AbstractRequestBuilder {
         for(LineItemInfo lineItem : pposOrder.getLineItems()) {
             salesOrderLineItemType = new SalesOrderLineItemType();
             salesOrderLineItemType.setLineNumber(new Long(lineItem.getItemNumber()).longValue());
-            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName()));
-            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.UPC, lineItem.getProductUpc(), lineItem.getProductName()));
+            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName(),lineItem.getProductNum(),lineItem.getLineIdentifier()));
+            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.UPC, lineItem.getProductUpc(), lineItem.getProductName(),lineItem.getProductNum(),lineItem.getLineIdentifier()));
             ProductQuantityType productQuantityType = new ProductQuantityType();
             productQuantityType.setMeasurement(getMeasurementType(lineItem.getSalesQuantity().getQtyUom(), lineItem.getSalesQuantity().getQtyValue()));
             salesOrderLineItemType.setProductQuantity(productQuantityType);
