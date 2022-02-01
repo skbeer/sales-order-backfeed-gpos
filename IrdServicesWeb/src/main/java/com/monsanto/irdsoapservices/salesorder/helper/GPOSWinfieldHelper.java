@@ -95,7 +95,7 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
     }
 
 
-    // method is public only to be tested separately
+    // method is  public only to be tested separately
 
     @Override
     public List<GPOSOrderInfo> normalizeOrderLineItems(List<GPOSOrderInfo> deNormalizedOrders) {

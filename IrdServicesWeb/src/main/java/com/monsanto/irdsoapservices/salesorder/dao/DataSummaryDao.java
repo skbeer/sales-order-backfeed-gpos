@@ -16,7 +16,7 @@ public interface DataSummaryDao {
 
     DataSummaryInfo getDataSummaryInfoDirect(Date startDate, String groupCode) throws Exception;
 
-    //CUSTPLT-632 - Introducing new Partner Agdata
+    //CUSTPLT-632 - Introducing new Partner  Agdata
     DataSummaryInfo getDataSummaryInfoAgdata(Date startDate, String groupCode) throws Exception;
 
     //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021

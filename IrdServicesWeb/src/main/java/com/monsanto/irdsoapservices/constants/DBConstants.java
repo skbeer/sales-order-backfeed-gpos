@@ -33,6 +33,6 @@ public class DBConstants {
     public static final String XML_DATA_SOURCE_TYPE = "XML";
     //CUSTPLT-632 - Introducing new Partner Agdata
     public static final String GPOS_AGDATA_SOURCE_TYPE = "AGDATA";
-    //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+    //OTT 92172 - Seed GPOS Interface to Agdata for Bayer - Introducing new Partner Agdata2021
     public static final String GPOS_AGDATA_SOURCE_TYPE_2021 = "AGDATA2021";
 }

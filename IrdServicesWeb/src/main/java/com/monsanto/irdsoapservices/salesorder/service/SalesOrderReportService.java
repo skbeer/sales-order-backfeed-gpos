@@ -19,7 +19,7 @@ import java.util.List;
  * User: MKUCHIP
  * Date: Jun 8, 2010
  * Time: 9:42:52 AM
- * To change this template use File | Settings | File Templates.
+ * To change this template use File | Settings |  File Templates.
  */
 public class SalesOrderReportService {
     private TransactionDao transactionDao;
