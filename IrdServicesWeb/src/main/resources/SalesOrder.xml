@@ -1849,7 +1849,7 @@
         order by rptd_doc_nbr, dealer_acct_id, grower_acct_id
     </select>
 
-    <!--OTT 92172 - Seed GPOS Interface to  Agdata for Bayer  - Introducing new Partner Agdata2021-->
+    <!--OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021-->
     <select id="getGPOSAgDataOrders2021" resultMap="gposWinfieldAgdata2021" parameterClass="java.util.Map">
         SELECT rptd_doc_nbr,
         detail_seq_nbr,
