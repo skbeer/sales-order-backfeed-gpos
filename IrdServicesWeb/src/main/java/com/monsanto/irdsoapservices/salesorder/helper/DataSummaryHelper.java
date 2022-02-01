@@ -38,7 +38,7 @@ public class DataSummaryHelper {
                 dataSummaryInfo = dataSummaryDao.getDataSummaryInfoAgdata(transaction.getLastTransactionDate(), transaction.getGroupCode());
                 dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsAgdata(transaction.getLastTransactionDate(), transaction.getGroupCode());
             }
-            //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+            //OTT 92172 - Seed GPOS Interface to Agdata for  Bayer  - Introducing new Partner Agdata2021
             else if(DBConstants.GPOS_AGDATA_SOURCE_TYPE_2021.equalsIgnoreCase(transaction.getDataSourceType())) {
                 dataSummaryInfo = dataSummaryDao.getDataSummaryInfoAgdata2021(transaction.getLastTransactionDate(), transaction.getGroupCode());
                 dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsAgdata2021(transaction.getLastTransactionDate(), transaction.getGroupCode());
