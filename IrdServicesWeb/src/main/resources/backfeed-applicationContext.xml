@@ -25,9 +25,11 @@
     </bean>
 
     <bean id="transactionDao" class="com.monsanto.irdsoapservices.salesorder.dao.TransactionDaoImpl">
-        <property name="sqlMapClient" ref="fsSqlMap"/>
-        <property name="dataSource" ref="fsDataSource"/>
+        <property name="dataSource" ref="irdDataSource" />
+        <property name="sqlMapClient" ref="sqlMap" />
     </bean>
+
+
 
     <bean id="salesOrderDao" class="com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDaoImpl">
         <property name="sqlMapClient" ref="sqlMap"/>
@@ -117,8 +119,9 @@
     <bean id="gposWinfieldRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.GPOSWinfieldRequestBuilder"/>
     <bean id="dataSummaryRequestBuilder" class="com.monsanto.irdsoapservices.salesorder.helper.DataSummaryRequestBuilder"/>
 
+
     <bean id="trasactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="fsDataSource"/>
+        <property name="dataSource" ref="irdDataSource"/>
     </bean>
 
     <tx:advice id="transactionAdvice" transaction-manager="trasactionManager">

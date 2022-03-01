@@ -13,4 +13,5 @@
     <sqlMap resource="RetailSeller.xml"/>
     <sqlMap resource="DataSummary.xml"/>
     <sqlMap resource="GrowerLicenseZone.xml"/>
+    <sqlMap resource="BackfeedPartnersControl.xml"/>
 </sqlMapConfig>

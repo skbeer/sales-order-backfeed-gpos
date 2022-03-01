@@ -27,8 +27,8 @@
     </bean>
 
     <bean id="transactionDao" class="com.monsanto.irdsoapservices.salesorder.dao.TransactionDaoImpl">
-        <property name="sqlMapClient" ref="fsSqlMap"/>
-        <property name="dataSource" ref="fsDataSource"/>
+        <property name="sqlMapClient" ref="sqlMap"/>
+        <property name="dataSource" ref="irdDataSource"/>
     </bean>
 
     <bean id="agreementStatusDao" class="com.monsanto.irdsoapservices.agreementstatus.dao.AgreementStatusDaoImpl">
