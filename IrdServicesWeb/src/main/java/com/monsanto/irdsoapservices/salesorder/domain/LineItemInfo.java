@@ -23,6 +23,7 @@ public class LineItemInfo {
     String specie_descr;
     String productNum;
     String lineIdentifier;
+//    String acronymName;
 
     public String getSpecie_descr() {
         return specie_descr;
@@ -145,6 +146,15 @@ public class LineItemInfo {
     public void setLineIdentifier(String lineIdentifier) {
         this.lineIdentifier = lineIdentifier;
     }
+
+//    public String getAcronymName() {
+//        return acronymName;
+//    }
+//
+//    public void setAcronymName(String acronymName) {
+//        this.acronymName = acronymName;
+//    }
+
 
 
     public String getOrderTransactionType() {

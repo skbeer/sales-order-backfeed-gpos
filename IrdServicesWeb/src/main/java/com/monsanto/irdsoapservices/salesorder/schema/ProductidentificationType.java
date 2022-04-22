@@ -110,6 +110,7 @@ public class ProductidentificationType {
         return productName;
     }
 
+
     /**
      * Sets the value of the productName property.
      * 

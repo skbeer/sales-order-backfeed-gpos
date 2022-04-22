@@ -20,13 +20,21 @@
 
     <dependencies>
         <!-- main dependencies -->
+<!--        <dependency>-->
+<!--            <groupId>oracle</groupId>-->
+<!--            <artifactId>oracle-jdbc</artifactId>-->
+<!--            <version>10.x</version>-->
+<!--            <scope>system</scope>-->
+<!--            &lt;!&ndash;suppress MavenModelInspection &ndash;&gt;-->
+<!--            <systemPath>${env.ORACLE_HOME}/jdbc/lib/ojdbc14.jar</systemPath>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>oracle</groupId>
             <artifactId>oracle-jdbc</artifactId>
-            <version>10.x</version>
+            <version>10.1.0.2.0</version>
             <scope>system</scope>
             <!--suppress MavenModelInspection -->
-            <systemPath>${env.ORACLE_HOME}/jdbc/lib/ojdbc14.jar</systemPath>
+            <systemPath>C:\CanadaExternalJarFiles\ojdbc14.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>

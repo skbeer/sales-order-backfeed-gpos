@@ -10,7 +10,7 @@ import com.monsanto.irdsoapservices.utils.StringUtils;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * Created by IntelliJ IDEA..
  * User: MKUCHIP
  * Date: Jun 9, 2010
  * Time: 9:28:43 AM

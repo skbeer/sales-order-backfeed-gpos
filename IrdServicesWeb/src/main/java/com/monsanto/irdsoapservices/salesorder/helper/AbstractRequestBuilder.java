@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Created by IntelliJ IDEA.
+ * Created by IntelliJ IDEA..
  * User: MKUCHIP
  * Date: Jun 22, 2010
  * Time: 11:51:57 AM
