@@ -1894,6 +1894,7 @@
         grower_mailing_zip_code,
         grower_mailing_county,
         upc_code,
+        AGDATA_READY,
         reopen,
         product_name,
         TRAN_ID,
@@ -1920,6 +1921,7 @@
         SELECT distinct h.rptd_doc_nbr,
         d.SAP_MAT_ID,
         r.reopen,
+        r.AGDATA_READY,
         h.tran_id,
         d.detail_seq_nbr,
         'NS' sales_order_type_code,
@@ -2021,7 +2023,8 @@
         where h1.tran_id = hs1.tran_id
         and h1.tran_id = tp1.tran_id
         and tp1.party_code = 'SF'
-        AND (hs1.status_id = 3 OR hs1.status_id = 5 AND r.REOPEN='Y')
+        AND ((hs1.status_id = 3 OR hs1.status_id = 5) AND r.REOPEN='Y')
+        AND r.AGDATA_READY= 'N'
         and hs1.row_modify_date > #startDate#
         AND SUBSTR(dd.mkt_yr, 1,4) >= '2020'
         and h1.rptd_doc_nbr = h.rptd_doc_nbr
@@ -2035,7 +2038,8 @@
             AND bt.alias_program = 'CDW749RT'
             AND bt.source_alias_type = 'CustGrp'
         </isNull>
-        AND (hs.status_id = 3 OR hs.status_id = 5 AND r.REOPEN='Y')
+        AND ((hs.status_id = 3 OR hs.status_id = 5) AND r.REOPEN='Y')
+        AND r.AGDATA_READY= 'N'
         <isNull property="companyCode">
             AND spd.OWNED_LICENSED_CODE = 'OWNED'
         </isNull>
@@ -2087,6 +2091,7 @@
         grower_mailing_zip_code,
         grower_mailing_county,
         upc_code,
+        AGDATA_READY,
         reopen,
         product_name,
         TRAN_ID,
