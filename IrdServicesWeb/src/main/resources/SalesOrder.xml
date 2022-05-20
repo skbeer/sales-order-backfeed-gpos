@@ -1656,6 +1656,7 @@
         grower_mailing_zip_code,
         grower_mailing_county,
         upc_code,
+        SENT_TO_AGDATA,
         product_name,
         TRAN_ID,
 <!--        acronym_name,-->
@@ -1680,6 +1681,7 @@
         FROM (
         SELECT distinct h.rptd_doc_nbr,
         d.SAP_MAT_ID,
+        r.SENT_TO_AGDATA,
         h.tran_id,
         d.detail_seq_nbr,
         'NS' sales_order_type_code,
@@ -1725,6 +1727,7 @@
         spd.specie_descr,
         spd.seed_co_brand_descr
         FROM ecg_tran_header h,
+        ecg.tran_hdr_stat_reop r,
         ecg_tran_detail d,
         ecg_tran_party p_sf,
         ecg_tran_party p_st,
@@ -1780,6 +1783,7 @@
         and h1.tran_id = tp1.tran_id
         and tp1.party_code = 'SF'
         and hs1.status_id = 3
+        AND r.SENT_TO_AGDATA= 'N'
         and hs1.row_modify_date > #startDate#
         AND SUBSTR(dd.mkt_yr, 1,4) >= '2020'
         and h1.rptd_doc_nbr = h.rptd_doc_nbr
@@ -1845,6 +1849,7 @@
         grower_mailing_zip_code,
         grower_mailing_county,
         upc_code,
+        SENT_TO_AGDATA,
         product_name,
         TRAN_ID,
 <!--        acronym_name,-->
@@ -1894,7 +1899,7 @@
         grower_mailing_zip_code,
         grower_mailing_county,
         upc_code,
-        AGDATA_READY,
+        SENT_TO_AGDATA,
         reopen,
         product_name,
         TRAN_ID,
@@ -1921,7 +1926,7 @@
         SELECT distinct h.rptd_doc_nbr,
         d.SAP_MAT_ID,
         r.reopen,
-        r.AGDATA_READY,
+        r.SENT_TO_AGDATA,
         h.tran_id,
         d.detail_seq_nbr,
         'NS' sales_order_type_code,
@@ -2024,7 +2029,7 @@
         and h1.tran_id = tp1.tran_id
         and tp1.party_code = 'SF'
         AND ((hs1.status_id = 3 OR hs1.status_id = 5) AND r.REOPEN='Y')
-        AND r.AGDATA_READY= 'N'
+        AND r.SENT_TO_AGDATA= 'N'
         and hs1.row_modify_date > #startDate#
         AND SUBSTR(dd.mkt_yr, 1,4) >= '2020'
         and h1.rptd_doc_nbr = h.rptd_doc_nbr
@@ -2039,7 +2044,7 @@
             AND bt.source_alias_type = 'CustGrp'
         </isNull>
         AND ((hs.status_id = 3 OR hs.status_id = 5) AND r.REOPEN='Y')
-        AND r.AGDATA_READY= 'N'
+        AND r.SENT_TO_AGDATA= 'N'
         <isNull property="companyCode">
             AND spd.OWNED_LICENSED_CODE = 'OWNED'
         </isNull>
@@ -2091,7 +2096,7 @@
         grower_mailing_zip_code,
         grower_mailing_county,
         upc_code,
-        AGDATA_READY,
+        SENT_TO_AGDATA,
         reopen,
         product_name,
         TRAN_ID,
