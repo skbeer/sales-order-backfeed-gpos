@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 public class AddressInformationType {
 
-    @XmlElement(name = "AddressLine", required = true)
+    @XmlElement(name = "AddressLine")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected List<String> addressLine;
@@ -57,7 +57,7 @@ public class AddressInformationType {
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String postBoxNumber;
-    @XmlElement(name = "CityName", required = true)
+    @XmlElement(name = "CityName")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
     protected String cityName;

@@ -9,7 +9,7 @@ import com.monsanto.irdsoapservices.salesorder.schema.*;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * Created by IntelliJ IDEA..
  * User: MKUCHIP
  * Date: Jun 22, 2010
  * Time: 1:06:40 PM
@@ -48,7 +48,7 @@ public class COSRequestBuilder extends AbstractRequestBuilder {
         SalesOrderLineItemType salesOrderLineItemType = null;
         for(LineItemInfo lineItem : cosOrder.getLineItems()) {
             salesOrderLineItemType =  new SalesOrderLineItemType();
-            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName()));
+            salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName(),lineItem.getProductNum(),lineItem.getLineIdentifier()));
 
             ProductQuantityEquivalentType productQuantityEquivalentType = new ProductQuantityEquivalentType();
             productQuantityEquivalentType.setMeasurement(getMeasurementType(lineItem.getQtyUom(), lineItem.getOrderQty()));

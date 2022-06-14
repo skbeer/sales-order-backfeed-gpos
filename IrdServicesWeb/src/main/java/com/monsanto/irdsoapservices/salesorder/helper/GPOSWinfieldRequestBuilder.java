@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by IntelliJ IDEA.
+ * Created by IntelliJ IDEA..
  * User: caggarw
  * Date: Mar 22, 2012
  * Time: 3:02:45 PM
@@ -64,9 +64,9 @@ public class GPOSWinfieldRequestBuilder extends GPOSRequestBuilder {
            /* salesOrderLineItemType.setLineNumber(new Long(lineItem.getItemNumber()).longValue());
               salesOrderLineItemType.getProductIdentification().add(getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName()));*/
             //CUSTPLT-632 - Introducing new Partner Agdata
-            productidentificationType = getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName());
+            productidentificationType = getProductionIdentificationType(ListProductIDAgency.AGIIS_PRODUCT_ID, lineItem.getProductGtin(), lineItem.getProductName(),lineItem.getProductNum(),lineItem.getLineIdentifier());
             salesOrderLineItemType.getProductIdentification().add(productidentificationType);
-            productidentificationType = (getProductionIdentificationType(ListProductIDAgency.UPC, lineItem.getProductUpc(), lineItem.getProductName()));
+            productidentificationType = (getProductionIdentificationType(ListProductIDAgency.UPC, lineItem.getProductUpc(), lineItem.getProductName(),lineItem.getProductNum(),lineItem.getLineIdentifier()));
             if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)){
                 getAgDataInfo(lineItem,productidentificationType);
             }

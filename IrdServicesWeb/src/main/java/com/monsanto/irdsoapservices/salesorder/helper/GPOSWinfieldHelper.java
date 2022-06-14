@@ -4,7 +4,6 @@ import com.monsanto.irdsoapservices.constants.DBConstants;
 import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
 import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
-import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryTotals;
 import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.OrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
@@ -32,8 +31,8 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
     public int processGPOSOrderReport(TransactionInfo transaction) throws SalesOrderException {
         int ordersSent = 0;
         try {
-            logger.info("Initiating GPOS SalesOrderReport for Partner:"+transaction.getName());
-            logger.info("DataSourceType:"+transaction.getDataSourceType());
+            logger.info("Initiating GPOS SalesOrderReport for PARTNER2021:"+transaction.getName());
+            logger.info("DataSourceType 2021:"+transaction.getDataSourceType());
             List<GPOSOrderInfo> deNormalizedOrders = new ArrayList<GPOSOrderInfo>();
             if (DBConstants.DIRECT_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
                 if(GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())) {
@@ -56,6 +55,18 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
                 }
             }
 
+            //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+            else if (DBConstants.GPOS_AGDATA_SOURCE_TYPE_2021.equalsIgnoreCase(transaction.getDataSourceType()))
+            {
+                if(GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())){
+                    deNormalizedOrders = salesOrderDao.getGPOSAgDataOrders2021(transaction.getLastTransactionDate(), transaction.getGroupCode());
+                }
+                else{
+                    deNormalizedOrders = salesOrderDao.getGPOSAgDataOrders2021(transaction.getLastTransactionDate(), transaction.getGroupCode(),transaction.getCompanyCode());
+                    System.out.println("AGdata Company Code 2021"+transaction.getCompanyCode());
+                }
+            }
+
             else if (DBConstants.XML_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
                if(GPOSWinfieldHelper.isWinfield(transaction.getCompanyCode())){
                    deNormalizedOrders = salesOrderDao.getGPOSXMLOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
@@ -67,7 +78,7 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
             else if (DBConstants.AGRIMINE_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
                deNormalizedOrders = salesOrderDao.getGPOSAgrimineOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
             }
-            logger.info("Total number of GPOS Line Items:"+deNormalizedOrders.size());
+            logger.info("Total number of GPOS Line Items2021-02:"+deNormalizedOrders.size());
             List<GPOSOrderInfo> normalizedOrders = normalizeOrderLineItems(deNormalizedOrders);
             ordersSent = normalizedOrders.size();
             logger.info("Total number of GPOS Orders:"+normalizedOrders.size());
@@ -84,7 +95,7 @@ public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> 
     }
 
 
-    // method is public only to be tested separately
+    // method is  public only to be tested separately
 
     @Override
     public List<GPOSOrderInfo> normalizeOrderLineItems(List<GPOSOrderInfo> deNormalizedOrders) {

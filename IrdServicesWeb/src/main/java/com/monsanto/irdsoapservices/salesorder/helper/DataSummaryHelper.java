@@ -3,16 +3,12 @@ package com.monsanto.irdsoapservices.salesorder.helper;
 import com.monsanto.irdsoapservices.constants.DBConstants;
 import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
 import com.monsanto.irdsoapservices.salesorder.dao.DataSummaryDao;
-import com.monsanto.irdsoapservices.salesorder.dao.SalesOrderDao;
 import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.DataSummaryTotals;
-import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.exception.SalesOrderException;
 import com.monsanto.irdsoapservices.utils.ErrorEmailer;
 import org.apache.log4j.Logger;
-
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,6 +37,11 @@ public class DataSummaryHelper {
             else if(DBConstants.GPOS_AGDATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
                 dataSummaryInfo = dataSummaryDao.getDataSummaryInfoAgdata(transaction.getLastTransactionDate(), transaction.getGroupCode());
                 dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsAgdata(transaction.getLastTransactionDate(), transaction.getGroupCode());
+            }
+            //OTT 92172 - Seed GPOS Interface to Agdata for Bayer  - Introducing new Partner Agdata2021
+            else if(DBConstants.GPOS_AGDATA_SOURCE_TYPE_2021.equalsIgnoreCase(transaction.getDataSourceType())) {
+                dataSummaryInfo = dataSummaryDao.getDataSummaryInfoAgdata2021(transaction.getLastTransactionDate(), transaction.getGroupCode());
+                dataSummaryTotals = dataSummaryDao.getDataSummaryTotalsAgdata2021(transaction.getLastTransactionDate(), transaction.getGroupCode());
             }
             else  if (DBConstants.XML_DATA_SOURCE_TYPE.equalsIgnoreCase(transaction.getDataSourceType())) {
                 dataSummaryInfo = dataSummaryDao.getDataSummaryInfoXML(transaction.getLastTransactionDate(), transaction.getGroupCode());

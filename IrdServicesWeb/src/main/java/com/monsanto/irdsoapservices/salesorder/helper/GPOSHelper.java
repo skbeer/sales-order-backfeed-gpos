@@ -19,7 +19,7 @@ import java.util.List;
  * User: MKUCHIP
  * Date: Jun 8, 2010
  * Time: 3:10:03 PM
- * To change this template use File | Settings | File Templates.
+ * To change this template use  File | Settings | File Templates.
  */
 public class GPOSHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> {
     SalesOrderDao salesOrderDao;
@@ -29,9 +29,9 @@ public class GPOSHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> {
     public int processGPOSOrderReport(TransactionInfo transaction) throws SalesOrderException {
         int ordersSent = 0;
         try {
-            logger.info("Initiating GPOS SalesOrderReport for Partner:"+transaction.getName());
+            logger.info("Initiating GPOS SalesOrderReport for PARTNER2021:"+transaction.getName());
             List<GPOSOrderInfo> deNormalizedOrders = salesOrderDao.getGPOSOrders(transaction.getLastTransactionDate(), transaction.getGroupCode());
-            logger.info("Total number of GPOS Line Items:"+deNormalizedOrders.size());
+            logger.info("Total number of GPOS Line Items2021:"+deNormalizedOrders.size());
             List<GPOSOrderInfo> normalizedOrders = normalizeOrderLineItems(deNormalizedOrders);
             ordersSent = normalizedOrders.size();
             logger.info("Total number of GPOS Orders:"+normalizedOrders.size());

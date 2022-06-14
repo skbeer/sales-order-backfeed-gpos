@@ -26,10 +26,13 @@ public class DBConstants {
     public static final String GPOS_DIRECT_TRAN_TYPE = "GPOS;DIRECT";
     //CUSTPLT-632 - Introducing new Partner Agdata
     public static final String GPOS_AGDATA_TRAN_TYPE = "GPOS;AGDATA";
+    public static final String GPOS_AGDATA_TRAN_TYPE_2021 = "GPOS;AGDATA2021";
 
     public static final String DIRECT_DATA_SOURCE_TYPE = "DIRECT";
     public static final String AGRIMINE_DATA_SOURCE_TYPE = "AGRIMINE";
     public static final String XML_DATA_SOURCE_TYPE = "XML";
     //CUSTPLT-632 - Introducing new Partner Agdata
     public static final String GPOS_AGDATA_SOURCE_TYPE = "AGDATA";
+    //OTT 92172 - Seed GPOS Interface to Agdata for Bayer - Introducing new Partner Agdata2021
+    public static final String GPOS_AGDATA_SOURCE_TYPE_2021 = "AGDATA2021";
 }
