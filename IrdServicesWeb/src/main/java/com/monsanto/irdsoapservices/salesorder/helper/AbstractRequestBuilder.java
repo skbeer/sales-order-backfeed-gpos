@@ -137,7 +137,8 @@ public abstract class AbstractRequestBuilder {
                 partnerIdentifierType = new PartnerIdentifierType();
                 partnerIdentifierType.setAgency(ListPartnerAgencyAttribute.ASSIGNED_BY_SELLER);
                 if(transactionInfo.getTransactionType().equalsIgnoreCase(DBConstants.GPOS_AGDATA_TRAN_TYPE)) {
-                   partnerIdentifierType.setValue(partnerInfo.getTechId());
+//                   partnerIdentifierType.setValue(partnerInfo.getTechId());
+                     partnerIdentifierType.setValue(partnerInfo.getAcctId());
                 }
                 else {
                     partnerIdentifierType.setValue(partnerInfo.getAcctId());
