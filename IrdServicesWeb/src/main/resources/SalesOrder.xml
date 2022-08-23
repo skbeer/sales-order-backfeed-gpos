@@ -1765,7 +1765,7 @@
         <!-- dm_date_period_map dpm,
         cdw_dm.CBR_GROWER_DIM mdm -->
         d1_ms.date_period_map dpm,
-        d1_CBR_GROWER_DIM mdm
+<!--        d1_CBR_GROWER_DIM mdm-->
         <isNull property="companyCode">
             <!-- ,biotech_translation bt -->
             ,d1_ms.biotech_translation bt
@@ -1818,12 +1818,12 @@
         </isNull>
         AND p_st.acct_id = g.acct_id
 <!--        AND g.acct_id = gln_map.acct_id(+)-->
-        AND g.grower_key  = mdm.grower_key
+<!--        AND g.grower_key  = mdm.grower_key-->
         AND spd.SEED_BRAND_DESCR in ('ASGROW','DEKALB','DELTA PINE')
         AND spd.SPECIE_DESCR IN ('CANOLA','CORN','COTTON','SORGHUM','SOYBEAN' )
         AND spd.product_class_descr NOT IN ('NOT APPLICABLE','INVALID','TO BE DETERMINE')
-        AND mdm.SOURCE_SYSTEM_CODE in ('IRD','ECC-CB','ECC-RB')
-        AND mdm.BRAND_FAMILY_DESCR = 'NATIONAL'
+<!--        AND mdm.SOURCE_SYSTEM_CODE in ('IRD','ECC-CB','ECC-RB')-->
+<!--        AND mdm.BRAND_FAMILY_DESCR = 'NATIONAL'-->
 <!--        AND gln_map.alias_id IS NOT NULL-->
         AND H.SALE_TYPE='GROWER'
 <!--        AND gln_map.system_type_code(+) = 'GLN'-->
@@ -2016,7 +2016,7 @@
         <!-- dm_date_period_map dpm,
         cdw_dm.CBR_GROWER_DIM mdm -->
         d1_ms.date_period_map dpm,
-        d1_CBR_GROWER_DIM mdm
+<!--        d1_CBR_GROWER_DIM mdm-->
         <isNull property="companyCode">
             <!-- ,biotech_translation bt -->
             ,d1_ms.biotech_translation bt
@@ -2068,12 +2068,12 @@
         </isNull>
         AND p_st.acct_id = g.acct_id
 <!--        AND g.acct_id = gln_map.acct_id(+)-->
-        AND g.grower_key  = mdm.grower_key
+<!--        AND g.grower_key  = mdm.grower_key-->
         AND spd.SEED_BRAND_DESCR in ('ASGROW','DEKALB','DELTA PINE')
         AND spd.SPECIE_DESCR IN ('CANOLA','CORN','COTTON','SORGHUM','SOYBEAN' )
         AND spd.product_class_descr NOT IN ('NOT APPLICABLE','INVALID','TO BE DETERMINE')
-        AND mdm.SOURCE_SYSTEM_CODE in ('IRD','ECC-CB','ECC-RB')
-        AND mdm.BRAND_FAMILY_DESCR = 'NATIONAL'
+<!--        AND mdm.SOURCE_SYSTEM_CODE in ('IRD','ECC-CB','ECC-RB')-->
+<!--        AND mdm.BRAND_FAMILY_DESCR = 'NATIONAL'-->
 <!--        AND gln_map.alias_id IS NOT NULL-->
         AND H.SALE_TYPE='GROWER'
 <!--        AND gln_map.system_type_code(+) = 'GLN'-->
