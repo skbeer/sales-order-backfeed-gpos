@@ -163,7 +163,7 @@
         <result property="dealerInfo.zip" column="DEALER_MAILING_ZIP_CODE"/>
         <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY"/>
         <result property="growerInfo.acctId" column="GROWER_ACCT_ID"/>
-        <result property="growerInfo.gln" column="GROWER_GLN"/>
+<!--        <result property="growerInfo.gln" column="GROWER_GLN"/>-->
         <result property="growerInfo.napd" column="GROWER_NAPD_ID"/>
         <result property="growerInfo.partnerName" column="GROWER_NAME"/>
         <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME"/>
@@ -211,7 +211,7 @@
         <result property="dealerInfo.zip" column="DEALER_MAILING_ZIP_CODE"/>
         <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY"/>
         <result property="growerInfo.acctId" column="GROWER_ACCT_ID"/>
-        <result property="growerInfo.gln" column="GROWER_GLN"/>
+<!--        <result property="growerInfo.gln" column="GROWER_GLN"/>-->
         <result property="growerInfo.napd" column="GROWER_NAPD_ID"/>
         <result property="growerInfo.partnerName" column="GROWER_NAME"/>
         <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME"/>
@@ -1646,7 +1646,7 @@
         dealer_mailing_zip_code,
         dealer_mailing_county,
         grower_name,
-        grower_gln,
+<!--        grower_gln,-->
         grower_napd_id,
         grower_acct_id,
         grower_contact_name,
@@ -1699,7 +1699,7 @@
         cad.shipping_zip_code dealer_mailing_zip_code,
         cad.shipping_county dealer_mailing_county,
         g.name_1 grower_name,
-        gln_map.alias_id grower_gln,
+<!--        gln_map.alias_id grower_gln,-->
         g.napd_id grower_napd_id,
         g.acct_id grower_acct_id,
         g.primary_contact_full_name grower_contact_name,
@@ -1750,12 +1750,12 @@
 <!--        )-->
 <!--        where begin_date = max_date-->
 <!--        )gln_map,-->
-        (select   acct_id, system_type_code,
-        alias_id, active_flag, rank, begin_date,
-        max(begin_date) over (partition by acct_id, rank) max_date
-        from  s_acct_xref
-        where  system_type_code='GLN' and active_flag='Y' and rank=1
-        ) gln_map,
+<!--        (select   acct_id, system_type_code,-->
+<!--        alias_id, active_flag, rank, begin_date,-->
+<!--        max(begin_date) over (partition by acct_id, rank) max_date-->
+<!--        from  s_acct_xref-->
+<!--        where  system_type_code='GLN' and active_flag='Y' and rank=1-->
+<!--        ) gln_map,-->
         <!-- dm_date_dim dd, -->
         d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
@@ -1817,18 +1817,18 @@
             AND cgp.sales_org_code = 'CJ20'
         </isNull>
         AND p_st.acct_id = g.acct_id
-        AND g.acct_id = gln_map.acct_id(+)
+<!--        AND g.acct_id = gln_map.acct_id(+)-->
         AND g.grower_key  = mdm.grower_key
         AND spd.SEED_BRAND_DESCR in ('ASGROW','DEKALB','DELTA PINE')
         AND spd.SPECIE_DESCR IN ('CANOLA','CORN','COTTON','SORGHUM','SOYBEAN' )
         AND spd.product_class_descr NOT IN ('NOT APPLICABLE','INVALID','TO BE DETERMINE')
         AND mdm.SOURCE_SYSTEM_CODE in ('IRD','ECC-CB','ECC-RB')
         AND mdm.BRAND_FAMILY_DESCR = 'NATIONAL'
-        AND gln_map.alias_id IS NOT NULL
+<!--        AND gln_map.alias_id IS NOT NULL-->
         AND H.SALE_TYPE='GROWER'
-        AND gln_map.system_type_code(+) = 'GLN'
-        AND gln_map.rank(+) = 1
-        AND gln_map.active_flag(+) = 'Y'
+<!--        AND gln_map.system_type_code(+) = 'GLN'-->
+<!--        AND gln_map.rank(+) = 1-->
+<!--        AND gln_map.active_flag(+) = 'Y'-->
         and cad.source_system_code = 'IRD'
         )
         group by rptd_doc_nbr,
@@ -1846,7 +1846,7 @@
         dealer_mailing_zip_code,
         dealer_mailing_county,
         grower_name,
-        grower_gln,
+<!--        grower_gln,-->
         grower_napd_id,
         grower_acct_id,
         grower_contact_name,
@@ -1897,7 +1897,7 @@
         dealer_mailing_zip_code,
         dealer_mailing_county,
         grower_name,
-        grower_gln,
+<!--        grower_gln,-->
         grower_napd_id,
         grower_acct_id,
         grower_contact_name,
@@ -1950,7 +1950,7 @@
         cad.shipping_zip_code dealer_mailing_zip_code,
         cad.shipping_county dealer_mailing_county,
         g.name_1 grower_name,
-        gln_map.alias_id grower_gln,
+<!--        gln_map.alias_id grower_gln,-->
         g.napd_id grower_napd_id,
         g.acct_id grower_acct_id,
         g.primary_contact_full_name grower_contact_name,
@@ -2001,12 +2001,12 @@
 <!--        )-->
 <!--        where begin_date = max_date-->
 <!--        )gln_map,-->
-        (select   acct_id, system_type_code,
-        alias_id, active_flag, rank, begin_date,
-        max(begin_date) over (partition by acct_id, rank) max_date
-        from  s_acct_xref
-        where  system_type_code='GLN' and active_flag='Y' and rank=1
-        ) gln_map,
+<!--        (select   acct_id, system_type_code,-->
+<!--        alias_id, active_flag, rank, begin_date,-->
+<!--        max(begin_date) over (partition by acct_id, rank) max_date-->
+<!--        from  s_acct_xref-->
+<!--        where  system_type_code='GLN' and active_flag='Y' and rank=1-->
+<!--        ) gln_map,-->
         <!-- dm_date_dim dd, -->
         d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
@@ -2067,18 +2067,18 @@
             AND cgp.sales_org_code = 'CJ20'
         </isNull>
         AND p_st.acct_id = g.acct_id
-        AND g.acct_id = gln_map.acct_id(+)
+<!--        AND g.acct_id = gln_map.acct_id(+)-->
         AND g.grower_key  = mdm.grower_key
         AND spd.SEED_BRAND_DESCR in ('ASGROW','DEKALB','DELTA PINE')
         AND spd.SPECIE_DESCR IN ('CANOLA','CORN','COTTON','SORGHUM','SOYBEAN' )
         AND spd.product_class_descr NOT IN ('NOT APPLICABLE','INVALID','TO BE DETERMINE')
         AND mdm.SOURCE_SYSTEM_CODE in ('IRD','ECC-CB','ECC-RB')
         AND mdm.BRAND_FAMILY_DESCR = 'NATIONAL'
-        AND gln_map.alias_id IS NOT NULL
+<!--        AND gln_map.alias_id IS NOT NULL-->
         AND H.SALE_TYPE='GROWER'
-        AND gln_map.system_type_code(+) = 'GLN'
-        AND gln_map.rank(+) = 1
-        AND gln_map.active_flag(+) = 'Y'
+<!--        AND gln_map.system_type_code(+) = 'GLN'-->
+<!--        AND gln_map.rank(+) = 1-->
+<!--        AND gln_map.active_flag(+) = 'Y'-->
         and cad.source_system_code = 'IRD'
         )
         group by rptd_doc_nbr,
@@ -2096,7 +2096,7 @@
         dealer_mailing_zip_code,
         dealer_mailing_county,
         grower_name,
-        grower_gln,
+<!--        grower_gln,-->
         grower_napd_id,
         grower_acct_id,
         grower_contact_name,
