@@ -3,6 +3,8 @@
 <sqlMap namespace="BackfeedData">
 	<typeAlias alias="transactionInfo"
 		type="com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo" />
+    <typeAlias alias="transactionHeader"
+               type="com.monsanto.irdsoapservices.salesorder.domain.TransactionHeaderStateReopenInfo"/>
 
 	<resultMap id="transaction" class="transactionInfo">
 		<result property="name" column="PARTNER_NAME" />
@@ -15,6 +17,13 @@
         <result property="lastTransactionNumber" column="LAST_TRANSACTION_NUMBER" />
         <result property="maxFileSize" column="MAX_FILE_SIZE"/>
 	</resultMap>
+
+    <resultMap id="tranHeader" class="transactionHeader">
+        <result property="tranID" column="TRAN_ID"/>
+        <result property="statusCode" column="STATUS_CODE"/>
+        <result property="statusID" column="STATUS_ID"/>
+        <result property="sentToAgdata" column="SENT_TO_AGDATA"/>
+    </resultMap>
     
 	<select id="getTransactionsToBeProcessed" resultMap="transaction" parameterClass="transactionInfo">
 	    SELECT  PARTNER_NAME,
@@ -45,6 +54,12 @@
         UPDATE  AGSHARE.PARTNER_BACKFEED_CONTROL
         SET     LAST_TRANSACTION_NUMBER = #lastTransactionNumber#
         WHERE   GROUP_CODE = #groupCode# AND TRANSACTION_TYPE = #transactionType#
+    </update>
+
+    <update id="updateSentToAgdata" parameterClass="java.lang.Long">
+        UPDATE ECG.TRAN_HDR_STAT_REOP
+        SET SENT_TO_AGDATA = 'Y'
+        where TRAN_ID = #tranID#
     </update>
 
 

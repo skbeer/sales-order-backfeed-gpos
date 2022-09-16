@@ -1,5 +1,6 @@
 package com.monsanto.irdsoapservices.salesorder.helper;
 
+import com.monsanto.irdsoapservices.salesorder.domain.GPOSOrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.OrderInfo;
 import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderReportResponseType;
@@ -22,6 +23,7 @@ import org.apache.log4j.Logger;
 public abstract class AbstractSalesOrderHelper<T extends OrderInfo> {
     ClientFactory clientFactory;
     TransactionDao transactionDao;
+    public static final String AgdataCompanyCode = "1661352510000";
     Logger logger = Logger.getLogger(this.getClass());
 
     // method is public only to be tested separately
@@ -72,10 +74,16 @@ public abstract class AbstractSalesOrderHelper<T extends OrderInfo> {
             }
             logger.info("Sending Batch # "+(++count));
             try {
-                SalesOrderReport salesOrderRequest = getSalesOrderRequest(subList(originalOrders, 0, endPos), transactionInfo);
+                List<T> orders=subList(originalOrders, 0, endPos);
+                SalesOrderReport salesOrderRequest = getSalesOrderRequest(orders, transactionInfo);
                 logger.info("Built sales order request for batch Batch # " + count);
                 updateDocumentIdentifierAndAddToDataSummaryDetails(salesOrderRequest, count, totalBatches, transactionInfo);
                 SalesOrderReportResponseType response = clientFactory.getSalesOrderClient().getSalesOrderReport(salesOrderRequest);
+                for(T order:orders) {
+                    if(order instanceof GPOSOrderInfo && (transactionInfo.getCompanyCode().equals(AgdataCompanyCode))){
+                        transactionDao.updateSentToAgdata(order.getTempLineItem().getLineIdentifier());
+                    }
+                }
             } catch (Exception se) {
                 logger.error("Error occurred while trying to send Batch # "+count);
                 logger.error(se,se);
