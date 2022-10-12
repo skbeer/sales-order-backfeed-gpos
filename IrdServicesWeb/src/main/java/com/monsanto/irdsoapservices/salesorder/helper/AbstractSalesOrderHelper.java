@@ -76,11 +76,15 @@ public abstract class AbstractSalesOrderHelper<T extends OrderInfo> {
             try {
                 List<T> orders=subList(originalOrders, 0, endPos);
                 SalesOrderReport salesOrderRequest = getSalesOrderRequest(orders, transactionInfo);
+                //logger.info("Agdata Updation: ..inside AbstractSalesOrderHelper.sendFragmentedOrders method...");
                 logger.info("Built sales order request for batch Batch # " + count);
                 updateDocumentIdentifierAndAddToDataSummaryDetails(salesOrderRequest, count, totalBatches, transactionInfo);
                 SalesOrderReportResponseType response = clientFactory.getSalesOrderClient().getSalesOrderReport(salesOrderRequest);
+                //logger.info("Agdata Updation...");
                 for(T order:orders) {
                     if(order instanceof GPOSOrderInfo && (transactionInfo.getCompanyCode().equals(AgdataCompanyCode))){
+                        //logger.info("Partner name-- "+transactionInfo.getName()+"  Company code-- "+transactionInfo.getCompanyCode());
+                        //logger.info("Agdata Updation: TranID -- "+order.getTempLineItem().getLineIdentifier());
                         transactionDao.updateSentToAgdata(order.getTempLineItem().getLineIdentifier());
                     }
                 }

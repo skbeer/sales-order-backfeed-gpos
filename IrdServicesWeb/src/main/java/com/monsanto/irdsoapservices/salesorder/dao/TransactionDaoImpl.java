@@ -4,7 +4,6 @@ import com.monsanto.irdsoapservices.salesorder.domain.TransactionInfo;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import java.util.List;
-import org.apache.log4j.Logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,7 +13,6 @@ import org.apache.log4j.Logger;
  * To change this template use File | Settings | File Templates.
  */
 public class TransactionDaoImpl extends SqlMapClientDaoSupport implements TransactionDao {
-    Logger logger = Logger.getLogger(this.getClass());
 
     public List<TransactionInfo> getTransactionsToBeProcessed() throws Exception {
         return (List<TransactionInfo>)getSqlMapClientTemplate().queryForList("BackfeedData.getTransactionsToBeProcessed", null);
@@ -36,6 +34,7 @@ public class TransactionDaoImpl extends SqlMapClientDaoSupport implements Transa
 
     public int updateSentToAgdata(String lineIdentifier) throws Exception{
         Long transactionID = Long.parseLong(lineIdentifier);
+        //logger.info("Inside TransactionDaoImpl.updateSentToAgdata.....transaction Id: "+transactionID+" .. of type "+transactionID.getClass().getSimpleName());
         return getSqlMapClientTemplate().update("BackfeedData.updateSentToAgdata",transactionID);
     }
     
