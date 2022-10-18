@@ -31,5 +31,11 @@ public class TransactionDaoImpl extends SqlMapClientDaoSupport implements Transa
     public int updateLastTransactionNumber(TransactionInfo transaction) throws Exception {
         return getSqlMapClientTemplate().update("BackfeedData.updateLastTransactionNumber", transaction);
     }
+
+    public int updateSentToAgdata(String lineIdentifier) throws Exception{
+        Long transactionID = Long.parseLong(lineIdentifier);
+        //logger.info("Inside TransactionDaoImpl.updateSentToAgdata.....transaction Id: "+transactionID+" .. of type "+transactionID.getClass().getSimpleName());
+        return getSqlMapClientTemplate().update("BackfeedData.updateSentToAgdata",transactionID);
+    }
     
 }

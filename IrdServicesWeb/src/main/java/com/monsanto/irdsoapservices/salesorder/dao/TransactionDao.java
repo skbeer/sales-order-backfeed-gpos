@@ -19,4 +19,6 @@ public interface TransactionDao {
     int updateLastTransactionNumber(TransactionInfo transaction) throws Exception;
 
     List<TransactionInfo> getTransactionsByType(String tranType) throws Exception;
+
+    int updateSentToAgdata(String lineIdentifier) throws Exception;
 }

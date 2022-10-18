@@ -47,6 +47,12 @@
         WHERE   GROUP_CODE = #groupCode# AND TRANSACTION_TYPE = #transactionType#
     </update>
 
+    <update id="updateSentToAgdata" parameterClass="java.lang.Long">
+        UPDATE ECG.TRAN_HDR_STAT_REOP
+        SET SENT_TO_AGDATA = 'Y'
+        where TRAN_ID = #tranID#
+    </update>
+
 
 </sqlMap>
 
