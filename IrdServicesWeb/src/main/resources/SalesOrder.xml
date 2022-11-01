@@ -1788,7 +1788,7 @@
         and tp1.party_code = 'SF'
 <!--        and hs1.status_id = 3-->
         and ((hs1.status_id = 3) AND r.REOPEN='N')
-        AND (r.SENT_TO_AGDATA = 'N' OR r.SENT_TO_AGDATA is NULL)
+        AND (r.SENT_TO_AGDATA is NULL)
         and hs1.row_modify_date > #startDate#
         AND SUBSTR(dd.mkt_yr, 1,4) >= '2020'
         and h1.rptd_doc_nbr = h.rptd_doc_nbr
@@ -1963,9 +1963,9 @@
 <!--        spd.legal_descr_1 product_name,-->
         spd.acronym_name product_name,
         pps.upc_scc_code gtin,
-        d.ssu_qty sales_qty,
+        decode(r.reopen, 'Y', 0, d.ssu_qty) sales_qty,
         decode(pps.UOM_code, 'BN','BG',pps.UOM_code) sales_uom,
-        d.ssu_qty equivalent_qty,
+        decode(r.reopen, 'Y', 0, d.ssu_qty) equivalent_qty,
         'UN' equivilent_qty_uom,
         cad.name_1 salesrep_name,
         salesrep.name_1 || ' ' || salesrep.name_3 contact_name,
@@ -2037,8 +2037,8 @@
         and h1.tran_id = tp1.tran_id
         and h1.tran_id = h.tran_id
         and tp1.party_code = 'SF'
-        AND ((hs1.status_id = 3 OR hs1.status_id = 5) AND r.REOPEN='Y')
-        AND (r.SENT_TO_AGDATA = 'N' OR r.SENT_TO_AGDATA is NULL)
+        AND (hs1.status_id = 3 OR hs1.status_id = 5)
+        AND (r.SENT_TO_AGDATA is NULL)
         and hs1.row_modify_date > #startDate#
         AND SUBSTR(dd.mkt_yr, 1,4) >= '2020'
         and h1.rptd_doc_nbr = h.rptd_doc_nbr
@@ -2052,8 +2052,8 @@
             AND bt.alias_program = 'CDW749RT'
             AND bt.source_alias_type = 'CustGrp'
         </isNull>
-        AND ((hs.status_id = 3 OR hs.status_id = 5) AND r.REOPEN='Y')
-        AND (r.SENT_TO_AGDATA = 'N' OR r.SENT_TO_AGDATA is NULL)
+        AND (hs.status_id = 3 OR hs.status_id = 5)
+        AND (r.SENT_TO_AGDATA is NULL)
         <isNull property="companyCode">
             AND spd.OWNED_LICENSED_CODE = 'OWNED'
         </isNull>
