@@ -7,6 +7,7 @@ import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderReportResponseTy
 import com.monsanto.irdsoapservices.salesorder.schema.SalesOrderReport;
 import com.monsanto.irdsoapservices.salesorder.client.ClientFactory;
 import com.monsanto.irdsoapservices.salesorder.dao.TransactionDao;
+import com.monsanto.irdsoapservices.salesorder.domain.LineItemInfo;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -76,16 +77,28 @@ public abstract class AbstractSalesOrderHelper<T extends OrderInfo> {
             try {
                 List<T> orders=subList(originalOrders, 0, endPos);
                 SalesOrderReport salesOrderRequest = getSalesOrderRequest(orders, transactionInfo);
-                //logger.info("Agdata Updation: ..inside AbstractSalesOrderHelper.sendFragmentedOrders method...");
+                logger.info("OTT #105838 Agdata Updation: inside sendFragmentedOrders method....");
                 logger.info("Built sales order request for batch Batch # " + count);
                 updateDocumentIdentifierAndAddToDataSummaryDetails(salesOrderRequest, count, totalBatches, transactionInfo);
                 SalesOrderReportResponseType response = clientFactory.getSalesOrderClient().getSalesOrderReport(salesOrderRequest);
-                //logger.info("Agdata Updation...");
+                logger.info("OTT #105838 Agdata Updation...");
+                logger.info("OTT #105838 The type of order -- "+orders.getClass().getSimpleName());
+                logger.info("OTT #105838 Transaction name -- "+transactionInfo.getName()+" Transaction type -- "+transactionInfo.getTransactionType()+" Partner name-- "+transactionInfo.getName()+" Company code-- "+transactionInfo.getCompanyCode());
                 for(T order:orders) {
                     if(order instanceof GPOSOrderInfo && (transactionInfo.getCompanyCode().equals(AgdataCompanyCode))){
                         //logger.info("Partner name-- "+transactionInfo.getName()+"  Company code-- "+transactionInfo.getCompanyCode());
                         //logger.info("Agdata Updation: TranID -- "+order.getTempLineItem().getLineIdentifier());
-                        transactionDao.updateSentToAgdata(order.getTempLineItem().getLineIdentifier());
+                        //transactionDao.updateSentToAgdata(order.getTempLineItem().getLineIdentifier());
+                    	List<LineItemInfo> gposOrderInfo = order.getLineItems();
+                    	logger.info("OTT #105838  transactions size --" + gposOrderInfo.size());
+                    	for(LineItemInfo lineItemInfo:gposOrderInfo) {
+                    		logger.info("OTT #105838  transactions size inside the for loop --" + gposOrderInfo.size());
+                            logger.info("OTT #105838  transaction id- --- " + lineItemInfo.getLineIdentifier());
+                            transactionDao.updateSentToAgdata(lineItemInfo.getLineIdentifier());
+                    	}
+                    	if (gposOrderInfo.isEmpty()) {
+                            logger.info("OTT #105838 gposOrderInfo list is empty");
+                        }
                     }
                 }
             } catch (Exception se) {
