@@ -32,7 +32,7 @@ public class SalesOrderServlet extends HttpServlet {
             ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
             SalesOrderReportService salesOrderService = (SalesOrderReportService) context.getBean("salesOrderService");
             salesOrderService.startProcessing();
-            writer.print("SalesOrder executed Successfully.?");
+            writer.print("SalesOrder executed Successfully.");
         } catch (BeansException e) {
             e.printStackTrace();
             logger.error(e);

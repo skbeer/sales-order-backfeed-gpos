@@ -1816,6 +1816,8 @@
             AND cgp.division_code = '17'
             AND cgp.sales_org_code = 'CJ20'
         </isNull>
+        <!--        OTT PSO0026167 - removing duplicate account id from D1MS table-->
+        And g.acct_id NOT LIKE '0%'
         AND p_st.acct_id = g.acct_id
 <!--        AND g.acct_id = gln_map.acct_id(+)-->
 <!--        AND g.grower_key  = mdm.grower_key-->
@@ -2066,6 +2068,8 @@
             AND cgp.division_code = '17'
             AND cgp.sales_org_code = 'CJ20'
         </isNull>
+<!--        OTT PSO0026167 - removing duplicate account id from D1MS table-->
+        And g.acct_id NOT LIKE '0%'
         AND p_st.acct_id = g.acct_id
 <!--        AND g.acct_id = gln_map.acct_id(+)-->
 <!--        AND g.grower_key  = mdm.grower_key-->
