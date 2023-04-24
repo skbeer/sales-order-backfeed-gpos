@@ -164,9 +164,9 @@
         <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY"/>
         <result property="growerInfo.acctId" column="GROWER_ACCT_ID"/>
 <!--        <result property="growerInfo.gln" column="GROWER_GLN"/>-->
-        <result property="growerInfo.napd" column="GROWER_NAPD_ID"/>
+<!--        <result property="growerInfo.napd" column="GROWER_NAPD_ID"/>-->
         <result property="growerInfo.partnerName" column="GROWER_NAME"/>
-        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME"/>
+<!--        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME"/>-->
         <result property="growerInfo.address" column="GROWER_MAILING_ADDRESS"/>
         <result property="growerInfo.city" column="GROWER_MAILING_CITY"/>
         <result property="growerInfo.state" column="GROWER_MAILING_STATE"/>
@@ -212,9 +212,9 @@
         <result property="dealerInfo.county" column="DEALER_MAILING_COUNTY"/>
         <result property="growerInfo.acctId" column="GROWER_ACCT_ID"/>
 <!--        <result property="growerInfo.gln" column="GROWER_GLN"/>-->
-        <result property="growerInfo.napd" column="GROWER_NAPD_ID"/>
+<!--        <result property="growerInfo.napd" column="GROWER_NAPD_ID"/>-->
         <result property="growerInfo.partnerName" column="GROWER_NAME"/>
-        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME"/>
+<!--        <result property="growerInfo.contactName" column="GROWER_CONTACT_NAME"/>-->
         <result property="growerInfo.address" column="GROWER_MAILING_ADDRESS"/>
         <result property="growerInfo.city" column="GROWER_MAILING_CITY"/>
         <result property="growerInfo.state" column="GROWER_MAILING_STATE"/>
@@ -1646,10 +1646,7 @@
         dealer_mailing_zip_code,
         dealer_mailing_county,
         grower_name,
-<!--        grower_gln,-->
-        grower_napd_id,
         grower_acct_id,
-        grower_contact_name,
         grower_mailing_address,
         grower_mailing_city,
         grower_mailing_state,
@@ -1660,7 +1657,6 @@
         reopen,
         product_name,
         TRAN_ID,
-<!--        acronym_name,-->
         SAP_MAT_ID,
         gtin,
         SUM (sales_qty) sales_qty,
@@ -1676,7 +1672,6 @@
         salesrep_zip,
         salesrep_county,
         Touched_Untouched,
-<!--        mdm_tech_id,-->
         specie_descr,
         seed_co_brand_descr
         FROM (
@@ -1699,17 +1694,13 @@
         cad.shipping_zip_code dealer_mailing_zip_code,
         cad.shipping_county dealer_mailing_county,
         g.name_1 grower_name,
-<!--        gln_map.alias_id grower_gln,-->
-        g.napd_id grower_napd_id,
         g.acct_id grower_acct_id,
-        g.primary_contact_full_name grower_contact_name,
-        g.mailing_addr_line_1 grower_mailing_address,
-        g.mailing_city grower_mailing_city,
-        g.mailing_state_code grower_mailing_state,
-        g.mailing_zip_code grower_mailing_zip_code,
-        g.mailing_county grower_mailing_county,
+        g.SHIPPING_ADDR_LINE_1 grower_mailing_address,
+        g.SHIPPING_CITY grower_mailing_city,
+        g.SHIPPING_STATE_CODE grower_mailing_state,
+        g.SHIPPING_ZIP grower_mailing_zip_code,
+        g.SHIPPING_FIPS_DESCR grower_mailing_county,
         spd.upc_code upc_code,
-<!--        spd.legal_descr_1 product_name,-->
         spd.acronym_name product_name,
         pps.upc_scc_code gtin,
         d.ssu_qty sales_qty,
@@ -1725,7 +1716,6 @@
         cad.mailing_zip_code salesrep_zip,
         cad.mailing_county salesrep_county,
         decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched,
-<!--        mdm.MDM_TECH_ID,-->
         spd.specie_descr,
         spd.seed_co_brand_descr
         FROM ecg_tran_header h,
@@ -1736,38 +1726,15 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        <!--dm_active_grower_dim g,
-        dm_active_channel_account_dim cad, -->
-        d1_ms.active_grower_dim_mv g,
+        S_ACCT_EXT_DNML g,
         d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
-<!--        (select *-->
-<!--        from (select acct_id, system_type_code,-->
-<!--        alias_id, active_flag, rank, begin_date,-->
-<!--        max(begin_date) over (partition by acct_id, rank) max_date-->
-<!--        from s_acct_xref-->
-<!--        where system_type_code='GLN' and active_flag='Y' and rank=1-->
-<!--        )-->
-<!--        where begin_date = max_date-->
-<!--        )gln_map,-->
-<!--        (select   acct_id, system_type_code,-->
-<!--        alias_id, active_flag, rank, begin_date,-->
-<!--        max(begin_date) over (partition by acct_id, rank) max_date-->
-<!--        from  s_acct_xref-->
-<!--        where  system_type_code='GLN' and active_flag='Y' and rank=1-->
-<!--        ) gln_map,-->
-        <!-- dm_date_dim dd, -->
         d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        <!-- dm_seed_product_dim spd, -->
         d1_seed_product_dim spd,
         s_prod_package_struct pps,
-        <!-- dm_date_period_map dpm,
-        cdw_dm.CBR_GROWER_DIM mdm -->
         d1_ms.date_period_map dpm
-<!--        , d1_CBR_GROWER_DIM mdm-->
         <isNull property="companyCode">
-            <!-- ,biotech_translation bt -->
             ,d1_ms.biotech_translation bt
         </isNull>
         WHERE h.tran_id = d.tran_id
@@ -1786,7 +1753,6 @@
         and h1.tran_id = tp1.tran_id
         and h1.tran_id = h.tran_id
         and tp1.party_code = 'SF'
-<!--        and hs1.status_id = 3-->
         and ((hs1.status_id = 3) AND r.REOPEN='N')
         AND (r.SENT_TO_AGDATA is NULL)
         and hs1.row_modify_date > #startDate#
@@ -1802,7 +1768,6 @@
             AND bt.alias_program = 'CDW749RT'
             AND bt.source_alias_type = 'CustGrp'
         </isNull>
-<!--        AND hs.status_id = 3-->
         AND ((hs.status_id = 3) AND r.REOPEN='N')
         <isNull property="companyCode">
             AND spd.OWNED_LICENSED_CODE = 'OWNED'
@@ -1811,26 +1776,16 @@
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND NVL (cgp.mfd_flag, 'N') != 'X'
         <isNull property="companyCode">
-            <!-- Changes for JIRA-3745 (US20->CJ20), 90->02 -->
             AND cgp.distribution_channel_code = '02'
             AND cgp.division_code = '17'
             AND cgp.sales_org_code = 'CJ20'
         </isNull>
-        <!--        OTT PSO0026167 - removing duplicate account id from D1MS table-->
         And g.acct_id NOT LIKE '0%'
         AND p_st.acct_id = g.acct_id
-<!--        AND g.acct_id = gln_map.acct_id(+)-->
-<!--        AND g.grower_key  = mdm.grower_key-->
         AND spd.SEED_BRAND_DESCR in ('ASGROW','DEKALB','DELTA PINE')
         AND spd.SPECIE_DESCR IN ('CANOLA','CORN','COTTON','SORGHUM','SOYBEAN' )
         AND spd.product_class_descr NOT IN ('NOT APPLICABLE','INVALID','TO BE DETERMINE')
-<!--        AND mdm.SOURCE_SYSTEM_CODE in ('IRD','ECC-CB','ECC-RB')-->
-<!--        AND mdm.BRAND_FAMILY_DESCR = 'NATIONAL'-->
-<!--        AND gln_map.alias_id IS NOT NULL-->
         AND H.SALE_TYPE='GROWER'
-<!--        AND gln_map.system_type_code(+) = 'GLN'-->
-<!--        AND gln_map.rank(+) = 1-->
-<!--        AND gln_map.active_flag(+) = 'Y'-->
         and cad.source_system_code = 'IRD'
         )
         group by rptd_doc_nbr,
@@ -1848,10 +1803,7 @@
         dealer_mailing_zip_code,
         dealer_mailing_county,
         grower_name,
-<!--        grower_gln,-->
-        grower_napd_id,
         grower_acct_id,
-        grower_contact_name,
         grower_mailing_address,
         grower_mailing_city,
         grower_mailing_state,
@@ -1862,7 +1814,6 @@
         reopen,
         product_name,
         TRAN_ID,
-<!--        acronym_name,-->
         SAP_MAT_ID,
         gtin,
         sales_uom,
@@ -1876,7 +1827,6 @@
         salesrep_zip,
         salesrep_county,
         Touched_Untouched,
-<!--        mdm_tech_id,-->
         specie_descr,
         seed_co_brand_descr
         order by rptd_doc_nbr, dealer_acct_id, grower_acct_id
@@ -1899,10 +1849,7 @@
         dealer_mailing_zip_code,
         dealer_mailing_county,
         grower_name,
-<!--        grower_gln,-->
-        grower_napd_id,
         grower_acct_id,
-        grower_contact_name,
         grower_mailing_address,
         grower_mailing_city,
         grower_mailing_state,
@@ -1913,7 +1860,6 @@
         reopen,
         product_name,
         TRAN_ID,
-<!--        acronym_name,-->
         SAP_MAT_ID,
         gtin,
         SUM (sales_qty) sales_qty,
@@ -1929,7 +1875,6 @@
         salesrep_zip,
         salesrep_county,
         Touched_Untouched,
-<!--        mdm_tech_id,-->
         specie_descr,
         seed_co_brand_descr
         FROM (
@@ -1952,17 +1897,13 @@
         cad.shipping_zip_code dealer_mailing_zip_code,
         cad.shipping_county dealer_mailing_county,
         g.name_1 grower_name,
-<!--        gln_map.alias_id grower_gln,-->
-        g.napd_id grower_napd_id,
         g.acct_id grower_acct_id,
-        g.primary_contact_full_name grower_contact_name,
-        g.mailing_addr_line_1 grower_mailing_address,
-        g.mailing_city grower_mailing_city,
-        g.mailing_state_code grower_mailing_state,
-        g.mailing_zip_code grower_mailing_zip_code,
-        g.mailing_county grower_mailing_county,
+        g.SHIPPING_ADDR_LINE_1 grower_mailing_address,
+        g.SHIPPING_CITY grower_mailing_city,
+        g.SHIPPING_STATE_CODE grower_mailing_state,
+        g.SHIPPING_ZIP grower_mailing_zip_code,
+        g.SHIPPING_FIPS_DESCR grower_mailing_county,
         spd.upc_code upc_code,
-<!--        spd.legal_descr_1 product_name,-->
         spd.acronym_name product_name,
         pps.upc_scc_code gtin,
         decode(r.reopen, 'Y', 0, d.ssu_qty) sales_qty,
@@ -1978,7 +1919,6 @@
         cad.mailing_zip_code salesrep_zip,
         cad.mailing_county salesrep_county,
         decode (h.man_attn_flag, 'Y', 'N', 'Y') Touched_Untouched,
-<!--        mdm.MDM_TECH_ID,-->
         spd.specie_descr,
         spd.seed_co_brand_descr
         FROM ecg_tran_header h,
@@ -1989,38 +1929,15 @@
         ecg_tran_party p_ds,
         ecg_tracking_source ts,
         ecg_tran_header_status hs,
-        <!--dm_active_grower_dim g,
-        dm_active_channel_account_dim cad, -->
-        d1_ms.active_grower_dim_mv g,
+        S_ACCT_EXT_DNML g,
         d1_ms.active_channel_account_dim_mv cad,
         s_acct_sales_area cgp,
-<!--        (select *-->
-<!--        from (select acct_id, system_type_code,-->
-<!--        alias_id, active_flag, rank, begin_date,-->
-<!--        max(begin_date) over (partition by acct_id, rank) max_date-->
-<!--        from s_acct_xref-->
-<!--        where system_type_code='GLN' and active_flag='Y' and rank=1-->
-<!--        )-->
-<!--        where begin_date = max_date-->
-<!--        )gln_map,-->
-<!--        (select   acct_id, system_type_code,-->
-<!--        alias_id, active_flag, rank, begin_date,-->
-<!--        max(begin_date) over (partition by acct_id, rank) max_date-->
-<!--        from  s_acct_xref-->
-<!--        where  system_type_code='GLN' and active_flag='Y' and rank=1-->
-<!--        ) gln_map,-->
-        <!-- dm_date_dim dd, -->
         d1_ms.date_dim dd,
         s_seedco_salesrep salesrep,
-        <!-- dm_seed_product_dim spd, -->
         d1_seed_product_dim spd,
         s_prod_package_struct pps,
-        <!-- dm_date_period_map dpm,
-        cdw_dm.CBR_GROWER_DIM mdm -->
         d1_ms.date_period_map dpm
-<!--        , d1_CBR_GROWER_DIM mdm-->
         <isNull property="companyCode">
-            <!-- ,biotech_translation bt -->
             ,d1_ms.biotech_translation bt
         </isNull>
         WHERE h.tran_id = d.tran_id
@@ -2063,26 +1980,16 @@
         AND to_number(LPAD (NVL (h.seedco_sales_rep_code,0),12,'0'))=TO_NUMBER (salesrep.seedco_salesrep_id(+))
         AND NVL (cgp.mfd_flag, 'N') != 'X'
         <isNull property="companyCode">
-            <!-- Changes for JIRA-3745 (US20->CJ20), 90->02 -->
             AND cgp.distribution_channel_code = '02'
             AND cgp.division_code = '17'
             AND cgp.sales_org_code = 'CJ20'
         </isNull>
-<!--        OTT PSO0026167 - removing duplicate account id from D1MS table-->
         And g.acct_id NOT LIKE '0%'
         AND p_st.acct_id = g.acct_id
-<!--        AND g.acct_id = gln_map.acct_id(+)-->
-<!--        AND g.grower_key  = mdm.grower_key-->
         AND spd.SEED_BRAND_DESCR in ('ASGROW','DEKALB','DELTA PINE')
         AND spd.SPECIE_DESCR IN ('CANOLA','CORN','COTTON','SORGHUM','SOYBEAN' )
         AND spd.product_class_descr NOT IN ('NOT APPLICABLE','INVALID','TO BE DETERMINE')
-<!--        AND mdm.SOURCE_SYSTEM_CODE in ('IRD','ECC-CB','ECC-RB')-->
-<!--        AND mdm.BRAND_FAMILY_DESCR = 'NATIONAL'-->
-<!--        AND gln_map.alias_id IS NOT NULL-->
         AND H.SALE_TYPE='GROWER'
-<!--        AND gln_map.system_type_code(+) = 'GLN'-->
-<!--        AND gln_map.rank(+) = 1-->
-<!--        AND gln_map.active_flag(+) = 'Y'-->
         and cad.source_system_code = 'IRD'
         )
         group by rptd_doc_nbr,
@@ -2100,10 +2007,7 @@
         dealer_mailing_zip_code,
         dealer_mailing_county,
         grower_name,
-<!--        grower_gln,-->
-        grower_napd_id,
         grower_acct_id,
-        grower_contact_name,
         grower_mailing_address,
         grower_mailing_city,
         grower_mailing_state,
@@ -2114,7 +2018,6 @@
         reopen,
         product_name,
         TRAN_ID,
-<!--        acronym_name,-->
         SAP_MAT_ID,
         gtin,
         sales_uom,
@@ -2128,7 +2031,6 @@
         salesrep_zip,
         salesrep_county,
         Touched_Untouched,
-<!--        mdm_tech_id,-->
         specie_descr,
         seed_co_brand_descr
         order by rptd_doc_nbr, dealer_acct_id, grower_acct_id
