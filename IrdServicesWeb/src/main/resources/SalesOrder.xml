@@ -1782,7 +1782,7 @@
         </isNull>
         And g.acct_id NOT LIKE '0%'
         AND p_st.acct_id = g.acct_id
-        AND spd.SEED_BRAND_DESCR in ('ASGROW','DEKALB','DELTA PINE')
+        AND spd.SEED_BRAND_DESCR in ('ASGROW','DEKALB','DELTA PINE','ALLOY')
         AND spd.SPECIE_DESCR IN ('CANOLA','CORN','COTTON','SORGHUM','SOYBEAN' )
         AND spd.product_class_descr NOT IN ('NOT APPLICABLE','INVALID','TO BE DETERMINE')
         AND H.SALE_TYPE='GROWER'
@@ -1986,7 +1986,7 @@
         </isNull>
         And g.acct_id NOT LIKE '0%'
         AND p_st.acct_id = g.acct_id
-        AND spd.SEED_BRAND_DESCR in ('ASGROW','DEKALB','DELTA PINE')
+        AND spd.SEED_BRAND_DESCR in ('ASGROW','DEKALB','DELTA PINE','ALLOY')
         AND spd.SPECIE_DESCR IN ('CANOLA','CORN','COTTON','SORGHUM','SOYBEAN' )
         AND spd.product_class_descr NOT IN ('NOT APPLICABLE','INVALID','TO BE DETERMINE')
         AND H.SALE_TYPE='GROWER'
