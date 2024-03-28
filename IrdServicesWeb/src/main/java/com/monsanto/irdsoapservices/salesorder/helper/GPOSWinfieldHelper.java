@@ -23,7 +23,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class GPOSWinfieldHelper extends AbstractSalesOrderHelper<GPOSOrderInfo> {
-    private static final String WINFIELD_COMPANY_CODE = "0527346750000";
+//    private static final String WINFIELD_COMPANY_CODE = "0527346750000";
+private static final String WINFIELD_COMPANY_CODE = "1527194980000";
     SalesOrderDao salesOrderDao;
     Logger logger = Logger.getLogger(this.getClass());
     GPOSWinfieldRequestBuilder gposWinfieldRequestBuilder;
